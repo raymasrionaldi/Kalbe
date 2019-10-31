@@ -5,4 +5,5 @@
     <color name="colorAccent">#D81B60</color>
     <color name="warnaBiru">#00BCD4</color>
     <color name="warnaAbu">#CCCCCC</color>
+    <color name="warnaBackgroundBorder">#FFDDDDDD</color>
 </resources>
