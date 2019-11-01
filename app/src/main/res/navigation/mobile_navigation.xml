@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_home">
+
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="com.xsis.android.batch217.ui.home.HomeFragment"
+        android:label="@string/menu_home"
+        tools:layout="@layout/fragment_home" />
+
+    <fragment
+        android:id="@+id/nav_agama"
+        android:name="com.xsis.android.batch217.ui.agama.AgamaFragment"
+        android:label="@string/menu_agama"
+        tools:layout="@layout/fragment_agama" />
+
+    <fragment
+        android:id="@+id/nav_backOfficePosition"
+        android:name="com.xsis.android.batch217.ui.back_office_position.BackOfficePositionFragment"
+        android:label="@string/menu_back_office_position"
+        tools:layout="@layout/fragment_back_office_position" />
+
+    <fragment
+        android:id="@+id/nav_company"
+        android:name="com.xsis.android.batch217.ui.company.CompanyFragment"
+        android:label="@string/menu_company"
+        tools:layout="@layout/fragment_company" />
+
+    <fragment
+        android:id="@+id/nav_contactStatus"
+        android:name="com.xsis.android.batch217.ui.contact_status.ContactStatusFragment"
+        android:label="@string/menu_contact_status"
+        tools:layout="@layout/fragment_contact_status" />
+
+    <fragment
+        android:id="@+id/nav_employeStatus"
+        android:name="com.xsis.android.batch217.ui.employe_status.EmployeStatusFragment"
+        android:label="@string/menu_employe_status"
+        tools:layout="@layout/fragment_employe_status" />
+
+    <fragment
+        android:id="@+id/nav_employeType"
+        android:name="com.xsis.android.batch217.ui.home.HomeFragment"
+        android:label="@string/menu_employe_type"
+        tools:layout="@layout/fragment_employe_type" />
+
+    <fragment
+        android:id="@+id/nav_grade"
+        android:name="com.xsis.android.batch217.ui.home.HomeFragment"
+        android:label="@string/menu_grade"
+        tools:layout="@layout/fragment_grade" />
+
+    <fragment
+        android:id="@+id/nav_jadwal"
+        android:name="com.xsis.android.batch217.ui.home.HomeFragment"
+        android:label="@string/menu_jadwal"
+        tools:layout="@layout/fragment_jadwal" />
+
+    <fragment
+        android:id="@+id/nav_tipeTes"
+        android:name="com.xsis.android.batch217.ui.tipe_tes.TipeTesFragment"
+        android:label="@string/menu_tipe_tes"
+        tools:layout="@layout/fragment_tipe_tes" />
+
+    <fragment
+        android:id="@+id/nav_jenisCatatan"
+        android:name="com.xsis.android.batch217.ui.jenis_catatan.JenisCatatanFragment"
+        android:label="@string/menu_jenis_catatan"
+        tools:layout="@layout/fragment_jenis_catatan" />
+
+    <fragment
+        android:id="@+id/nav_positionLevel"
+        android:name="com.xsis.android.batch217.ui.position_level.PositionLevelFragment"
+        android:label="@string/menu_position_level"
+        tools:layout="@layout/fragment_position_level" />
+
+    <fragment
+        android:id="@+id/nav_keahlian"
+        android:name="com.xsis.android.batch217.ui.keahlian.KeahlianFragment"
+        android:label="@string/menu_Keahlian"
+        tools:layout="@layout/fragment_keahlian" />
+
+    <fragment
+        android:id="@+id/nav_providerTools"
+        android:name="com.xsis.android.batch217.ui.provider_tools.ProviderToolsFragment"
+        android:label="@string/menu_provider_tools"
+        tools:layout="@layout/fragment_provider_tools" />
+
+    <fragment
+        android:id="@+id/nav_training"
+        android:name="com.xsis.android.batch217.ui.training.TrainingFragment"
+        android:label="@string/menu_training"
+        tools:layout="@layout/fragment_training" />
+
+    <fragment
+        android:id="@+id/nav_jenjangPendidikan"
+        android:name="com.xsis.android.batch217.ui.jenjang_pendidikan.JenjangPendidikanFragment"
+        android:label="@string/menu_jenjang_pendidikan"
+        tools:layout="@layout/fragment_jenjang_pendidikan" />
+
+
+<!-- Transaksi -->
+    <fragment
+        android:id="@+id/nav_employee"
+        android:name="com.xsis.android.batch217.ui.employee.EmployeeFragment"
+        android:label="@string/menu_employee"
+        tools:layout="@layout/fragment_employee" />
+
+</navigation>

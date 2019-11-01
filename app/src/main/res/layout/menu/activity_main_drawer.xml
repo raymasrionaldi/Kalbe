@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/ic_home_black"
+            android:title="@string/menu_home" />
+
+        <item
+            android:id="@+id/nav_agama"
+            android:title="@string/menu_agama" />
+
+        <item
+            android:id="@+id/nav_backOfficePosition"
+            android:title="@string/menu_back_office_position" />
+
+        <item
+            android:id="@+id/nav_company"
+            android:title="@string/menu_company" />
+
+        <item
+            android:id="@+id/nav_contactStatus"
+            android:title="@string/menu_contact_status" />
+
+        <item
+            android:id="@+id/nav_employeStatus"
+            android:title="@string/menu_employe_status" />
+
+        <item
+            android:id="@+id/nav_employeType"
+            android:title="@string/menu_employe_type" />
+
+        <item
+            android:id="@+id/nav_grade"
+            android:title="@string/menu_grade" />
+
+        <item
+            android:id="@+id/nav_jadwal"
+            android:title="@string/menu_jadwal" />
+        <item
+            android:id="@+id/nav_employee"
+            android:icon="@drawable/ic_folder_black"
+            android:title="@string/menu_employee">
+
+
+
+        </item>
+
+
+    </group>
+
+</menu>
