@@ -46,7 +46,7 @@ class KeahlianQueryHelper(val databaseHelperCadangan: DatabaseHelper) {
         return listKeahlian
     }
 
-    fun cariAgamaModels(keyword:String): List<Keahlian>{
+    fun cariKeahlianModels(keyword:String): List<Keahlian>{
         var listKeahlian = ArrayList<Keahlian>()
 
         val db = databaseHelperCadangan.readableDatabase
