@@ -12,10 +12,11 @@ import com.xsis.android.batch217.viewholders.ViewHolderListPendidikan
 import kotlinx.android.synthetic.main.popup_layout.view.*
 
 class ListPendidikanAdapter(val context: Context?, val listPendidikan:List<Pendidikan>): RecyclerView.Adapter<ViewHolderListPendidikan>() {
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolderListPendidikan {
-        val customView = LayoutInflater.from(parent.context).inflate(R.layout.list_dot_layout, parent, false)
-        return ViewHolderListPendidikan(customView)
+        val customView = LayoutInflater.from(parent.context)
+            .inflate(R.layout.list_dot_layout,parent,false)
+
+        return  ViewHolderListPendidikan(customView)
     }
 
     override fun getItemCount(): Int {
@@ -23,7 +24,7 @@ class ListPendidikanAdapter(val context: Context?, val listPendidikan:List<Pendi
     }
 
     override fun onBindViewHolder(holder: ViewHolderListPendidikan, position: Int) {
-        holder.setPendidikan(listPendidikan[position])
+        holder.setModel(listPendidikan[position])
 
         holder.bukaMenu.setOnClickListener { view ->
             val window = showPopupMenuUbahHapus(

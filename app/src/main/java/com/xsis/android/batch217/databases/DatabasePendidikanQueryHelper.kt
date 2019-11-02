@@ -2,17 +2,14 @@ package com.xsis.android.batch217.databases
 
 import android.database.Cursor
 import com.xsis.android.batch217.models.Pendidikan
-import com.xsis.android.batch217.utils.ID_PENDIDIKAN
-import com.xsis.android.batch217.utils.IS_DELETED
-import com.xsis.android.batch217.utils.NAMA_PENDIDIKAN
-import com.xsis.android.batch217.utils.TABEL_PENDIDIKAN
+import com.xsis.android.batch217.utils.*
 
 class DatabasePendidikanQueryHelper(val databaseHelper:DatabaseHelper) {
 
 
-    private fun readAllPendidikan(): Cursor {
+    private fun getSemuaPendidikan(): Cursor {
         val db = databaseHelper.readableDatabase
-        val queryRead = "SELECT * FROM $TABEL_PENDIDIKAN"
+        val queryRead = "select * FROM $TABEL_PENDIDIKAN"
         return db.rawQuery(queryRead,null)
     }
 
@@ -22,10 +19,10 @@ class DatabasePendidikanQueryHelper(val databaseHelper:DatabaseHelper) {
             cursor.moveToPosition(i)
 
             val pendidikan = Pendidikan()
-            pendidikan.id = cursor.getInt(0)
-            pendidikan.nama = cursor.getString(1)
-            pendidikan.des = cursor.getString(2)
-            pendidikan.is_deleted = cursor.getString(3)
+            pendidikan.id_pendidikan = cursor.getInt(0)
+            pendidikan.nama_pendidikan = cursor.getString(1)
+            pendidikan.des_pendidikan = cursor.getString(2)
+            pendidikan.is_Deleted = cursor.getString(3)
             listPendidikan.add(pendidikan)
         }
         return listPendidikan
@@ -48,14 +45,17 @@ class DatabasePendidikanQueryHelper(val databaseHelper:DatabaseHelper) {
         return listPendidikan
     }
 
+
     fun readSemuaPendidikanModels():List<Pendidikan>{
         var listPendidikan = ArrayList<Pendidikan>()
 
-        val cursor = readAllPendidikan()
+        val cursor = getSemuaPendidikan()
         if (cursor.count > 0){
             listPendidikan = konversiCursorKeListPendidikanModel(cursor)
         }
 
         return listPendidikan
     }
+
+
 }
