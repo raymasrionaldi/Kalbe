@@ -20,8 +20,8 @@ class EmployeStatusFragment: Fragment() {
     ): View? {
         employeStatusViewModel =
             ViewModelProviders.of(this).get(EmployeStatusViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_contact_status, container, false)
-        val textView: TextView = root.findViewById(R.id.text_contact_status)
+        val root = inflater.inflate(R.layout.fragment_employe_status, container, false)
+        val textView: TextView = root.findViewById(R.id.text_employe_status)
         employeStatusViewModel.text.observe(this, Observer {
             textView.text = it
         })
