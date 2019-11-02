@@ -10,26 +10,18 @@ import com.xsis.android.batch217.models.Pendidikan
 import com.xsis.android.batch217.utils.ambilDuaInisial
 
 class ViewHolderListPendidikan(itemView: View): RecyclerView.ViewHolder(itemView) {
-    val idPendidikan: NameInitialsCircleImageView
-    val namaPendidikan: TextView
-    val bukaMenu : ImageView
 
+    val isiText = itemView.findViewById(R.id.isiTeks) as TextView
+    val inisial = itemView.findViewById(R.id.gambarLingkaran) as NameInitialsCircleImageView
+    val bukaMenu = itemView.findViewById(R.id.bukaMenu) as ImageView
 
-    init{
-        idPendidikan = itemView.findViewById(R.id.gambarLingkaran) as NameInitialsCircleImageView
-        namaPendidikan= itemView.findViewById(R.id.isiTeks)
-        bukaMenu = itemView.findViewById(R.id.bukaMenu) as ImageView
-
-
-    }
-
-    fun setPendidikan(pendidikan: Pendidikan){
-        namaPendidikan.text = pendidikan.nama
+    fun setModel(pendidikan: Pendidikan) {
+        isiText.text = pendidikan.nama_pendidikan
         val image = NameInitialsCircleImageView.ImageInfo
-            .Builder(idPendidikan.toString())
+            .Builder(pendidikan.id_pendidikan.toString())
             .setTextColor(android.R.color.black)
             .setCircleBackgroundColorRes(R.color.warnaAbu)
             .build()
-        idPendidikan.setImageInfo(image)
+        inisial.setImageInfo(image)
     }
 }
