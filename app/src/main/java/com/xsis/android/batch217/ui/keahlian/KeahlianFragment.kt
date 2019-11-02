@@ -1,5 +1,6 @@
 package com.xsis.android.batch217.ui.keahlian
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -43,7 +44,9 @@ class KeahlianFragment : Fragment() {
         getSemuaKeahlian(recyclerView, databaseQueryHelper)
         recyclerView.layoutManager=layoutManager
         root.fab_keahlian.setOnClickListener { view ->
-            Toast.makeText(context,"onClick", Toast.LENGTH_LONG).show()
+//            Toast.makeText(context,"onClick", Toast.LENGTH_LONG).show()
+            val intent = Intent(context, InputDataActivity::class.java)
+            startActivity(intent)
         }
 
         return root
