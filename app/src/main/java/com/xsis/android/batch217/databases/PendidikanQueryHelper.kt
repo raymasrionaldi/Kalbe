@@ -4,7 +4,7 @@ import android.database.Cursor
 import com.xsis.android.batch217.models.Pendidikan
 import com.xsis.android.batch217.utils.*
 
-class DatabasePendidikanQueryHelper(val databaseHelper:DatabaseHelper) {
+class PendidikanQueryHelper(val databaseHelper:DatabaseHelper) {
 
 
     private fun getSemuaPendidikan(): Cursor {

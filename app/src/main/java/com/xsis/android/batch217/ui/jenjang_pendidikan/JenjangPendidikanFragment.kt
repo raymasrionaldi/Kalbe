@@ -12,9 +12,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.xsis.android.batch217.R
 import com.xsis.android.batch217.adapters.ListPendidikanAdapter
 import com.xsis.android.batch217.databases.DatabaseHelper
-import com.xsis.android.batch217.databases.DatabasePendidikanQueryHelper
+import com.xsis.android.batch217.databases.PendidikanQueryHelper
 import com.xsis.android.batch217.models.Pendidikan
-import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.fragment_jenjang_pendidikan.view.fab
 
 class JenjangPendidikanFragment : Fragment() {
@@ -44,7 +43,7 @@ class JenjangPendidikanFragment : Fragment() {
         }
 
         val databaseHelper = DatabaseHelper(context!!)
-        val databaseQueryHelper = DatabasePendidikanQueryHelper(databaseHelper)
+        val databaseQueryHelper = PendidikanQueryHelper(databaseHelper)
 
         getSemuaPendidikan(recyclerView, databaseQueryHelper)
         
@@ -52,8 +51,8 @@ class JenjangPendidikanFragment : Fragment() {
         return root
     }
 
-    fun getSemuaPendidikan(recyclerView: RecyclerView, databaseQueryHelper:DatabasePendidikanQueryHelper){
-        val listPendidikan= databaseQueryHelper.readSemuaPendidikanModels()
+    fun getSemuaPendidikan(recyclerView: RecyclerView, queryHelper:PendidikanQueryHelper){
+        val listPendidikan= queryHelper.readSemuaPendidikanModels()
         tampilkanListPendidikan(listPendidikan,recyclerView)
     }
 
