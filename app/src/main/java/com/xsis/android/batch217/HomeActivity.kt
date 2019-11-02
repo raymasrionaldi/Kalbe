@@ -11,8 +11,11 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.navigation.NavigationView
+import com.xsis.android.batch217.databases.DatabaseHelper
 
 class HomeActivity : AppCompatActivity() {
+    val databaseHelper = DatabaseHelper(this)
+
 
     private lateinit var appBarConfiguration: AppBarConfiguration
 
@@ -34,6 +37,9 @@ class HomeActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
+
+        databaseHelper.createDatabaseFromImportedFile()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
