@@ -13,7 +13,7 @@ import com.xsis.android.batch217.R
 
 import com.xsis.android.batch217.adapters.ListAgamaAdapter
 import com.xsis.android.batch217.databases.AgamaQueryHelper
-import com.xsis.android.batch217.databases.CadanganDbHelper
+import com.xsis.android.batch217.databases.DatabaseHelper
 import com.xsis.android.batch217.models.Agama
 import kotlinx.android.synthetic.main.fragment_agama.view.*
 
@@ -44,7 +44,7 @@ class AgamaFragment : Fragment() {
             Toast.makeText(context,"onClick", Toast.LENGTH_LONG).show()
         }
 
-        val databaseHelper = CadanganDbHelper(activity!!)
+        val databaseHelper = DatabaseHelper(context!!)
         val databaseQueryHelper = AgamaQueryHelper(databaseHelper)
 
         getSemuaAgama(recyclerView, databaseQueryHelper)

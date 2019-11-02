@@ -6,7 +6,7 @@ import com.xsis.android.batch217.utils.DES_AGAMA
 import com.xsis.android.batch217.utils.NAMA_AGAMA
 import com.xsis.android.batch217.utils.TABEL_AGAMA
 
-class AgamaQueryHelper(val databaseHelperCadangan: CadanganDbHelper) {
+class AgamaQueryHelper(val databaseHelperCadangan: DatabaseHelper) {
 
     private fun getSemuaAgama(): Cursor {
         val db = databaseHelperCadangan.readableDatabase
