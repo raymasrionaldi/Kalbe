@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.keahlian.InputDataActivity"
+    tools:context=".ui.keahlian.InputDataKeahlianActivity"
     android:orientation="vertical">
 
     <LinearLayout
@@ -131,7 +131,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:padding="20dp">
 
         <Button
             android:id="@+id/tipeidentitasBatal"

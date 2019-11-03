@@ -6,13 +6,13 @@ import android.text.Editable
 import android.text.TextWatcher
 import androidx.core.view.isVisible
 import com.xsis.android.batch217.R
-import kotlinx.android.synthetic.main.activity_input_data.*
+import kotlinx.android.synthetic.main.activity_input_data_keahlian.*
 
-class InputDataActivity : AppCompatActivity() {
+class InputDataKeahlianActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_input_data)
+        setContentView(R.layout.activity_input_data_keahlian)
 
         cekIsi()
         hapus()
