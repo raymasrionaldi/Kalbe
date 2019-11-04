@@ -1,9 +1,11 @@
 package com.xsis.android.batch217.ui.tipe_identitas
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.*
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -33,14 +35,16 @@ class TipeIdentitasFragment:Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         tipeIdentitasViewModel = ViewModelProviders.of(this).get(TipeIdentitasViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_tipe_identitas, container, false)
 
         val layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL,false)
-        val recyclerView = root.findViewById(R.id.listTipeIdentitasRecycler) as RecyclerView
-        recyclerView.layoutManager = layoutManager
+        recyclerView = root.findViewById(R.id.listTipeIdentitasRecycler) as RecyclerView
+        recyclerView!!.layoutManager = layoutManager
 
-        setHasOptionsMenu(true)
+
+//        setHasOptionsMenu(true)
 
         root.fab.setOnClickListener{view->
             pindahFragment()
@@ -49,10 +53,11 @@ class TipeIdentitasFragment:Fragment() {
         databaseHelper = DatabaseHelper(context!!)
         databaseQueryHelper = TipeIdentitasQueryHelper(databaseHelper!!)
 
-        getSemuaTipeIdentitas(recyclerView, databaseQueryHelper!!)
+        getSemuaTipeIdentitas(recyclerView!!, databaseQueryHelper!!)
 
         return root
     }
+
     fun getSemuaTipeIdentitas(recyclerView: RecyclerView, queryHelper:TipeIdentitasQueryHelper){
         val listTipeIdentitas = queryHelper.readSemuaTipeIdentitasModels()
         tampilkanListTipeIdentitas(listTipeIdentitas, recyclerView)

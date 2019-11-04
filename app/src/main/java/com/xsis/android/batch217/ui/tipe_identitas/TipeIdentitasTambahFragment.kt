@@ -154,33 +154,4 @@ class TipeIdentitasTambahFragment:Fragment() {
         clearDes.setOnClickListener {tipeIdentitas_deskripsi.setText("") }
         clearTipe.setOnClickListener {tipeIdentitas_text.setText("") }
     }
-
-//    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-//        inflater.inflate(R.menu.main, menu)
-//
-//        val myActionMenuItem = menu.findItem(R.id.action_search)
-//        val searchView = myActionMenuItem.actionView as SearchView
-//
-//        searchView!!.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-//
-//            override fun onQueryTextSubmit(query: String): Boolean {
-//                // collapse the view ?
-//                //menu.findItem(R.id.menu_search).collapseActionView();
-//                Log.e("Fragment queryText", query)
-//                return false
-//            }
-//            override fun onQueryTextChange(keyword: String): Boolean {
-//                // search goes here !!
-//                // listAdapter.getFilter().filter(query);
-//                // Log.e("Fragment queryText", keyword)
-//
-//                /*TODO
-//                1. do search based on active fragment table
-//                2. send list result to active fragment
-//                3.
-//                */
-//                return true
-//            }
-//        })
-//    }
 }
