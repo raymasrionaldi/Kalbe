@@ -34,7 +34,13 @@ class InputDataKeahlianActivity : AppCompatActivity() {
         val simpan = tipeKeahlianSimpan as Button
         simpan.setOnClickListener{
             insertKeDatabase()
-            finish()
+            if (tipeKeahlian.text.toString().trim().isEmpty()) {
+                //tidak ada aksi
+            }
+            else{
+                finish()
+            }
+
         }
         //Ke activity list
 
@@ -73,8 +79,12 @@ class InputDataKeahlianActivity : AppCompatActivity() {
                 tipeKeahlianSimpan.isEnabled = true
 
                 //Tipe identitas tidak boleh kosong
-                val tipeIdentitas = tipeKeahlian.text.toString().trim()
-                errorKeahlian.isVisible = tipeIdentitas.isEmpty()
+                val tipeKeahlian = tipeKeahlian.text.toString().trim()
+                if (tipeKeahlian.isEmpty()){
+                    errorKeahlian.isVisible = true
+                } else{
+                    errorKeahlian.isVisible = false
+                }
             }
         })
         deskripsiKeahlian.addTextChangedListener(object : TextWatcher {
