@@ -3,15 +3,16 @@ package com.xsis.android.batch217.databases
 import android.database.Cursor
 import com.xsis.android.batch217.models.Agama
 import com.xsis.android.batch217.utils.DES_AGAMA
+import com.xsis.android.batch217.utils.IS_DELETED
 import com.xsis.android.batch217.utils.NAMA_AGAMA
 import com.xsis.android.batch217.utils.TABEL_AGAMA
 
-class AgamaQueryHelper(val databaseHelperCadangan: DatabaseHelper) {
+class AgamaQueryHelper(val databaseHelper: DatabaseHelper) {
 
     private fun getSemuaAgama(): Cursor {
-        val db = databaseHelperCadangan.readableDatabase
+        val db = databaseHelper.readableDatabase
 
-        val queryRead = "SELECT * FROM $TABEL_AGAMA"
+        val queryRead = "SELECT * FROM $TABEL_AGAMA WHERE $IS_DELETED='false'"
 
         return db.rawQuery(queryRead, null)
     }
@@ -48,9 +49,8 @@ class AgamaQueryHelper(val databaseHelperCadangan: DatabaseHelper) {
     fun cariAgamaModels(keyword:String): List<Agama>{
         var listAgama = ArrayList<Agama>()
 
-        val db = databaseHelperCadangan.readableDatabase
-        val queryCari = "SELECT * FROM $TABEL_AGAMA WHERE $NAMA_AGAMA LIKE '%$keyword%' OR " +
-                "$DES_AGAMA LIKE '%$keyword%'"
+        val db = databaseHelper.readableDatabase
+        val queryCari = "SELECT * FROM $TABEL_AGAMA WHERE ($NAMA_AGAMA LIKE '%$keyword%' OR $DES_AGAMA LIKE '%$keyword%') AND is_deleted='false'"
 
         val cursor =db.rawQuery(queryCari,null)
         if(cursor.count > 0){

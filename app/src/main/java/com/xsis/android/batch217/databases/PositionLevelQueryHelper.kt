@@ -48,7 +48,7 @@ class PositionLevelQueryHelper(val databaseHelper: DatabaseHelper) {
 
         val db = databaseHelper.readableDatabase
         val queryCari =
-            "SELECT * FROM $TABEL_POSITION_LEVEL WHERE $NAMA_POSITION_LVL LIKE '%$keyword%' AND " +
+            "SELECT * FROM $TABEL_POSITION_LEVEL WHERE $NAMA_POSITION LIKE '%$keyword%' AND " +
                     "$IS_DELETED = 'false'"
 
         val cursor = db.rawQuery(queryCari, null)
