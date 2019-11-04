@@ -9,9 +9,9 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.xsis.android.batch217.R
+import com.xsis.android.batch217.databases.DatabaseHelper
 
 class HomeFragment : Fragment() {
-
     private lateinit var homeViewModel: HomeViewModel
 
     override fun onCreateView(
@@ -26,6 +26,8 @@ class HomeFragment : Fragment() {
         homeViewModel.text.observe(this, Observer {
             textView.text = it
         })
+
+
         return root
     }
 }

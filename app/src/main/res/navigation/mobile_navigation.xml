@@ -18,6 +18,12 @@
         tools:layout="@layout/fragment_agama" />
 
     <fragment
+        android:id="@+id/nav_tipe_identitas"
+        android:name="com.xsis.android.batch217.ui.tipe_identitas.TipeIdentitasFragment"
+        android:label="@string/menu_tipe_identitas"
+        tools:layout="@layout/fragment_tipe_identitas" />
+
+    <fragment
         android:id="@+id/nav_backOfficePosition"
         android:name="com.xsis.android.batch217.ui.back_office_position.BackOfficePositionFragment"
         android:label="@string/menu_back_office_position"
