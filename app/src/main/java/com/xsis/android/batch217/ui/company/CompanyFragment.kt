@@ -39,7 +39,6 @@ class CompanyFragment : Fragment() {
         //nonaktifkan klik tab
         slidingTabs.touchables.forEach { view -> view.isEnabled = false }
 
-
         return root
     }
 }

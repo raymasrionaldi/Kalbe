@@ -19,8 +19,7 @@ import com.xsis.android.batch217.adapters.fragments.CompanyFragmentAdapter
 import com.xsis.android.batch217.databases.CompanyQueryHelper
 import com.xsis.android.batch217.databases.DatabaseHelper
 import com.xsis.android.batch217.models.Company
-import com.xsis.android.batch217.utils.ubahResetButton
-
+import com.xsis.android.batch217.utils.*
 
 class CompanyFragmentForm(context: Context, val fm: FragmentManager) : Fragment() {
     var title: TextView? = null
@@ -37,7 +36,7 @@ class CompanyFragmentForm(context: Context, val fm: FragmentManager) : Fragment(
     var defaultColor = 0
     var modeForm = 0
     var idData = 0
-    var data: Company? = null
+    var data = Company()
 
     var databaseQueryHelper: CompanyQueryHelper? = null
 
@@ -89,6 +88,10 @@ class CompanyFragmentForm(context: Context, val fm: FragmentManager) : Fragment(
 
         nama!!.addTextChangedListener(textWatcher)
         kota!!.addTextChangedListener(textWatcher)
+        kdPos!!.addTextChangedListener(textWatcher)
+        jalan!!.addTextChangedListener(textWatcher)
+        gedung!!.addTextChangedListener(textWatcher)
+        lantai!!.addTextChangedListener(textWatcher)
 
         title!!.text = TITLE_ADD
 
@@ -111,7 +114,10 @@ class CompanyFragmentForm(context: Context, val fm: FragmentManager) : Fragment(
         idData = company.idCompany
         nama!!.setText(company.namaCompany)
         kota!!.setText(company.kotaCompany)
-
+        kdPos!!.setText(company.kdPosCompany)
+        jalan!!.setText(company.jlnCompany)
+        gedung!!.setText(company.buildingCompany)
+        lantai!!.setText(company.floorCompany)
         data = company
     }
 
@@ -119,7 +125,7 @@ class CompanyFragmentForm(context: Context, val fm: FragmentManager) : Fragment(
         modeForm = MODE_ADD
         changeMode()
         resetForm()
-        data = null
+        data = Company()
     }
 
     fun changeMode() {
@@ -137,16 +143,19 @@ class CompanyFragmentForm(context: Context, val fm: FragmentManager) : Fragment(
             .setMessage("Hapus ${data!!.namaCompany}")
             .setCancelable(false)
             .setPositiveButton("DELETE") { dialog, which ->
-                Toast.makeText(context!!, "terhapus", Toast.LENGTH_SHORT).show()
-                val viewPager = view!!.parent as ViewPager
-                val adapter = viewPager.adapter!! as CompanyFragmentAdapter
-                val fragment = fm.fragments[0] as CompanyFragmentData
-                fragment.updateContent()
-                adapter.notifyDataSetChanged()
-                viewPager.setCurrentItem(0, true)
+                if (databaseQueryHelper!!.hapusCompany(data.idCompany) != 0) {
+                    Toast.makeText(context!!, HAPUS_DATA_BERHASIL, Toast.LENGTH_SHORT).show()
+                    val viewPager = view!!.parent as ViewPager
+                    val adapter = viewPager.adapter!! as CompanyFragmentAdapter
+                    val fragment = fm.fragments[0] as CompanyFragmentData
+                    fragment.updateContent()
+                    adapter.notifyDataSetChanged()
+                    viewPager.setCurrentItem(0, true)
+                } else {
+                    Toast.makeText(context!!, HAPUS_DATA_GAGAL, Toast.LENGTH_SHORT).show()
+                }
             }
             .setNegativeButton("CANCEL") { dialog, which ->
-                null
             }
             .create()
             .show()
@@ -161,9 +170,9 @@ class CompanyFragmentForm(context: Context, val fm: FragmentManager) : Fragment(
             val namaTeks = nama!!.text.toString().trim()
             val kotaTeks = kota!!.text.toString().trim()
             val kdPosTeks = kdPos!!.text.toString().trim()
-            val jalanTeks = jalan!!.toString().trim()
-            val gedungTeks = gedung!!.toString().trim()
-            val lantaiTeks = lantai!!.toString().trim()
+            val jalanTeks = jalan!!.text.toString().trim()
+            val gedungTeks = gedung!!.text.toString().trim()
+            val lantaiTeks = lantai!!.text.toString().trim()
             val kondisi =
                 namaTeks.isNotEmpty() || kotaTeks.isNotEmpty() || kdPosTeks.isNotEmpty()
                         || jalanTeks.isNotEmpty() || gedungTeks.isNotEmpty()
@@ -186,7 +195,7 @@ class CompanyFragmentForm(context: Context, val fm: FragmentManager) : Fragment(
         val lantaiCompany = lantai!!.text.toString().trim()
 
         nama!!.setHintTextColor(defaultColor)
-        kotaCompany
+        kota!!.setHintTextColor(defaultColor)
         requiredNama!!.visibility = View.INVISIBLE
         requiredKota!!.visibility = View.INVISIBLE
 
@@ -198,8 +207,9 @@ class CompanyFragmentForm(context: Context, val fm: FragmentManager) : Fragment(
             kota!!.setHintTextColor(Color.RED)
             requiredKota!!.visibility = View.VISIBLE
         }
-        if (kotaCompany.isNotEmpty() && kotaCompany.isNotEmpty()) {
+        if (namaCompany.isNotEmpty() && kotaCompany.isNotEmpty()) {
             val model = Company()
+            model.idCompany = data.idCompany
             model.namaCompany = namaCompany
             model.kotaCompany = kotaCompany
             model.kdPosCompany = kdPosCompany
@@ -207,24 +217,32 @@ class CompanyFragmentForm(context: Context, val fm: FragmentManager) : Fragment(
             model.buildingCompany = gedungCompany
             model.floorCompany = lantaiCompany
 
-            if (databaseQueryHelper!!.cekCompanySudahAda(model.namaCompany!!)) {
-                Toast.makeText(context, "Data Sudah Ada", Toast.LENGTH_SHORT).show()
-            } else {
-                if (modeForm == MODE_ADD) {
-                    if (databaseQueryHelper!!.tambahCompany(model) == -1L) {
-                        Toast.makeText(context, "Data Gagal Tersimpan", Toast.LENGTH_SHORT).show()
-                    } else {
-                        Toast.makeText(context, "Data Berhasil Tersimpan", Toast.LENGTH_SHORT)
-                            .show()
-                    }
-                } else if (modeForm == MODE_EDIT) {
-                    if (databaseQueryHelper!!.editCompany(model) != 0) {
-                        Toast.makeText(context, "Data Berhasil Diperbaharui", Toast.LENGTH_SHORT)
-                            .show()
-                    } else {
-                        Toast.makeText(context, "Data Berhasil Diperbaharui", Toast.LENGTH_SHORT)
-                            .show()
-                    }
+            val cekCompany = databaseQueryHelper!!.cekCompanySudahAda(model.namaCompany!!)
+
+            if (modeForm == MODE_ADD) {
+                if (cekCompany > 0) {
+                    Toast.makeText(context, DATA_SUDAH_ADA, Toast.LENGTH_SHORT).show()
+                    return
+                }
+                if (databaseQueryHelper!!.tambahCompany(model) == -1L) {
+                    Toast.makeText(context, SIMPAN_DATA_GAGAL, Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(context, SIMPAN_DATA_BERHASIL, Toast.LENGTH_SHORT)
+                        .show()
+                }
+            } else if (modeForm == MODE_EDIT) {
+                if ((cekCompany != 1 && model.namaCompany == data.namaCompany) ||
+                    (cekCompany != 0 && model.namaCompany != data.namaCompany)
+                ) {
+                    Toast.makeText(context, DATA_SUDAH_ADA, Toast.LENGTH_SHORT).show()
+                    return
+                }
+                if (databaseQueryHelper!!.editCompany(model) == 0) {
+                    Toast.makeText(context, EDIT_DATA_GAGAL, Toast.LENGTH_SHORT)
+                        .show()
+                } else {
+                    Toast.makeText(context, EDIT_DATA_BERHASIL, Toast.LENGTH_SHORT)
+                        .show()
                 }
             }
 

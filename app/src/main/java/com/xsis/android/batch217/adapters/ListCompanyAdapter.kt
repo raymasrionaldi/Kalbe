@@ -11,7 +11,6 @@ import com.xsis.android.batch217.models.Company
 import com.xsis.android.batch217.ui.company.CompanyFragmentForm
 import com.xsis.android.batch217.viewholders.ViewHolderListCompany
 
-
 class ListCompanyAdapter(
     val context: Context,
     val listCompany: List<Company>,
@@ -32,10 +31,9 @@ class ListCompanyAdapter(
         holder.setModel(model)
 
         holder.layoutList.setOnClickListener { view ->
-            val viewPager = view.parent.parent.parent.parent as ViewPager
-            val adapter = viewPager.adapter!! as CompanyFragmentAdapter
-
             val fragment = fm.fragments[1] as CompanyFragmentForm
+            val viewPager = fragment.view!!.parent as ViewPager
+            val adapter = viewPager.adapter!! as CompanyFragmentAdapter
 
             fragment.modeEdit(model)
             adapter.notifyDataSetChanged()

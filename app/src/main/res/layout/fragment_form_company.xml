@@ -51,6 +51,7 @@
             android:layout_height="wrap_content"
             android:text="Required"
             android:textColor="@color/warnaMerah"
+            android:textSize="@dimen/text_size_small"
             android:visibility="invisible" />
 
         <EditText
@@ -58,26 +59,29 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Postal Code"
-            android:maxLength="5"
-            android:inputType="number"/>
+            android:inputType="number"
+            android:maxLength="5" />
 
         <EditText
             android:id="@+id/inputJalanCompany"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Street" />
+            android:hint="Street"
+            android:inputType="text" />
 
         <EditText
             android:id="@+id/inputGedungCompany"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Building" />
+            android:hint="Building"
+            android:inputType="text" />
 
         <EditText
             android:id="@+id/inputLantaiCompany"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Floor" />
+            android:hint="Floor"
+            android:inputType="text" />
 
         <LinearLayout
             android:layout_width="match_parent"
