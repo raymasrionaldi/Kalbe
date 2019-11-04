@@ -9,7 +9,7 @@ class PendidikanQueryHelper(val databaseHelper:DatabaseHelper) {
 
     private fun getSemuaPendidikan(): Cursor {
         val db = databaseHelper.readableDatabase
-        val queryRead = "select * FROM $TABEL_PENDIDIKAN"
+        val queryRead = "select * FROM $TABEL_PENDIDIKAN WHERE $IS_DELETED = 'false'"
         return db.rawQuery(queryRead,null)
     }
 
@@ -25,6 +25,33 @@ class PendidikanQueryHelper(val databaseHelper:DatabaseHelper) {
             pendidikan.is_Deleted = cursor.getString(3)
             listPendidikan.add(pendidikan)
         }
+        return listPendidikan
+    }
+
+    fun readPendidikan(nama:String):List<Pendidikan>{
+        var listPendidikan = ArrayList<Pendidikan>()
+
+        val db = databaseHelper.readableDatabase
+        val queryCari = "SELECT * FROM $TABEL_PENDIDIKAN " +
+                "WHERE $NAMA_PENDIDIKAN = '$nama' " +
+                "AND $IS_DELETED = 'true'"
+        val cursor = db.rawQuery(queryCari, null)
+
+        if (cursor.count > 0){
+            listPendidikan = konversiCursorKeListPendidikanModel(cursor)
+        }
+
+        return listPendidikan
+    }
+
+    fun updatePendidikan(nama: String, des: String):List<Pendidikan>{
+        var listPendidikan = ArrayList<Pendidikan>()
+
+        val db = databaseHelper.writableDatabase
+        val queryUpdate = "UPDATE $TABEL_PENDIDIKAN " +
+                "SET $DES_PENDIDIKAN = '$des', $IS_DELETED = 'false' " +
+                "WHERE $NAMA_PENDIDIKAN = '$nama' AND $IS_DELETED = 'true'"
+        val cursor = db.rawQuery(queryUpdate, null)
         return listPendidikan
     }
 

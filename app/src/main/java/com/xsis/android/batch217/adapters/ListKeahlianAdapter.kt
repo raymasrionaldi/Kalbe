@@ -12,6 +12,9 @@ import com.xsis.android.batch217.R
 import com.xsis.android.batch217.databases.DatabaseHelper
 import com.xsis.android.batch217.models.Keahlian
 import com.xsis.android.batch217.ui.keahlian.UbahDataKeahlianActivity
+import com.xsis.android.batch217.utils.ID_KEAHLIAN
+import com.xsis.android.batch217.utils.IS_DELETED
+import com.xsis.android.batch217.utils.TABEL_KEAHLIAN
 import com.xsis.android.batch217.utils.showPopupMenuUbahHapus
 import com.xsis.android.batch217.viewholders.ViewHolderListKeahlian
 import kotlinx.android.synthetic.main.popup_layout.view.*
@@ -50,6 +53,9 @@ class ListKeahlianAdapter(val context: Context?,
                                 Toast.makeText(context,"Hapus data", Toast.LENGTH_SHORT).show()
                                 val databaseHelper = DatabaseHelper(context)
                                 val db = databaseHelper.writableDatabase
+
+                                val queryDelete = "UPDATE $TABEL_KEAHLIAN SET $IS_DELETED = 'true' WHERE $ID_KEAHLIAN = $position"
+                                db.execSQL(queryDelete)
 
                             })
                             .setNegativeButton("Tidak", DialogInterface.OnClickListener{ dialog, which ->

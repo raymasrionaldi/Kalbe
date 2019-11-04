@@ -25,7 +25,7 @@ class KeahlianQueryHelper(val databaseHelper: DatabaseHelper) {
             keahlian.id_keahlian = cursor.getInt(0)
             keahlian.nama_keahlian = cursor.getString(1)
             keahlian.des_keahlian = cursor.getString(2)
-            keahlian.is_deleted = cursor.getString(3)
+//            keahlian.is_deleted = cursor.getString(3)
 
             listKeahlian.add(keahlian)
         }

@@ -1,14 +1,15 @@
 package com.xsis.android.batch217.databases
 
 import android.database.Cursor
+import com.xsis.android.batch217.models.Agama
 import com.xsis.android.batch217.models.TipeIdentitas
-import com.xsis.android.batch217.utils.TABEL_TIPE_IDENTITAS
+import com.xsis.android.batch217.utils.*
 
 class TipeIdentitasQueryHelper(val databasehelper:DatabaseHelper) {
 
     private fun getSemuaTipeIdentitas():Cursor{
         val db = databasehelper.readableDatabase
-        val queryRead = "SELECT * FROM $TABEL_TIPE_IDENTITAS"
+        val queryRead = "SELECT * FROM $TABEL_TIPE_IDENTITAS where $IS_DELETED='false' "
         return db.rawQuery(queryRead,null)
     }
     fun readSemuaTipeIdentitasModels(): List<TipeIdentitas>{
@@ -34,6 +35,20 @@ class TipeIdentitasQueryHelper(val databasehelper:DatabaseHelper) {
 
             listTipeIdentitas.add(tipeIdentitas)
         }
+        return listTipeIdentitas
+    }
+
+    fun cariTipeIdentitasModels(keyword:String): List<TipeIdentitas>{
+        var listTipeIdentitas = ArrayList<TipeIdentitas>()
+
+        val db = databasehelper.readableDatabase
+        val queryCari = "SELECT * FROM $TABEL_TIPE_IDENTITAS WHERE ($NAMA_IDENTITAS LIKE '%$keyword%' OR $DES_IDENTITAS LIKE '%$keyword%') AND is_deleted='false'"
+
+        val cursor =db.rawQuery(queryCari,null)
+        if(cursor.count > 0){
+            listTipeIdentitas = konversiCursorKeListTipeIdentitasModel(cursor)
+        }
+
         return listTipeIdentitas
     }
 }
