@@ -12,17 +12,13 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.viewpager.widget.ViewPager
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.xsis.android.batch217.R
 import com.xsis.android.batch217.adapters.fragments.TipeTesFragmentAdapter
 import com.xsis.android.batch217.models.TipeTes
-import com.xsis.android.batch217.utils.ubahResetButton
 import com.xsis.android.batch217.utils.ubahSimpanButton
-import kotlinx.android.synthetic.main.fragment_form_tipe_tes.*
 
 class TipeTesFragmentForm(context: Context, val fm: FragmentManager) : Fragment() {
     var title: TextView? = null
@@ -61,7 +57,13 @@ class TipeTesFragmentForm(context: Context, val fm: FragmentManager) : Fragment(
         }
 
         buttonBatal!!.setOnClickListener {
-            resetForm()
+            Toast.makeText(context!!, "batal", Toast.LENGTH_SHORT).show()
+                val viewPager = view!!.parent as ViewPager
+                val adapter = viewPager.adapter!! as TipeTesFragmentAdapter
+                val fragment = fm.fragments[0] as TipeTesFragmentData
+                fragment.updateContent()
+                adapter.notifyDataSetChanged()
+                viewPager.setCurrentItem(0, true)
         }
 
         tipeTesText!!.addTextChangedListener(textWatcher)
@@ -72,10 +74,6 @@ class TipeTesFragmentForm(context: Context, val fm: FragmentManager) : Fragment(
         return customView
     }
 
-    fun resetForm() {
-        tipeTesText!!.setText("")
-        deskripsi!!.setText("")
-    }
 
     fun modeEdit(tipeTes: TipeTes) {
         modeForm = MODE_EDIT
@@ -90,7 +88,6 @@ class TipeTesFragmentForm(context: Context, val fm: FragmentManager) : Fragment(
     fun modeAdd() {
         modeForm = MODE_ADD
         changeMode()
-        resetForm()
     }
 
     fun changeMode() {
