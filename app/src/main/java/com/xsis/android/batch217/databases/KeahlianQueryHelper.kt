@@ -3,16 +3,14 @@ package com.xsis.android.batch217.databases
 import android.database.Cursor
 import com.xsis.android.batch217.models.Agama
 import com.xsis.android.batch217.models.Keahlian
-import com.xsis.android.batch217.utils.DES_KEAHLIAN
-import com.xsis.android.batch217.utils.NAMA_KEAHLIAN
-import com.xsis.android.batch217.utils.TABEL_KEAHLIAN
+import com.xsis.android.batch217.utils.*
 
 class KeahlianQueryHelper(val databaseHelper: DatabaseHelper) {
 
     fun getSemuaKeahlian(): Cursor {
         val db = databaseHelper.readableDatabase
 
-        val queryRead = "SELECT * FROM $TABEL_KEAHLIAN"
+        val queryRead = "SELECT * FROM $TABEL_KEAHLIAN WHERE $IS_DELETED = 'false'"
 
         return db.rawQuery(queryRead, null)
     }
@@ -27,7 +25,7 @@ class KeahlianQueryHelper(val databaseHelper: DatabaseHelper) {
             keahlian.id_keahlian = cursor.getInt(0)
             keahlian.nama_keahlian = cursor.getString(1)
             keahlian.des_keahlian = cursor.getString(2)
-            keahlian.is_deleted_keahlian = cursor.getString(3)
+            keahlian.is_deleted = cursor.getString(3)
 
             listKeahlian.add(keahlian)
         }
@@ -50,8 +48,7 @@ class KeahlianQueryHelper(val databaseHelper: DatabaseHelper) {
         var listKeahlian = ArrayList<Keahlian>()
 
         val db = databaseHelper.readableDatabase
-        val queryCari = "SELECT * FROM $TABEL_KEAHLIAN WHERE $NAMA_KEAHLIAN LIKE '%$keyword%' OR " +
-                "$DES_KEAHLIAN LIKE '%$keyword%'"
+        val queryCari = "SELECT * FROM $TABEL_KEAHLIAN WHERE ($NAMA_KEAHLIAN LIKE '%$keyword%' OR $DES_KEAHLIAN LIKE '%$keyword%') AND is_deleted='false'"
 
         val cursor =db.rawQuery(queryCari,null)
         if(cursor.count > 0){
