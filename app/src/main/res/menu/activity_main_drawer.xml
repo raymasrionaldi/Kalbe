@@ -14,6 +14,10 @@
             android:title="@string/menu_agama" />
 
         <item
+            android:id="@+id/nav_tipe_identitas"
+            android:title="@string/menu_tipe_identitas" />
+
+        <item
             android:id="@+id/nav_backOfficePosition"
             android:title="@string/menu_back_office_position" />
 
