@@ -28,6 +28,7 @@ class KeahlianFragment : Fragment() {
     var databaseHelper: DatabaseHelper? = null
     private var searchView: SearchView? = null
     private var queryTextListener: SearchView.OnQueryTextListener? = null
+    var hitung = 1
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -107,4 +108,10 @@ class KeahlianFragment : Fragment() {
             }
         })
     }
+
+    override fun onResume() {
+        super.onResume()
+        getSemuaKeahlian(recyclerView!!, databaseQueryHelper!!)
+    }
+
 }

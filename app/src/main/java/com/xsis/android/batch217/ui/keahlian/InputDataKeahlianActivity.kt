@@ -1,11 +1,20 @@
 package com.xsis.android.batch217.ui.keahlian
 
+import android.app.PendingIntent.getActivity
+import android.content.ContentValues
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.View
+import android.widget.Button
 import androidx.core.view.isVisible
 import com.xsis.android.batch217.R
+import com.xsis.android.batch217.databases.DatabaseHelper
+import com.xsis.android.batch217.utils.DES_KEAHLIAN
+import com.xsis.android.batch217.utils.IS_DELETED
+import com.xsis.android.batch217.utils.NAMA_KEAHLIAN
+import com.xsis.android.batch217.utils.TABEL_KEAHLIAN
 import kotlinx.android.synthetic.main.activity_input_data_keahlian.*
 
 class InputDataKeahlianActivity : AppCompatActivity() {
@@ -22,8 +31,28 @@ class InputDataKeahlianActivity : AppCompatActivity() {
 
     fun simpan(){
         //Simpan ke database
-
+        val simpan = tipeKeahlianSimpan as Button
+        simpan.setOnClickListener{
+            insertKeDatabase()
+            finish()
+        }
         //Ke activity list
+
+    }
+
+    fun insertKeDatabase() {
+        val isiTipeKeahlian = tipeKeahlian.text.toString().trim()
+        val isiDeskripsiKeahlian = deskripsiKeahlian.text.toString().trim()
+
+        val content = ContentValues()
+        content.put(NAMA_KEAHLIAN, isiTipeKeahlian)
+        content.put(DES_KEAHLIAN, isiDeskripsiKeahlian)
+        content.put(IS_DELETED, "false")
+
+        val databaseHelper = DatabaseHelper(this)
+        val db = databaseHelper.writableDatabase
+
+        db.insert(TABEL_KEAHLIAN, null, content)
     }
 
     fun batal(){
@@ -64,6 +93,5 @@ class InputDataKeahlianActivity : AppCompatActivity() {
         clearDeskripsiKeahlian.setOnClickListener {deskripsiKeahlian.setText("") }
         clearKeahlian.setOnClickListener {tipeKeahlian.setText("") }
     }
-
 
 }
