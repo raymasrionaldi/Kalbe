@@ -6,13 +6,13 @@ import android.text.Editable
 import android.text.TextWatcher
 import androidx.core.view.isVisible
 import com.xsis.android.batch217.R
-import kotlinx.android.synthetic.main.activity_input_data_keahlian.*
+import kotlinx.android.synthetic.main.activity_ubah_data_keahlian.*
 
-class InputDataKeahlianActivity : AppCompatActivity() {
+class UbahDataKeahlianActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_input_data_keahlian)
+        setContentView(R.layout.activity_ubah_data_keahlian)
 
         cekIsi()
         hapus()
@@ -28,11 +28,11 @@ class InputDataKeahlianActivity : AppCompatActivity() {
 
     fun batal(){
         //Ke activity list
-        tipeKeahlianBatal.setOnClickListener { finish() }
+        tipeKeahlianBatalEdit.setOnClickListener { finish() }
     }
 
     fun cekIsi(){
-        tipeKeahlian.addTextChangedListener(object : TextWatcher {
+        tipeKeahlianEdit.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
 
             }
@@ -41,29 +41,27 @@ class InputDataKeahlianActivity : AppCompatActivity() {
             }
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 //Enable tombol simpan ketika user sudah mulai mengisi form
-                tipeKeahlianSimpan.isEnabled = true
+                tipeKeahlianSimpanEdit.isEnabled = true
 
                 //Tipe identitas tidak boleh kosong
-                val tipeIdentitas = tipeKeahlian.text.toString().trim()
-                errorKeahlian.isVisible = tipeIdentitas.isEmpty()
+                val tipeIdentitas = tipeKeahlianEdit.text.toString().trim()
+                errorKeahlianEdit.isVisible = tipeIdentitas.isEmpty()
             }
         })
-        deskripsiKeahlian.addTextChangedListener(object : TextWatcher {
+        deskripsiKeahlianEdit.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
             }
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 //Enable tombol simpan ketika user sudah mulai mengisi form
-                tipeKeahlianSimpan.isEnabled = true
+                tipeKeahlianSimpanEdit.isEnabled = true
             }
         })
     }
 
     fun hapus(){
-        clearDeskripsiKeahlian.setOnClickListener {deskripsiKeahlian.setText("") }
-        clearKeahlian.setOnClickListener {tipeKeahlian.setText("") }
+        clearDeskripsiKeahlianEdit.setOnClickListener {deskripsiKeahlianEdit.setText("") }
+        clearKeahlianEdit.setOnClickListener {tipeKeahlianEdit.setText("") }
     }
-
-
 }

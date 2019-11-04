@@ -22,7 +22,7 @@
             app:tabTextColor="@color/warnaBiruUnselected"
             app:tabMode="fixed" />
 
-        <androidx.viewpager.widget.ViewPager
+        <com.xsis.android.batch217.utils.CustomViewPager
             android:id="@+id/viewPagerPositionLevel"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
