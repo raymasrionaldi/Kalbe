@@ -1,5 +1,6 @@
 package com.xsis.android.batch217
 
+import android.app.PendingIntent.getActivity
 import android.os.Bundle
 import android.view.Menu
 import androidx.appcompat.app.AppCompatActivity
@@ -12,6 +13,12 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.navigation.NavigationView
 import com.xsis.android.batch217.databases.DatabaseHelper
+import androidx.core.app.ComponentActivity.ExtraData
+import androidx.core.content.ContextCompat.getSystemService
+import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+
+
+
 
 class HomeActivity : AppCompatActivity() {
     val databaseHelper = DatabaseHelper(this)
@@ -40,6 +47,10 @@ class HomeActivity : AppCompatActivity() {
 
 
         databaseHelper.createDatabaseFromImportedFile()
+    }
+
+    override fun onBackPressed() {
+        getSupportFragmentManager().beginTransaction().remove(supportFragmentManager.fragments[supportFragmentManager.fragments.size-1]).commit()
     }
 
     /*override fun onCreateOptionsMenu(menu: Menu): Boolean {
