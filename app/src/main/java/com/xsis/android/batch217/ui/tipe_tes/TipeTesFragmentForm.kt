@@ -64,7 +64,11 @@ class TipeTesFragmentForm(context: Context, val fm: FragmentManager) : Fragment(
                 fragment.updateContent()
                 adapter.notifyDataSetChanged()
                 viewPager.setCurrentItem(0, true)
+
         }
+
+
+
 
         tipeTesText!!.addTextChangedListener(textWatcher)
         deskripsi!!.addTextChangedListener(textWatcher)
@@ -72,6 +76,11 @@ class TipeTesFragmentForm(context: Context, val fm: FragmentManager) : Fragment(
         title!!.text = TITLE_ADD
 
         return customView
+    }
+
+    fun resetForm() {
+        tipeTesText!!.setText("")
+        deskripsi!!.setText("")
     }
 
 
@@ -88,6 +97,7 @@ class TipeTesFragmentForm(context: Context, val fm: FragmentManager) : Fragment(
     fun modeAdd() {
         modeForm = MODE_ADD
         changeMode()
+        resetForm()
     }
 
     fun changeMode() {
