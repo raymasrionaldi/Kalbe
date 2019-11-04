@@ -1,6 +1,7 @@
 package com.xsis.android.batch217.databases
 
 import android.database.Cursor
+import android.widget.Toast
 import com.xsis.android.batch217.models.Pendidikan
 import com.xsis.android.batch217.utils.*
 
@@ -52,6 +53,10 @@ class PendidikanQueryHelper(val databaseHelper:DatabaseHelper) {
                 "SET $DES_PENDIDIKAN = '$des', $IS_DELETED = 'false' " +
                 "WHERE $NAMA_PENDIDIKAN = '$nama' AND $IS_DELETED = 'true'"
         val cursor = db.rawQuery(queryUpdate, null)
+        if (cursor.count > 0){
+            listPendidikan = konversiCursorKeListPendidikanModel(cursor)
+        }
+        println(queryUpdate)
         return listPendidikan
     }
 
