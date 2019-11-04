@@ -24,26 +24,73 @@
             android:textStyle="bold"
             android:textColor="@color/warnaBlack"/>
 
-        <EditText
-            android:id="@+id/inputTipeTes"
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Tipe Tes*"
-            android:inputType="text" />
+            android:orientation="horizontal">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/inputTipeTes"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:layout_margin="5dp"
+                    android:hint="Tipe Tes*"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <Button
+                android:id="@+id/resetFieldTipeTes"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="end|center_vertical"
+                android:layout_marginRight="5dp"
+                android:background="@drawable/ic_cancel_black" />
+
+        </FrameLayout>
 
         <TextView
             android:id="@+id/requiredTipeTes"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Required"
+            android:text="Error: Tipe Tes tidak boleh kosong"
             android:textColor="@color/warnaMerah"
             android:visibility="invisible" />
 
-        <EditText
-            android:id="@+id/inputDeskripsiTipeTes"
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Deskripsi" />
+            android:orientation="horizontal">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/inputDeskripsiTipeTes"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:layout_margin="5dp"
+                    android:hint="Deskripsi"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <Button
+                android:id="@+id/resetFieldDeskripsiTipeTes"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="end|center_vertical"
+                android:layout_marginRight="5dp"
+                android:background="@drawable/ic_cancel_black" />
+
+        </FrameLayout>
 
         <LinearLayout
             android:layout_width="match_parent"

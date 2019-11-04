@@ -19,11 +19,14 @@ import com.xsis.android.batch217.R
 import com.xsis.android.batch217.adapters.fragments.TipeTesFragmentAdapter
 import com.xsis.android.batch217.models.TipeTes
 import com.xsis.android.batch217.utils.ubahSimpanButton
+import kotlinx.android.synthetic.main.fragment_form_tipe_tes.*
 
 class TipeTesFragmentForm(context: Context, val fm: FragmentManager) : Fragment() {
     var title: TextView? = null
     var buttonBatal: Button? = null
     var buttonSimpan: Button? = null
+    var buttonResetTipeTes: Button? = null
+    var buttonResetDeskripsi: Button? = null
     var tipeTesText: EditText? = null
     var deskripsi: EditText? = null
     var defaultColor = 0
@@ -51,6 +54,16 @@ class TipeTesFragmentForm(context: Context, val fm: FragmentManager) : Fragment(
         tipeTesText = customView.findViewById(R.id.inputTipeTes) as EditText
         defaultColor = tipeTesText!!.currentHintTextColor
         deskripsi = customView.findViewById(R.id.inputDeskripsiTipeTes) as EditText
+        buttonResetTipeTes = customView.findViewById(R.id.resetFieldTipeTes) as Button
+        buttonResetDeskripsi = customView.findViewById(R.id.resetFieldDeskripsiTipeTes) as Button
+
+        buttonResetTipeTes!!.setOnClickListener {
+            tipeTesText!!.setText("")
+        }
+
+        buttonResetDeskripsi!!.setOnClickListener{
+            deskripsi!!.setText("")
+        }
 
         buttonSimpan!!.setOnClickListener {
             simpanTipeTes()
@@ -66,9 +79,6 @@ class TipeTesFragmentForm(context: Context, val fm: FragmentManager) : Fragment(
                 viewPager.setCurrentItem(0, true)
 
         }
-
-
-
 
         tipeTesText!!.addTextChangedListener(textWatcher)
         deskripsi!!.addTextChangedListener(textWatcher)
@@ -165,4 +175,5 @@ class TipeTesFragmentForm(context: Context, val fm: FragmentManager) : Fragment(
             Toast.makeText(context, "Kirim ke DB", Toast.LENGTH_SHORT).show()
         }
     }
+
 }
