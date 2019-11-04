@@ -4,16 +4,20 @@ import android.content.Context
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
+import com.xsis.android.batch217.models.ContractStatus
 import com.xsis.android.batch217.ui.contact_status.FragmentDataContractStatus
 import com.xsis.android.batch217.ui.contact_status.FragmentFormContratctStatus
 
-class ContractStatusFragmentAdapter(val context: Context, fm: FragmentManager): FragmentPagerAdapter(fm) {
+class ContractStatusFragmentAdapter(
+    val context: Context,
+    val fm: FragmentManager
+): FragmentPagerAdapter(fm) {
     override fun getItem(position: Int): Fragment {
         if (position == 0){
-            return FragmentDataContractStatus(context)
+            return FragmentDataContractStatus(context,fm)
         }
         else if (position == 1){
-            return FragmentFormContratctStatus(context)
+            return FragmentFormContratctStatus(context,fm)
         }
         else
             return Fragment()

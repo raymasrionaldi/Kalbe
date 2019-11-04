@@ -9,6 +9,8 @@ import androidx.viewpager.widget.ViewPager
 import com.xsis.android.batch217.R
 import com.xsis.android.batch217.adapters.fragments.ContractStatusFragmentAdapter
 import com.xsis.android.batch217.models.ContractStatus
+import com.xsis.android.batch217.ui.contact_status.FragmentFormContratctStatus
+import com.xsis.android.batch217.utils.showPopupMenuUbahHapus
 import com.xsis.android.batch217.viewholders.ViewHolderListContractStatus
 
 class ListContractStatusAdapter (
@@ -34,11 +36,15 @@ class ListContractStatusAdapter (
                 val viewPager = view.parent.parent.parent.parent as ViewPager
                 val adapter = viewPager.adapter!! as ContractStatusFragmentAdapter
 
-                val fragment = fm.fragments[1] as ContractStatusFragmentAdapter
+                val fragment = fm.fragments[1] as FragmentFormContratctStatus
 
                 fragment.modeEdit(model)
                 adapter.notifyDataSetChanged()
                 viewPager.setCurrentItem(1, true)
+
+
+                }
+
             }
         }
-}
+

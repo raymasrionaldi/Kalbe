@@ -33,7 +33,7 @@ class ContactStatusFragment : Fragment() {
 //        })
         val tabKontrak = ContractStatusFragmentAdapter(
             context!!,
-            fragmentManager!!
+            childFragmentManager
         )
         val viewPager: ViewPager = root.findViewById(R.id.viewPager) as ViewPager
         viewPager.adapter = tabKontrak

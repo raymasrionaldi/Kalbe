@@ -6,7 +6,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.github.ramiz.nameinitialscircleimageview.NameInitialsCircleImageView
 import com.xsis.android.batch217.R
-import com.xsis.android.batch217.models.PositionLevel
+import com.xsis.android.batch217.models.ContractStatus
 import com.xsis.android.batch217.utils.ambilDuaInisial
 
 class ViewHolderListContractStatus(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -15,16 +15,20 @@ class ViewHolderListContractStatus(itemView: View) : RecyclerView.ViewHolder(ite
     var teksTambahan = itemView.findViewById(R.id.textTambahan) as TextView
     var inisial = itemView.findViewById(R.id.gambarLingkaran) as NameInitialsCircleImageView
 
-    fun setModel(model: PositionLevel) {
-        val nama = model.namaPosition
+    fun setModel(model: ContractStatus) {
+        val nama = model.namaContract
         teksUtama.text = nama
         teksTambahan.text = ""
 
-        val image = NameInitialsCircleImageView.ImageInfo
-            .Builder(ambilDuaInisial(nama!!))
-            .setTextColor(android.R.color.black)
-            .setCircleBackgroundColorRes(R.color.warnaAbu)
-            .build()
-        inisial.setImageInfo(image)
+        val image = nama?.let { ambilDuaInisial(it) }?.let {
+            NameInitialsCircleImageView.ImageInfo
+                .Builder(it)
+                .setTextColor(android.R.color.black)
+                .setCircleBackgroundColorRes(R.color.warnaAbu)
+                .build()
+        }
+        if (image != null) {
+            inisial.setImageInfo(image)
+        }
     }
 }
