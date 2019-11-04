@@ -1,1 +1,4 @@
-<resources></resources>
+<resources>
+    <string name="reset">Reset</string>
+    <string name="save">Save</string>
+</resources>
