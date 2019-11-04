@@ -56,11 +56,11 @@ class AgamaFragment : Fragment() {
         root.fab.setOnClickListener { view ->
             //Toast.makeText(context,"onClick", Toast.LENGTH_LONG).show()
 
-            val fragment = TambahAgamaFragment() as Fragment
+//            val fragment = TambahAgamaFragment() as Fragment
 
-            getFragmentManager()!!.beginTransaction()
-                .replace(R.id.nav_host_fragment, fragment)
-                .commit()
+//            getFragmentManager()!!.beginTransaction()
+//                .replace(R.id.nav_host_fragment, fragment)
+//                .commit()
         }
 
          databaseHelper = DatabaseHelper(context!!)
