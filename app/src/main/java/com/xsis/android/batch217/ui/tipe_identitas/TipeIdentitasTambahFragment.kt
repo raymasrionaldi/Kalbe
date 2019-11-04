@@ -42,6 +42,8 @@ class TipeIdentitasTambahFragment:Fragment() {
         simpan(root)
         batal(root)
 
+
+
         return root
 
     }
@@ -50,7 +52,7 @@ class TipeIdentitasTambahFragment:Fragment() {
         val simpan = view.findViewById(R.id.tipeidentitasSimpan) as Button
         simpan.setOnClickListener {
             //Simpan ke database
-            insertKeDatabaseMahasiswa(view)
+            insertKeTabelTipeIdentitas(view)
 
             //Ke activity list tipe identitas (list sudah terbarui)
             tutup(view)
@@ -58,12 +60,13 @@ class TipeIdentitasTambahFragment:Fragment() {
         }
     }
 
-    fun insertKeDatabaseMahasiswa(view:View){
+    fun insertKeTabelTipeIdentitas(view:View){
         val tipeIdentitas_text = view.findViewById(R.id.tipeTipeIdentitas) as TextInputEditText
         val tipeIdentitas_deskripsi = view.findViewById(R.id.deskripsiTipeIdentitas) as TextInputEditText
 
         val nama = tipeIdentitas_text.text.toString().trim()
         val des = tipeIdentitas_deskripsi.text.toString().trim()
+
         //Dengan cara content values
         val content = ContentValues()
         content.put(NAMA_IDENTITAS, nama)
@@ -81,9 +84,7 @@ class TipeIdentitasTambahFragment:Fragment() {
     fun batal(view:View){
         val batal = view.findViewById(R.id.tipeidentitasBatal) as Button
         //Ke fragment list tipe identitas
-        batal.setOnClickListener { tutup(view)
-
-        }
+        batal.setOnClickListener { tutup(view) }
     }
 
     fun tutup(view:View){
@@ -94,7 +95,7 @@ class TipeIdentitasTambahFragment:Fragment() {
         val fragment = TipeIdentitasFragment()
         val fragmentManager = getActivity()!!.getSupportFragmentManager()
         val fragmentTransaction = fragmentManager.beginTransaction()
-        fragmentTransaction.replace(R.id.fragment_tipe_identitas, fragment)
+        fragmentTransaction.replace(this.id, fragment)
         fragmentTransaction.addToBackStack(null)
         fragmentTransaction.commit()
     }
@@ -123,13 +124,11 @@ class TipeIdentitasTambahFragment:Fragment() {
             }
         })
         tipeIdentitas_deskripsi.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable?) {
-            }
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-            }
+            override fun afterTextChanged(s: Editable?) {}
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 //Enable tombol simpan ketika user sudah mulai mengisi form
-                tipeIdentitas_deskripsi.isEnabled = true
+                tipeIdentitas_simpan.isEnabled = true
             }
         })
     }
