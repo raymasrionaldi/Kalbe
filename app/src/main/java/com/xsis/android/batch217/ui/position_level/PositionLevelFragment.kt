@@ -10,6 +10,7 @@ import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
 import com.xsis.android.batch217.R
 import com.xsis.android.batch217.adapters.fragments.PositionLevelFragmentAdapter
+import com.xsis.android.batch217.utils.CustomViewPager
 
 class PositionLevelFragment : Fragment() {
 
@@ -25,10 +26,10 @@ class PositionLevelFragment : Fragment() {
         val root = inflater.inflate(R.layout.fragment_position_level, container, false)
 
         val fragmentAdapter = PositionLevelFragmentAdapter(context!!, childFragmentManager)
-        val viewPager = root.findViewById(R.id.viewPagerPositionLevel) as ViewPager
+        val viewPager = root.findViewById(R.id.viewPagerPositionLevel) as CustomViewPager
         viewPager.adapter = fragmentAdapter
 
-        viewPager.setOnTouchListener { v, event -> true  }
+        viewPager.setSwipePagingEnabled(false)
 
         val slidingTabs = root.findViewById(R.id.slidingTabsPositionLevel) as TabLayout
 
