@@ -1,36 +1,44 @@
 package com.xsis.android.batch217.adapters
 
 import android.content.Context
-import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
+import android.view.ViewGroup
 import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentPagerAdapter
-import com.xsis.android.batch217.ui.contact_status.FragmentDataContractStatus
-import com.xsis.android.batch217.ui.contact_status.FragmentFormContratctStatus
+import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager.widget.ViewPager
+import com.xsis.android.batch217.R
+import com.xsis.android.batch217.adapters.fragments.ContractStatusFragmentAdapter
+import com.xsis.android.batch217.models.ContractStatus
+import com.xsis.android.batch217.viewholders.ViewHolderListContractStatus
 
-class ListContractStatusAdapter(val context: Context, fm: FragmentManager): FragmentPagerAdapter(fm) {
-    override fun getItem(position: Int): Fragment {
-        if (position == 0){
-            return FragmentDataContractStatus(context)
+class ListContractStatusAdapter (
+    val context: Context,
+    val listKontrakStatus: List<ContractStatus>,
+    val fm: FragmentManager
+    ) : RecyclerView.Adapter<ViewHolderListContractStatus>() {
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolderListContractStatus {
+            val customLayout =
+                LayoutInflater.from(parent.context).inflate(R.layout.list_layout, parent, false)
+            return ViewHolderListContractStatus(customLayout)
         }
-        else if (position == 1){
-            return FragmentFormContratctStatus(context)
+
+        override fun getItemCount(): Int {
+            return listKontrakStatus.size
         }
-        else
-            return Fragment()
 
+        override fun onBindViewHolder(holder: ViewHolderListContractStatus, position: Int) {
+            val model = listKontrakStatus[position]
+            holder.setModel(model)
 
-    }
+            holder.layoutList.setOnClickListener { view ->
+                val viewPager = view.parent.parent.parent.parent as ViewPager
+                val adapter = viewPager.adapter!! as ContractStatusFragmentAdapter
 
-    override fun getCount(): Int {
-        //ada 2 tab menu
-        return 2
-    }
+                val fragment = fm.fragments[1] as ContractStatusFragmentAdapter
 
-    override fun getPageTitle(position: Int): CharSequence? {
-        return when(position){
-            0 -> "Data"
-            1 -> "Form"
-            else -> ""
+                fragment.modeEdit(model)
+                adapter.notifyDataSetChanged()
+                viewPager.setCurrentItem(1, true)
+            }
         }
-    }
 }

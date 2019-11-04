@@ -12,7 +12,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
 import com.xsis.android.batch217.R
-import com.xsis.android.batch217.adapters.ListContractStatusAdapter
+import com.xsis.android.batch217.adapters.fragments.ContractStatusFragmentAdapter
 
 
 class ContactStatusFragment : Fragment() {
@@ -31,7 +31,10 @@ class ContactStatusFragment : Fragment() {
 //        contactStatusViewModel.text.observe(this, Observer {
 //            textView.text = it
 //        })
-        val tabKontrak = ListContractStatusAdapter(context!!, fragmentManager!!)
+        val tabKontrak = ContractStatusFragmentAdapter(
+            context!!,
+            fragmentManager!!
+        )
         val viewPager: ViewPager = root.findViewById(R.id.viewPager) as ViewPager
         viewPager.adapter = tabKontrak
         viewPager.setOnTouchListener { v, event -> true  }
