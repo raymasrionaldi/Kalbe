@@ -8,12 +8,15 @@
     <color name="warnaBackgroundBorder">#FFDDDDDD</color>
     <color name="colorWhite">#FFFFFF</color>
     <color name="warnaButtonSimpan">#03A9F4</color>
+    <color name="warnaTeksSimpanOff">#B4B4B4</color>
     <color name="warnaButtonBatal">#FF9800</color>
     <color name="warnaBiruUnselected">#82DEEA</color>
     <color name="warnaMerah">#FF0000</color>
     <color name="warnaButtonResetOn">#FF6600</color>
+    <color name="warnaButtonBatal1">#FF3F00</color>
     <color name="warnaButtonResetOff">#E1E1E1</color>
     <color name="warnaTeksResetOff">#B4B4B4</color>
     <color name="warnaButtonSave">#00BCDA</color>
+    <color name="warnaBlack">#000000</color>
 
 </resources>
