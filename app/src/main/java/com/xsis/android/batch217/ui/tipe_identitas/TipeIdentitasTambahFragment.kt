@@ -5,27 +5,19 @@ import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.view.inputmethod.InputMethodManager
+import android.util.Log
+import android.view.*
 import android.widget.Button
-import android.widget.EditText
 import android.widget.TextView
-import androidx.core.content.ContextCompat.getSystemService
+import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
+import androidx.appcompat.widget.SearchView
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.RecyclerView
-import androidx.viewpager.widget.ViewPager
 import com.google.android.material.textfield.TextInputEditText
 import com.xsis.android.batch217.R
-import com.xsis.android.batch217.adapters.ListTipeIdentitasAdapter
-import com.xsis.android.batch217.adapters.fragments.PositionLevelFragmentAdapter
 import com.xsis.android.batch217.databases.DatabaseHelper
-import com.xsis.android.batch217.databases.TipeIdentitasQueryHelper
-import com.xsis.android.batch217.ui.position_level.PositionLevelFragmentData
 import com.xsis.android.batch217.utils.*
-import kotlinx.android.synthetic.main.fragment_tipe_identitas.*
 import kotlinx.android.synthetic.main.fragment_tipe_identitas_tambah.*
 
 
@@ -37,26 +29,52 @@ class TipeIdentitasTambahFragment:Fragment() {
     ): View? {
         val root = inflater.inflate(R.layout.fragment_tipe_identitas_tambah, container, false)
 
+//        setHasOptionsMenu(false)
+
         cekIsi(root)
         hapus(root)
         simpan(root)
         batal(root)
 
-
-
         return root
 
     }
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        val callback = object : OnBackPressedCallback(
+            true // default to enabled
+        ) {
+            override fun handleOnBackPressed() {
+                tutup()
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(
+            this, // LifecycleOwner
+            callback
+        )
+    }
+
+    fun tutup(){
+        getActivity()!!.getSupportFragmentManager().beginTransaction().remove(this).commit()
+    }
+
     fun simpan(view:View){
         val simpan = view.findViewById(R.id.tipeidentitasSimpan) as Button
-        simpan.setOnClickListener {
-            //Simpan ke database
-            insertKeTabelTipeIdentitas(view)
+        val tipeIdentitas_text = view.findViewById(R.id.tipeTipeIdentitas) as TextInputEditText
 
-            //Ke activity list tipe identitas (list sudah terbarui)
-            tutup(view)
-            pindahFragment()
+        simpan.setOnClickListener {
+            val nama = tipeIdentitas_text.text.toString().trim()
+            if (nama.isEmpty()){
+                Toast.makeText(context,"Tipe identitas tidak boleh kosong !", Toast.LENGTH_SHORT).show()
+            } else{
+                //Simpan ke database
+                insertKeTabelTipeIdentitas(view)
+
+                //Ke activity list tipe identitas (list sudah terbarui)
+                tutup()
+                pindahFragment()
+            }
         }
     }
 
@@ -66,7 +84,6 @@ class TipeIdentitasTambahFragment:Fragment() {
 
         val nama = tipeIdentitas_text.text.toString().trim()
         val des = tipeIdentitas_deskripsi.text.toString().trim()
-
         //Dengan cara content values
         val content = ContentValues()
         content.put(NAMA_IDENTITAS, nama)
@@ -84,11 +101,7 @@ class TipeIdentitasTambahFragment:Fragment() {
     fun batal(view:View){
         val batal = view.findViewById(R.id.tipeidentitasBatal) as Button
         //Ke fragment list tipe identitas
-        batal.setOnClickListener { tutup(view) }
-    }
-
-    fun tutup(view:View){
-        getActivity()!!.getSupportFragmentManager().beginTransaction().remove(this).commit()
+        batal.setOnClickListener { tutup() }
     }
 
     fun pindahFragment(){
