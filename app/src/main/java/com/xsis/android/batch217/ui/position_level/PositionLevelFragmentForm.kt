@@ -32,8 +32,8 @@ class PositionLevelFragmentForm(context: Context, val fm: FragmentManager) : Fra
     var data: PositionLevel? = null
 
     companion object {
-        const val TITLE_ADD = "ADD NEW POSITION LEVEL"
-        const val TITLE_EDIT = "EDIT POSITION LEVEL"
+        const val TITLE_ADD = "Add New Position Level"
+        const val TITLE_EDIT = "Edit Position Level"
         const val MODE_ADD = 0
         const val MODE_EDIT = 1
     }
@@ -93,6 +93,7 @@ class PositionLevelFragmentForm(context: Context, val fm: FragmentManager) : Fra
         modeForm = MODE_ADD
         changeMode()
         resetForm()
+        data = null
     }
 
     fun changeMode() {
