@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/fragmenFormPositionLevel"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="10dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/titleFormAgama"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Title"
+            android:textSize="@dimen/title_form_text_size"
+            android:textStyle="bold"
+            android:textColor="@color/warnaBlack"/>
+
+        <!--EDIT MODE-->
+        <FrameLayout
+            android:id="@+id/frameEditAgama"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editAgama"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:layout_margin="5dp"
+                    android:hint="@string/hint_agama"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <Button
+                android:id="@+id/clearAgama"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="end|center_vertical"
+                android:layout_marginRight="5dp"
+                android:background="@drawable/ic_cancel_black" />
+        </FrameLayout>
+        <TextView
+            android:id="@+id/errorAgama"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Error : Tipe identitas tidak boleh kosong"
+            android:textColor="@android:color/holo_red_dark"
+            android:visibility="gone"/>
+
+        <FrameLayout
+            android:id="@+id/frameEditDeskripsiAgama"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editDeskripsiAgama"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:layout_margin="5dp"
+                    android:hint="@string/hint_deskripsi"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <Button
+                android:id="@+id/clearDeskripsiAgama"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="end|center_vertical"
+                android:layout_marginRight="5dp"
+                android:background="@drawable/ic_cancel_black" />
+        </FrameLayout>
+
+        <!--ADD MODE-->
+
+        <EditText
+            android:id="@+id/inputAgama"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/hint_agama"
+            android:inputType="text" />
+
+        <!--<TextView
+            android:id="@+id/requiredAgama"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Required"
+            android:textColor="@color/warnaMerah"
+            android:visibility="invisible" />-->
+
+        <EditText
+            android:id="@+id/inputDeskripsiAgama"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/hint_deskripsi" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/buttonBatalAgama"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/button_batal"
+                android:clickable="false"
+                android:text="@string/batal"
+                android:textColor="@color/colorWhite" />
+
+            <Button
+                android:id="@+id/buttonSimpanAgama"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/button_simpan_off"
+                android:text="@string/simpan"
+                android:textColor="@color/warnaTeksSimpanOff" />
+        </LinearLayout>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
