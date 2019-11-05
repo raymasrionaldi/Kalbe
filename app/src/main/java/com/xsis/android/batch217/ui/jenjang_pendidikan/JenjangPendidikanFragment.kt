@@ -2,10 +2,10 @@ package com.xsis.android.batch217.ui.jenjang_pendidikan
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.util.Log
+import android.view.*
 import android.widget.Toast
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -19,6 +19,10 @@ import kotlinx.android.synthetic.main.fragment_jenjang_pendidikan.view.fab
 
 class JenjangPendidikanFragment : Fragment() {
     private lateinit var pendidikanViewModel: JenjangPendidikanViewModel
+    private var recyclerView: RecyclerView?=null
+    var databaseHelper :DatabaseHelper?=null
+    var databaseQueryHelper: PendidikanQueryHelper?= null
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -29,23 +33,26 @@ class JenjangPendidikanFragment : Fragment() {
         val root = inflater.inflate(R.layout.fragment_jenjang_pendidikan, container, false)
 
         val layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL,false)
-        val recyclerView = root.findViewById(R.id.listPendidikanRecycler) as RecyclerView
-        recyclerView.layoutManager = layoutManager
+        recyclerView = root.findViewById(R.id.listPendidikanRecycler) as RecyclerView
+        recyclerView!!.layoutManager = layoutManager
+
+        setHasOptionsMenu(true)
 
         root.fab.setOnClickListener{view->
             pindahFragment()
+            setHasOptionsMenu(false)
         }
 
-        getSemuaPendidikan(recyclerView, PendidikanQueryHelper(DatabaseHelper(context!!)))
+        databaseHelper = DatabaseHelper(context!!)
+        databaseQueryHelper = PendidikanQueryHelper(databaseHelper!!)
+
+        getSemuaPendidikan(recyclerView!!, PendidikanQueryHelper(DatabaseHelper(context!!)))
 
         return root
     }
     fun getSemuaPendidikan(recyclerView: RecyclerView, queryHelper:PendidikanQueryHelper){
         val listPendidikan = queryHelper.readSemuaPendidikanModels()
-
-        val adapter = ListPendidikanAdapter(context!!, listPendidikan)
-        recyclerView.adapter = adapter
-        adapter.notifyDataSetChanged()
+        tampilkanListPendidikan(listPendidikan,recyclerView)
     }
 
     fun pindahFragment(){
@@ -54,5 +61,47 @@ class JenjangPendidikanFragment : Fragment() {
         val fragmentTransaction = fragmentManager.beginTransaction()
         fragmentTransaction.replace(R.id.fragment_jenjang_pendidikan, fragment)
         fragmentTransaction.addToBackStack(null)
-        fragmentTransaction.commit()}
+        fragmentTransaction.commit()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.main, menu)
+
+        val myActionMenuItem = menu.findItem(R.id.action_search)
+        val searchView = myActionMenuItem.actionView as SearchView
+
+        searchView!!.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+
+            override fun onQueryTextSubmit(query: String): Boolean {
+                // collapse the view ?
+                //menu.findItem(R.id.menu_search).collapseActionView();
+                Log.e("Fragment queryText", query)
+                return false
+            }
+            override fun onQueryTextChange(keyword: String): Boolean {
+                // search goes here !!
+                // listAdapter.getFilter().filter(query);
+                // Log.e("Fragment queryText", keyword)
+                search(keyword,PendidikanQueryHelper(DatabaseHelper(context!!)))
+
+                /*TODO
+                1. do search based on active fragment table
+                2. send list result to active fragment
+                3.
+                */
+                return true
+            }
+        })
+    }
+
+    fun search(keyword:String,databaseQueryHelper: PendidikanQueryHelper){
+        val listPendidikan= databaseQueryHelper.cariPendidikanModels(keyword)
+        tampilkanListPendidikan(listPendidikan,recyclerView!!)
+    }
+
+    fun tampilkanListPendidikan(listPendidikan:List<Pendidikan>,recyclerView: RecyclerView){
+        val adapter = ListPendidikanAdapter(context!!, listPendidikan)
+        recyclerView.adapter = adapter
+        adapter.notifyDataSetChanged()
+    }
 }

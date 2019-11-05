@@ -27,6 +27,9 @@ class JenjangPendidikanInputFragment: Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val root = inflater.inflate(R.layout.fragment_jenjang_pendidikan_input, container, false)
+        val title = root.findViewById(R.id.titlePendidikan) as TextView
+        title.text = INPUT_PENDIDIKAN
+
 
         cekIsi(root)
         hapus(root)
@@ -57,14 +60,20 @@ class JenjangPendidikanInputFragment: Fragment() {
         //read
         val databaseHelper = DatabaseHelper(context!!)
         val databaseQueryHelper = PendidikanQueryHelper(databaseHelper)
-        val listPendidikan = databaseQueryHelper.readPendidikan(nama)
+        val listPendidikan = databaseQueryHelper.readNamaPendidikan(nama)
         println(listPendidikan.size)
 
         if (!listPendidikan.isEmpty()){
-          //jika ada maka update
-            databaseQueryHelper.updatePendidikan(nama,des)
+            //cek id_deleted
+            if(listPendidikan[0].is_Deleted == "true"){
+                //update tru jadi false
+                databaseQueryHelper.updatePendidikan(nama,des)
+            } else {
+                Toast.makeText(context, DATA_SUDAH_ADA, Toast.LENGTH_SHORT).show()
+            }
         } else {
             //jika tidak maka insert
+            //cek nama
             val content = ContentValues()
             content.put(NAMA_PENDIDIKAN, nama)
             content.put(DES_PENDIDIKAN, des)
@@ -72,6 +81,10 @@ class JenjangPendidikanInputFragment: Fragment() {
             val db = DatabaseHelper(context!!).writableDatabase
             db.insert(TABEL_PENDIDIKAN, null, content)
         }
+    }
+
+    fun readPendidikan(nama:String){
+
     }
 
     fun batal(view:View){

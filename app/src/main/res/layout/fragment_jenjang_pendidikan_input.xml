@@ -5,10 +5,10 @@
     android:background="@android:color/white">
 
     <TextView
+        android:id="@+id/titlePendidikan"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
-        android:text="@string/input_jenjang_pendidikan"
         android:textSize="20sp"
         android:textStyle="bold" />
 

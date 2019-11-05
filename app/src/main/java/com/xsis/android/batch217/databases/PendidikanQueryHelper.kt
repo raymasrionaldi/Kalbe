@@ -45,6 +45,21 @@ class PendidikanQueryHelper(val databaseHelper:DatabaseHelper) {
         return listPendidikan
     }
 
+    fun readNamaPendidikan(nama:String):List<Pendidikan>{
+        var listPendidikan = ArrayList<Pendidikan>()
+
+        val db = databaseHelper.readableDatabase
+        val queryCari = "SELECT * FROM $TABEL_PENDIDIKAN " +
+                "WHERE $NAMA_PENDIDIKAN = '$nama' "
+        val cursor = db.rawQuery(queryCari, null)
+
+        if (cursor.count > 0){
+            listPendidikan = konversiCursorKeListPendidikanModel(cursor)
+        }
+
+        return listPendidikan
+    }
+
     fun updatePendidikan(nama: String, des: String):List<Pendidikan>{
         var listPendidikan = ArrayList<Pendidikan>()
 
@@ -64,16 +79,16 @@ class PendidikanQueryHelper(val databaseHelper:DatabaseHelper) {
         var listPendidikan = ArrayList<Pendidikan>()
 
         val db = databaseHelper.readableDatabase
-        val queryCari = "SELECT * FROM $TABEL_PENDIDIKAN " +
-                "WHERE $ID_PENDIDIKAN LIKE '%$keyword%' " +
-                "OR $NAMA_PENDIDIKAN LIKE '%$keyword%'" +
-                "AND $IS_DELETED = 'false'"
-        val cursor = db.rawQuery(queryCari, null)
+        if(keyword.isNotBlank()) {
+            val queryCari = "SELECT * FROM $TABEL_PENDIDIKAN " +
+                    "WHERE $NAMA_PENDIDIKAN LIKE '%$keyword%'" +
+                    "AND $IS_DELETED = 'false'"
+            val cursor = db.rawQuery(queryCari, null)
 
-        if (cursor.count > 0){
-            listPendidikan = konversiCursorKeListPendidikanModel(cursor)
+            if (cursor.count > 0){
+                listPendidikan = konversiCursorKeListPendidikanModel(cursor)
+            }
         }
-
         return listPendidikan
     }
 
