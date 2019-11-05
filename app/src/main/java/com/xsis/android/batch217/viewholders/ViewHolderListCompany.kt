@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.github.ramiz.nameinitialscircleimageview.NameInitialsCircleImageView
 import com.xsis.android.batch217.R
 import com.xsis.android.batch217.models.Company
-import com.xsis.android.batch217.models.PositionLevel
 import com.xsis.android.batch217.utils.ambilDuaInisial
 
 class ViewHolderListCompany(itemView: View) : RecyclerView.ViewHolder(itemView) {

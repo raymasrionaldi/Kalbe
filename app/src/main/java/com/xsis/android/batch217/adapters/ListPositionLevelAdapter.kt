@@ -1,15 +1,10 @@
 package com.xsis.android.batch217.adapters
 
 import android.content.Context
-import android.os.Bundle
-import android.os.Parcelable
 import android.view.*
-import android.widget.Toast
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
-import com.xsis.android.batch217.HomeActivity
 import com.xsis.android.batch217.R
 import com.xsis.android.batch217.adapters.fragments.PositionLevelFragmentAdapter
 import com.xsis.android.batch217.models.PositionLevel
@@ -37,10 +32,9 @@ class ListPositionLevelAdapter(
         holder.setModel(model)
 
         holder.layoutList.setOnClickListener { view ->
-            val viewPager = view.parent.parent.parent.parent as ViewPager
-            val adapter = viewPager.adapter!! as PositionLevelFragmentAdapter
-
             val fragment = fm.fragments[1] as PositionLevelFragmentForm
+            val viewPager = fragment.view!!.parent as ViewPager
+            val adapter = viewPager.adapter!! as PositionLevelFragmentAdapter
 
             fragment.modeEdit(model)
             adapter.notifyDataSetChanged()

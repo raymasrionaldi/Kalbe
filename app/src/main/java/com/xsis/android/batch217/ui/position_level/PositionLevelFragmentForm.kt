@@ -16,8 +16,10 @@ import androidx.viewpager.widget.ViewPager
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.xsis.android.batch217.R
 import com.xsis.android.batch217.adapters.fragments.PositionLevelFragmentAdapter
+import com.xsis.android.batch217.databases.DatabaseHelper
+import com.xsis.android.batch217.databases.PositionLevelQueryHelper
 import com.xsis.android.batch217.models.PositionLevel
-import com.xsis.android.batch217.utils.ubahResetButton
+import com.xsis.android.batch217.utils.*
 
 
 class PositionLevelFragmentForm(context: Context, val fm: FragmentManager) : Fragment() {
@@ -29,7 +31,9 @@ class PositionLevelFragmentForm(context: Context, val fm: FragmentManager) : Fra
     var defaultColor = 0
     var modeForm = 0
     var idData = 0
-    var data: PositionLevel? = null
+    var data = PositionLevel()
+
+    var databaseQueryHelper: PositionLevelQueryHelper? = null
 
     companion object {
         const val TITLE_ADD = "Add New Position Level"
@@ -44,6 +48,10 @@ class PositionLevelFragmentForm(context: Context, val fm: FragmentManager) : Fra
         savedInstanceState: Bundle?
     ): View? {
         val customView = inflater.inflate(R.layout.fragment_form_position_level, container, false)
+
+        val databaseHelper = DatabaseHelper(context!!)
+        databaseQueryHelper = PositionLevelQueryHelper(databaseHelper)
+
         title = customView.findViewById(R.id.titleFormPositionLevel) as TextView
 
         val buttonSave = customView.findViewById(R.id.buttonSavePositionLevel) as Button
@@ -93,7 +101,7 @@ class PositionLevelFragmentForm(context: Context, val fm: FragmentManager) : Fra
         modeForm = MODE_ADD
         changeMode()
         resetForm()
-        data = null
+        data = PositionLevel()
     }
 
     fun changeMode() {
@@ -111,16 +119,19 @@ class PositionLevelFragmentForm(context: Context, val fm: FragmentManager) : Fra
             .setMessage("Hapus ${data!!.namaPosition}")
             .setCancelable(false)
             .setPositiveButton("DELETE") { dialog, which ->
-                Toast.makeText(context!!, "terhapus", Toast.LENGTH_SHORT).show()
-                val viewPager = view!!.parent as ViewPager
-                val adapter = viewPager.adapter!! as PositionLevelFragmentAdapter
-                val fragment = fm.fragments[0] as PositionLevelFragmentData
-                fragment.updateContent()
-                adapter.notifyDataSetChanged()
-                viewPager.setCurrentItem(0, true)
+                if (databaseQueryHelper!!.hapusPositionLevel(data.idPostionLevel) != 0) {
+                    Toast.makeText(context!!, HAPUS_DATA_BERHASIL, Toast.LENGTH_SHORT).show()
+                    val viewPager = view!!.parent as ViewPager
+                    val adapter = viewPager.adapter!! as PositionLevelFragmentAdapter
+                    val fragment = fm.fragments[0] as PositionLevelFragmentData
+                    fragment.updateContent()
+                    adapter.notifyDataSetChanged()
+                    viewPager.setCurrentItem(0, true)
+                } else {
+                    Toast.makeText(context!!, HAPUS_DATA_GAGAL, Toast.LENGTH_SHORT).show()
+                }
             }
             .setNegativeButton("CANCEL") { dialog, which ->
-                null
             }
             .create()
             .show()
@@ -146,11 +157,11 @@ class PositionLevelFragmentForm(context: Context, val fm: FragmentManager) : Fra
     }
 
     fun simpanPositionLevel() {
+        val namaPositionLevel = nama!!.text.toString().trim()
+        val notesPositionLevel = notes!!.text.toString().trim()
 
         val required = view!!.findViewById(R.id.requiredNamaPositionLevel) as TextView
 
-        val namaPositionLevel = nama!!.text.toString().trim()
-        val notesPositionLevel = notes!!.text.toString().trim()
 
         nama!!.setHintTextColor(defaultColor)
         required.visibility = View.INVISIBLE
@@ -159,8 +170,46 @@ class PositionLevelFragmentForm(context: Context, val fm: FragmentManager) : Fra
             nama!!.setHintTextColor(Color.RED)
             required.visibility = View.VISIBLE
         } else {
+            val model = PositionLevel()
+            model.idPostionLevel = data.idPostionLevel
+            model.namaPosition = namaPositionLevel
+            model.desPosition = notesPositionLevel
 
-            Toast.makeText(context, "Kirim ke DB", Toast.LENGTH_SHORT).show()
+            val cekPostionLevel = databaseQueryHelper!!.cekPositionLevelSudahAda(model.namaPosition!!)
+
+            if (modeForm == MODE_ADD) {
+                if (cekPostionLevel > 0) {
+                    Toast.makeText(context, DATA_SUDAH_ADA, Toast.LENGTH_SHORT).show()
+                    return
+                }
+                if (databaseQueryHelper!!.tambahPostionLevel(model) == -1L) {
+                    Toast.makeText(context, SIMPAN_DATA_GAGAL, Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(context, SIMPAN_DATA_BERHASIL, Toast.LENGTH_SHORT)
+                        .show()
+                }
+            } else if (modeForm == MODE_EDIT) {
+                if ((cekPostionLevel != 1 && model.namaPosition == data.namaPosition) ||
+                    (cekPostionLevel != 0 && model.namaPosition != data.namaPosition)
+                ) {
+                    Toast.makeText(context, DATA_SUDAH_ADA, Toast.LENGTH_SHORT).show()
+                    return
+                }
+                if (databaseQueryHelper!!.editPositionLevel(model) == 0) {
+                    Toast.makeText(context, EDIT_DATA_GAGAL, Toast.LENGTH_SHORT)
+                        .show()
+                } else {
+                    Toast.makeText(context, EDIT_DATA_BERHASIL, Toast.LENGTH_SHORT)
+                        .show()
+                }
+            }
+
+            val viewPager = view!!.parent as ViewPager
+            val adapter = viewPager.adapter!! as PositionLevelFragmentAdapter
+            val fragment = fm.fragments[0] as PositionLevelFragmentData
+            fragment.updateContent()
+            adapter.notifyDataSetChanged()
+            viewPager.setCurrentItem(0, true)
         }
     }
 }

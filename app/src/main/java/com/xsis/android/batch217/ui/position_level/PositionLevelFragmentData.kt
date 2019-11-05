@@ -2,9 +2,8 @@ package com.xsis.android.batch217.ui.position_level
 
 import android.content.Context
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -33,6 +32,7 @@ class PositionLevelFragmentData(context: Context, val fm: FragmentManager) : Fra
             container,
             false
         )
+        setHasOptionsMenu(true)
 
         val layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
 
@@ -51,7 +51,7 @@ class PositionLevelFragmentData(context: Context, val fm: FragmentManager) : Fra
         val databaseHelper = DatabaseHelper(context!!)
         databaseQueryHelper = PositionLevelQueryHelper(databaseHelper)
 
-        getSemuaPositionLevel(recyclerView!!, databaseQueryHelper!!)
+//        getSemuaPositionLevel(recyclerView!!, databaseQueryHelper!!)
 
         return customView
     }
@@ -83,6 +83,30 @@ class PositionLevelFragmentData(context: Context, val fm: FragmentManager) : Fra
     }
 
     fun updateContent() {
-        getSemuaPositionLevel(recyclerView!!, databaseQueryHelper!!)
+//        getSemuaPositionLevel(recyclerView!!, databaseQueryHelper!!)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.main, menu)
+
+        val myActionMenuItem = menu.findItem(R.id.action_search)
+        val searchView = myActionMenuItem.actionView as SearchView
+
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+
+            override fun onQueryTextSubmit(query: String): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(keyword: String): Boolean {
+                search(keyword, databaseQueryHelper!!)
+                return true
+            }
+        })
+    }
+
+    fun search(keyword: String, databaseQueryHelper: PositionLevelQueryHelper) {
+        val listPositionLevel = databaseQueryHelper.cariPositionLevelModels(keyword)
+        tampilkanListPositionLevel(listPositionLevel, recyclerView!!)
     }
 }
