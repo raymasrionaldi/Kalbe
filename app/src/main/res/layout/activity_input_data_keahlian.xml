@@ -36,10 +36,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Keahlian"
-                android:textStyle="bold"
-                android:textSize="30sp"
+                android:textSize="25sp"
                 android:textColor="@color/colorWhite"
-                android:paddingLeft="13dp"/>
+                android:paddingLeft="18dp"/>
         </LinearLayout>
 
         <LinearLayout
@@ -141,6 +140,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@color/warnaButtonBatal"
+
             android:text="Batal" />
 
         <Button
@@ -148,7 +148,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@color/warnaButtonSimpan"
+            android:background="@color/warnaAbu"
             android:text="Simpan"
             android:enabled="false"/>
 

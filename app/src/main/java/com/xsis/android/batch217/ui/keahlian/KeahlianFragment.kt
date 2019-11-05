@@ -111,6 +111,10 @@ class KeahlianFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
+        refreshList()
+    }
+
+    fun refreshList() {
         getSemuaKeahlian(recyclerView!!, databaseQueryHelper!!)
     }
 

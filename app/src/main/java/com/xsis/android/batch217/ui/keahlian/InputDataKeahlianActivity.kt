@@ -2,6 +2,7 @@ package com.xsis.android.batch217.ui.keahlian
 
 import android.app.PendingIntent.getActivity
 import android.content.ContentValues
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
@@ -77,6 +78,8 @@ class InputDataKeahlianActivity : AppCompatActivity() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 //Enable tombol simpan ketika user sudah mulai mengisi form
                 tipeKeahlianSimpan.isEnabled = true
+                tipeKeahlianSimpan.setBackgroundResource(R.drawable.button_simpan_on)
+                tipeKeahlianSimpan.setTextColor(Color.WHITE)
 
                 //Tipe identitas tidak boleh kosong
                 val tipeKeahlian = tipeKeahlian.text.toString().trim()

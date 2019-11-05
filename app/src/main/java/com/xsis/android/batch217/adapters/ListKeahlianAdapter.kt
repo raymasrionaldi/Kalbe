@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.xsis.android.batch217.R
 import com.xsis.android.batch217.databases.DatabaseHelper
 import com.xsis.android.batch217.models.Keahlian
+import com.xsis.android.batch217.ui.keahlian.KeahlianFragment
 import com.xsis.android.batch217.ui.keahlian.UbahDataKeahlianActivity
 import com.xsis.android.batch217.utils.ID_KEAHLIAN
 import com.xsis.android.batch217.utils.IS_DELETED
@@ -32,7 +33,8 @@ class ListKeahlianAdapter(val context: Context?,
     }
 
     override fun onBindViewHolder(holder: ViewHolderListKeahlian, position: Int) {
-        holder.setModelKeahlian(listKeahlian[position])
+        val selectedListKeahlain = listKeahlian[position]
+        holder.setModelKeahlian(selectedListKeahlain)
 
         holder.bukaMenu.setOnClickListener {view ->
             val window = showPopupMenuUbahHapus(
@@ -44,6 +46,7 @@ class ListKeahlianAdapter(val context: Context?,
                 when (position){
                     0 -> {
                         val intentEdit = Intent(context, UbahDataKeahlianActivity::class.java)
+                            intentEdit.putExtra(ID_KEAHLIAN, selectedListKeahlain.id_keahlian )
                         context.startActivity(intentEdit)
                     }
                     1 -> {
@@ -54,7 +57,7 @@ class ListKeahlianAdapter(val context: Context?,
                                 val databaseHelper = DatabaseHelper(context)
                                 val db = databaseHelper.writableDatabase
 
-                                val queryDelete = "UPDATE $TABEL_KEAHLIAN SET $IS_DELETED = 'true' WHERE $ID_KEAHLIAN = $position"
+                                val queryDelete = "UPDATE $TABEL_KEAHLIAN SET $IS_DELETED = 'true' WHERE $ID_KEAHLIAN = ${selectedListKeahlain.id_keahlian}"
                                 db.execSQL(queryDelete)
 
                             })

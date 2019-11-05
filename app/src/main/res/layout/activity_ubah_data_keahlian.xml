@@ -36,8 +36,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Keahlian"
-                android:textStyle="bold"
-                android:textSize="30sp"
+                android:textSize="25sp"
                 android:textColor="@color/colorWhite"
                 android:paddingLeft="13dp"/>
         </LinearLayout>
@@ -147,7 +146,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@color/warnaButtonSimpan"
+            android:background="@color/warnaAbu"
             android:text="Simpan"
             android:enabled="false"/>
 
