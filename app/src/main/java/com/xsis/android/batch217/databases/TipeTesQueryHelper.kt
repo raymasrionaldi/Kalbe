@@ -1,7 +1,7 @@
 package com.xsis.android.batch217.databases
 
+import android.content.ContentValues
 import android.database.Cursor
-import com.xsis.android.batch217.models.Keahlian
 import com.xsis.android.batch217.models.TipeTes
 import com.xsis.android.batch217.utils.*
 
@@ -25,7 +25,7 @@ class TipeTesQueryHelper(val databaseHelper: DatabaseHelper) {
             tipetes.id_tipe_tes = cursor.getInt(0)
             tipetes.nama_tipe_tes = cursor.getString(1)
             tipetes.deskripsi_tipe_tes = cursor.getString(2)
-            tipetes.is_delete_tipe_tes = cursor.getString(3)
+            tipetes.is_delete = cursor.getString(3)
 
             listTipeTes.add(tipetes)
         }
@@ -57,5 +57,50 @@ class TipeTesQueryHelper(val databaseHelper: DatabaseHelper) {
         }
 
         return listTipeTes
+    }
+
+    fun hapusTipeTes(id: Int): Int {
+        val db = databaseHelper.writableDatabase
+
+        val values = ContentValues()
+        values.put(IS_DELETED, "true")
+        return db.update(TABEL_TIPE_TES, values, "$ID_TES = ?", arrayOf(id.toString()))
+    }
+
+    fun tambahTipeTes(model: TipeTes): Long {
+        val db = databaseHelper.writableDatabase
+
+        val values = ContentValues()
+        values.put(NAMA_TES, model.nama_tipe_tes)
+        values.put(DES_TES, model.deskripsi_tipe_tes)
+        values.put(IS_DELETED, "false")
+
+        return db.insert(TABEL_TIPE_TES, null, values)
+    }
+
+    fun editTipeTes(model: TipeTes): Int {
+        val db = databaseHelper.writableDatabase
+
+        val values = ContentValues()
+        values.put(NAMA_TES, model.nama_tipe_tes)
+        values.put(DES_TES, model.deskripsi_tipe_tes)
+
+        return db.update(
+            TABEL_TIPE_TES,
+            values,
+            "$ID_TES = ?",
+            arrayOf(model.id_tipe_tes.toString())
+        )
+    }
+
+    fun cekTipeTesSudahAda(nama: String): Int {
+        val db = databaseHelper.readableDatabase
+        val queryCari =
+            "SELECT * FROM $TABEL_TIPE_TES WHERE $NAMA_TES= '$nama' AND " +
+                    "$IS_DELETED = 'false'"
+
+        val cursor = db.rawQuery(queryCari, null)
+
+        return cursor.count
     }
 }

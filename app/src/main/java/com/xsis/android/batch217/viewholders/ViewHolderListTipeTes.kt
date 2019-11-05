@@ -1,6 +1,7 @@
 package com.xsis.android.batch217.viewholders
 
 import android.view.View
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -14,6 +15,8 @@ class ViewHolderListTipeTes(itemView: View) : RecyclerView.ViewHolder(itemView) 
     var teksUtama = itemView.findViewById(R.id.isiTeks) as TextView
 
     var id = itemView.findViewById(R.id.gambarLingkaran) as NameInitialsCircleImageView
+
+    val bukaMenu = itemView.findViewById(R.id.bukaMenu) as ImageView
 
     fun setModel(model: TipeTes) {
         val nama = model.nama_tipe_tes
