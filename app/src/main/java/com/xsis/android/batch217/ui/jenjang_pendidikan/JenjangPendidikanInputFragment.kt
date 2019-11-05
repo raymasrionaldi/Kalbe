@@ -68,6 +68,7 @@ class JenjangPendidikanInputFragment: Fragment() {
             if(listPendidikan[0].is_Deleted == "true"){
                 //update tru jadi false
                 databaseQueryHelper.updatePendidikan(nama,des)
+                Toast.makeText(context, SIMPAN_DATA_BERHASIL, Toast.LENGTH_SHORT).show()
             } else {
                 Toast.makeText(context, DATA_SUDAH_ADA, Toast.LENGTH_SHORT).show()
             }
@@ -80,11 +81,8 @@ class JenjangPendidikanInputFragment: Fragment() {
             content.put(IS_DELETED, "false")
             val db = DatabaseHelper(context!!).writableDatabase
             db.insert(TABEL_PENDIDIKAN, null, content)
+            Toast.makeText(context, SIMPAN_DATA_BERHASIL, Toast.LENGTH_SHORT).show()
         }
-    }
-
-    fun readPendidikan(nama:String){
-
     }
 
     fun batal(view:View){
@@ -101,7 +99,7 @@ class JenjangPendidikanInputFragment: Fragment() {
         val fragment = JenjangPendidikanFragment()
         val fragmentManager = getActivity()!!.getSupportFragmentManager()
         val fragmentTransaction = fragmentManager.beginTransaction()
-        fragmentTransaction.replace(R.id.fragment_jenjang_pendidikan, fragment)
+        fragmentTransaction.replace(this.id, fragment)
         fragmentTransaction.addToBackStack(null)
         fragmentTransaction.commit()
     }
@@ -111,6 +109,9 @@ class JenjangPendidikanInputFragment: Fragment() {
         val des = view.findViewById(R.id.teksDesPendidikan) as TextInputEditText
         val btnSimpan = view.findViewById(R.id.btnSimpanPendidikan) as Button
         val error = view.findViewById(R.id.teksErrorPendidikan) as TextView
+        val clearPendidikan = view.findViewById(R.id.clearPendidikan) as Button
+        val clearDes = view.findViewById(R.id.clearDeskripsi) as Button
+
 
         nama.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {}
@@ -120,13 +121,10 @@ class JenjangPendidikanInputFragment: Fragment() {
                 btnSimpan.isEnabled = true
 
                 //Tipe identitas tidak boleh kosong
-                val tipeIdentitas = nama.text.toString().trim()
+                val pendidikan = nama.text.toString().trim()
+                error.isVisible = pendidikan.isEmpty()
 
-                if (tipeIdentitas.isEmpty()){
-                    error.isVisible = true
-                } else{
-                    error.isVisible = false
-                }
+                clearPendidikan.isVisible = !pendidikan.isEmpty()
             }
         })
         des.addTextChangedListener(object : TextWatcher {
@@ -137,6 +135,10 @@ class JenjangPendidikanInputFragment: Fragment() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 //Enable tombol simpan ketika user sudah mulai mengisi form
                 btnSimpan.isEnabled = true
+
+                val des = des.text.toString().trim()
+
+                clearDes.isVisible = !des.isEmpty()
             }
         })
     }
