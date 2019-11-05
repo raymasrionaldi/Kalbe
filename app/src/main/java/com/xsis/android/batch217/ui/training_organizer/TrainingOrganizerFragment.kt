@@ -12,6 +12,7 @@ import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
 import com.xsis.android.batch217.R
 import com.xsis.android.batch217.adapters.fragments.TrainingOrganizerFragmentAdapter
+import com.xsis.android.batch217.utils.CustomViewPager
 
 class TrainingOrganizerFragment: Fragment() {
     private lateinit var trainingViewModel: TrainingOrganizerViewModel
@@ -32,11 +33,12 @@ class TrainingOrganizerFragment: Fragment() {
             context!!,
             childFragmentManager
         )
-        val viewPager: ViewPager = root.findViewById(R.id.viewPager) as ViewPager
+        val viewPager = root.findViewById(R.id.viewPagerTrainingOrg) as CustomViewPager
         viewPager.adapter = tabKontrak
+        viewPager.setSwipePagingEnabled(false)
         viewPager.setOnTouchListener { v, event -> true  }
 
-        val slidingTabs = root.findViewById(R.id.slidingTabs) as TabLayout
+        val slidingTabs = root.findViewById(R.id.slidingTabsTrainingOrg) as TabLayout
 
         slidingTabs.setupWithViewPager(viewPager)
         slidingTabs.touchables.forEach { view -> view.isEnabled = false }

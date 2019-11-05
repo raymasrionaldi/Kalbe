@@ -13,13 +13,13 @@
         app:layout_constraintRight_toRightOf="parent"
         android:orientation="vertical">
         <com.google.android.material.tabs.TabLayout
-            android:id="@+id/slidingTabs"
+            android:id="@+id/slidingTabsTrainingOrg"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:tabMode="fixed"/>
 
-        <androidx.viewpager.widget.ViewPager
-            android:id="@+id/viewPager"
+        <com.xsis.android.batch217.utils.CustomViewPager
+            android:id="@+id/viewPagerTrainingOrg"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="#05C2B1AF" />

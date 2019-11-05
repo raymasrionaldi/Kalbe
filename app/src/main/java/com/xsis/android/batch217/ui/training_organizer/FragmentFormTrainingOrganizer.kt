@@ -201,7 +201,11 @@ class FragmentFormTrainingOrganizer(context: Context, val fm: FragmentManager) :
             val kondisi = !namaTeks.isEmpty() || !notesTeks.isEmpty()
 
             ubahResetButton(context!!, kondisi, buttonResetNewTrainingOrganizer!!)
+
+            val kondisii = !namaTeks.isEmpty() || !notesTeks.isEmpty()
+            ubahSimpanButton(context!!, kondisii,buttonSaveNewTrainingOrganizer!!)
         }
+
 
         override fun afterTextChanged(s: Editable) {
 

@@ -13,6 +13,7 @@ import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
 import com.xsis.android.batch217.R
 import com.xsis.android.batch217.adapters.fragments.ContractStatusFragmentAdapter
+import com.xsis.android.batch217.utils.CustomViewPager
 
 
 class ContactStatusFragment : Fragment() {
@@ -35,11 +36,12 @@ class ContactStatusFragment : Fragment() {
             context!!,
             childFragmentManager
         )
-        val viewPager: ViewPager = root.findViewById(R.id.viewPager) as ViewPager
+        val viewPager = root.findViewById(R.id.viewPagerContractStatus) as CustomViewPager
         viewPager.adapter = tabKontrak
+        viewPager.setSwipePagingEnabled(false)
         viewPager.setOnTouchListener { v, event -> true  }
 
-        val slidingTabs = root.findViewById(R.id.slidingTabs) as TabLayout
+        val slidingTabs = root.findViewById(R.id.slidingTabsContractStatus) as TabLayout
 
         slidingTabs.setupWithViewPager(viewPager)
         slidingTabs.touchables.forEach { view -> view.isEnabled = false }
