@@ -54,8 +54,8 @@ class TipeTesFragmentForm(context: Context, val fm: FragmentManager) : Fragment(
         tipeTesText = customView.findViewById(R.id.inputTipeTes) as EditText
         defaultColor = tipeTesText!!.currentHintTextColor
         deskripsi = customView.findViewById(R.id.inputDeskripsiTipeTes) as EditText
-        buttonResetTipeTes = customView.findViewById(R.id.resetFieldTipeTes) as Button
-        buttonResetDeskripsi = customView.findViewById(R.id.resetFieldDeskripsiTipeTes) as Button
+        buttonResetTipeTes = customView.findViewById(R.id.buttonResetFieldTipeTes) as Button
+        buttonResetDeskripsi = customView.findViewById(R.id.buttonResetFieldDeskripsiTipeTes) as Button
 
         buttonResetTipeTes!!.setOnClickListener {
             tipeTesText!!.setText("")
@@ -96,7 +96,7 @@ class TipeTesFragmentForm(context: Context, val fm: FragmentManager) : Fragment(
 
     fun modeEdit(tipeTes: TipeTes) {
         modeForm = MODE_EDIT
-        //changeMode()
+        changeMode()
 
         idData = tipeTes.id_tipe_tes
         tipeTesText!!.setText(tipeTes.nama_tipe_tes)
@@ -150,6 +150,25 @@ class TipeTesFragmentForm(context: Context, val fm: FragmentManager) : Fragment(
             val kondisi = !tipeTesTeks.isEmpty() || !deskripsiTeks.isEmpty()
 
             ubahSimpanButton(context!!, kondisi, buttonSimpan!!)
+
+
+            //fungsi tombol reset field
+            if(tipeTesTeks.isNotEmpty()){
+                buttonResetFieldTipeTes.visibility = View.VISIBLE
+            }
+            if(deskripsiTeks.isNotEmpty()){
+                buttonResetFieldDeskripsiTipeTes.visibility = View.VISIBLE
+            }
+
+            if(tipeTesTeks.isEmpty()){
+                buttonResetFieldTipeTes.visibility = View.GONE
+            }
+            if(deskripsiTeks.isEmpty()){
+                buttonResetFieldDeskripsiTipeTes.visibility = View.GONE
+            }
+
+
+
         }
 
         override fun afterTextChanged(s: Editable) {

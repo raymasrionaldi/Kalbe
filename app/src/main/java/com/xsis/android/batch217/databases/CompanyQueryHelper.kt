@@ -110,7 +110,7 @@ class CompanyQueryHelper(val databaseHelper: DatabaseHelper) {
     fun cekCompanySudahAda(nama: String): Int {
         val db = databaseHelper.readableDatabase
         val queryCari =
-            "SELECT * FROM $TABEL_COMPANY WHERE $NAMA_COMPANY = '$nama' AND " +
+            "SELECT * FROM $TABEL_COMPANY WHERE $NAMA_COMPANY LIKE '$nama' AND " +
                     "$IS_DELETED = 'false'"
 
         val cursor = db.rawQuery(queryCari, null)

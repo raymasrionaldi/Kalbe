@@ -13,17 +13,6 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/text_tipeTes"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:textAlignment="center"
-            android:gravity="center_horizontal|center_vertical"
-            android:text="@string/menu_tipe_tes"
-            android:textSize="15sp"
-            android:textColor="@color/warnaBiru"
-            android:background="@drawable/custom_border_blue"/>
-
         <com.xsis.android.batch217.utils.CustomViewPager
             android:id="@+id/viewPagerTipeTes"
             android:layout_width="match_parent"
