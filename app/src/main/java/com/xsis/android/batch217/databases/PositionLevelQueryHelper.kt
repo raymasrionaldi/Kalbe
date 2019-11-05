@@ -79,7 +79,7 @@ class PositionLevelQueryHelper(val databaseHelper: DatabaseHelper) {
         values.put(DES_POSITION, model.desPosition)
 
         return db.update(
-            TABEL_COMPANY,
+            TABEL_POSITION_LEVEL,
             values,
             "$ID_POSITION = ?",
             arrayOf(model.idPostionLevel.toString())
@@ -98,7 +98,7 @@ class PositionLevelQueryHelper(val databaseHelper: DatabaseHelper) {
     fun cekPositionLevelSudahAda(nama: String): Int {
         val db = databaseHelper.readableDatabase
         val queryCari =
-            "SELECT * FROM $TABEL_POSITION_LEVEL WHERE $NAMA_POSITION = '$nama' AND " +
+            "SELECT * FROM $TABEL_POSITION_LEVEL WHERE $NAMA_POSITION LIKE '$nama' AND " +
                     "$IS_DELETED = 'false'"
 
         val cursor = db.rawQuery(queryCari, null)
