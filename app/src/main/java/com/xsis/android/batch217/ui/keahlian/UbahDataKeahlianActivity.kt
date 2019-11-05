@@ -20,31 +20,27 @@ class UbahDataKeahlianActivity : AppCompatActivity() {
     val context = this
     var databaseHelper = DatabaseHelper(context)
     var data = Keahlian()
+    var ID_Keahlian = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_ubah_data_keahlian)
 
-        cekIsi()
-        hapus()
-        simpan()
-        batal()
         val bundle: Bundle? = intent.extras
         bundle?.let {
-            val id = bundle!!.getInt(ID_KEAHLIAN)
-            loadDataKeahlian(id)
+            ID_Keahlian = bundle!!.getInt(ID_KEAHLIAN)
+            loadDataKeahlian(ID_Keahlian)
         }
     }
 
-    fun simpan(){
+    fun simpan(id: Int) {
         //Simpan ke database
         val simpan = tipeKeahlianSimpanEdit as Button
-        simpan.setOnClickListener{
+        simpan.setOnClickListener {
             if (tipeKeahlianEdit.text.toString().trim().isEmpty()) {
                 //tidak ada aksi
-            }
-            else{
-                insertKeDatabase()
+            } else {
+                insertKeDatabase(id)
                 finish()
             }
 
@@ -53,7 +49,7 @@ class UbahDataKeahlianActivity : AppCompatActivity() {
         //Ke activity list
     }
 
-    fun insertKeDatabase() {
+    fun insertKeDatabase(id: Int) {
         val isiTipeKeahlian = tipeKeahlianEdit.text.toString().trim()
         val isiDeskripsiKeahlian = deskripsiKeahlianEdit.text.toString().trim()
 
@@ -61,43 +57,31 @@ class UbahDataKeahlianActivity : AppCompatActivity() {
         val db = databaseHelper.writableDatabase
 
         val databaseQueryHelper = KeahlianQueryHelper(databaseHelper)
-        val listKeahlian = databaseQueryHelper.readNamaKeahlian(isiTipeKeahlian)
+        val listKeahlian = databaseQueryHelper.readUpdate(id, isiTipeKeahlian)
 
-        if (!listKeahlian.isEmpty()){
-            //cek id_deleted
-            if(listKeahlian[0].is_deleted == "true"){
-                //update tru jadi false
-                databaseQueryHelper.updateKeahlian(isiTipeKeahlian,isiDeskripsiKeahlian)
-                Toast.makeText(this, SIMPAN_DATA_BERHASIL, Toast.LENGTH_SHORT).show()
-            } else {
-                Toast.makeText(this, DATA_SUDAH_ADA, Toast.LENGTH_SHORT).show()
-            }
+        if(listKeahlian.isEmpty()){
+            databaseQueryHelper.updateDelete(id, isiTipeKeahlian,isiDeskripsiKeahlian)
+            Toast.makeText(context, EDIT_DATA_BERHASIL, Toast.LENGTH_SHORT).show()
         } else {
-            //jika tidak maka insert
-            //cek nama
-            val content = ContentValues()
-            content.put(NAMA_KEAHLIAN, isiTipeKeahlian)
-            content.put(DES_KEAHLIAN, isiDeskripsiKeahlian)
-            content.put(IS_DELETED, "false")
-            val db = DatabaseHelper(this).writableDatabase
-            db.insert(TABEL_KEAHLIAN, null, content)
-            Toast.makeText(this, SIMPAN_DATA_BERHASIL, Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, DATA_SUDAH_ADA, Toast.LENGTH_SHORT).show()
         }
     }
 
-    fun batal(){
+    fun batal() {
         //Ke activity list
         tipeKeahlianBatalEdit.setOnClickListener { finish() }
     }
 
-    fun cekIsi(){
+    fun cekIsi() {
         tipeKeahlianEdit.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
 
             }
+
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
 
             }
+
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 //Enable tombol simpan ketika user sudah mulai mengisi form
                 tipeKeahlianSimpanEdit.isEnabled = true
@@ -106,10 +90,10 @@ class UbahDataKeahlianActivity : AppCompatActivity() {
 
                 //Tipe identitas tidak boleh kosong
                 val tipeKeahlian = tipeKeahlianEdit.text.toString().trim()
-                if (tipeKeahlian.isEmpty()){
+                if (tipeKeahlian.isEmpty()) {
                     errorKeahlianEdit.isVisible = true
                     clearKeahlianEdit.isVisible = false
-                } else{
+                } else {
                     errorKeahlianEdit.isVisible = false
                     clearKeahlianEdit.isVisible = true
                 }
@@ -118,28 +102,30 @@ class UbahDataKeahlianActivity : AppCompatActivity() {
         deskripsiKeahlianEdit.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
             }
+
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
+
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 //Enable tombol simpan ketika user sudah mulai mengisi form
                 tipeKeahlianSimpanEdit.isEnabled = true
                 //Deskripsi tidak boleh kosong
                 val deskripsiKeahlian = deskripsiKeahlianEdit.text.toString().trim()
-                if (deskripsiKeahlian.isEmpty()){
+                if (deskripsiKeahlian.isEmpty()) {
                     clearDeskripsiKeahlianEdit.isVisible = false
-                } else{
+                } else {
                     clearDeskripsiKeahlianEdit.isVisible = true
                 }
             }
         })
     }
 
-    fun hapus(){
-        clearDeskripsiKeahlianEdit.setOnClickListener {deskripsiKeahlianEdit.setText("") }
-        clearKeahlianEdit.setOnClickListener {tipeKeahlianEdit.setText("") }
+    fun hapus() {
+        clearDeskripsiKeahlianEdit.setOnClickListener { deskripsiKeahlianEdit.setText("") }
+        clearKeahlianEdit.setOnClickListener { tipeKeahlianEdit.setText("") }
     }
 
-    fun loadDataKeahlian(id: Int){
+    fun loadDataKeahlian(id: Int) {
         val db = databaseHelper.readableDatabase
 
         val projection = arrayOf<String>(
@@ -147,9 +133,10 @@ class UbahDataKeahlianActivity : AppCompatActivity() {
         )
         val selection = ID_KEAHLIAN + "=?"
         val selectionArgs = arrayOf(id.toString())
-        val cursor = db.query(TABEL_KEAHLIAN, projection, selection, selectionArgs, null, null, null)
+        val cursor =
+            db.query(TABEL_KEAHLIAN, projection, selection, selectionArgs, null, null, null)
 
-        if (cursor.count == 1){
+        if (cursor.count == 1) {
             cursor.moveToFirst()
             data.id_keahlian = cursor.getInt(0)
             data.nama_keahlian = cursor.getString(1)
@@ -158,5 +145,9 @@ class UbahDataKeahlianActivity : AppCompatActivity() {
             tipeKeahlianEdit.setText(data.nama_keahlian)
             deskripsiKeahlianEdit.setText(data.des_keahlian)
         }
+        cekIsi()
+        hapus()
+        simpan(id)
+        batal()
     }
 }
