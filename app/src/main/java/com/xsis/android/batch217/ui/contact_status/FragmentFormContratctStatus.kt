@@ -50,6 +50,8 @@ class FragmentFormContratctStatus(context:Context,val fm: FragmentManager) : Fra
         savedInstanceState: Bundle?
     ): View? {
         val customView = inflater.inflate(R.layout.fragment_form_contract_status, container, false)
+        nama = customView.findViewById(R.id.inputNameNewContractStatus) as EditText
+        notes = customView.findViewById(R.id.inputNotesNewContractStatus) as EditText
         customView.buttonSaveNewContractStatus.setOnClickListener{
             inputJenisKontrak(it)
         }
@@ -78,6 +80,7 @@ class FragmentFormContratctStatus(context:Context,val fm: FragmentManager) : Fra
             val content = ContentValues()
             content.put(NAMA_CONTRACT,jenisKontrak )
             content.put(DES_CONTRACT, notesKontrak)
+            content.put(IS_DELETED,"false")
 
             val databaseHelper = DatabaseHelper(context!!)
             val db = databaseHelper.writableDatabase
@@ -122,14 +125,15 @@ class FragmentFormContratctStatus(context:Context,val fm: FragmentManager) : Fra
         changeMode()
 
         idData = contractStatus.idContract
-        nama?.setText(contractStatus.namaContract)
-        notes?.setText(contractStatus.desContract)
+        nama!!.setText(contractStatus.namaContract)
+        notes!!.setText(contractStatus.desContract)
         data = contractStatus
 
     }
     fun modeAdd() {
         modeForm = MODE_ADD
         changeMode()
+        data = null
     }
     fun changeMode() {
         if (modeForm == MODE_ADD) {
