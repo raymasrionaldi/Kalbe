@@ -89,8 +89,10 @@ class UbahDataKeahlianActivity : AppCompatActivity() {
                 val tipeKeahlian = tipeKeahlianEdit.text.toString().trim()
                 if (tipeKeahlian.isEmpty()){
                     errorKeahlianEdit.isVisible = true
+                    clearKeahlianEdit.isVisible = false
                 } else{
                     errorKeahlianEdit.isVisible = false
+                    clearKeahlianEdit.isVisible = true
                 }
             }
         })
@@ -102,6 +104,13 @@ class UbahDataKeahlianActivity : AppCompatActivity() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 //Enable tombol simpan ketika user sudah mulai mengisi form
                 tipeKeahlianSimpanEdit.isEnabled = true
+                //Deskripsi tidak boleh kosong
+                val deskripsiKeahlian = deskripsiKeahlianEdit.text.toString().trim()
+                if (deskripsiKeahlian.isEmpty()){
+                    clearDeskripsiKeahlianEdit.isVisible = false
+                } else{
+                    clearDeskripsiKeahlianEdit.isVisible = true
+                }
             }
         })
     }

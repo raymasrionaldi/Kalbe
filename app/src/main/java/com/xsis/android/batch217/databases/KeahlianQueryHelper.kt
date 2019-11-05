@@ -44,6 +44,36 @@ class KeahlianQueryHelper(val databaseHelper: DatabaseHelper) {
         return listKeahlian
     }
 
+    fun readNamaKeahlian(nama:String):List<Keahlian>{
+        var listKeahlian = ArrayList<Keahlian>()
+
+        val db = databaseHelper.readableDatabase
+        val queryCari = "SELECT * FROM $TABEL_KEAHLIAN " +
+                "WHERE $NAMA_KEAHLIAN = '$nama' "
+        val cursor = db.rawQuery(queryCari, null)
+
+        if (cursor.count > 0){
+            listKeahlian = konversiCursorKeListKeahlianModel(cursor)
+        }
+
+        return listKeahlian
+    }
+
+    fun updateKeahlian(nama: String, des: String):List<Keahlian>{
+        var listKeahlian = ArrayList<Keahlian>()
+
+        val db = databaseHelper.writableDatabase
+        val queryUpdate = "UPDATE $TABEL_KEAHLIAN " +
+                "SET $DES_KEAHLIAN = '$des', $IS_DELETED = 'false' " +
+                "WHERE $NAMA_KEAHLIAN = '$nama' AND $IS_DELETED = 'true'"
+        val cursor = db.rawQuery(queryUpdate, null)
+        if (cursor.count > 0){
+            listKeahlian = konversiCursorKeListKeahlianModel(cursor)
+        }
+        println(queryUpdate)
+        return listKeahlian
+    }
+
     fun cariKeahlianModels(keyword:String): List<Keahlian>{
         var listKeahlian = ArrayList<Keahlian>()
 

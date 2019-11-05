@@ -9,13 +9,12 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import android.widget.Button
+import android.widget.Toast
 import androidx.core.view.isVisible
 import com.xsis.android.batch217.R
 import com.xsis.android.batch217.databases.DatabaseHelper
-import com.xsis.android.batch217.utils.DES_KEAHLIAN
-import com.xsis.android.batch217.utils.IS_DELETED
-import com.xsis.android.batch217.utils.NAMA_KEAHLIAN
-import com.xsis.android.batch217.utils.TABEL_KEAHLIAN
+import com.xsis.android.batch217.databases.KeahlianQueryHelper
+import com.xsis.android.batch217.utils.*
 import kotlinx.android.synthetic.main.activity_input_data_keahlian.*
 
 class InputDataKeahlianActivity : AppCompatActivity() {
@@ -51,15 +50,32 @@ class InputDataKeahlianActivity : AppCompatActivity() {
         val isiTipeKeahlian = tipeKeahlian.text.toString().trim()
         val isiDeskripsiKeahlian = deskripsiKeahlian.text.toString().trim()
 
-        val content = ContentValues()
-        content.put(NAMA_KEAHLIAN, isiTipeKeahlian)
-        content.put(DES_KEAHLIAN, isiDeskripsiKeahlian)
-        content.put(IS_DELETED, "false")
-
         val databaseHelper = DatabaseHelper(this)
         val db = databaseHelper.writableDatabase
 
-        db.insert(TABEL_KEAHLIAN, null, content)
+        val databaseQueryHelper = KeahlianQueryHelper(databaseHelper)
+        val listKeahlian = databaseQueryHelper.readNamaKeahlian(isiTipeKeahlian)
+
+        if (!listKeahlian.isEmpty()){
+            //cek id_deleted
+            if(listKeahlian[0].is_deleted == "true"){
+                //update tru jadi false
+                databaseQueryHelper.updateKeahlian(isiTipeKeahlian,isiDeskripsiKeahlian)
+                Toast.makeText(this, SIMPAN_DATA_BERHASIL, Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(this, DATA_SUDAH_ADA, Toast.LENGTH_SHORT).show()
+            }
+        } else {
+            //jika tidak maka insert
+            //cek nama
+            val content = ContentValues()
+            content.put(NAMA_KEAHLIAN, isiTipeKeahlian)
+            content.put(DES_KEAHLIAN, isiDeskripsiKeahlian)
+            content.put(IS_DELETED, "false")
+            val db = DatabaseHelper(this).writableDatabase
+            db.insert(TABEL_KEAHLIAN, null, content)
+            Toast.makeText(this, SIMPAN_DATA_BERHASIL, Toast.LENGTH_SHORT).show()
+        }
     }
 
     fun batal(){
