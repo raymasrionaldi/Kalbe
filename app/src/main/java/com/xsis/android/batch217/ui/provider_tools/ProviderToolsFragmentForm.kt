@@ -1,5 +1,6 @@
 package com.xsis.android.batch217.ui.provider_tools
 
+import android.app.AlertDialog
 import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
@@ -17,29 +18,31 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.xsis.android.batch217.R
 import com.xsis.android.batch217.adapters.fragments.ProviderToolsFragmentAdapter
+import com.xsis.android.batch217.databases.DatabaseHelper
 import com.xsis.android.batch217.databases.ProviderToolsQueryHelper
 import com.xsis.android.batch217.models.ProviderTools
-import com.xsis.android.batch217.utils.ubahSimpanButton
+import com.xsis.android.batch217.utils.*
 
 class ProviderToolsFragmentForm(ontext: Context, val fm: FragmentManager) : Fragment() {
 
     var title: TextView? = null
-    var buttonBatal: Button? = null
-    var buttonSimpan: Button? = null
-    var providerToolsText: EditText? = null
-    var buttonResetProviderTools: Button? = null
-    var buttonResetDeskripsi: Button? = null
-    var deskripsi: EditText? = null
+    var buttonReset: Button? = null
+    var nama: EditText? = null
+    var notes: EditText? = null
+    var buttonDelete: FloatingActionButton? = null
     var defaultColor = 0
     var modeForm = 0
     var idData = 0
-    var data: ProviderTools? = null
+    var data = ProviderTools()
+
+    var databaseQueryHelper: ProviderToolsQueryHelper? = null
 
     companion object {
-        const val TITLE_ADD = "Tambah Provider Tools"
-        const val TITLE_EDIT = "Ubah Provider tools"
+        const val TITLE_ADD = "Add New Provider Tools"
+        const val TITLE_EDIT = "Edit Provider Tools"
         const val MODE_ADD = 0
         const val MODE_EDIT = 1
     }
@@ -50,41 +53,34 @@ class ProviderToolsFragmentForm(ontext: Context, val fm: FragmentManager) : Frag
         savedInstanceState: Bundle?
     ): View? {
         val customView = inflater.inflate(R.layout.fragment_form_provider_tools, container, false)
+
+        val databaseHelper = DatabaseHelper(context!!)
+        databaseQueryHelper = ProviderToolsQueryHelper(databaseHelper)
+
         title = customView.findViewById(R.id.titleFormProviderTools) as TextView
 
-        buttonSimpan = customView.findViewById(R.id.buttonSimpanProviderTools) as Button
-        buttonBatal = customView.findViewById(R.id.buttonBatalProviderTools) as Button
-        providerToolsText = customView.findViewById(R.id.inputNamaProviderTools) as EditText
-        defaultColor = providerToolsText!!.currentHintTextColor
-        deskripsi = customView.findViewById(R.id.inputNotesProviderTools) as EditText
-        buttonResetProviderTools = customView.findViewById(R.id.resetFieldProviderTools) as Button
-        buttonResetDeskripsi = customView.findViewById(R.id.resetFieldDeskripsiProviderTools) as Button
+        val buttonSave = customView.findViewById(R.id.buttonSaveProviderTools) as Button
+        buttonReset = customView.findViewById(R.id.buttonResetProviderTools) as Button
+        nama = customView.findViewById(R.id.inputNamaProviderTools) as EditText
+        defaultColor = nama!!.currentHintTextColor
+        notes = customView.findViewById(R.id.inputNotesProviderTools) as EditText
+        buttonDelete =
+            customView.findViewById(R.id.buttonDeleteProviderTools) as FloatingActionButton
 
-        buttonResetProviderTools!!.setOnClickListener {
-            providerToolsText!!.setText("")
-        }
-
-        buttonResetDeskripsi!!.setOnClickListener{
-            deskripsi!!.setText("")
-        }
-
-        buttonSimpan!!.setOnClickListener {
+        buttonSave.setOnClickListener {
             simpanProviderTools()
         }
 
-        buttonBatal!!.setOnClickListener {
-            Toast.makeText(context!!, "batal", Toast.LENGTH_SHORT).show()
-            val viewPager = view!!.parent as ViewPager
-            val adapter = viewPager.adapter!! as ProviderToolsFragmentAdapter
-            val fragment = fm.fragments[0] as ProviderToolsFragmentData
-            fragment.updateContent()
-            adapter.notifyDataSetChanged()
-            viewPager.setCurrentItem(0, true)
-
+        buttonReset!!.setOnClickListener {
+            resetForm()
         }
 
-        providerToolsText!!.addTextChangedListener(textWatcher)
-        deskripsi!!.addTextChangedListener(textWatcher)
+        buttonDelete!!.setOnClickListener {
+            showDeleteDialog()
+        }
+
+        nama!!.addTextChangedListener(textWatcher)
+        notes!!.addTextChangedListener(textWatcher)
 
         title!!.text = TITLE_ADD
 
@@ -92,33 +88,58 @@ class ProviderToolsFragmentForm(ontext: Context, val fm: FragmentManager) : Frag
     }
 
     fun resetForm() {
-        providerToolsText!!.setText("")
-        deskripsi!!.setText("")
+        nama!!.setText("")
+        notes!!.setText("")
     }
 
-
-    fun modeEdit(providerTools: ProviderTools) {
+    fun modeEdit(positionLevel: ProviderTools) {
         modeForm = MODE_EDIT
-        //changeMode()
+        changeMode()
 
-        idData = providerTools.id_provider
-        providerToolsText!!.setText(providerTools.nama_provider)
-        deskripsi!!.setText(providerTools.des_provider)
-        data = providerTools
+        idData = positionLevel.id_provider
+        nama!!.setText(positionLevel.nama_provider)
+        notes!!.setText(positionLevel.des_provider)
+        data = positionLevel
     }
 
     fun modeAdd() {
         modeForm = MODE_ADD
         changeMode()
         resetForm()
+        data = ProviderTools()
     }
 
     fun changeMode() {
         if (modeForm == MODE_ADD) {
             title!!.text = TITLE_ADD
+            buttonDelete!!.hide()
         } else if (modeForm == MODE_EDIT) {
             title!!.text = TITLE_EDIT
+            buttonDelete!!.show()
         }
+    }
+
+    fun showDeleteDialog() {
+        AlertDialog.Builder(context!!, R.style.AlertDialogTheme)
+            .setMessage("Hapus ${data!!.nama_provider}")
+            .setCancelable(false)
+            .setPositiveButton("DELETE") { dialog, which ->
+                if (databaseQueryHelper!!.hapusProviderTools(data.id_provider) != 0) {
+                    Toast.makeText(context!!, HAPUS_DATA_BERHASIL, Toast.LENGTH_SHORT).show()
+                    val viewPager = view!!.parent as ViewPager
+                    val adapter = viewPager.adapter!! as ProviderToolsFragmentAdapter
+                    val fragment = fm.fragments[0] as ProviderToolsFragmentData
+                    fragment.updateContent()
+                    adapter.notifyDataSetChanged()
+                    viewPager.setCurrentItem(0, true)
+                } else {
+                    Toast.makeText(context!!, HAPUS_DATA_GAGAL, Toast.LENGTH_SHORT).show()
+                }
+            }
+            .setNegativeButton("CANCEL") { dialog, which ->
+            }
+            .create()
+            .show()
     }
 
     private val textWatcher = object : TextWatcher {
@@ -127,20 +148,12 @@ class ProviderToolsFragmentForm(ontext: Context, val fm: FragmentManager) : Frag
         }
 
         override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-            val providerToolsTeks = providerToolsText!!.text.toString().trim()
-            val deskripsiTeks = deskripsi!!.text.toString().trim()
+            val namaTeks = nama!!.text.toString().trim()
+            val notesTeks = notes!!.text.toString().trim()
 
-            val kondisi = !providerToolsTeks.isEmpty() || !deskripsiTeks.isEmpty()
+            val kondisi = !namaTeks.isEmpty() || !notesTeks.isEmpty()
 
-            ubahSimpanButton(context!!, kondisi, buttonSimpan!!)
-
-            if(providerToolsTeks.isNotEmpty()){
-                buttonResetProviderTools?.visibility = View.VISIBLE
-            }
-            if(deskripsiTeks.isNotEmpty()){
-                buttonResetDeskripsi?.visibility = View.VISIBLE
-            }
-
+            ubahResetButton(context!!, kondisi, buttonReset!!)
         }
 
         override fun afterTextChanged(s: Editable) {
@@ -149,24 +162,59 @@ class ProviderToolsFragmentForm(ontext: Context, val fm: FragmentManager) : Frag
     }
 
     fun simpanProviderTools() {
+        val namaProviderTools = nama!!.text.toString().trim()
+        val notesProviderTools = notes!!.text.toString().trim()
 
         val required = view!!.findViewById(R.id.requiredNamaProviderTools) as TextView
 
-        val namaProviderTools = providerToolsText!!.text.toString().trim()
-        val deskripsiJenisCatatan = deskripsi!!.text.toString().trim()
 
-        providerToolsText!!.setHintTextColor(defaultColor)
+        nama!!.setHintTextColor(defaultColor)
         required.visibility = View.INVISIBLE
 
         if (namaProviderTools.isEmpty()) {
-            providerToolsText!!.setHintTextColor(Color.RED)
+            nama!!.setHintTextColor(Color.RED)
             required.visibility = View.VISIBLE
         } else {
+            val model = ProviderTools()
+            model.id_provider = data.id_provider
+            model.nama_provider = namaProviderTools
+            model.des_provider = notesProviderTools
 
-            Toast.makeText(context, "Kirim ke DB", Toast.LENGTH_SHORT).show()
+            val cekPostionLevel = databaseQueryHelper!!.cekPositionLevelSudahAda(model.nama_provider!!)
+
+            if (modeForm == MODE_ADD) {
+                if (cekPostionLevel > 0) {
+                    Toast.makeText(context, DATA_SUDAH_ADA, Toast.LENGTH_SHORT).show()
+                    return
+                }
+                if (databaseQueryHelper!!.tambahProviderTools(model) == -1L) {
+                    Toast.makeText(context, SIMPAN_DATA_GAGAL, Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(context, SIMPAN_DATA_BERHASIL, Toast.LENGTH_SHORT)
+                        .show()
+                }
+            } else if (modeForm == MODE_EDIT) {
+                if ((cekPostionLevel != 1 && model.nama_provider == data.nama_provider) ||
+                    (cekPostionLevel != 0 && model.nama_provider != data.nama_provider)
+                ) {
+                    Toast.makeText(context, DATA_SUDAH_ADA, Toast.LENGTH_SHORT).show()
+                    return
+                }
+                if (databaseQueryHelper!!.editProviderTools(model) == 0) {
+                    Toast.makeText(context, EDIT_DATA_GAGAL, Toast.LENGTH_SHORT)
+                        .show()
+                } else {
+                    Toast.makeText(context, EDIT_DATA_BERHASIL, Toast.LENGTH_SHORT)
+                        .show()
+                }
+            }
+
+            val viewPager = view!!.parent as ViewPager
+            val adapter = viewPager.adapter!! as ProviderToolsFragmentAdapter
+            val fragment = fm.fragments[0] as ProviderToolsFragmentData
+            fragment.updateContent()
+            adapter.notifyDataSetChanged()
+            viewPager.setCurrentItem(0, true)
         }
     }
-
-
-
 }

@@ -78,15 +78,17 @@ class InputDataKeahlianActivity : AppCompatActivity() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 //Enable tombol simpan ketika user sudah mulai mengisi form
                 tipeKeahlianSimpan.isEnabled = true
-                tipeKeahlianSimpan.setBackgroundResource(R.drawable.button_simpan_on)
+                tipeKeahlianSimpan.setBackgroundResource(R.drawable.button_simpan_on_2)
                 tipeKeahlianSimpan.setTextColor(Color.WHITE)
 
-                //Tipe identitas tidak boleh kosong
+                //Keahlian tidak boleh kosong
                 val tipeKeahlian = tipeKeahlian.text.toString().trim()
                 if (tipeKeahlian.isEmpty()){
                     errorKeahlian.isVisible = true
+                    clearKeahlian.isVisible = false
                 } else{
                     errorKeahlian.isVisible = false
+                    clearKeahlian.isVisible = true
                 }
             }
         })
@@ -98,6 +100,13 @@ class InputDataKeahlianActivity : AppCompatActivity() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 //Enable tombol simpan ketika user sudah mulai mengisi form
                 tipeKeahlianSimpan.isEnabled = true
+                //Deskripsi Keahlian tidak boleh kosong
+                val deskripsiKeahlian = deskripsiKeahlian.text.toString().trim()
+                if (deskripsiKeahlian.isEmpty()){
+                    clearDeskripsiKeahlian.isVisible = false
+                } else{
+                    clearDeskripsiKeahlian.isVisible = true
+                }
             }
         })
     }

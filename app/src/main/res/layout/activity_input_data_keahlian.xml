@@ -90,7 +90,8 @@
             android:layout_height="30dp"
             android:layout_gravity="end|center_vertical"
             android:layout_marginRight="5dp"
-            android:background="@drawable/ic_cancel_black" />
+            android:background="@drawable/ic_cancel_black"
+            android:visibility="gone"/>
 
     </FrameLayout>
     <TextView
@@ -116,7 +117,7 @@
                 android:layout_height="wrap_content"
                 android:text=""
                 android:layout_margin="5dp"
-                android:hint="Deskripsi" />
+                android:hint="Deskripsi"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -126,7 +127,8 @@
             android:layout_height="30dp"
             android:layout_gravity="end|center_vertical"
             android:layout_marginRight="5dp"
-            android:background="@drawable/ic_cancel_black" />
+            android:background="@drawable/ic_cancel_black"
+            android:visibility="gone"/>
     </FrameLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -140,7 +142,6 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@color/warnaButtonBatal"
-
             android:text="Batal" />
 
         <Button

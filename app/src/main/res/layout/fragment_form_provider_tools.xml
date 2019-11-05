@@ -23,69 +23,27 @@
             android:textSize="@dimen/title_form_text_size"
             android:textStyle="bold" />
 
-        <FrameLayout
+        <EditText
+            android:id="@+id/inputNamaProviderTools"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/inputNamaProviderTools"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Provider Tools*"
-                    android:inputType="text"/>
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <Button
-                android:id="@+id/resetFieldProviderTools"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_gravity="end|center_vertical"
-                android:layout_marginRight="5dp"
-                android:background="@drawable/ic_cancel_black"
-                android:visibility="invisible"/>
-
-        </FrameLayout>
+            android:hint="Name *"
+            android:inputType="text" />
 
         <TextView
             android:id="@+id/requiredNamaProviderTools"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Error: Provider Tools Tidak Boleh Kosong"
+            android:text="Required"
             android:textColor="@color/warnaMerah"
+            android:textSize="@dimen/text_size_small"
             android:visibility="invisible" />
 
-        <FrameLayout
+        <EditText
+            android:id="@+id/inputNotesProviderTools"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/inputNotesProviderTools"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Deskripsi"/>
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <Button
-                android:id="@+id/resetFieldDeskripsiProviderTools"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_gravity="end|center_vertical"
-                android:layout_marginRight="5dp"
-                android:background="@drawable/ic_cancel_black"
-                android:visibility="invisible"/>
-
-        </FrameLayout>
+            android:hint="Notes" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -94,28 +52,28 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/buttonBatalProviderTools"
+                android:id="@+id/buttonResetProviderTools"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="@drawable/button_reset_on"
+                android:background="@drawable/button_reset_off"
                 android:clickable="false"
-                android:text="@string/batal"
-                android:textColor="@color/colorWhite" />
+                android:text="@string/reset"
+                android:textColor="@color/warnaTeksResetOff" />
 
             <Button
-                android:id="@+id/buttonSimpanProviderTools"
+                android:id="@+id/buttonSaveProviderTools"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="@drawable/button_simpan_off"
-                android:text="@string/simpan"
-                android:textColor="@color/warnaTeksSimpanOff" />
+                android:background="@drawable/button_save"
+                android:text="@string/save"
+                android:textColor="@color/colorWhite" />
         </LinearLayout>
     </LinearLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/buttonDeleteJenisCatatan"
+        android:id="@+id/buttonDeleteProviderTools"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/fab_margin"

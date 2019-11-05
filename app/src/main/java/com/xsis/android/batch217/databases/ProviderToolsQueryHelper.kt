@@ -1,10 +1,9 @@
 package com.xsis.android.batch217.databases
 
+import android.content.ContentValues
 import android.database.Cursor
 import com.xsis.android.batch217.models.ProviderTools
-import com.xsis.android.batch217.utils.IS_DELETED
-import com.xsis.android.batch217.utils.NAMA_PROVIDER
-import com.xsis.android.batch217.utils.TABEL_PROVIDER
+import com.xsis.android.batch217.utils.*
 
 class ProviderToolsQueryHelper(val databaseHelper: DatabaseHelper) {
 
@@ -59,5 +58,51 @@ class ProviderToolsQueryHelper(val databaseHelper: DatabaseHelper) {
         }
 
         return listProviderTools
+    }
+
+    fun tambahProviderTools(model: ProviderTools): Long {
+        val db = databaseHelper.writableDatabase
+
+        val values = ContentValues()
+        values.put(NAMA_PROVIDER, model.nama_provider)
+        values.put(DES_PROVIDER, model.des_provider)
+        values.put(IS_DELETED, "false")
+
+        return db.insert(TABEL_PROVIDER, null, values)
+    }
+
+    fun editProviderTools(model: ProviderTools): Int {
+        val db = databaseHelper.writableDatabase
+
+        val values = ContentValues()
+        values.put(NAMA_PROVIDER, model.nama_provider)
+        values.put(DES_PROVIDER, model.des_provider)
+
+        return db.update(
+            TABEL_PROVIDER,
+            values,
+            "$ID_PROVIDER = ?",
+            arrayOf(model.id_provider.toString())
+        )
+    }
+
+    fun hapusProviderTools(id: Int): Int {
+        val db = databaseHelper.writableDatabase
+
+        val values = ContentValues()
+        values.put(IS_DELETED, "true")
+
+        return db.update(TABEL_PROVIDER, values, "$ID_PROVIDER = ?", arrayOf(id.toString()))
+    }
+
+    fun cekPositionLevelSudahAda(nama: String): Int {
+        val db = databaseHelper.readableDatabase
+        val queryCari =
+            "SELECT * FROM $TABEL_PROVIDER WHERE $NAMA_PROVIDER = '$nama' AND " +
+                    "$IS_DELETED = 'false'"
+
+        val cursor = db.rawQuery(queryCari, null)
+
+        return cursor.count
     }
 }
