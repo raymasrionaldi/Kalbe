@@ -4,13 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.xsis.android.batch217.R
+import com.xsis.android.batch217.adapters.fragments.JenisCatatanFragmentAdapter
+import com.xsis.android.batch217.utils.CustomViewPager
 
-class JenisCatatanFragment : Fragment() {
+
+class JenisCatatanFragment: Fragment() {
 
     private lateinit var jenisCatatanViewModel: JenisCatatanViewModel
 
@@ -22,10 +23,12 @@ class JenisCatatanFragment : Fragment() {
         jenisCatatanViewModel =
             ViewModelProviders.of(this).get(JenisCatatanViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_jenis_catatan, container, false)
-        val textView: TextView = root.findViewById(R.id.text_jenis_catatan)
-        jenisCatatanViewModel.text.observe(this, Observer {
-            textView.text = it
-        })
+        val fragmentAdapter = JenisCatatanFragmentAdapter(context!!, childFragmentManager)
+        val viewPager = root.findViewById(R.id.viewPagerJenisCatatan) as CustomViewPager
+        viewPager.adapter = fragmentAdapter
+
+        viewPager.setSwipePagingEnabled(false)
+
         return root
     }
 }

@@ -13,22 +13,24 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/text_employee_status"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:textAlignment="center"
-            android:gravity="center_horizontal|center_vertical"
-            android:text="@string/menu_employe_status"
-            android:textSize="15sp"
-            android:textColor="@color/warnaBiru"
-            android:background="@drawable/custom_border_blue"/>
-
-        <com.xsis.android.batch217.utils.CustomViewPager
-            android:id="@+id/viewPagerEmployeeStatus"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/listJenisCatatanRecycler"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#05C2B1AF" />
+            android:layout_gravity="center_horizontal"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp" />
     </LinearLayout>
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/buttonAddJenisCatatan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/fab_margin"
+        app:backgroundTint="@color/warnaBiru"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/ic_add_white" />
 </androidx.constraintlayout.widget.ConstraintLayout>
