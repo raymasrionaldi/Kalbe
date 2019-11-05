@@ -1,6 +1,5 @@
-package com.xsis.android.batch217.ui.contact_status
+package com.xsis.android.batch217.ui.training_organizer
 
-import android.content.ContentValues
 import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
@@ -10,7 +9,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
-import android.widget.ListAdapter
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -19,16 +17,17 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.viewpager.widget.ViewPager
 import com.xsis.android.batch217.R
-import com.xsis.android.batch217.adapters.fragments.ContractStatusFragmentAdapter
+import com.xsis.android.batch217.adapters.fragments.TrainingOrganizerFragmentAdapter
 import com.xsis.android.batch217.databases.ContractStatusQueryHelper
 import com.xsis.android.batch217.databases.DatabaseHelper
-import com.xsis.android.batch217.models.ContractStatus
+import com.xsis.android.batch217.databases.TrainingOrganizerQueryHelper
+import com.xsis.android.batch217.models.TrainingOrganizer
 import com.xsis.android.batch217.utils.*
-import kotlinx.android.synthetic.main.fragment_form_contract_status.*
-import kotlinx.android.synthetic.main.fragment_form_contract_status.view.*
+import kotlinx.android.synthetic.main.fragment_form_training_organizer.*
+import kotlinx.android.synthetic.main.fragment_form_training_organizer.view.*
 
-class FragmentFormContratctStatus(context:Context,val fm: FragmentManager) : Fragment() {
-    var data = ContractStatus()
+class FragmentFormTrainingOrganizer(context: Context, val fm: FragmentManager) : Fragment() {
+    var data = TrainingOrganizer()
     var title: TextView? = null
     var defaultColor = 0
     var modeForm = 0
@@ -36,35 +35,33 @@ class FragmentFormContratctStatus(context:Context,val fm: FragmentManager) : Fra
     var nama: EditText? = null
     var notes: EditText? = null
 
-    var databaseQueryHelper: ContractStatusQueryHelper? = null
+    var databaseQueryHelper: TrainingOrganizerQueryHelper? = null
 
     companion object {
         const val TITLE_ADD = ""
-        const val TITLE_EDIT = "Edit Contract Status"
+        const val TITLE_EDIT = "Edit Training Organizer"
         const val MODE_ADD = 0
         const val MODE_EDIT = 1
     }
-
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val customView = inflater.inflate(R.layout.fragment_form_contract_status, container, false)
+        val customView = inflater.inflate(R.layout.fragment_form_training_organizer, container, false)
         val databaseHelper = DatabaseHelper(context!!)
-        databaseQueryHelper = ContractStatusQueryHelper(databaseHelper)
-        title= customView.findViewById(R.id.titleFromContractStatus) as TextView
-        nama = customView.findViewById(R.id.inputNameNewContractStatus) as EditText
+        databaseQueryHelper = TrainingOrganizerQueryHelper(databaseHelper)
+        title= customView.findViewById(R.id.titleFromTrainingOrganizer) as TextView
+        nama = customView.findViewById(R.id.inputNameNewTrainingOrganizer) as EditText
         defaultColor = nama!!.currentHintTextColor
-        notes = customView.findViewById(R.id.inputNotesNewContractStatus) as EditText
-        customView.buttonSaveNewContractStatus.setOnClickListener{
-            inputJenisKontrak()
+        notes = customView.findViewById(R.id.inputNotesNewTrainingOrganizer) as EditText
+        customView.buttonSaveNewTrainingOrganizer.setOnClickListener{
+            inputTrainingOrg()
         }
-        customView.buttonResetNewContractStatus.setOnClickListener {
-            resetJenisKontrak()
+        customView.buttonResetNewTrainingOrganizer.setOnClickListener {
+            resetTrainingOrg()
         }
-        customView.buttonDeleteContractStatus.setOnClickListener {
+        customView.buttonDeleteTrainingOrganizer.setOnClickListener {
             deleteData(it)
         }
         nama!!.addTextChangedListener(textWatcher)
@@ -72,20 +69,20 @@ class FragmentFormContratctStatus(context:Context,val fm: FragmentManager) : Fra
 
         return customView
     }
-    fun inputJenisKontrak(){
+    fun inputTrainingOrg() {
 //        val nama = view.findViewById(R.id.inputNameNewContractStatus) as EditText
 //        val notes = view.findViewById(R.id.inputNotesNewContractStatus) as EditText
 
-        var jenisKontrak = inputNameNewContractStatus.text.toString().trim()
-        var notesKontrak = inputNotesNewContractStatus.text.toString().trim()
+        var namaOrganizer = inputNameNewTrainingOrganizer.text.toString().trim()
+        var notesOrganizer = inputNotesNewTrainingOrganizer.text.toString().trim()
 
-        if(jenisKontrak.length==0){
-            inputNameNewContractStatus.setHintTextColor(Color.RED)
-            requiredContract.isVisible = true
+        if (namaOrganizer.length == 0) {
+            inputNameNewTrainingOrganizer.setHintTextColor(Color.RED)
+            requiredTrainingOrganizer.isVisible = true
 
 
         }
-        if(jenisKontrak.length!=0) {
+        if (namaOrganizer.length != 0) {
 //            val content = ContentValues()
 //            content.put(NAMA_CONTRACT,jenisKontrak )
 //            content.put(DES_CONTRACT, notesKontrak)
@@ -96,31 +93,31 @@ class FragmentFormContratctStatus(context:Context,val fm: FragmentManager) : Fra
 //            val db = databaseHelper.writableDatabase
 //
 //            val hasil = db.insert(TABEL_CONTRACT_STATUS, null,content)
-            val model = ContractStatus()
-            model.idContract = data!!.idContract
-            model.namaContract = jenisKontrak
-            model.desContract = notesKontrak
+            val model = TrainingOrganizer()
+            model.idTrainingOrganizer = data!!.idTrainingOrganizer
+            model.namaTrainingOrganizer = namaOrganizer
+            model.desTrainingOrganizer = notesOrganizer
+            val cekTrainingStatus = databaseQueryHelper!!.cekTrainingOrg(namaOrganizer)
 
-            val cekKontrakStatus = databaseQueryHelper!!.cekContractStatus(jenisKontrak)
-
-            if (modeForm == MODE_ADD){
-                if(cekKontrakStatus > 0){
+            if (modeForm == MODE_ADD) {
+                if (cekTrainingStatus > 0) {
                     Toast.makeText(context, DATA_SUDAH_ADA, Toast.LENGTH_SHORT).show()
                     return
                 }
-                if (databaseQueryHelper!!.tambahContractStatus(model) == -1L){
+                if (databaseQueryHelper!!.tambahTrainingOrg(model) == -1L) {
                     Toast.makeText(context, SIMPAN_DATA_GAGAL, Toast.LENGTH_SHORT).show()
                 } else {
                     Toast.makeText(context, SIMPAN_DATA_BERHASIL, Toast.LENGTH_SHORT)
                         .show()
                 }
-            } else if (modeForm == MODE_EDIT){
-                if ((cekKontrakStatus != 1 && model.namaContract == data!!.namaContract)||
-                    (cekKontrakStatus != 0 && model.namaContract != data!!.namaContract) ){
+            } else if (modeForm == MODE_EDIT) {
+                if ((cekTrainingStatus != 1 && model.namaTrainingOrganizer == data!!.namaTrainingOrganizer) ||
+                    (cekTrainingStatus != 0 && model.namaTrainingOrganizer != data!!.namaTrainingOrganizer)
+                ) {
                     Toast.makeText(context, DATA_SUDAH_ADA, Toast.LENGTH_SHORT).show()
                     return
                 }
-                if(databaseQueryHelper!!.editContractStatus(model) == 0){
+                if (databaseQueryHelper!!.editTrainingOrg(model) == 0) {
                     Toast.makeText(context, EDIT_DATA_GAGAL, Toast.LENGTH_SHORT)
                         .show()
                 } else {
@@ -129,31 +126,29 @@ class FragmentFormContratctStatus(context:Context,val fm: FragmentManager) : Fra
                 }
 
             }
-
             val viewPager = getView()!!.parent as ViewPager
-            val adapter = viewPager.adapter!! as ContractStatusFragmentAdapter
-            val fragment = fm.fragments[0] as FragmentDataContractStatus
+            val adapter = viewPager.adapter!! as TrainingOrganizerFragmentAdapter
+            val fragment = fm.fragments[0] as FragmentDataTrainingOrganizer
             fragment.updateKontrak()
             adapter.notifyDataSetChanged()
             viewPager.setCurrentItem(0, true)
 
         }
-
     }
-    fun resetJenisKontrak(){
-        inputNameNewContractStatus!!.setText("")
-        inputNotesNewContractStatus!!.setText("")
+    fun resetTrainingOrg(){
+        inputNameNewTrainingOrganizer!!.setText("")
+        inputNotesNewTrainingOrganizer.setText("")
     }
     fun deleteData(view: View){
         AlertDialog.Builder(context!!, R.style.AlertDialogTheme)
-            .setMessage("Hapus ${data!!.namaContract}")
+            .setMessage("Hapus ${data!!.namaTrainingOrganizer}")
             .setCancelable(false)
             .setPositiveButton("DELETE") { dialog, which ->
-                if (databaseQueryHelper!!.hapusContractStatus(data.idContract) != 0){
+                if (databaseQueryHelper!!.hapusTrainingOrg(data.idTrainingOrganizer) != 0){
                     Toast.makeText(context!!, "terhapus", Toast.LENGTH_SHORT).show()
                     val viewPager = view!!.parent.parent as ViewPager
-                    val adapter = viewPager.adapter!! as ContractStatusFragmentAdapter
-                    val fragment = fm.fragments[0] as FragmentDataContractStatus
+                    val adapter = viewPager.adapter!! as TrainingOrganizerFragmentAdapter
+                    val fragment = fm.fragments[0] as FragmentDataTrainingOrganizer
                     fragment.updateKontrak()
                     adapter.notifyDataSetChanged()
                     viewPager.setCurrentItem(0, true)
@@ -168,30 +163,30 @@ class FragmentFormContratctStatus(context:Context,val fm: FragmentManager) : Fra
             .create()
             .show()
     }
-    fun modeEdit(contractStatus: ContractStatus){
+    fun modeEdit(trainingOrganizer: TrainingOrganizer){
         modeForm = MODE_EDIT
         changeMode()
 
-        idData = contractStatus.idContract
-        nama!!.setText(contractStatus.namaContract)
-        notes!!.setText(contractStatus.desContract)
-        data = contractStatus
+        idData = trainingOrganizer.idTrainingOrganizer
+        nama!!.setText(trainingOrganizer.namaTrainingOrganizer)
+        notes!!.setText(trainingOrganizer.desTrainingOrganizer)
+        data = trainingOrganizer
 
     }
     fun modeAdd() {
         modeForm = MODE_ADD
         changeMode()
-        resetJenisKontrak()
-        data = ContractStatus()
+        resetTrainingOrg()
+        data = TrainingOrganizer()
     }
     fun changeMode() {
         if (modeForm == MODE_ADD) {
-            fragmenForm!!.text = TITLE_ADD
+            fragmenFormTrainingOrganizer!!.text = TITLE_ADD
 
-            buttonDeleteContractStatus!!.hide()
+            buttonDeleteTrainingOrganizer!!.hide()
         } else if (modeForm == MODE_EDIT) {
-            titleFromContractStatus!!.text = TITLE_EDIT
-            buttonDeleteContractStatus!!.show()
+            titleFromTrainingOrganizer!!.text = TITLE_EDIT
+            buttonDeleteTrainingOrganizer!!.show()
         }
     }
     private val textWatcher = object : TextWatcher {
@@ -205,13 +200,12 @@ class FragmentFormContratctStatus(context:Context,val fm: FragmentManager) : Fra
 
             val kondisi = !namaTeks.isEmpty() || !notesTeks.isEmpty()
 
-            ubahResetButton(context!!, kondisi, buttonResetNewContractStatus!!)
+            ubahResetButton(context!!, kondisi, buttonResetNewTrainingOrganizer!!)
         }
 
         override fun afterTextChanged(s: Editable) {
 
         }
     }
-
 
 }

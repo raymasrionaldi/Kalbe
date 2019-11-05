@@ -73,6 +73,9 @@
             android:id="@+id/nav_jenjangPendidikan"
             android:title="@string/menu_jenjang_pendidikan" />
         <item
+            android:id="@+id/nav_trainingOrganizer"
+            android:title="Training Organizer"/>
+        <item
             android:id="@+id/nav_employee"
             android:icon="@drawable/ic_folder_black"
             android:title="@string/menu_employee">
