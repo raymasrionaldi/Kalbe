@@ -25,6 +25,7 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/titleFromContractStatus"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -75,7 +76,9 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="30dp"
                 android:layout_weight="1"
-                android:backgroundTint="#F44336"
+                android:background="@drawable/button_reset_off"
+                android:clickable="false"
+                android:textColor="@color/warnaTeksResetOff"
                 android:text="RESET" />
 
             <Button
@@ -86,8 +89,9 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginRight="5dp"
                 android:layout_marginBottom="30dp"
+                android:background="@drawable/button_save"
                 android:layout_weight="1"
-                android:backgroundTint="#2196F3"
+                android:textColor="@color/colorWhite"
                 android:text="SAVE" />
 
 

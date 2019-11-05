@@ -3,7 +3,7 @@ import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.*
-import android.widget.SearchView
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -30,6 +30,7 @@ class FragmentDataContractStatus(context:Context, val fm: FragmentManager): Frag
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        setHasOptionsMenu(true)
         val customView = inflater.inflate(R.layout.fragment_data_contract_status, container, false)
         val layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         recyclerView = customView.findViewById(R.id.listJenisKontrak) as RecyclerView
@@ -52,7 +53,7 @@ class FragmentDataContractStatus(context:Context, val fm: FragmentManager): Frag
         databaseQueryHelper = ContractStatusQueryHelper(databaseHelper)
 
 
-        getSemuaKontrak(recyclerView, databaseQueryHelper!!)
+//        getSemuaKontrak(recyclerView, databaseQueryHelper!!)
 
 
         return customView
@@ -79,7 +80,7 @@ class FragmentDataContractStatus(context:Context, val fm: FragmentManager): Frag
     }
     fun updateKontrak() {
 
-        getSemuaKontrak(recyclerView, databaseQueryHelper!!)
+//        getSemuaKontrak(recyclerView, databaseQueryHelper!!)
     }
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.main, menu)
@@ -87,19 +88,19 @@ class FragmentDataContractStatus(context:Context, val fm: FragmentManager): Frag
         val myActionMenuItem = menu.findItem(R.id.action_search)
         val searchView = myActionMenuItem.actionView as SearchView
 
-        searchView!!.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
 
             override fun onQueryTextSubmit(query: String): Boolean {
                 // collapse the view ?
                 //menu.findItem(R.id.menu_search).collapseActionView();
-                Log.e("Fragment queryText", query)
+//                Log.e("Fragment queryText", query)
                 return false
             }
             override fun onQueryTextChange(keyword: String): Boolean {
                 // search goes here !!
                 // listAdapter.getFilter().filter(query);
                 // Log.e("Fragment queryText", keyword)
-                search(keyword,ContractStatusQueryHelper(DatabaseHelper(context!!)))
+                search(keyword,databaseQueryHelper!!)
 
                 /*TODO
                 1. do search based on active fragment table
