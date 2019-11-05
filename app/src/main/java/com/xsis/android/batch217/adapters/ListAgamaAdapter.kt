@@ -1,24 +1,21 @@
 package com.xsis.android.batch217.adapters
 
-import android.app.AlertDialog
 import android.content.Context
-import android.content.DialogInterface
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
 import com.xsis.android.batch217.R
 import com.xsis.android.batch217.adapters.fragments.AgamaFragmentAdapter
-import com.xsis.android.batch217.adapters.fragments.PositionLevelFragmentAdapter
+import com.xsis.android.batch217.databases.AgamaQueryHelper
 import com.xsis.android.batch217.databases.DatabaseHelper
 import com.xsis.android.batch217.models.Agama
+import com.xsis.android.batch217.ui.agama.AgamaFragmentData
 import com.xsis.android.batch217.ui.agama.AgamaFragmentForm
 import com.xsis.android.batch217.utils.*
 import com.xsis.android.batch217.viewholders.ViewHolderListAgama
-import kotlinx.android.synthetic.main.popup_layout.view.*
 
 class ListAgamaAdapter(val context: Context?, val listAgama: List<Agama>, val fm: FragmentManager) :
     RecyclerView.Adapter<ViewHolderListAgama>() {
@@ -34,6 +31,10 @@ class ListAgamaAdapter(val context: Context?, val listAgama: List<Agama>, val fm
     }
 
     override fun onBindViewHolder(holder: ViewHolderListAgama, position: Int) {
+        val databaseHelper = DatabaseHelper(context!!)
+        val databaseQueryHelper = AgamaQueryHelper(databaseHelper)
+
+
         val model = listAgama[position]
         holder.setModel(model)
 
@@ -59,27 +60,29 @@ class ListAgamaAdapter(val context: Context?, val listAgama: List<Agama>, val fm
                     }
                     1 -> {
                         window.dismiss()
-                        val konfirmasiDelete = AlertDialog.Builder(context)
-                        konfirmasiDelete.setMessage("Yakin mau hapus data ini ?")
-                            .setPositiveButton("Ya", DialogInterface.OnClickListener{ dialog, which ->
-                                Toast.makeText(context,"Hapus data", Toast.LENGTH_SHORT).show()
-                                val databaseHelper = DatabaseHelper(context)
-                                val db = databaseHelper.writableDatabase
-
-                                val queryDelete = "UPDATE $TABEL_AGAMA SET $IS_DELETED = 'true' WHERE $ID_KEAHLIAN = $position"
-                                db.execSQL(queryDelete)
-
-                            })
-                            .setNegativeButton("Tidak", DialogInterface.OnClickListener{ dialog, which ->
-                                dialog.cancel()
-                            })
-                            .setCancelable(true)
-
-                        konfirmasiDelete.create().show()
-
+                        androidx.appcompat.app.AlertDialog.Builder(context!!, R.style.AlertDialogTheme)
+                            .setMessage("Hapus ${model.nama_agama}")
+                            .setCancelable(false)
+                            .setPositiveButton("DELETE") { dialog, which ->
+                                if (databaseQueryHelper!!.hapusAgama(model.id_agama) != 0) {
+                                    Toast.makeText(context!!, HAPUS_DATA_BERHASIL, Toast.LENGTH_SHORT).show()
+                                    val fragment = fm.fragments[0] as AgamaFragmentData
+                                    val viewPager = fragment.view!!.parent as ViewPager
+                                    val adapter = viewPager.adapter!! as AgamaFragmentAdapter
+                                    fragment.updateContent()
+                                    adapter.notifyDataSetChanged()
+                                    viewPager.setCurrentItem(0, true)
+                                } else {
+                                    Toast.makeText(context!!, HAPUS_DATA_GAGAL, Toast.LENGTH_SHORT).show()
+                                }
+                            }
+                            .setNegativeButton("CANCEL") { dialog, which ->
+                            }
+                            .create()
+                            .show()
                     }
                 }
-//                Toast.makeText(context, "$position || $id", Toast.LENGTH_SHORT).show()
+                        //Toast.makeText(context, "$position || $id", Toast.LENGTH_SHORT).show()
             }
 
             window.show()

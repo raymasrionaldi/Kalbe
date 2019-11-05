@@ -13,6 +13,17 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <TextView
+            android:id="@+id/text_agama"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:textAlignment="center"
+            android:gravity="center_horizontal|center_vertical"
+            android:text="@string/menu_agama"
+            android:textSize="15sp"
+            android:textColor="@color/warnaBiru"
+            android:background="@drawable/custom_border_blue"/>
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/listAgamaRecycler"
             android:layout_width="match_parent"

@@ -1,11 +1,9 @@
 package com.xsis.android.batch217.databases
 
+import android.content.ContentValues
 import android.database.Cursor
 import com.xsis.android.batch217.models.Agama
-import com.xsis.android.batch217.utils.DES_AGAMA
-import com.xsis.android.batch217.utils.IS_DELETED
-import com.xsis.android.batch217.utils.NAMA_AGAMA
-import com.xsis.android.batch217.utils.TABEL_AGAMA
+import com.xsis.android.batch217.utils.*
 
 class AgamaQueryHelper(val databaseHelper: DatabaseHelper) {
 
@@ -58,5 +56,51 @@ class AgamaQueryHelper(val databaseHelper: DatabaseHelper) {
         }
 
         return listAgama
+    }
+
+    fun cekAgamaSudahAda(nama: String): Int {
+        val db = databaseHelper.readableDatabase
+        val queryCari =
+            "SELECT * FROM $TABEL_AGAMA WHERE $NAMA_AGAMA= '$nama' AND " +
+                    "$IS_DELETED = 'false'"
+
+        val cursor = db.rawQuery(queryCari, null)
+
+        return cursor.count
+    }
+
+    fun tambahAgama(model: Agama): Long {
+        val db = databaseHelper.writableDatabase
+
+        val values = ContentValues()
+        values.put(NAMA_AGAMA, model.nama_agama)
+        values.put(DES_AGAMA, model.des_agama)
+        values.put(IS_DELETED, "false")
+
+        return db.insert(TABEL_AGAMA, null, values)
+    }
+
+    fun editAgama(model: Agama): Int {
+        val db = databaseHelper.writableDatabase
+
+        val values = ContentValues()
+        values.put(NAMA_AGAMA, model.nama_agama)
+        values.put(DES_AGAMA, model.des_agama)
+
+        return db.update(
+            TABEL_AGAMA,
+            values,
+            "$ID_AGAMA = ?",
+            arrayOf(model.id_agama.toString())
+        )
+    }
+
+    fun hapusAgama(id: Int): Int {
+        val db = databaseHelper.writableDatabase
+
+        val values = ContentValues()
+        values.put(IS_DELETED, "true")
+
+        return db.update(TABEL_AGAMA, values, "$ID_AGAMA = ?", arrayOf(id.toString()))
     }
 }

@@ -86,6 +86,7 @@ class AgamaFragmentData(context: Context, val fm: FragmentManager) : Fragment() 
         val viewPager = view!!.parent as ViewPager
         val adapter = viewPager.adapter!! as AgamaFragmentAdapter
         val fragment = fm.fragments[1] as AgamaFragmentForm
+
         fragment.modeAdd()
         adapter.notifyDataSetChanged()
         viewPager.setCurrentItem(1, true)
