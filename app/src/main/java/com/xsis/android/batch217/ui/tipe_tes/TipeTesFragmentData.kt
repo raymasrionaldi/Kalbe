@@ -2,9 +2,9 @@ package com.xsis.android.batch217.ui.tipe_tes
 
 import android.content.Context
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.util.Log
+import android.view.*
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -48,12 +48,38 @@ class TipeTesFragmentData(context: Context, val fm: FragmentManager) : Fragment(
             addData()
         }
 
+        setHasOptionsMenu(true)
+
         val databaseHelper = DatabaseHelper(context!!)
         databaseQueryHelper = TipeTesQueryHelper(databaseHelper)
 
         getSemuaTipeTes(recyclerView!!, databaseQueryHelper!!)
 
         return customView
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.main, menu)
+
+        val myActionMenuItem = menu.findItem(R.id.action_search)
+        val searchView = myActionMenuItem.actionView as SearchView
+
+        searchView!!.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+
+            override fun onQueryTextSubmit(query: String): Boolean {
+                Log.e("Fragment queryText", query)
+                return false
+            }
+            override fun onQueryTextChange(keyword: String): Boolean {
+                search(keyword,databaseQueryHelper!!)
+                return true
+            }
+        })
+    }
+
+    fun search(keyword:String,databaseQueryHelper: TipeTesQueryHelper){
+        val listTipeTes= databaseQueryHelper.cariTipeTesModels(keyword)
+        tampilkanListTipeTes(listTipeTes,recyclerView!!)
     }
 
     fun addData() {
