@@ -81,7 +81,7 @@ class KeahlianQueryHelper(val databaseHelper: DatabaseHelper) {
         if (keyword.isNotBlank()) {
             val db = databaseHelper.readableDatabase
             val queryCari =
-                "SELECT * FROM $TABEL_KEAHLIAN WHERE ($NAMA_KEAHLIAN LIKE '%$keyword%' OR $DES_KEAHLIAN LIKE '%$keyword%') AND is_deleted='false'"
+                "SELECT * FROM $TABEL_KEAHLIAN WHERE $NAMA_KEAHLIAN LIKE '%$keyword%'  AND is_deleted='false'"
 
             val cursor = db.rawQuery(queryCari, null)
             if (cursor.count > 0) {
