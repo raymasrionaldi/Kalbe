@@ -11,17 +11,29 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.textfield.TextInputEditText
 import com.xsis.android.batch217.R
+import com.xsis.android.batch217.adapters.ListTipeIdentitasAdapter
 import com.xsis.android.batch217.databases.DatabaseHelper
+import com.xsis.android.batch217.databases.PendidikanQueryHelper
+import com.xsis.android.batch217.databases.TipeIdentitasQueryHelper
+import com.xsis.android.batch217.models.TipeIdentitas
 import com.xsis.android.batch217.utils.*
-import kotlinx.android.synthetic.main.fragment_tipe_identitas_tambah.*
-
 
 class TipeIdentitasTambahFragment:Fragment() {
+    var judul:TextView? = null
+    var nama:TextInputEditText? = null
+    var des:TextInputEditText? = null
+    var simpan:Button? = null
+    var batal:Button? = null
+    var clearNama:Button? = null
+    var clearDes:Button? = null
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -29,7 +41,25 @@ class TipeIdentitasTambahFragment:Fragment() {
     ): View? {
         val root = inflater.inflate(R.layout.fragment_tipe_identitas_tambah, container, false)
 
-//        setHasOptionsMenu(false)
+        judul = root.findViewById(R.id.judulFormTipeIdentitas) as TextView
+        nama = root.findViewById(R.id.tipeTipeIdentitas) as TextInputEditText
+        des = root.findViewById(R.id.deskripsiTipeIdentitas) as TextInputEditText
+        simpan = root.findViewById(R.id.tipeidentitasSimpan) as Button
+        batal = root.findViewById(R.id.tipeidentitasBatal) as Button
+        clearNama = root.findViewById(R.id.clearTipeIdentitas) as Button
+        clearDes = root.findViewById(R.id.clearDeskripsi) as Button
+
+        if (arguments != null){
+            if (arguments!!.getString("judul") != null){
+                judul!!.text = arguments!!.getString("judul")
+                nama!!.setText(arguments!!.getString("nama"))
+                des!!.setText(arguments!!.getString("des"))
+                clearNama!!.isVisible = true
+                clearDes!!.isVisible = true
+                simpan!!.isEnabled = true
+            }
+        }
+        hasOptionsMenu()
 
         cekIsi(root)
         hapus(root)
@@ -40,12 +70,20 @@ class TipeIdentitasTambahFragment:Fragment() {
 
     }
 
+    override fun onStart() {
+        super.onStart()
+        // where mText is the title you want on your toolbar/actionBar
+        activity!!.setTitle("Tipe Identitas")
+    }
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
         val callback = object : OnBackPressedCallback(
             true // default to enabled
         ) {
             override fun handleOnBackPressed() {
+//                tutup()
+//                pindahFragment_batal()
                 tutup()
             }
         }
@@ -62,18 +100,40 @@ class TipeIdentitasTambahFragment:Fragment() {
     fun simpan(view:View){
         val simpan = view.findViewById(R.id.tipeidentitasSimpan) as Button
         val tipeIdentitas_text = view.findViewById(R.id.tipeTipeIdentitas) as TextInputEditText
+        val tipeIdentitas_des = view.findViewById(R.id.deskripsiTipeIdentitas) as TextInputEditText
+
+        //read
+        val databaseHelper = DatabaseHelper(context!!)
+        val databaseQueryHelper = TipeIdentitasQueryHelper(databaseHelper)
 
         simpan.setOnClickListener {
             val nama = tipeIdentitas_text.text.toString().trim()
+            val des = tipeIdentitas_des.text.toString().trim()
+            var pindah = false
+
             if (nama.isEmpty()){
                 Toast.makeText(context,"Tipe identitas tidak boleh kosong !", Toast.LENGTH_SHORT).show()
             } else{
-                //Simpan ke database
-                insertKeTabelTipeIdentitas(view)
+                if (arguments!!.getString("judul") == null){
+                    //Simpan ke database
+                    insertKeTabelTipeIdentitas(view)
+                    pindah = true
+                }else{
+                    //Update
+                    val ada = databaseQueryHelper.updateTipeIdentitas(nama, des, arguments!!.getInt("id"))
+                    if (ada){
+                        Toast.makeText(context, DATA_SUDAH_ADA, Toast.LENGTH_SHORT).show()
+                    } else{
+                        pindah = true
+                    }
+                }
 
-                //Ke activity list tipe identitas (list sudah terbarui)
-                tutup()
-                pindahFragment()
+
+                if (pindah){
+                    //Ke activity list tipe identitas (list sudah terbarui)
+                    tutup()
+//                    pindahFragment()
+                }
             }
         }
     }
@@ -84,32 +144,63 @@ class TipeIdentitasTambahFragment:Fragment() {
 
         val nama = tipeIdentitas_text.text.toString().trim()
         val des = tipeIdentitas_deskripsi.text.toString().trim()
-        //Dengan cara content values
-        val content = ContentValues()
-        content.put(NAMA_IDENTITAS, nama)
-        content.put(DES_IDENTITAS, des)
-        content.put(IS_DELETED, "false")
 
-        //Insert
+        //read
         val databaseHelper = DatabaseHelper(context!!)
-        val db = databaseHelper.writableDatabase
+        val databaseQueryHelper = TipeIdentitasQueryHelper(databaseHelper)
+        val listTipeIdentitas = databaseQueryHelper.readNamaTipeIdentitas(nama)
 
-        db.insert(TABEL_TIPE_IDENTITAS, null, content)
+        if (listTipeIdentitas.size == 0){
+            //Dengan cara content values
+            val content = ContentValues()
+            content.put(NAMA_IDENTITAS, nama)
+            content.put(DES_IDENTITAS, des)
+            content.put(IS_DELETED, "false")
+
+            //Insert
+            val db = databaseHelper.writableDatabase
+            db.insert(TABEL_TIPE_IDENTITAS, null, content)
+
+        } else{
+            if (listTipeIdentitas[0].is_deleted == "true"){
+                val ada = databaseQueryHelper.updateTipeIdentitas(nama, des, listTipeIdentitas[0].id_TipeIdentitas)
+                if (ada){
+                    Toast.makeText(context, DATA_SUDAH_ADA, Toast.LENGTH_SHORT).show()
+                }
+            } else{
+                Toast.makeText(context, DATA_SUDAH_ADA, Toast.LENGTH_SHORT).show()
+            }
+        }
 
     }
 
     fun batal(view:View){
         val batal = view.findViewById(R.id.tipeidentitasBatal) as Button
         //Ke fragment list tipe identitas
-        batal.setOnClickListener { tutup() }
+        batal.setOnClickListener {
+            tutup()
+//            pindahFragment_batal()
+////            tutup()
+        }
     }
 
-    fun pindahFragment(){
+    fun pindahFragment(){//Untuk simpan
+        val bundle = Bundle()
+        bundle.putString("dariTambah", "iya")
         val fragment = TipeIdentitasFragment()
+        fragment.arguments = bundle
         val fragmentManager = getActivity()!!.getSupportFragmentManager()
         val fragmentTransaction = fragmentManager.beginTransaction()
         fragmentTransaction.replace(this.id, fragment)
-        fragmentTransaction.addToBackStack(null)
+        fragmentTransaction.commit()
+    }
+
+    fun pindahFragment_batal(){
+        val fragment = TipeIdentitasFragment()
+        fragment.arguments = null
+        val fragmentManager = getActivity()!!.getSupportFragmentManager()
+        val fragmentTransaction = fragmentManager.beginTransaction()
+        fragmentTransaction.replace(this.id, fragment)
         fragmentTransaction.commit()
     }
 
@@ -118,6 +209,8 @@ class TipeIdentitasTambahFragment:Fragment() {
         val tipeIdentitas_deskripsi = view.findViewById(R.id.deskripsiTipeIdentitas) as TextInputEditText
         val tipeIdentitas_simpan = view.findViewById(R.id.tipeidentitasSimpan) as Button
         val tipeIdentitas_error = view.findViewById(R.id.errorTipeIdentitas) as TextView
+        val clearDes = view.findViewById(R.id.clearDeskripsi) as Button
+        val clearTipe = view.findViewById(R.id.clearTipeIdentitas) as Button
 
         tipeIdentitas_text.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {}
@@ -128,12 +221,10 @@ class TipeIdentitasTambahFragment:Fragment() {
 
                 //Tipe identitas tidak boleh kosong
                 val tipeIdentitas = tipeIdentitas_text.text.toString().trim()
+                tipeIdentitas_error.isVisible = tipeIdentitas.isEmpty()
 
-                if (tipeIdentitas.isEmpty()){
-                    tipeIdentitas_error.isVisible = true
-                } else{
-                    tipeIdentitas_error.isVisible = false
-                }
+                //Tombol clear
+                clearTipe.isVisible = !tipeIdentitas.isEmpty()
             }
         })
         tipeIdentitas_deskripsi.addTextChangedListener(object : TextWatcher {
@@ -142,16 +233,21 @@ class TipeIdentitasTambahFragment:Fragment() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 //Enable tombol simpan ketika user sudah mulai mengisi form
                 tipeIdentitas_simpan.isEnabled = true
+
+                //Tombol clear
+                val des = tipeIdentitas_deskripsi.text.toString().trim()
+                clearDes.isVisible = !des.isEmpty()
             }
         })
     }
 
-    fun hapus(view:View){
+    fun hapus(view:View) {
         val tipeIdentitas_text = view.findViewById(R.id.tipeTipeIdentitas) as TextInputEditText
-        val tipeIdentitas_deskripsi = view.findViewById(R.id.deskripsiTipeIdentitas) as TextInputEditText
+        val tipeIdentitas_deskripsi =
+            view.findViewById(R.id.deskripsiTipeIdentitas) as TextInputEditText
         val clearDes = view.findViewById(R.id.clearDeskripsi) as Button
         val clearTipe = view.findViewById(R.id.clearTipeIdentitas) as Button
-        clearDes.setOnClickListener {tipeIdentitas_deskripsi.setText("") }
-        clearTipe.setOnClickListener {tipeIdentitas_text.setText("") }
+        clearDes.setOnClickListener { tipeIdentitas_deskripsi.setText("") }
+        clearTipe.setOnClickListener { tipeIdentitas_text.setText("") }
     }
 }

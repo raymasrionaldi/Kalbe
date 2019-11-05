@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.*
 import android.widget.Toast
+import android.widget.Toolbar
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.isVisible
@@ -23,6 +24,9 @@ import com.xsis.android.batch217.databases.TipeIdentitasQueryHelper
 import com.xsis.android.batch217.models.TipeIdentitas
 import kotlinx.android.synthetic.main.fragment_tipe_identitas.*
 import kotlinx.android.synthetic.main.fragment_tipe_identitas.view.*
+import androidx.appcompat.app.AppCompatActivity
+import java.nio.BufferUnderflowException
+
 
 class TipeIdentitasFragment:Fragment() {
     private lateinit var tipeIdentitasViewModel:TipeIdentitasViewModel
@@ -39,21 +43,27 @@ class TipeIdentitasFragment:Fragment() {
         tipeIdentitasViewModel = ViewModelProviders.of(this).get(TipeIdentitasViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_tipe_identitas, container, false)
 
+        if (arguments != null){
+            setHasOptionsMenu(false)
+        }else{
+            setHasOptionsMenu(true)
+        }
+
+
+
         val layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL,false)
         recyclerView = root.findViewById(R.id.listTipeIdentitasRecycler) as RecyclerView
         recyclerView!!.layoutManager = layoutManager
 
-
-//        setHasOptionsMenu(true)
-
         root.fab.setOnClickListener{view->
             pindahFragment()
+//            setHasOptionsMenu(false)
         }
 
         databaseHelper = DatabaseHelper(context!!)
         databaseQueryHelper = TipeIdentitasQueryHelper(databaseHelper!!)
 
-        getSemuaTipeIdentitas(recyclerView!!, databaseQueryHelper!!)
+//        getSemuaTipeIdentitas(recyclerView!!, databaseQueryHelper!!)
 
         return root
     }
@@ -70,11 +80,15 @@ class TipeIdentitasFragment:Fragment() {
     }
 
     fun pindahFragment(){
+        val bundle = Bundle()
+        bundle.putString("judul", null)
+
         val fragment = TipeIdentitasTambahFragment()
+        fragment.arguments = bundle
         val fragmentManager = getActivity()!!.getSupportFragmentManager()
         val fragmentTransaction = fragmentManager.beginTransaction()
         fragmentTransaction.replace(this.id, fragment)
-        fragmentTransaction.addToBackStack(null)
+//        fragmentTransaction.addToBackStack(null)
         fragmentTransaction.commit()
     }
 
@@ -84,7 +98,7 @@ class TipeIdentitasFragment:Fragment() {
         val myActionMenuItem = menu.findItem(R.id.action_search)
         val searchView = myActionMenuItem.actionView as SearchView
 
-        searchView!!.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
 
             override fun onQueryTextSubmit(query: String): Boolean {
                 // collapse the view ?
@@ -97,12 +111,6 @@ class TipeIdentitasFragment:Fragment() {
                 // listAdapter.getFilter().filter(query);
                 // Log.e("Fragment queryText", keyword)
                 search(keyword,TipeIdentitasQueryHelper(DatabaseHelper(context!!)))
-
-                /*TODO
-                1. do search based on active fragment table
-                2. send list result to active fragment
-                3.
-                */
                 return true
             }
         })

@@ -3,13 +3,14 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/fragment_tipe_identitas_tambah"
-    android:background="@color/warnaAbu">
+    android:background="@android:color/white">
     <TextView
+        android:id="@+id/judulFormTipeIdentitas"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
         android:textStyle="bold"
-        android:text="Ubah Tipe Identitas"
+        android:text="Tambah Tipe Identitas"
         android:textSize="30sp"/>
 
     <FrameLayout
@@ -28,7 +29,8 @@
                 android:layout_height="wrap_content"
                 android:text=""
                 android:layout_margin="5dp"
-                android:hint="Tipe Identitas*"/>
+                android:hint="Tipe Identitas*"
+                android:singleLine="true"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -38,7 +40,8 @@
             android:layout_height="30dp"
             android:layout_gravity="end|center_vertical"
             android:layout_marginRight="5dp"
-            android:background="@android:drawable/ic_notification_clear_all" />
+            android:background="@drawable/ic_cancel_black"
+            android:visibility="invisible"/>
     </FrameLayout>
     <TextView
         android:id="@+id/errorTipeIdentitas"
@@ -62,7 +65,8 @@
                 android:layout_height="wrap_content"
                 android:text=""
                 android:layout_margin="5dp"
-                android:hint="Deskripsi"/>
+                android:hint="Deskripsi"
+                android:singleLine="true"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -72,7 +76,8 @@
             android:layout_height="30dp"
             android:layout_gravity="end|center_vertical"
             android:layout_marginRight="5dp"
-            android:background="@android:drawable/ic_notification_clear_all" />
+            android:background="@drawable/ic_cancel_black"
+            android:visibility="invisible"/>
     </FrameLayout>
     <LinearLayout
         android:layout_width="match_parent"
