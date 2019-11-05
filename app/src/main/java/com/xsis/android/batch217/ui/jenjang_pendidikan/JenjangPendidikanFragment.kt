@@ -33,7 +33,11 @@ class JenjangPendidikanFragment : Fragment() {
         pendidikanViewModel = ViewModelProviders.of(this).get(JenjangPendidikanViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_jenjang_pendidikan, container, false)
 
-        setHasOptionsMenu(true)
+        if(arguments == null){
+            setHasOptionsMenu(true)
+        } else {
+            setHasOptionsMenu(false)
+        }
 
         val layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL,false)
         recyclerView = root.findViewById(R.id.listPendidikanRecycler) as RecyclerView
@@ -106,11 +110,4 @@ class JenjangPendidikanFragment : Fragment() {
         recyclerView.adapter = adapter
         adapter.notifyDataSetChanged()
     }
-
-    override fun onResume() {
-        println("HALO")
-        setHasOptionsMenu(true)
-        super.onResume()
-    }
-
 }

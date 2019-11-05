@@ -1,6 +1,7 @@
 package com.xsis.android.batch217.ui.jenjang_pendidikan
 
 import android.content.ContentValues
+import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -10,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import com.google.android.material.textfield.TextInputEditText
@@ -38,6 +40,22 @@ class JenjangPendidikanInputFragment: Fragment() {
 
 
         return root
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        val callback = object : OnBackPressedCallback(
+            true // default to enabled
+        ) {
+            override fun handleOnBackPressed() {
+                tutup()
+                pindahFragment()
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(
+            this, // LifecycleOwner
+            callback
+        )
     }
 
     fun cekIsi(view:View){
@@ -86,7 +104,7 @@ class JenjangPendidikanInputFragment: Fragment() {
             insertKeTabelPendidikan(view)
 
             //Ke activity list tipe identitas (list sudah terbarui)
-            tutup(view)
+            tutup()
             pindahFragment()
         }
     }
@@ -101,8 +119,6 @@ class JenjangPendidikanInputFragment: Fragment() {
         val databaseHelper = DatabaseHelper(context!!)
         val databaseQueryHelper = PendidikanQueryHelper(databaseHelper)
         val listPendidikan = databaseQueryHelper.readNamaPendidikan(nama)
-        println(listPendidikan.size)
-
         if (!listPendidikan.isEmpty()){
             //cek id_deleted
             if(listPendidikan[0].is_Deleted == "true"){
@@ -125,7 +141,7 @@ class JenjangPendidikanInputFragment: Fragment() {
         }
     }
 
-    fun tutup(view:View){
+    fun tutup(){
         getActivity()?.getFragmentManager()?.popBackStack();
         getActivity()!!.getSupportFragmentManager().beginTransaction().remove(this).commit()
 
@@ -143,7 +159,10 @@ class JenjangPendidikanInputFragment: Fragment() {
     fun batal(view:View){
         val batal = view.findViewById(R.id.btnBatalPendidikan) as Button
         //Ke fragment list tipe identitas
-        batal.setOnClickListener { tutup(view) }
+        batal.setOnClickListener {
+            tutup()
+            pindahFragment()
+        }
     }
 
     fun hapus(view:View){

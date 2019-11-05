@@ -75,6 +75,36 @@ class PendidikanQueryHelper(val databaseHelper:DatabaseHelper) {
         return listPendidikan
     }
 
+    fun readUpdate(id:Int, nama:String):List<Pendidikan>{
+        var listPendidikan = ArrayList<Pendidikan>()
+
+        val db = databaseHelper.writableDatabase
+        val queryUpdate = "SELECT * FROM $TABEL_PENDIDIKAN " +
+                "WHERE $NAMA_PENDIDIKAN = '$nama' AND $ID_PENDIDIKAN != '$id'"
+        val cursor = db.rawQuery(queryUpdate, null)
+        if (cursor.count > 0){
+            listPendidikan = konversiCursorKeListPendidikanModel(cursor)
+        }
+
+        println(queryUpdate)
+        return listPendidikan
+    }
+
+    fun updateDelete(id:Int, nama: String, des: String):List<Pendidikan>{
+        var listPendidikan = ArrayList<Pendidikan>()
+
+        val db = databaseHelper.writableDatabase
+        val queryUpdate = "UPDATE $TABEL_PENDIDIKAN " +
+                "SET $DES_PENDIDIKAN = '$des', $NAMA_PENDIDIKAN = '$nama' " +
+                "WHERE $ID_PENDIDIKAN = '$id'"
+        val cursor = db.rawQuery(queryUpdate, null)
+        if (cursor.count > 0){
+            listPendidikan = konversiCursorKeListPendidikanModel(cursor)
+        }
+        println(queryUpdate)
+        return listPendidikan
+    }
+
     fun cariPendidikanModels(keyword:String):List<Pendidikan>{
         var listPendidikan = ArrayList<Pendidikan>()
 

@@ -29,16 +29,18 @@ class JenjangPendidikanUpdateFragment:Fragment() {
         val title = root.findViewById(R.id.titlePendidikan) as TextView
         val nama = root.findViewById(R.id.teksPendidikan) as TextView
         val des = root.findViewById(R.id.teksDesPendidikan) as TextView
+        var idPendidikan = 0
 
         title.text = UPDATE_PENDIDIKAN
         if(arguments!!.getString("nama") != null){
+            idPendidikan = arguments!!.getInt("id")
             nama.setText(arguments!!.getString("nama"))
             des.setText(arguments!!.getString("des"))
         }
 
         cekIsi(root)
         hapus(root)
-        simpan(root)
+        simpan(root, idPendidikan)
         batal(root)
 
 
@@ -84,11 +86,11 @@ class JenjangPendidikanUpdateFragment:Fragment() {
         })
     }
 
-    fun simpan(view:View){
+    fun simpan(view:View, idPendidikan: Int){
         val simpan = view.findViewById(R.id.btnSimpanPendidikan) as Button
         simpan.setOnClickListener {
             //Simpan ke database
-            insertKeTabelPendidikan(view)
+            insertKeTabelPendidikan(view, idPendidikan)
 
             //Ke activity list tipe identitas (list sudah terbarui)
             tutup(view)
@@ -96,7 +98,7 @@ class JenjangPendidikanUpdateFragment:Fragment() {
         }
     }
 
-    fun insertKeTabelPendidikan(view:View){
+    fun insertKeTabelPendidikan(view:View, idPendidikan: Int){
         val nama_pendidikan = view.findViewById(R.id.teksPendidikan) as TextInputEditText
         val des_pendidikan = view.findViewById(R.id.teksDesPendidikan) as TextInputEditText
 
@@ -105,8 +107,13 @@ class JenjangPendidikanUpdateFragment:Fragment() {
         //read
         val databaseHelper = DatabaseHelper(context!!)
         val databaseQueryHelper = PendidikanQueryHelper(databaseHelper)
-        databaseQueryHelper.updatePendidikan(nama,des)
-        Toast.makeText(context, EDIT_DATA_BERHASIL, Toast.LENGTH_SHORT).show()
+        val listPendidikan = databaseQueryHelper.readUpdate(idPendidikan,nama)
+        if(listPendidikan.isEmpty()){
+            databaseQueryHelper.updateDelete(idPendidikan, nama,des)
+            Toast.makeText(context, EDIT_DATA_BERHASIL, Toast.LENGTH_SHORT).show()
+        } else {
+            Toast.makeText(context, DATA_SUDAH_ADA, Toast.LENGTH_SHORT).show()
+        }
     }
 
     fun tutup(view:View){
@@ -117,6 +124,7 @@ class JenjangPendidikanUpdateFragment:Fragment() {
 
     fun pindahFragment(){
         val fragment = JenjangPendidikanFragment()
+        //fragment.arguments = null
         val fragmentManager = getActivity()!!.getSupportFragmentManager()
         val fragmentTransaction = fragmentManager.beginTransaction()
         fragmentTransaction.replace(this.id, fragment)

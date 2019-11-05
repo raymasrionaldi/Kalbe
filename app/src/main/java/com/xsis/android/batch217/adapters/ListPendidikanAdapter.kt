@@ -45,6 +45,7 @@ class ListPendidikanAdapter(val context: Context?, val listPendidikan:List<Pendi
                     0 -> {
                         val fragment = JenjangPendidikanUpdateFragment() as Fragment
                         val bundle = Bundle()
+                        bundle.putInt("id", model.id_pendidikan)
                         bundle.putString("nama", model.nama_pendidikan)
                         bundle.putString("des", model.des_pendidikan)
                         fragment.arguments = bundle
