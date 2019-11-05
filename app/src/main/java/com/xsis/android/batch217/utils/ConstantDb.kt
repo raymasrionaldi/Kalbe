@@ -95,8 +95,8 @@ val DES_TES="des_tes"
 
 val TABEL_TRAINING= "training"
 val ID_TRAINING="id_training"
+val CODE_TRAINING="code_training"
 val NAMA_TRAINING="nama_training"
-val DES_TRAINING="des_training"
 
 val TABEL_TRAINING_ORG="training_organizer"
 val ID_TRAINING_ORG="id_to"
