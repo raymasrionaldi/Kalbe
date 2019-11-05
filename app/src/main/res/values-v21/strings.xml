@@ -33,6 +33,6 @@
     <string name="ubah_agama">Ubah Agama</string>
 
     <string name="hint_agama">Agama *</string>
-    <string name="hint_deskripsi">Deskripsi *</string>
+    <string name="hint_deskripsi">Deskripsi</string>
 
 </resources>
