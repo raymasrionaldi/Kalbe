@@ -1,6 +1,7 @@
 package com.xsis.android.batch217.ui.jenjang_pendidikan
 
 import android.content.ContentValues
+import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -10,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import com.google.android.material.textfield.TextInputEditText
@@ -45,6 +47,22 @@ class JenjangPendidikanUpdateFragment:Fragment() {
 
 
         return root
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        val callback = object : OnBackPressedCallback(
+            true // default to enabled
+        ) {
+            override fun handleOnBackPressed() {
+                tutup()
+//                pindahFragment()
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(
+            this, // LifecycleOwner
+            callback
+        )
     }
 
     fun cekIsi(view:View){
@@ -93,8 +111,8 @@ class JenjangPendidikanUpdateFragment:Fragment() {
             insertKeTabelPendidikan(view, idPendidikan)
 
             //Ke activity list tipe identitas (list sudah terbarui)
-            tutup(view)
-            pindahFragment()
+            tutup()
+//            pindahFragment()
         }
     }
 
@@ -116,26 +134,29 @@ class JenjangPendidikanUpdateFragment:Fragment() {
         }
     }
 
-    fun tutup(view:View){
+    fun tutup(){
         getActivity()?.getFragmentManager()?.popBackStack();
         getActivity()!!.getSupportFragmentManager().beginTransaction().remove(this).commit()
 
     }
 
-    fun pindahFragment(){
-        val fragment = JenjangPendidikanFragment()
-        //fragment.arguments = null
-        val fragmentManager = getActivity()!!.getSupportFragmentManager()
-        val fragmentTransaction = fragmentManager.beginTransaction()
-        fragmentTransaction.replace(this.id, fragment)
-        fragmentTransaction.addToBackStack(null)
-        fragmentTransaction.commit()
-    }
+//    fun pindahFragment(){
+//        val fragment = JenjangPendidikanFragment()
+//        //fragment.arguments = null
+//        val fragmentManager = getActivity()!!.getSupportFragmentManager()
+//        val fragmentTransaction = fragmentManager.beginTransaction()
+//        fragmentTransaction.replace(this.id, fragment)
+//        fragmentTransaction.addToBackStack(null)
+//        fragmentTransaction.commit()
+//    }
 
     fun batal(view:View){
         val batal = view.findViewById(R.id.btnBatalPendidikan) as Button
         //Ke fragment list tipe identitas
-        batal.setOnClickListener { tutup(view) }
+        batal.setOnClickListener {
+            tutup()
+//            pindahFragment()
+        }
     }
 
     fun hapus(view:View){

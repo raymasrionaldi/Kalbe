@@ -49,7 +49,7 @@ class JenjangPendidikanInputFragment: Fragment() {
         ) {
             override fun handleOnBackPressed() {
                 tutup()
-                pindahFragment()
+//                pindahFragment()
             }
         }
         requireActivity().onBackPressedDispatcher.addCallback(
@@ -105,7 +105,7 @@ class JenjangPendidikanInputFragment: Fragment() {
 
             //Ke activity list tipe identitas (list sudah terbarui)
             tutup()
-            pindahFragment()
+//            pindahFragment()
         }
     }
 
@@ -147,21 +147,22 @@ class JenjangPendidikanInputFragment: Fragment() {
 
     }
 
-    fun pindahFragment(){
-        val fragment = JenjangPendidikanFragment()
-        val fragmentManager = getActivity()!!.getSupportFragmentManager()
-        val fragmentTransaction = fragmentManager.beginTransaction()
-        fragmentTransaction.replace(this.id, fragment)
-        fragmentTransaction.addToBackStack(null)
-        fragmentTransaction.commit()
-    }
+//    fun pindahFragment(){
+//        val fragment = JenjangPendidikanFragment()
+//        //fragment.arguments = null
+//        val fragmentManager = getActivity()!!.getSupportFragmentManager()
+//        val fragmentTransaction = fragmentManager.beginTransaction()
+//        fragmentTransaction.replace(this.id, fragment)
+//        fragmentTransaction.addToBackStack(null)
+//        fragmentTransaction.commit()
+//    }
 
     fun batal(view:View){
         val batal = view.findViewById(R.id.btnBatalPendidikan) as Button
         //Ke fragment list tipe identitas
         batal.setOnClickListener {
             tutup()
-            pindahFragment()
+//            pindahFragment()
         }
     }
 

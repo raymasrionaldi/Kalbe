@@ -33,11 +33,11 @@ class JenjangPendidikanFragment : Fragment() {
         pendidikanViewModel = ViewModelProviders.of(this).get(JenjangPendidikanViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_jenjang_pendidikan, container, false)
 
-        if(arguments == null){
+//        if(arguments == null){
             setHasOptionsMenu(true)
-        } else {
-            setHasOptionsMenu(false)
-        }
+//        } else {
+//            setHasOptionsMenu(false)
+//        }
 
         val layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL,false)
         recyclerView = root.findViewById(R.id.listPendidikanRecycler) as RecyclerView
@@ -46,7 +46,7 @@ class JenjangPendidikanFragment : Fragment() {
 
         root.fab.setOnClickListener{view->
             pindahFragment()
-            setHasOptionsMenu(false)
+
         }
 
         databaseHelper = DatabaseHelper(context!!)
@@ -62,6 +62,7 @@ class JenjangPendidikanFragment : Fragment() {
     }
 
     fun pindahFragment(){
+        setHasOptionsMenu(false)
         val fragment = JenjangPendidikanInputFragment()
         val fragmentManager = getActivity()!!.getSupportFragmentManager()
         val fragmentTransaction = fragmentManager.beginTransaction()
