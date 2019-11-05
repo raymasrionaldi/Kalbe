@@ -45,20 +45,6 @@ class AgamaQueryHelper(val databaseHelper: DatabaseHelper) {
         return listAgama
     }
 
-    /*fun cariAgamaModels(keyword:String): List<Agama>{
-        var listAgama = ArrayList<Agama>()
-
-        val db = databaseHelper.readableDatabase
-        val queryCari = "SELECT * FROM $TABEL_AGAMA WHERE ($NAMA_AGAMA LIKE '%$keyword%' OR $DES_AGAMA LIKE '%$keyword%') AND $IS_DELETED='false'"
-
-        val cursor =db.rawQuery(queryCari,null)
-        if(cursor.count > 0){
-            listAgama = konversiCursorKeListAgamaModel(cursor)
-        }
-
-        return listAgama
-    }*/
-
     fun cariAgamaModels(keyword: String): List<Agama> {
         var listAgama = ArrayList<Agama>()
         if (keyword.isNotBlank()) {
