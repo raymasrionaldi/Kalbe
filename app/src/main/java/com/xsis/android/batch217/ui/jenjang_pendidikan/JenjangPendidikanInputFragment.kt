@@ -36,7 +36,47 @@ class JenjangPendidikanInputFragment: Fragment() {
         simpan(root)
         batal(root)
 
+
         return root
+    }
+
+    fun cekIsi(view:View){
+        val nama = view.findViewById(R.id.teksPendidikan) as TextInputEditText
+        val des = view.findViewById(R.id.teksDesPendidikan) as TextInputEditText
+        val btnSimpan = view.findViewById(R.id.btnSimpanPendidikan) as Button
+        val error = view.findViewById(R.id.teksErrorPendidikan) as TextView
+        val clearPendidikan = view.findViewById(R.id.clearPendidikan) as Button
+        val clearDes = view.findViewById(R.id.clearDeskripsi) as Button
+
+
+        nama.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {}
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                //Enable tombol simpan ketika user sudah mulai mengisi form
+                btnSimpan.isEnabled = true
+
+                //Tipe identitas tidak boleh kosong
+                val pendidikan = nama.text.toString().trim()
+                error.isVisible = pendidikan.isEmpty()
+
+                clearPendidikan.isVisible = !pendidikan.isEmpty()
+            }
+        })
+        des.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+            }
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                //Enable tombol simpan ketika user sudah mulai mengisi form
+                btnSimpan.isEnabled = true
+
+                val des = des.text.toString().trim()
+
+                clearDes.isVisible = !des.isEmpty()
+            }
+        })
     }
 
     fun simpan(view:View){
@@ -85,14 +125,10 @@ class JenjangPendidikanInputFragment: Fragment() {
         }
     }
 
-    fun batal(view:View){
-        val batal = view.findViewById(R.id.btnBatalPendidikan) as Button
-        //Ke fragment list tipe identitas
-        batal.setOnClickListener { tutup(view) }
-    }
-
     fun tutup(view:View){
         getActivity()?.getFragmentManager()?.popBackStack();
+        getActivity()!!.getSupportFragmentManager().beginTransaction().remove(this).commit()
+
     }
 
     fun pindahFragment(){
@@ -104,43 +140,10 @@ class JenjangPendidikanInputFragment: Fragment() {
         fragmentTransaction.commit()
     }
 
-    fun cekIsi(view:View){
-        val nama = view.findViewById(R.id.teksPendidikan) as TextInputEditText
-        val des = view.findViewById(R.id.teksDesPendidikan) as TextInputEditText
-        val btnSimpan = view.findViewById(R.id.btnSimpanPendidikan) as Button
-        val error = view.findViewById(R.id.teksErrorPendidikan) as TextView
-        val clearPendidikan = view.findViewById(R.id.clearPendidikan) as Button
-        val clearDes = view.findViewById(R.id.clearDeskripsi) as Button
-
-
-        nama.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable?) {}
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                //Enable tombol simpan ketika user sudah mulai mengisi form
-                btnSimpan.isEnabled = true
-
-                //Tipe identitas tidak boleh kosong
-                val pendidikan = nama.text.toString().trim()
-                error.isVisible = pendidikan.isEmpty()
-
-                clearPendidikan.isVisible = !pendidikan.isEmpty()
-            }
-        })
-        des.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable?) {
-            }
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-            }
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                //Enable tombol simpan ketika user sudah mulai mengisi form
-                btnSimpan.isEnabled = true
-
-                val des = des.text.toString().trim()
-
-                clearDes.isVisible = !des.isEmpty()
-            }
-        })
+    fun batal(view:View){
+        val batal = view.findViewById(R.id.btnBatalPendidikan) as Button
+        //Ke fragment list tipe identitas
+        batal.setOnClickListener { tutup(view) }
     }
 
     fun hapus(view:View){
