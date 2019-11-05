@@ -1,14 +1,21 @@
 package com.xsis.android.batch217.ui.jenjang_pendidikan
 
+import android.content.ContentValues
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import com.google.android.material.textfield.TextInputEditText
 import com.xsis.android.batch217.R
 import com.xsis.android.batch217.databases.DatabaseHelper
+import com.xsis.android.batch217.databases.PendidikanQueryHelper
 import com.xsis.android.batch217.utils.*
 import kotlinx.android.synthetic.main.fragment_jenjang_pendidikan_input.*
 
@@ -18,34 +25,118 @@ class JenjangPendidikanUpdateFragment:Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val ID_PENDIDIKAN = 0
         val root = inflater.inflate(R.layout.fragment_jenjang_pendidikan_input, container, false)
         val title = root.findViewById(R.id.titlePendidikan) as TextView
-        title.text = UPDATE_PENDIDIKAN
+        val nama = root.findViewById(R.id.teksPendidikan) as TextView
+        val des = root.findViewById(R.id.teksDesPendidikan) as TextView
 
-        loadData(root, ID_PENDIDIKAN)
+        title.text = UPDATE_PENDIDIKAN
+        if(arguments!!.getString("nama") != null){
+            nama.setText(arguments!!.getString("nama"))
+            des.setText(arguments!!.getString("des"))
+        }
+
+        cekIsi(root)
+        hapus(root)
+        simpan(root)
+        batal(root)
+
+
         return root
     }
 
-    fun loadData(view:View, id:Int){
-        val db = DatabaseHelper(context!!).readableDatabase
-        //Cara Projection
-        val projection =
-            arrayOf(NAMA_PENDIDIKAN, DES_PENDIDIKAN)
-        val selection = ID_PENDIDIKAN + "=?" //WHERE
-        val selectionArgs = arrayOf(id.toString())
+    fun cekIsi(view:View){
+        val nama = view.findViewById(R.id.teksPendidikan) as TextInputEditText
+        val des = view.findViewById(R.id.teksDesPendidikan) as TextInputEditText
+        val btnSimpan = view.findViewById(R.id.btnSimpanPendidikan) as Button
+        val error = view.findViewById(R.id.teksErrorPendidikan) as TextView
+        val clearPendidikan = view.findViewById(R.id.clearPendidikan) as Button
+        val clearDes = view.findViewById(R.id.clearDeskripsi) as Button
 
-        val cursor = db.query(TABEL_PENDIDIKAN, projection, selection, selectionArgs, null, null, null)
 
-        if(cursor!!.count==1){
-            //data ditemukan
-            cursor.moveToPosition(1)
-            teksPendidikan.setText(cursor.getInt(1))
-            teksDesPendidikan.setText(cursor.getString(2))
-        }
-        else{
-            //data tidak ditemukan
-            Toast.makeText(context, "Data Mahasiswa Tidak Ditemukan!", Toast.LENGTH_SHORT).show()
+        nama.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {}
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                //Enable tombol simpan ketika user sudah mulai mengisi form
+                btnSimpan.isEnabled = true
+
+                //Tipe identitas tidak boleh kosong
+                val pendidikan = nama.text.toString().trim()
+                error.isVisible = pendidikan.isEmpty()
+
+                clearPendidikan.isVisible = !pendidikan.isEmpty()
+            }
+        })
+        des.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+            }
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                //Enable tombol simpan ketika user sudah mulai mengisi form
+                btnSimpan.isEnabled = true
+
+                val des = des.text.toString().trim()
+
+                clearDes.isVisible = !des.isEmpty()
+            }
+        })
+    }
+
+    fun simpan(view:View){
+        val simpan = view.findViewById(R.id.btnSimpanPendidikan) as Button
+        simpan.setOnClickListener {
+            //Simpan ke database
+            insertKeTabelPendidikan(view)
+
+            //Ke activity list tipe identitas (list sudah terbarui)
+            tutup(view)
+            pindahFragment()
         }
     }
+
+    fun insertKeTabelPendidikan(view:View){
+        val nama_pendidikan = view.findViewById(R.id.teksPendidikan) as TextInputEditText
+        val des_pendidikan = view.findViewById(R.id.teksDesPendidikan) as TextInputEditText
+
+        val nama = nama_pendidikan.text.toString().trim()
+        val des = des_pendidikan.text.toString().trim()
+        //read
+        val databaseHelper = DatabaseHelper(context!!)
+        val databaseQueryHelper = PendidikanQueryHelper(databaseHelper)
+        databaseQueryHelper.updatePendidikan(nama,des)
+        Toast.makeText(context, EDIT_DATA_BERHASIL, Toast.LENGTH_SHORT).show()
+    }
+
+    fun tutup(view:View){
+        getActivity()?.getFragmentManager()?.popBackStack();
+        getActivity()!!.getSupportFragmentManager().beginTransaction().remove(this).commit()
+
+    }
+
+    fun pindahFragment(){
+        val fragment = JenjangPendidikanFragment()
+        val fragmentManager = getActivity()!!.getSupportFragmentManager()
+        val fragmentTransaction = fragmentManager.beginTransaction()
+        fragmentTransaction.replace(this.id, fragment)
+        fragmentTransaction.addToBackStack(null)
+        fragmentTransaction.commit()
+    }
+
+    fun batal(view:View){
+        val batal = view.findViewById(R.id.btnBatalPendidikan) as Button
+        //Ke fragment list tipe identitas
+        batal.setOnClickListener { tutup(view) }
+    }
+
+    fun hapus(view:View){
+        val nama = view.findViewById(R.id.teksPendidikan) as TextInputEditText
+        val des = view.findViewById(R.id.teksDesPendidikan) as TextInputEditText
+        val clearDes = view.findViewById(R.id.clearDeskripsi) as Button
+        val clearPendidikan = view.findViewById(R.id.clearPendidikan) as Button
+        clearDes.setOnClickListener {des.setText("") }
+        clearPendidikan.setOnClickListener {nama.setText("") }
+    }
+
 }

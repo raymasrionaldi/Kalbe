@@ -1,5 +1,6 @@
 package com.xsis.android.batch217.ui.jenjang_pendidikan
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -32,11 +33,12 @@ class JenjangPendidikanFragment : Fragment() {
         pendidikanViewModel = ViewModelProviders.of(this).get(JenjangPendidikanViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_jenjang_pendidikan, container, false)
 
+        setHasOptionsMenu(true)
+
         val layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL,false)
         recyclerView = root.findViewById(R.id.listPendidikanRecycler) as RecyclerView
         recyclerView!!.layoutManager = layoutManager
 
-        setHasOptionsMenu(true)
 
         root.fab.setOnClickListener{view->
             pindahFragment()
@@ -46,7 +48,7 @@ class JenjangPendidikanFragment : Fragment() {
         databaseHelper = DatabaseHelper(context!!)
         databaseQueryHelper = PendidikanQueryHelper(databaseHelper!!)
 
-        getSemuaPendidikan(recyclerView!!, PendidikanQueryHelper(DatabaseHelper(context!!)))
+//        getSemuaPendidikan(recyclerView!!, PendidikanQueryHelper(DatabaseHelper(context!!)))
 
         return root
     }
@@ -59,7 +61,7 @@ class JenjangPendidikanFragment : Fragment() {
         val fragment = JenjangPendidikanInputFragment()
         val fragmentManager = getActivity()!!.getSupportFragmentManager()
         val fragmentTransaction = fragmentManager.beginTransaction()
-        fragmentTransaction.replace(R.id.fragment_jenjang_pendidikan, fragment)
+        fragmentTransaction.replace(this.id, fragment)
         fragmentTransaction.addToBackStack(null)
         fragmentTransaction.commit()
     }
@@ -104,4 +106,11 @@ class JenjangPendidikanFragment : Fragment() {
         recyclerView.adapter = adapter
         adapter.notifyDataSetChanged()
     }
+
+    override fun onResume() {
+        println("HALO")
+        setHasOptionsMenu(true)
+        super.onResume()
+    }
+
 }
