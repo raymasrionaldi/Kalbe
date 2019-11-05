@@ -1,6 +1,5 @@
 package com.xsis.android.batch217
 
-import android.app.PendingIntent.getActivity
 import android.os.Bundle
 import android.view.Menu
 import androidx.appcompat.app.AppCompatActivity
@@ -13,12 +12,6 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.navigation.NavigationView
 import com.xsis.android.batch217.databases.DatabaseHelper
-import androidx.core.app.ComponentActivity.ExtraData
-import androidx.core.content.ContextCompat.getSystemService
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
-
-
-
 
 class HomeActivity : AppCompatActivity() {
     val databaseHelper = DatabaseHelper(this)
@@ -39,7 +32,24 @@ class HomeActivity : AppCompatActivity() {
         // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.nav_home, R.id.nav_employee
+                R.id.nav_home,
+                R.id.nav_agama,
+                R.id.nav_tipe_identitas,
+                R.id.nav_backOfficePosition,
+                R.id.nav_company,
+                R.id.nav_contactStatus,
+                R.id.nav_employeStatus,
+                R.id.nav_employeType,
+                R.id.nav_grade,
+                R.id.nav_jadwal,
+                R.id.nav_tipeTes,
+                R.id.nav_jenisCatatan,
+                R.id.nav_positionLevel,
+                R.id.nav_keahlian,
+                R.id.nav_providerTools,
+                R.id.nav_training,
+                R.id.nav_jenjangPendidikan,
+                R.id.nav_employee
             ), drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
