@@ -53,7 +53,7 @@ class AgamaFragmentData(context: Context, val fm: FragmentManager) : Fragment() 
         val databaseHelper = DatabaseHelper(context!!)
         databaseQueryHelper = AgamaQueryHelper(databaseHelper)
 
-        getSemuaAgama(recyclerView!!, databaseQueryHelper!!)
+//       getSemuaAgama(recyclerView!!, databaseQueryHelper!!)
 
         return customView
     }
@@ -78,6 +78,7 @@ class AgamaFragmentData(context: Context, val fm: FragmentManager) : Fragment() 
 
     fun search(keyword:String,databaseQueryHelper: AgamaQueryHelper){
         val listAgama= databaseQueryHelper.cariAgamaModels(keyword)
+//        val listCompany = databaseQueryHelper.cariCompanyModels(keyword)
         tampilkanListAgama(listAgama,recyclerView!!)
     }
 

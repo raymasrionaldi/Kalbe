@@ -20,7 +20,6 @@ import com.xsis.android.batch217.databases.DatabaseHelper
 import com.xsis.android.batch217.models.Agama
 import com.xsis.android.batch217.utils.*
 
-
 class AgamaFragmentForm(context: Context, val fm: FragmentManager) : Fragment() {
     var title: TextView? = null
     var clearAgama: Button? = null
@@ -106,6 +105,7 @@ class AgamaFragmentForm(context: Context, val fm: FragmentManager) : Fragment() 
 
         return customView
     }
+
     fun resetForm() {
         agamaText!!.setText("")
         deskripsi!!.setText("")
@@ -113,7 +113,6 @@ class AgamaFragmentForm(context: Context, val fm: FragmentManager) : Fragment() 
         var required = view!!.findViewById(R.id.requiredAgama) as TextView
         required.visibility= View.GONE
     }
-
 
     fun modeEdit(agama: Agama) {
         modeForm = MODE_EDIT
@@ -132,9 +131,6 @@ class AgamaFragmentForm(context: Context, val fm: FragmentManager) : Fragment() 
         clearDeskripsi!!.setOnClickListener {
             deskripsi!!.setText("")
         }
-
-
-
         data = agama
     }
 
@@ -180,25 +176,6 @@ class AgamaFragmentForm(context: Context, val fm: FragmentManager) : Fragment() 
         }
     }
 
-//    fun showDeleteDialog() {
-//        AlertDialog.Builder(context!!, R.style.AlertDialogTheme)
-//            .setMessage("Hapus ${data!!.nama_agama}")
-//            .setCancelable(false)
-//            .setPositiveButton("DELETE") { dialog, which ->
-//                Toast.makeText(context!!, "terhapus", Toast.LENGTH_SHORT).show()
-//                val viewPager = view!!.parent as ViewPager
-//                val adapter = viewPager.adapter!! as AgamaFragmentAdapter
-//                val fragment = fm.fragments[0] as AgamaFragmentData
-//                fragment.updateContent()
-//                adapter.notifyDataSetChanged()
-//                viewPager.setCurrentItem(0, true)
-//            }
-//            .setNegativeButton("CANCEL") { dialog, which ->
-//                null
-//            }
-//            .create()
-//            .show()
-//    }
 
     private val textWatcher = object : TextWatcher {
         override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
@@ -221,62 +198,6 @@ class AgamaFragmentForm(context: Context, val fm: FragmentManager) : Fragment() 
         }
     }
 
-    /*fun simpanAgama() {
-
-        val required = view!!.findViewById(R.id.requiredAgama) as TextView
-        val namaAgama = agamaText!!.text.toString().trim()
-        val deskripsiAgama = deskripsi!!.text.toString().trim()
-
-        agamaText!!.setHintTextColor(defaultColor)
-        required!!.visibility = View.INVISIBLE
-
-        if (namaAgama.isEmpty()) {
-            agamaText!!.setHintTextColor(Color.RED)
-            required.visibility = View.VISIBLE
-        } else {
-            //Toast.makeText(context, "Kirim ke DB", Toast.LENGTH_SHORT).show()
-            val model = Agama()
-            model.id_agama= data.id_agama
-            model.nama_agama = namaAgama
-            model.des_agama = deskripsiAgama
-
-            val cekAgama = databaseQueryHelper!!.cekAgamaSudahAda(model.nama_agama!!)
-
-            if (modeForm == AgamaFragmentForm.MODE_ADD) {
-                if (cekAgama > 0) {
-                    Toast.makeText(context, DATA_SUDAH_ADA, Toast.LENGTH_SHORT).show()
-                    return
-                }
-                if (databaseQueryHelper!!.tambahAgama(model) == -1L) {
-                    Toast.makeText(context, SIMPAN_DATA_GAGAL, Toast.LENGTH_SHORT).show()
-                } else {
-                    Toast.makeText(context, SIMPAN_DATA_BERHASIL, Toast.LENGTH_SHORT)
-                        .show()
-                }
-            } else if (modeForm == AgamaFragmentForm.MODE_EDIT) {
-                if ((cekAgama != 1 && model.nama_agama == data.nama_agama) ||
-                    (cekAgama != 0 && model.nama_agama != data.nama_agama)
-                ) {
-                    Toast.makeText(context, DATA_SUDAH_ADA, Toast.LENGTH_SHORT).show()
-                    return
-                }
-                if (databaseQueryHelper!!.editAgama(model) == 0) {
-                    Toast.makeText(context, EDIT_DATA_GAGAL, Toast.LENGTH_SHORT)
-                        .show()
-                } else {
-                    Toast.makeText(context, EDIT_DATA_BERHASIL, Toast.LENGTH_SHORT)
-                        .show()
-                }
-            }
-
-            val viewPager = view!!.parent as ViewPager
-            val adapter = viewPager.adapter!! as AgamaFragmentAdapter
-            val fragment = fm.fragments[0] as AgamaFragmentData
-            fragment.updateContent()
-            adapter.notifyDataSetChanged()
-            viewPager.setCurrentItem(0, true)
-        }
-    }*/
 
     fun simpanAgama() {
 
