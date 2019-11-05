@@ -15,8 +15,8 @@ import com.xsis.android.batch217.utils.ambilDuaInisial
 class ViewHolderListJenisCatatan(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     var teksUtama = itemView.findViewById(R.id.isiTeks) as TextView
-
     var id = itemView.findViewById(R.id.gambarLingkaran) as NameInitialsCircleImageView
+    val bukaMenu = itemView.findViewById(R.id.bukaMenu) as ImageView
 
     fun setModel(model: JenisCatatan) {
         val nama = model.nama_catatan

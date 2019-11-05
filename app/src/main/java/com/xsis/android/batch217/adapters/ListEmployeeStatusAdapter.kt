@@ -5,8 +5,15 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager.widget.ViewPager
 import com.xsis.android.batch217.R
+import com.xsis.android.batch217.adapters.fragments.CompanyFragmentAdapter
+import com.xsis.android.batch217.adapters.fragments.EmployeeStatusFragmentAdapter
+import com.xsis.android.batch217.models.Company
 import com.xsis.android.batch217.models.EmployeeStatus
+import com.xsis.android.batch217.ui.company.CompanyFragmentForm
+import com.xsis.android.batch217.ui.employe_status.EmployeeStatusFragmentForm
+import com.xsis.android.batch217.viewholders.ViewHolderListCompany
 import com.xsis.android.batch217.viewholders.ViewHolderListEmployeeStatus
 
 class ListEmployeeStatusAdapter(
@@ -16,7 +23,7 @@ class ListEmployeeStatusAdapter(
 ) : RecyclerView.Adapter<ViewHolderListEmployeeStatus>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolderListEmployeeStatus {
         val customLayout =
-            LayoutInflater.from(parent.context).inflate(R.layout.list_dot_layout, parent, false)
+            LayoutInflater.from(parent.context).inflate(R.layout.list_layout, parent, false)
         return ViewHolderListEmployeeStatus(customLayout)
     }
 
@@ -27,5 +34,15 @@ class ListEmployeeStatusAdapter(
     override fun onBindViewHolder(holder: ViewHolderListEmployeeStatus, position: Int) {
         val model = listEmployeeStatus[position]
         holder.setModel(model)
+
+        holder.layoutList.setOnClickListener { view ->
+            val fragment = fm.fragments[1] as EmployeeStatusFragmentForm
+            val viewPager = fragment.view!!.parent as ViewPager
+            val adapter = viewPager.adapter!! as EmployeeStatusFragmentAdapter
+
+            fragment.modeEdit(model)
+            adapter.notifyDataSetChanged()
+            viewPager.setCurrentItem(1, true)
+        }
     }
 }

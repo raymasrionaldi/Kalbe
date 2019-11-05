@@ -12,26 +12,35 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.viewpager.widget.ViewPager
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.xsis.android.batch217.R
 import com.xsis.android.batch217.adapters.fragments.EmployeeStatusFragmentAdapter
+import com.xsis.android.batch217.adapters.fragments.JenisCatatanFragmentAdapter
+import com.xsis.android.batch217.databases.DatabaseHelper
+import com.xsis.android.batch217.databases.EmployeeStatusQueryHelper
 import com.xsis.android.batch217.models.EmployeeStatus
-import com.xsis.android.batch217.utils.ubahSimpanButton
+import com.xsis.android.batch217.models.JenisCatatan
+import com.xsis.android.batch217.ui.jenis_catatan.JenisCatatanFragmentData
+import com.xsis.android.batch217.ui.jenis_catatan.JenisCatatanFragmentForm
+import com.xsis.android.batch217.utils.*
 
 class EmployeeStatusFragmentForm(context: Context, val fm: FragmentManager) : Fragment() {
     var title: TextView? = null
-    var buttonBatal: Button? = null
+    var buttonReset: Button? = null
     var buttonSimpan: Button? = null
     var employeeStatusText: EditText? = null
-    var buttonResetEmployeeStatus: Button? = null
-    var buttonResetDeskripsi: Button? = null
     var deskripsi: EditText? = null
+    var buttonDelete: FloatingActionButton? = null
     var defaultColor = 0
     var modeForm = 0
     var idData = 0
-    var data: EmployeeStatus? = null
+    var data = EmployeeStatus()
+
+    var databaseQueryHelper: EmployeeStatusQueryHelper? = null
 
     companion object {
         const val TITLE_ADD = "Add New Employee Status"
@@ -46,37 +55,31 @@ class EmployeeStatusFragmentForm(context: Context, val fm: FragmentManager) : Fr
         savedInstanceState: Bundle?
     ): View? {
         val customView = inflater.inflate(R.layout.fragment_form_employee_status, container, false)
+
+        val databaseHelper = DatabaseHelper(context!!)
+        databaseQueryHelper = EmployeeStatusQueryHelper(databaseHelper)
+
         title = customView.findViewById(R.id.titleFormEmployeeStatus) as TextView
 
         buttonSimpan = customView.findViewById(R.id.buttonSimpanEmployeeStatus) as Button
-        buttonBatal = customView.findViewById(R.id.buttonBatalEmployeeStatus) as Button
+        buttonReset = customView.findViewById(R.id.buttonBatalEmployeeStatus) as Button
         employeeStatusText = customView.findViewById(R.id.inputNamaEmployeeStatus) as EditText
         defaultColor = employeeStatusText!!.currentHintTextColor
         deskripsi = customView.findViewById(R.id.inputNotesEmployeeStatus) as EditText
-        buttonResetEmployeeStatus = customView.findViewById(R.id.resetFieldEmployeeStatus) as Button
-        buttonResetDeskripsi = customView.findViewById(R.id.resetFieldDeskripsiEmployeeStatus) as Button
 
-        buttonResetEmployeeStatus!!.setOnClickListener {
-            employeeStatusText!!.setText("")
-        }
-
-        buttonResetDeskripsi!!.setOnClickListener{
-            deskripsi!!.setText("")
-        }
+        buttonDelete =
+            customView.findViewById(R.id.buttonDeleteEmployeeStatus) as FloatingActionButton
 
         buttonSimpan!!.setOnClickListener {
             simpanEmployeeStatus()
         }
 
-        buttonBatal!!.setOnClickListener {
-            Toast.makeText(context!!, "batal", Toast.LENGTH_SHORT).show()
-            val viewPager = view!!.parent as ViewPager
-            val adapter = viewPager.adapter!! as EmployeeStatusFragmentAdapter
-            val fragment = fm.fragments[0] as EmployeeStatusFragmentData
-            fragment.updateContent()
-            adapter.notifyDataSetChanged()
-            viewPager.setCurrentItem(0, true)
+        buttonReset!!.setOnClickListener {
+            resetForm()
+        }
 
+        buttonDelete!!.setOnClickListener {
+            showDeleteDialog()
         }
 
         employeeStatusText!!.addTextChangedListener(textWatcher)
@@ -92,14 +95,14 @@ class EmployeeStatusFragmentForm(context: Context, val fm: FragmentManager) : Fr
         deskripsi!!.setText("")
     }
 
-
     fun modeEdit(employeeStatus: EmployeeStatus) {
         modeForm = MODE_EDIT
-        //changeMode()
+        changeMode()
 
         idData = employeeStatus.id_employee_status
         employeeStatusText!!.setText(employeeStatus.nama_employee_status)
         deskripsi!!.setText(employeeStatus.des_employee_status)
+
         data = employeeStatus
     }
 
@@ -107,35 +110,42 @@ class EmployeeStatusFragmentForm(context: Context, val fm: FragmentManager) : Fr
         modeForm = MODE_ADD
         changeMode()
         resetForm()
+        data = EmployeeStatus()
     }
 
     fun changeMode() {
         if (modeForm == MODE_ADD) {
             title!!.text = TITLE_ADD
+            buttonDelete!!.hide()
         } else if (modeForm == MODE_EDIT) {
             title!!.text = TITLE_EDIT
+            buttonDelete!!.show()
         }
     }
 
-//    fun showDeleteDialog() {
-//        AlertDialog.Builder(context!!, R.style.AlertDialogTheme)
-//            .setMessage("Hapus ${data!!.nama_tipe_tes}")
-//            .setCancelable(false)
-//            .setPositiveButton("DELETE") { dialog, which ->
-//                Toast.makeText(context!!, "terhapus", Toast.LENGTH_SHORT).show()
-//                val viewPager = view!!.parent as ViewPager
-//                val adapter = viewPager.adapter!! as TipeTesFragmentAdapter
-//                val fragment = fm.fragments[0] as TipeTesFragmentData
-//                fragment.updateContent()
-//                adapter.notifyDataSetChanged()
-//                viewPager.setCurrentItem(0, true)
-//            }
-//            .setNegativeButton("CANCEL") { dialog, which ->
-//                null
-//            }
-//            .create()
-//            .show()
-//    }
+
+    fun showDeleteDialog() {
+        AlertDialog.Builder(context!!, R.style.AlertDialogTheme)
+            .setMessage("Hapus ${data!!.nama_employee_status} ?")
+            .setCancelable(false)
+            .setPositiveButton("DELETE") { dialog, which ->
+                if (databaseQueryHelper!!.hapusEmployeeStatus(data.id_employee_status) != 0) {
+                    Toast.makeText(context!!, HAPUS_DATA_BERHASIL, Toast.LENGTH_SHORT).show()
+                    val viewPager = view!!.parent as ViewPager
+                    val adapter = viewPager.adapter!! as EmployeeStatusFragmentAdapter
+                    val fragment = fm.fragments[0] as EmployeeStatusFragmentData
+                    fragment.updateContent()
+                    adapter.notifyDataSetChanged()
+                    viewPager.setCurrentItem(0, true)
+                } else {
+                    Toast.makeText(context!!, HAPUS_DATA_GAGAL, Toast.LENGTH_SHORT).show()
+                }
+            }
+            .setNegativeButton("CANCEL") { dialog, which ->
+            }
+            .create()
+            .show()
+    }
 
     private val textWatcher = object : TextWatcher {
         override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
@@ -150,13 +160,6 @@ class EmployeeStatusFragmentForm(context: Context, val fm: FragmentManager) : Fr
 
             ubahSimpanButton(context!!, kondisi, buttonSimpan!!)
 
-            if(employeeStatusTeks.isNotEmpty()){
-                buttonResetEmployeeStatus?.visibility = View.VISIBLE
-            }
-            if(deskripsiTeks.isNotEmpty()){
-                buttonResetDeskripsi?.visibility = View.VISIBLE
-            }
-
         }
 
         override fun afterTextChanged(s: Editable) {
@@ -165,7 +168,6 @@ class EmployeeStatusFragmentForm(context: Context, val fm: FragmentManager) : Fr
     }
 
     fun simpanEmployeeStatus() {
-
         val required = view!!.findViewById(R.id.requiredNamaEmployeeStatus) as TextView
 
         val namaEmployeeStatus = employeeStatusText!!.text.toString().trim()
@@ -177,9 +179,51 @@ class EmployeeStatusFragmentForm(context: Context, val fm: FragmentManager) : Fr
         if (namaEmployeeStatus.isEmpty()) {
             employeeStatusText!!.setHintTextColor(Color.RED)
             required.visibility = View.VISIBLE
-        } else {
-
-            Toast.makeText(context, "Kirim ke DB", Toast.LENGTH_SHORT).show()
         }
+
+        if (namaEmployeeStatus.isNotEmpty()) {
+            val model = EmployeeStatus()
+            model.id_employee_status = data.id_employee_status
+            model.nama_employee_status = namaEmployeeStatus
+            model.des_employee_status = deskripsiEmployeeStatus
+
+
+            val cekEmployeeStatus = databaseQueryHelper!!.cekEmployeeStatusSudahAda(model.nama_employee_status!!)
+
+            if (modeForm == EmployeeStatusFragmentForm.MODE_ADD) {
+                if (cekEmployeeStatus > 0) {
+                    Toast.makeText(context, DATA_SUDAH_ADA, Toast.LENGTH_SHORT).show()
+                    return
+                }
+                if (databaseQueryHelper!!.tambahEmployeeStatus(model) == -1L) {
+                    Toast.makeText(context, SIMPAN_DATA_GAGAL, Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(context, SIMPAN_DATA_BERHASIL, Toast.LENGTH_SHORT)
+                        .show()
+                }
+            } else if (modeForm == JenisCatatanFragmentForm.MODE_EDIT) {
+                if ((cekEmployeeStatus != 1 && model.nama_employee_status == data.nama_employee_status) ||
+                    (cekEmployeeStatus != 0 && model.nama_employee_status != data.nama_employee_status)
+                ) {
+                    Toast.makeText(context, DATA_SUDAH_ADA, Toast.LENGTH_SHORT).show()
+                    return
+                }
+                if (databaseQueryHelper!!.editEmployeeStatus(model) == 0) {
+                    Toast.makeText(context, EDIT_DATA_GAGAL, Toast.LENGTH_SHORT)
+                        .show()
+                } else {
+                    Toast.makeText(context, EDIT_DATA_BERHASIL, Toast.LENGTH_SHORT)
+                        .show()
+                }
+            }
+
+            val viewPager = view!!.parent as ViewPager
+            val adapter = viewPager.adapter!! as EmployeeStatusFragmentAdapter
+            val fragment = fm.fragments[0] as EmployeeStatusFragmentData
+            fragment.updateContent()
+            adapter.notifyDataSetChanged()
+            viewPager.setCurrentItem(0, true)
+        }
+
     }
 }

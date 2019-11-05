@@ -1,6 +1,9 @@
 package com.xsis.android.batch217.databases
 
+import android.content.ContentValues
 import android.database.Cursor
+import com.xsis.android.batch217.models.Agama
+import com.xsis.android.batch217.models.EmployeeStatus
 import com.xsis.android.batch217.models.JenisCatatan
 import com.xsis.android.batch217.models.PositionLevel
 import com.xsis.android.batch217.utils.*
@@ -48,16 +51,60 @@ class JenisCatatanQueryHelper(val databaseHelper: DatabaseHelper) {
         var listJenisCatatan = ArrayList<JenisCatatan>()
 
         val db = databaseHelper.readableDatabase
-        val queryCari =
-            "SELECT * FROM $TABEL_CATATAN WHERE $NAMA_CATATAN LIKE '%$keyword%' AND " +
-                    "$IS_DELETED = 'false'"
+        val queryCari = "SELECT * FROM $TABEL_CATATAN WHERE ($NAMA_CATATAN LIKE '%$keyword%' OR $DES_CATATAN LIKE '%$keyword%') AND $IS_DELETED='false'"
 
-        val cursor = db.rawQuery(queryCari, null)
-        if (cursor.count > 0) {
+        val cursor =db.rawQuery(queryCari,null)
+        if(cursor.count > 0){
             listJenisCatatan = konversiCursorKeListJenisCatatanModel(cursor)
         }
 
         return listJenisCatatan
+    }
+
+    fun tambahJenisCatatan(model: JenisCatatan): Long {
+        val db = databaseHelper.writableDatabase
+
+        val values = ContentValues()
+        values.put(NAMA_CATATAN, model.nama_catatan)
+        values.put(DES_CATATAN, model.des_catatan)
+        values.put(IS_DELETED, "false")
+
+        return db.insert(TABEL_CATATAN, null, values)
+    }
+
+    fun editJenisCatatan(model: JenisCatatan): Int {
+        val db = databaseHelper.writableDatabase
+        //println("model = ${model.nama_catatan} ${model.des_catatan}")
+        val values = ContentValues()
+        values.put(NAMA_CATATAN, model.nama_catatan)
+        values.put(DES_CATATAN, model.des_catatan)
+
+        return db.update(
+            TABEL_CATATAN,
+            values,
+            "$ID_CATATAN = ?",
+            arrayOf(model.id_catatan.toString())
+        )
+    }
+
+    fun hapusJenisCatatan(id: Int): Int {
+        val db = databaseHelper.writableDatabase
+
+        val values = ContentValues()
+        values.put(IS_DELETED, "true")
+
+        return db.update(TABEL_CATATAN, values, "$ID_CATATAN = ?", arrayOf(id.toString()))
+    }
+
+    fun cekJenisCatatanSudahAda(nama: String): Int {
+        val db = databaseHelper.readableDatabase
+        val queryCari =
+            "SELECT * FROM $TABEL_CATATAN WHERE $NAMA_CATATAN = '$nama' AND " +
+                    "$IS_DELETED = 'false'"
+
+        val cursor = db.rawQuery(queryCari, null)
+
+        return cursor.count
     }
 }
 

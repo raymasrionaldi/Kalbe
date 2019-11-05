@@ -17,9 +17,10 @@ import androidx.fragment.app.FragmentManager
 import androidx.viewpager.widget.ViewPager
 import com.xsis.android.batch217.R
 import com.xsis.android.batch217.adapters.fragments.JenisCatatanFragmentAdapter
+import com.xsis.android.batch217.databases.DatabaseHelper
+import com.xsis.android.batch217.databases.JenisCatatanQueryHelper
 import com.xsis.android.batch217.models.JenisCatatan
-import com.xsis.android.batch217.utils.ubahSimpanButton
-import kotlinx.android.synthetic.main.fragment_form_jenis_catatan.*
+import com.xsis.android.batch217.utils.*
 
 class JenisCatatanFragmentForm(context: Context, val fm: FragmentManager) : Fragment() {
     var title: TextView? = null
@@ -32,11 +33,13 @@ class JenisCatatanFragmentForm(context: Context, val fm: FragmentManager) : Frag
     var defaultColor = 0
     var modeForm = 0
     var idData = 0
-    var data: JenisCatatan? = null
+    var data = JenisCatatan()
+
+    var databaseQueryHelper: JenisCatatanQueryHelper? = null
 
     companion object {
         const val TITLE_ADD = "Tambah Jenis Catatan"
-        const val TITLE_EDIT = "Ubah Jenis Catatan Tes"
+        const val TITLE_EDIT = "Ubah Jenis Catatan"
         const val MODE_ADD = 0
         const val MODE_EDIT = 1
     }
@@ -47,8 +50,12 @@ class JenisCatatanFragmentForm(context: Context, val fm: FragmentManager) : Frag
         savedInstanceState: Bundle?
     ): View? {
         val customView = inflater.inflate(R.layout.fragment_form_jenis_catatan, container, false)
-        title = customView.findViewById(R.id.titleFormJenisCatatan) as TextView
 
+        val databaseHelper = DatabaseHelper(context!!)
+        databaseQueryHelper = JenisCatatanQueryHelper(databaseHelper)
+
+
+        title = customView.findViewById(R.id.titleFormJenisCatatan) as TextView
         buttonSimpan = customView.findViewById(R.id.buttonSimpanJenisCatatan) as Button
         buttonBatal = customView.findViewById(R.id.buttonBatalJenisCatatan) as Button
         jenisCatatanText = customView.findViewById(R.id.inputNamaJenisCatatan) as EditText
@@ -66,18 +73,18 @@ class JenisCatatanFragmentForm(context: Context, val fm: FragmentManager) : Frag
         }
 
         buttonSimpan!!.setOnClickListener {
-            simpanTipeTes()
+            simpanJenisCatatan()
         }
 
         buttonBatal!!.setOnClickListener {
-            Toast.makeText(context!!, "batal", Toast.LENGTH_SHORT).show()
+            resetForm()
+            //Toast.makeText(context!!, "batal", Toast.LENGTH_SHORT).show()
             val viewPager = view!!.parent as ViewPager
             val adapter = viewPager.adapter!! as JenisCatatanFragmentAdapter
             val fragment = fm.fragments[0] as JenisCatatanFragmentData
             fragment.updateContent()
             adapter.notifyDataSetChanged()
             viewPager.setCurrentItem(0, true)
-
         }
 
         jenisCatatanText!!.addTextChangedListener(textWatcher)
@@ -93,14 +100,14 @@ class JenisCatatanFragmentForm(context: Context, val fm: FragmentManager) : Frag
         deskripsi!!.setText("")
     }
 
-
     fun modeEdit(jenisCatatan: JenisCatatan) {
         modeForm = MODE_EDIT
-        //changeMode()
+        changeMode()
 
         idData = jenisCatatan.id_catatan
         jenisCatatanText!!.setText(jenisCatatan.nama_catatan)
         deskripsi!!.setText(jenisCatatan.des_catatan)
+
         data = jenisCatatan
     }
 
@@ -108,6 +115,7 @@ class JenisCatatanFragmentForm(context: Context, val fm: FragmentManager) : Frag
         modeForm = MODE_ADD
         changeMode()
         resetForm()
+        data = JenisCatatan()
     }
 
     fun changeMode() {
@@ -117,26 +125,6 @@ class JenisCatatanFragmentForm(context: Context, val fm: FragmentManager) : Frag
             title!!.text = TITLE_EDIT
         }
     }
-
-//    fun showDeleteDialog() {
-//        AlertDialog.Builder(context!!, R.style.AlertDialogTheme)
-//            .setMessage("Hapus ${data!!.nama_tipe_tes}")
-//            .setCancelable(false)
-//            .setPositiveButton("DELETE") { dialog, which ->
-//                Toast.makeText(context!!, "terhapus", Toast.LENGTH_SHORT).show()
-//                val viewPager = view!!.parent as ViewPager
-//                val adapter = viewPager.adapter!! as TipeTesFragmentAdapter
-//                val fragment = fm.fragments[0] as TipeTesFragmentData
-//                fragment.updateContent()
-//                adapter.notifyDataSetChanged()
-//                viewPager.setCurrentItem(0, true)
-//            }
-//            .setNegativeButton("CANCEL") { dialog, which ->
-//                null
-//            }
-//            .create()
-//            .show()
-//    }
 
     private val textWatcher = object : TextWatcher {
         override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
@@ -154,8 +142,17 @@ class JenisCatatanFragmentForm(context: Context, val fm: FragmentManager) : Frag
             if(jenisCatatanTeks.isNotEmpty()){
                 buttonResetJenisCatatan?.visibility = View.VISIBLE
             }
+
+            if(jenisCatatanTeks.isEmpty()){
+                buttonResetJenisCatatan?.visibility = View.INVISIBLE
+            }
+
             if(deskripsiTeks.isNotEmpty()){
                 buttonResetDeskripsi?.visibility = View.VISIBLE
+            }
+
+            if(deskripsiTeks.isEmpty()){
+                buttonResetDeskripsi?.visibility = View.INVISIBLE
             }
 
         }
@@ -165,7 +162,7 @@ class JenisCatatanFragmentForm(context: Context, val fm: FragmentManager) : Frag
         }
     }
 
-    fun simpanTipeTes() {
+    fun simpanJenisCatatan() {
 
         val required = view!!.findViewById(R.id.requiredNamaJenisCatatan) as TextView
 
@@ -178,9 +175,50 @@ class JenisCatatanFragmentForm(context: Context, val fm: FragmentManager) : Frag
         if (namaJenisCatatan.isEmpty()) {
             jenisCatatanText!!.setHintTextColor(Color.RED)
             required.visibility = View.VISIBLE
-        } else {
+        }
 
-            Toast.makeText(context, "Kirim ke DB", Toast.LENGTH_SHORT).show()
+        if (namaJenisCatatan.isNotEmpty()) {
+            val model = JenisCatatan()
+            model.id_catatan = data.id_catatan
+            model.nama_catatan = namaJenisCatatan
+            model.des_catatan = deskripsiJenisCatatan
+
+
+            val cekJenisCatatan = databaseQueryHelper!!.cekJenisCatatanSudahAda(model.nama_catatan!!)
+
+            if (modeForm == JenisCatatanFragmentForm.MODE_ADD) {
+                if (cekJenisCatatan > 0) {
+                    Toast.makeText(context, DATA_SUDAH_ADA, Toast.LENGTH_SHORT).show()
+                    return
+                }
+                if (databaseQueryHelper!!.tambahJenisCatatan(model) == -1L) {
+                    Toast.makeText(context, SIMPAN_DATA_GAGAL, Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(context, SIMPAN_DATA_BERHASIL, Toast.LENGTH_SHORT)
+                        .show()
+                }
+            } else if (modeForm == JenisCatatanFragmentForm.MODE_EDIT) {
+                if ((cekJenisCatatan != 1 && model.nama_catatan == data.nama_catatan) ||
+                    (cekJenisCatatan != 0 && model.nama_catatan != data.nama_catatan)
+                ) {
+                    Toast.makeText(context, DATA_SUDAH_ADA, Toast.LENGTH_SHORT).show()
+                    return
+                }
+                if (databaseQueryHelper!!.editJenisCatatan(model) == 0) {
+                    Toast.makeText(context, EDIT_DATA_GAGAL, Toast.LENGTH_SHORT)
+                        .show()
+                } else {
+                    Toast.makeText(context, EDIT_DATA_BERHASIL, Toast.LENGTH_SHORT)
+                        .show()
+                }
+            }
+
+            val viewPager = view!!.parent as ViewPager
+            val adapter = viewPager.adapter!! as JenisCatatanFragmentAdapter
+            val fragment = fm.fragments[0] as JenisCatatanFragmentData
+            fragment.updateContent()
+            adapter.notifyDataSetChanged()
+            viewPager.setCurrentItem(0, true)
         }
     }
 }
