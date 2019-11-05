@@ -1,5 +1,6 @@
 package com.xsis.android.batch217.databases
 
+import android.content.ContentValues
 import android.database.Cursor
 import com.xsis.android.batch217.models.Agama
 import com.xsis.android.batch217.models.Keahlian
@@ -15,10 +16,10 @@ class KeahlianQueryHelper(val databaseHelper: DatabaseHelper) {
         return db.rawQuery(queryRead, null)
     }
 
-    private fun konversiCursorKeListKeahlianModel(cursor: Cursor): ArrayList<Keahlian>{
+    private fun konversiCursorKeListKeahlianModel(cursor: Cursor): ArrayList<Keahlian> {
         var listKeahlian = ArrayList<Keahlian>()
 
-        for(c in 0 until cursor.count){
+        for (c in 0 until cursor.count) {
             cursor.moveToPosition(c)
 
             val keahlian = Keahlian()
@@ -33,18 +34,18 @@ class KeahlianQueryHelper(val databaseHelper: DatabaseHelper) {
         return listKeahlian
     }
 
-    fun readSemuaKeahlianModels(): List<Keahlian>{
+    fun readSemuaKeahlianModels(): List<Keahlian> {
         var listKeahlian = ArrayList<Keahlian>()
 
         val cursor = getSemuaKeahlian()
-        if(cursor.count > 0){
+        if (cursor.count > 0) {
             listKeahlian = konversiCursorKeListKeahlianModel(cursor)
         }
 
         return listKeahlian
     }
 
-    fun readNamaKeahlian(nama:String):List<Keahlian>{
+    fun readNamaKeahlian(nama: String): List<Keahlian> {
         var listKeahlian = ArrayList<Keahlian>()
 
         val db = databaseHelper.readableDatabase
@@ -52,14 +53,14 @@ class KeahlianQueryHelper(val databaseHelper: DatabaseHelper) {
                 "WHERE $NAMA_KEAHLIAN = '$nama' "
         val cursor = db.rawQuery(queryCari, null)
 
-        if (cursor.count > 0){
+        if (cursor.count > 0) {
             listKeahlian = konversiCursorKeListKeahlianModel(cursor)
         }
 
         return listKeahlian
     }
 
-    fun updateKeahlian(nama: String, des: String):List<Keahlian>{
+    fun updateKeahlian(nama: String, des: String): List<Keahlian> {
         var listKeahlian = ArrayList<Keahlian>()
 
         val db = databaseHelper.writableDatabase
@@ -67,24 +68,36 @@ class KeahlianQueryHelper(val databaseHelper: DatabaseHelper) {
                 "SET $DES_KEAHLIAN = '$des', $IS_DELETED = 'false' " +
                 "WHERE $NAMA_KEAHLIAN = '$nama' AND $IS_DELETED = 'true'"
         val cursor = db.rawQuery(queryUpdate, null)
-        if (cursor.count > 0){
+        if (cursor.count > 0) {
             listKeahlian = konversiCursorKeListKeahlianModel(cursor)
         }
         println(queryUpdate)
         return listKeahlian
     }
 
-    fun cariKeahlianModels(keyword:String): List<Keahlian>{
+    fun cariKeahlianModels(keyword: String): List<Keahlian> {
         var listKeahlian = ArrayList<Keahlian>()
 
-        val db = databaseHelper.readableDatabase
-        val queryCari = "SELECT * FROM $TABEL_KEAHLIAN WHERE ($NAMA_KEAHLIAN LIKE '%$keyword%' OR $DES_KEAHLIAN LIKE '%$keyword%') AND is_deleted='false'"
+        if (keyword.isNotBlank()) {
+            val db = databaseHelper.readableDatabase
+            val queryCari =
+                "SELECT * FROM $TABEL_KEAHLIAN WHERE ($NAMA_KEAHLIAN LIKE '%$keyword%' OR $DES_KEAHLIAN LIKE '%$keyword%') AND is_deleted='false'"
 
-        val cursor =db.rawQuery(queryCari,null)
-        if(cursor.count > 0){
-            listKeahlian = konversiCursorKeListKeahlianModel(cursor)
+            val cursor = db.rawQuery(queryCari, null)
+            if (cursor.count > 0) {
+                listKeahlian = konversiCursorKeListKeahlianModel(cursor)
+            }
         }
 
         return listKeahlian
+    }
+
+    fun hapusKeahlian(id: Int): Int {
+        val db = databaseHelper.writableDatabase
+
+        val values = ContentValues()
+        values.put(IS_DELETED, "true")
+
+        return db.update(TABEL_KEAHLIAN, values, "$ID_KEAHLIAN = ?", arrayOf(id.toString()))
     }
 }

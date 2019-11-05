@@ -57,7 +57,7 @@ class KeahlianFragment : Fragment() {
         databaseHelper = DatabaseHelper(context!!)
         databaseQueryHelper = KeahlianQueryHelper(databaseHelper!!)
         //panggil isi tabel keahlian
-        getSemuaKeahlian(recyclerView!!, databaseQueryHelper!!)
+//        getSemuaKeahlian(recyclerView!!, databaseQueryHelper!!)
 
         return root
     }

@@ -33,11 +33,11 @@ class InputDataKeahlianActivity : AppCompatActivity() {
         //Simpan ke database
         val simpan = tipeKeahlianSimpan as Button
         simpan.setOnClickListener{
-            insertKeDatabase()
             if (tipeKeahlian.text.toString().trim().isEmpty()) {
                 //tidak ada aksi
             }
             else{
+                insertKeDatabase()
                 finish()
             }
 

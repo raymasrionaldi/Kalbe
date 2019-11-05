@@ -10,13 +10,11 @@ import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.xsis.android.batch217.R
 import com.xsis.android.batch217.databases.DatabaseHelper
+import com.xsis.android.batch217.databases.KeahlianQueryHelper
 import com.xsis.android.batch217.models.Keahlian
 import com.xsis.android.batch217.ui.keahlian.KeahlianFragment
 import com.xsis.android.batch217.ui.keahlian.UbahDataKeahlianActivity
-import com.xsis.android.batch217.utils.ID_KEAHLIAN
-import com.xsis.android.batch217.utils.IS_DELETED
-import com.xsis.android.batch217.utils.TABEL_KEAHLIAN
-import com.xsis.android.batch217.utils.showPopupMenuUbahHapus
+import com.xsis.android.batch217.utils.*
 import com.xsis.android.batch217.viewholders.ViewHolderListKeahlian
 import kotlinx.android.synthetic.main.popup_layout.view.*
 
@@ -35,6 +33,9 @@ class ListKeahlianAdapter(val context: Context?,
     override fun onBindViewHolder(holder: ViewHolderListKeahlian, position: Int) {
         val selectedListKeahlain = listKeahlian[position]
         holder.setModelKeahlian(selectedListKeahlain)
+        val databaseHelper = DatabaseHelper(context!!)
+        val databaseQueryHelper = KeahlianQueryHelper(databaseHelper)
+        val db = databaseHelper.writableDatabase
 
         holder.bukaMenu.setOnClickListener {view ->
             val window = showPopupMenuUbahHapus(
@@ -51,17 +52,17 @@ class ListKeahlianAdapter(val context: Context?,
                     }
                     1 -> {
                         val konfirmasiDelete = AlertDialog.Builder(context)
-                        konfirmasiDelete.setMessage("Yakin mau hapus data ini ?")
-                            .setPositiveButton("Ya", DialogInterface.OnClickListener{ dialog, which ->
-                                Toast.makeText(context,"Hapus data", Toast.LENGTH_SHORT).show()
-                                val databaseHelper = DatabaseHelper(context)
-                                val db = databaseHelper.writableDatabase
+                        konfirmasiDelete.setMessage("Hapus data ${selectedListKeahlain.nama_keahlian} ?")
+                            .setPositiveButton("HAPUS", DialogInterface.OnClickListener{ dialog, which ->
+                                if (databaseQueryHelper!!.hapusKeahlian(selectedListKeahlain.id_keahlian) != 0) {
+                                    Toast.makeText(context!!, HAPUS_DATA_BERHASIL, Toast.LENGTH_SHORT).show()
 
-                                val queryDelete = "UPDATE $TABEL_KEAHLIAN SET $IS_DELETED = 'true' WHERE $ID_KEAHLIAN = ${selectedListKeahlain.id_keahlian}"
-                                db.execSQL(queryDelete)
+                                } else {
+                                    Toast.makeText(context!!, HAPUS_DATA_GAGAL, Toast.LENGTH_SHORT).show()
+                                }
 
                             })
-                            .setNegativeButton("Tidak", DialogInterface.OnClickListener{ dialog, which ->
+                            .setNegativeButton("BATAL", DialogInterface.OnClickListener{ dialog, which ->
                                 dialog.cancel()
                             })
                             .setCancelable(true)

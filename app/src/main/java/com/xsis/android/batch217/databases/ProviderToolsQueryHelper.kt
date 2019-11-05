@@ -47,14 +47,16 @@ class ProviderToolsQueryHelper(val databaseHelper: DatabaseHelper) {
     fun cariProviderToolsModels(keyword: String): List<ProviderTools> {
         var listProviderTools = ArrayList<ProviderTools>()
 
-        val db = databaseHelper.readableDatabase
-        val queryCari =
-            "SELECT * FROM $TABEL_PROVIDER WHERE $NAMA_PROVIDER LIKE '%$keyword%' AND " +
-                    "$IS_DELETED = 'false'"
+        if (keyword.isNotBlank()) {
+            val db = databaseHelper.readableDatabase
+            val queryCari =
+                "SELECT * FROM $TABEL_PROVIDER WHERE $NAMA_PROVIDER LIKE '%$keyword%' AND " +
+                        "$IS_DELETED = 'false'"
 
-        val cursor = db.rawQuery(queryCari, null)
-        if (cursor.count > 0) {
-            listProviderTools = konversiCursorKeListProviderToolsModel(cursor)
+            val cursor = db.rawQuery(queryCari, null)
+            if (cursor.count > 0) {
+                listProviderTools = konversiCursorKeListProviderToolsModel(cursor)
+            }
         }
 
         return listProviderTools
