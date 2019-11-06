@@ -10,7 +10,7 @@ class TipeTesQueryHelper(val databaseHelper: DatabaseHelper) {
     fun getSemuaTipeTes(): Cursor {
         val db = databaseHelper.readableDatabase
 
-        val queryRead = "SELECT * FROM $TABEL_TIPE_TES"
+        val queryRead = "SELECT * FROM $TABEL_TIPE_TES WHERE $IS_DELETED = 'false'"
 
         return db.rawQuery(queryRead, null)
     }

@@ -97,12 +97,21 @@
                 android:visibility="invisible"/>
 
         </FrameLayout>
-        <EditText
-            android:id="@+id/inputTipeTes"
+
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Tipe Tes *"
-            android:inputType="text" />
+            android:orientation="horizontal">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/inputTipeTes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:layout_margin="5dp"
+                android:hint="Tipe Tes*"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
             android:id="@+id/requiredTipeTes"
@@ -112,11 +121,20 @@
             android:textColor="@color/warnaMerah"
             android:visibility="invisible" />
 
-        <EditText
-            android:id="@+id/inputDeskripsiTipeTes"
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/hint_deskripsi" />
+            android:orientation="horizontal">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/inputDeskripsiTipeTes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:layout_margin="5dp"
+                android:hint="Deskripsi"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
 
         <LinearLayout
             android:layout_width="match_parent"

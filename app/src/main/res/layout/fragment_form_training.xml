@@ -22,6 +22,7 @@
             android:textSize="@dimen/title_form_text_size"
             android:textStyle="bold" />
 
+
         <EditText
             android:id="@+id/inputCodeTraining"
             android:layout_width="match_parent"
@@ -36,7 +37,7 @@
             android:text="Required"
             android:textColor="@color/warnaMerah"
             android:textSize="@dimen/text_size_small"
-            android:visibility="invisible" />
+            android:visibility="invisible"/>
 
         <EditText
             android:id="@+id/inputNamaTraining"
@@ -53,7 +54,6 @@
             android:textColor="@color/warnaMerah"
             android:textSize="@dimen/text_size_small"
             android:visibility="invisible" />
-
 
         <LinearLayout
             android:layout_width="match_parent"
