@@ -42,7 +42,7 @@ class KeluargaFragmentData(context: Context, val fm: FragmentManager) : Fragment
 
         val buttonAdd =customView.findViewById(R.id.buttonAddKeluarga) as FloatingActionButton
         buttonAdd.setOnClickListener {
-            addData()
+            addData() //Belum
         }
 
         val databaseHelper = DatabaseHelper(context!!)
@@ -52,12 +52,7 @@ class KeluargaFragmentData(context: Context, val fm: FragmentManager) : Fragment
     }
 
     fun addData() {
-        val viewPager = view!!.parent as ViewPager
-        val adapter = viewPager.adapter!! as CompanyFragmentAdapter
-        val fragment = fm.fragments[1] as CompanyFragmentForm
-        fragment.modeAdd()
-        adapter.notifyDataSetChanged()
-        viewPager.setCurrentItem(1, true)
+
     }
 
     fun tampilkanListKeluargaData(
