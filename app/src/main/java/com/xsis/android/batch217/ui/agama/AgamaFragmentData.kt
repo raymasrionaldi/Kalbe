@@ -22,6 +22,7 @@ import androidx.appcompat.widget.SearchView
 class AgamaFragmentData(context: Context, val fm: FragmentManager) : Fragment() {
     var recyclerView: RecyclerView? = null
     var databaseQueryHelper: AgamaQueryHelper? = null
+    var SEARCH_KEYWORD :String =""
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -53,7 +54,6 @@ class AgamaFragmentData(context: Context, val fm: FragmentManager) : Fragment() 
         val databaseHelper = DatabaseHelper(context!!)
         databaseQueryHelper = AgamaQueryHelper(databaseHelper)
 
-//       getSemuaAgama(recyclerView!!, databaseQueryHelper!!)
 
         return customView
     }
@@ -70,7 +70,9 @@ class AgamaFragmentData(context: Context, val fm: FragmentManager) : Fragment() 
                 return false
             }
             override fun onQueryTextChange(keyword: String): Boolean {
+                SEARCH_KEYWORD=keyword
                 search(keyword,databaseQueryHelper!!)
+
                 return true
             }
         })
@@ -78,7 +80,7 @@ class AgamaFragmentData(context: Context, val fm: FragmentManager) : Fragment() 
 
     fun search(keyword:String,databaseQueryHelper: AgamaQueryHelper){
         val listAgama= databaseQueryHelper.cariAgamaModels(keyword)
-//        val listCompany = databaseQueryHelper.cariCompanyModels(keyword)
+        //val listCompany = databaseQueryHelper.cariCompanyModels(keyword)
         tampilkanListAgama(listAgama,recyclerView!!)
     }
 
@@ -111,6 +113,6 @@ class AgamaFragmentData(context: Context, val fm: FragmentManager) : Fragment() 
     }
 
     fun updateContent() {
-        getSemuaAgama(recyclerView!!, databaseQueryHelper!!)
+        search(SEARCH_KEYWORD,databaseQueryHelper!!)
     }
 }

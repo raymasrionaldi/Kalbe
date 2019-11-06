@@ -12,8 +12,10 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
 import com.xsis.android.batch217.R
+import com.xsis.android.batch217.adapters.ListAgamaAdapter
 import com.xsis.android.batch217.adapters.fragments.AgamaFragmentAdapter
 import com.xsis.android.batch217.databases.AgamaQueryHelper
 import com.xsis.android.batch217.databases.DatabaseHelper
@@ -28,6 +30,8 @@ class AgamaFragmentForm(context: Context, val fm: FragmentManager) : Fragment() 
     var buttonSimpan: Button? = null
     var agamaText: EditText? = null
     var deskripsi: EditText? = null
+
+    var required:TextView?=null
 
     var frameEditAgama:FrameLayout?=null
     var frameEditDeskripsiAgama:FrameLayout?=null
@@ -62,25 +66,25 @@ class AgamaFragmentForm(context: Context, val fm: FragmentManager) : Fragment() 
         buttonSimpan = customView.findViewById(R.id.buttonSimpanAgama) as Button
         buttonBatal = customView.findViewById(R.id.buttonBatalAgama) as Button
 
-
-
         Log.e("MODEFORM",modeForm.toString())
 
         agamaText =  customView.findViewById(R.id.inputAgama) as EditText
         deskripsi = customView.findViewById(R.id.inputDeskripsiAgama) as EditText
 
+        required = customView.findViewById(R.id.requiredAgama) as TextView
+
         /*agamaText = return if (modeForm==MODE_ADD)
                                customView.findViewById(R.id.inputAgama) as EditText
                            else
                                customView.findViewById(R.id.editAgama) as EditText
-        deskripsi =  return if (modeForm==MODE_ADD)
+          deskripsi =  return if (modeForm==MODE_ADD)
                                 customView.findViewById(R.id.inputDeskripsiAgama) as EditText
                             else
                                 customView.findViewById(R.id.editDeskripsiAgama) as EditText*/
 
 
-        frameEditAgama= customView.findViewById(R.id.frameEditAgama) as FrameLayout
-        frameEditDeskripsiAgama= customView.findViewById(R.id.frameEditDeskripsiAgama) as FrameLayout
+//        frameEditAgama= customView.findViewById(R.id.frameEditAgama) as FrameLayout
+//        frameEditDeskripsiAgama= customView.findViewById(R.id.frameEditDeskripsiAgama) as FrameLayout
         defaultColor = agamaText!!.currentHintTextColor
 
         buttonSimpan!!.setOnClickListener {
@@ -98,6 +102,15 @@ class AgamaFragmentForm(context: Context, val fm: FragmentManager) : Fragment() 
             viewPager.setCurrentItem(0, true)
         }
 
+        clearAgama!!.setOnClickListener {
+            agamaText!!.setText("")
+
+        }
+
+        clearDeskripsi!!.setOnClickListener {
+            deskripsi!!.setText("")
+        }
+
         agamaText!!.addTextChangedListener(textWatcher)
         deskripsi!!.addTextChangedListener(textWatcher)
 
@@ -110,8 +123,8 @@ class AgamaFragmentForm(context: Context, val fm: FragmentManager) : Fragment() 
         agamaText!!.setText("")
         deskripsi!!.setText("")
         agamaText!!.setHintTextColor(Color.GRAY)
-        var required = view!!.findViewById(R.id.requiredAgama) as TextView
-        required.visibility= View.GONE
+//        var required = view!!.findViewById(R.id.requiredAgama) as TextView
+        required!!.visibility= View.GONE
     }
 
     fun modeEdit(agama: Agama) {
@@ -123,14 +136,14 @@ class AgamaFragmentForm(context: Context, val fm: FragmentManager) : Fragment() 
         agamaText!!.setText(agama.nama_agama)
         deskripsi!!.setText(agama.des_agama)
 
-        clearAgama!!.setOnClickListener {
+        /*clearAgama!!.setOnClickListener {
             agamaText!!.setText("")
 
         }
 
         clearDeskripsi!!.setOnClickListener {
             deskripsi!!.setText("")
-        }
+        }*/
         data = agama
     }
 
@@ -143,26 +156,26 @@ class AgamaFragmentForm(context: Context, val fm: FragmentManager) : Fragment() 
         if (modeForm == MODE_ADD) {
             title!!.text = TITLE_ADD
 
-            deskripsi = view!!.findViewById(R.id.inputDeskripsiAgama) as EditText
-            agamaText = view!!.findViewById(R.id.inputAgama) as EditText
+//            deskripsi = view!!.findViewById(R.id.inputDeskripsiAgama) as EditText
+//            agamaText = view!!.findViewById(R.id.inputAgama) as EditText
 
             agamaText!!.visibility=View.VISIBLE
             deskripsi!!.visibility=View.VISIBLE
 
-            frameEditAgama!!.visibility= View.GONE
-            frameEditDeskripsiAgama!!.visibility=View.GONE
+//            frameEditAgama!!.visibility= View.GONE
+//            frameEditDeskripsiAgama!!.visibility=View.GONE
 
         } else if (modeForm == MODE_EDIT) {
             title!!.text = TITLE_EDIT
 
-            val required = view!!.findViewById(R.id.requiredEditAgama) as TextView
+            //            val required = view!!.findViewById(R.id.requiredEditAgama) as TextView
             required!!.visibility = View.INVISIBLE
 
             agamaText!!.visibility=View.GONE
             deskripsi!!.visibility=View.GONE
 
-            deskripsi = view!!.findViewById(R.id.editDeskripsiAgama) as EditText
-            agamaText = view!!.findViewById(R.id.editAgama) as EditText
+//            deskripsi = view!!.findViewById(R.id.editDeskripsiAgama) as EditText
+//            agamaText = view!!.findViewById(R.id.editAgama) as EditText
 
             agamaText!!.visibility=View.VISIBLE
             deskripsi!!.visibility=View.VISIBLE
@@ -170,8 +183,8 @@ class AgamaFragmentForm(context: Context, val fm: FragmentManager) : Fragment() 
             agamaText!!.addTextChangedListener(textWatcher)
             deskripsi!!.addTextChangedListener(textWatcher)
 
-            frameEditAgama!!.visibility= View.VISIBLE
-            frameEditDeskripsiAgama!!.visibility=View.VISIBLE
+//            frameEditAgama!!.visibility= View.VISIBLE
+//            frameEditDeskripsiAgama!!.visibility=View.VISIBLE
 
         }
     }
@@ -187,10 +200,20 @@ class AgamaFragmentForm(context: Context, val fm: FragmentManager) : Fragment() 
             val deskripsiTeks = deskripsi!!.text.toString().trim()
 
             val kondisi = !agamaTeks.isEmpty() || !deskripsiTeks.isEmpty()
+            ubahSimpanButton(context!!, kondisi, buttonSimpan!!)
 
             //Log.e("Kondisi",kondisi.toString())
+            if(!agamaTeks.isEmpty()){
+                clearAgama!!.visibility=View.VISIBLE
+            }else{
+                clearAgama!!.visibility=View.GONE
+            }
 
-            ubahSimpanButton(context!!, kondisi, buttonSimpan!!)
+            if(!deskripsiTeks.isEmpty()){
+                clearDeskripsi!!.visibility=View.VISIBLE
+            }else{
+                clearDeskripsi!!.visibility=View.GONE
+            }
         }
 
         override fun afterTextChanged(s: Editable) {
@@ -240,7 +263,7 @@ class AgamaFragmentForm(context: Context, val fm: FragmentManager) : Fragment() 
             }
 
         } else if (modeForm == AgamaFragmentForm.MODE_EDIT) {
-            required = view!!.findViewById(R.id.requiredEditAgama) as TextView
+            //  required = view!!.findViewById(R.id.requiredEditAgama) as TextView
             if ((cekAgama != 1 && model.nama_agama == data.nama_agama) ||
                 (cekAgama != 0 && model.nama_agama != data.nama_agama)
             ) {
