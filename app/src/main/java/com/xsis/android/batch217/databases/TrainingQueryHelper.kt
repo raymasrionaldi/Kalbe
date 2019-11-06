@@ -105,7 +105,7 @@ class TrainingQueryHelper(val databaseHelper: DatabaseHelper) {
 
         return cursor.count
     }
-
+/*
     fun cekTrainingNamaSudahAda(nama: String): Int {
         val db = databaseHelper.readableDatabase
         val queryCari =
@@ -116,4 +116,6 @@ class TrainingQueryHelper(val databaseHelper: DatabaseHelper) {
 
         return cursor.count
     }
+
+ */
 }
