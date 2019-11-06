@@ -23,7 +23,7 @@ class JenjangPendidikanFragment : Fragment() {
     private var recyclerView: RecyclerView?=null
     var databaseHelper :DatabaseHelper?=null
     var databaseQueryHelper: PendidikanQueryHelper?= null
-
+    var fragment = this
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -109,7 +109,7 @@ class JenjangPendidikanFragment : Fragment() {
     }
 
     fun tampilkanListPendidikan(listPendidikan:List<Pendidikan>,recyclerView: RecyclerView){
-        val adapter = ListPendidikanAdapter(context!!, listPendidikan)
+        val adapter = ListPendidikanAdapter(context!!, fragment, listPendidikan)
         recyclerView.adapter = adapter
         adapter.notifyDataSetChanged()
     }

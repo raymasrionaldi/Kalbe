@@ -35,6 +35,8 @@ class UbahPendidikanActivity : AppCompatActivity() {
             idPendidikan = bundle!!.getInt(ID_PENDIDIKAN)
             loadDataKeahlian(idPendidikan)
         }
+
+        btnNavDrawerUpdate.setOnClickListener { finish() }
     }
 
     fun loadDataKeahlian(id: Int) {

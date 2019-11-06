@@ -27,7 +27,7 @@ import kotlinx.android.synthetic.main.fragment_jenjang_pendidikan.view.*
 
 
 
-class ListPendidikanAdapter(val context: Context?, val listPendidikan:List<Pendidikan>): RecyclerView.Adapter<ViewHolderListPendidikan>() {
+class ListPendidikanAdapter(val context: Context?, val fragment: JenjangPendidikanFragment, val listPendidikan:List<Pendidikan>): RecyclerView.Adapter<ViewHolderListPendidikan>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolderListPendidikan {
         val customView = LayoutInflater.from(parent.context).inflate(R.layout.list_dot_layout,parent,false)
         return  ViewHolderListPendidikan(customView)
@@ -73,16 +73,7 @@ class ListPendidikanAdapter(val context: Context?, val listPendidikan:List<Pendi
                                 val db = databaseHelper.writableDatabase
                                 val queryDelete = "UPDATE $TABEL_PENDIDIKAN SET $IS_DELETED = 'true' WHERE $ID_PENDIDIKAN = $ID"
                                 db.execSQL(queryDelete)
-//                                val activity = view.getContext() as AppCompatActivity
-//                                val myFragment = JenjangPendidikanFragment()
-//                                activity.supportFragmentManager.
-
-
-
-                                /*val manager = (context!! as AppCompatActivity).supportFragmentManager
-                                val fragment = manager!!.findFragmentById(R.id.fragment_jenjang_pendidikan) as JenjangPendidikanFragment
                                 fragment.refreshList()
-*/
                             })
                             .setNegativeButton("Tidak", DialogInterface.OnClickListener{ dialog, which ->
                                 dialog.cancel()
