@@ -39,6 +39,9 @@ class TipeIdentitasTambahFragment:Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        println("tambah $count")
+        count++
+
         val root = inflater.inflate(R.layout.fragment_tipe_identitas_tambah, container, false)
 
         judul = root.findViewById(R.id.judulFormTipeIdentitas) as TextView
@@ -82,9 +85,9 @@ class TipeIdentitasTambahFragment:Fragment() {
             true // default to enabled
         ) {
             override fun handleOnBackPressed() {
-//                tutup()
-//                pindahFragment_batal()
                 tutup()
+//                pindahFragment()
+//                tutup()
             }
         }
         requireActivity().onBackPressedDispatcher.addCallback(
@@ -95,6 +98,7 @@ class TipeIdentitasTambahFragment:Fragment() {
 
     fun tutup(){
         getActivity()!!.getSupportFragmentManager().beginTransaction().remove(this).commit()
+//        count == 0
     }
 
     fun simpan(view:View){
@@ -179,7 +183,7 @@ class TipeIdentitasTambahFragment:Fragment() {
         //Ke fragment list tipe identitas
         batal.setOnClickListener {
             tutup()
-//            pindahFragment_batal()
+//            pindahFragment()
 ////            tutup()
         }
     }
@@ -191,8 +195,10 @@ class TipeIdentitasTambahFragment:Fragment() {
         fragment.arguments = bundle
         val fragmentManager = getActivity()!!.getSupportFragmentManager()
         val fragmentTransaction = fragmentManager.beginTransaction()
-        fragmentTransaction.replace(this.id, fragment)
-        fragmentTransaction.commit()
+        fragmentTransaction.remove(fragment).commit()
+//        fragmentTransaction.add(fragment, null).commit()
+//        fragmentTransaction.replace(this.id, fragment)
+//        fragmentTransaction
     }
 
     fun pindahFragment_batal(){
@@ -200,7 +206,7 @@ class TipeIdentitasTambahFragment:Fragment() {
         fragment.arguments = null
         val fragmentManager = getActivity()!!.getSupportFragmentManager()
         val fragmentTransaction = fragmentManager.beginTransaction()
-        fragmentTransaction.replace(this.id, fragment)
+        fragmentTransaction.detach(fragment).attach(fragment)
         fragmentTransaction.commit()
     }
 

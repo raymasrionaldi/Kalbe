@@ -36,6 +36,12 @@
         tools:layout="@layout/fragment_company" />
 
     <fragment
+        android:id="@+id/nav_keluarga"
+        android:name="com.xsis.android.batch217.ui.keluarga.KeluargaFragment"
+        android:label="@string/menu_keluarga"
+        tools:layout="@layout/fragment_keluarga" />
+
+    <fragment
         android:id="@+id/nav_contactStatus"
         android:name="com.xsis.android.batch217.ui.contact_status.ContactStatusFragment"
         android:label="@string/menu_contact_status"

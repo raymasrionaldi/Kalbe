@@ -25,6 +25,7 @@ import com.xsis.android.batch217.models.TipeIdentitas
 import kotlinx.android.synthetic.main.fragment_tipe_identitas.*
 import kotlinx.android.synthetic.main.fragment_tipe_identitas.view.*
 import androidx.appcompat.app.AppCompatActivity
+import com.xsis.android.batch217.utils.count
 import java.nio.BufferUnderflowException
 
 
@@ -45,6 +46,7 @@ class TipeIdentitasFragment:Fragment() {
 
         if (arguments != null){
             setHasOptionsMenu(false)
+//            search("a" ,TipeIdentitasQueryHelper(DatabaseHelper(context!!)))
         }else{
             setHasOptionsMenu(true)
         }
@@ -57,8 +59,9 @@ class TipeIdentitasFragment:Fragment() {
 
         root.fab.setOnClickListener{view->
             pindahFragment()
-//            setHasOptionsMenu(false)
+            setHasOptionsMenu(false)
         }
+
 
         databaseHelper = DatabaseHelper(context!!)
         databaseQueryHelper = TipeIdentitasQueryHelper(databaseHelper!!)
@@ -66,6 +69,14 @@ class TipeIdentitasFragment:Fragment() {
 //        getSemuaTipeIdentitas(recyclerView!!, databaseQueryHelper!!)
 
         return root
+    }
+
+    override fun onResume() {
+        println("resume $count")
+        super.onResume()
+        if (count != 0){
+            setHasOptionsMenu(false)
+        }
     }
 
     fun getSemuaTipeIdentitas(recyclerView: RecyclerView, queryHelper:TipeIdentitasQueryHelper){
@@ -87,33 +98,37 @@ class TipeIdentitasFragment:Fragment() {
         fragment.arguments = bundle
         val fragmentManager = getActivity()!!.getSupportFragmentManager()
         val fragmentTransaction = fragmentManager.beginTransaction()
+//        fragmentTransaction.remove(TipeIdentitasFragment())
+//        fragmentTransaction.show(fragment).commit()
         fragmentTransaction.replace(this.id, fragment)
-//        fragmentTransaction.addToBackStack(null)
+        fragmentTransaction.addToBackStack(null)
         fragmentTransaction.commit()
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.main, menu)
+        if (count == 0){
+            inflater.inflate(R.menu.main, menu)
 
-        val myActionMenuItem = menu.findItem(R.id.action_search)
-        val searchView = myActionMenuItem.actionView as SearchView
+            val myActionMenuItem = menu.findItem(R.id.action_search)
+            var searchView = myActionMenuItem.actionView as SearchView
 
-        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
 
-            override fun onQueryTextSubmit(query: String): Boolean {
-                // collapse the view ?
-                //menu.findItem(R.id.menu_search).collapseActionView();
-                Log.e("Fragment queryText", query)
-                return false
-            }
-            override fun onQueryTextChange(keyword: String): Boolean {
-                // search goes here !!
-                // listAdapter.getFilter().filter(query);
-                // Log.e("Fragment queryText", keyword)
-                search(keyword,TipeIdentitasQueryHelper(DatabaseHelper(context!!)))
-                return true
-            }
-        })
+                override fun onQueryTextSubmit(query: String): Boolean {
+                    // collapse the view ?
+                    //menu.findItem(R.id.menu_search).collapseActionView();
+                    Log.e("Fragment queryText", query)
+                    return false
+                }
+                override fun onQueryTextChange(keyword: String): Boolean {
+                    // search goes here !!
+                    // listAdapter.getFilter().filter(query);
+                    // Log.e("Fragment queryText", keyword)
+                    search(keyword,TipeIdentitasQueryHelper(DatabaseHelper(context!!)))
+                    return true
+                }
+            })
+        }
     }
 
     fun search(keyword:String,databaseQueryHelper: TipeIdentitasQueryHelper){

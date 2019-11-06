@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.navOptions
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.textfield.TextInputEditText
 import com.xsis.android.batch217.R
@@ -49,11 +50,6 @@ class ListTipeIdentitasAdapter(val context:Context, val listTipeIdentitas:List<T
                         bundle.putString("nama", model.nama_TipeIdentitas)
                         bundle.putString("des", model.des_TipeIdentitas)
                         bundle.putInt("id", model.id_TipeIdentitas)
-
-//                        val fragment2 = TipeIdentitasFragment()
-//                        fragment2.arguments = bundle
-//                        manager.beginTransaction().replace(R.id.fragment_tipe_identitas, fragment2).commit()
-//                        manager.beginTransaction().remove(fragment2).commit()
 
                         val fragment = TipeIdentitasTambahFragment()
                         fragment.arguments = bundle

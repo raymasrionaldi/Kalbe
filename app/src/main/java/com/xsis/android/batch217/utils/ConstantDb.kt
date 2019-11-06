@@ -27,6 +27,7 @@ val TABEL_KELUARGA_DATA = "keluarga_data"
 val ID_JENIS = "id_jenis"
 val JENIS_KELUARGA = "jenis_keluarga"
 val TABEL_KELUARGA_DETAIL = "keluarga_detail"
+val ID_ANGGOTA = "id_anggota"
 val NAMA_ANGGOTA = "nama_anggota"
 
 val TABEL_POSITION_LEVEL ="position_level"
