@@ -15,8 +15,8 @@
     <string name="menu_company">Company</string>
     <string name="menu_keluarga">Keluarga</string>
     <string name="menu_contact_status">Contact Status</string>
-    <string name="menu_employe_status">Employe Status</string>
-    <string name="menu_employe_type">Employe Type</string>
+    <string name="menu_employe_status">Employee Status</string>
+    <string name="menu_employe_type">Employee Type</string>
     <string name="menu_grade">Grade</string>
     <string name="menu_jadwal">Jadwal</string>
     <string name="menu_jenis_catatan">Jenis Catatan</string>

@@ -43,7 +43,7 @@ class InputPendidikanActivity : AppCompatActivity() {
         batal()
 
         btnNavDrawer.setOnClickListener {
-            batal()
+            finish()
         }
     }
 
