@@ -55,7 +55,7 @@
 
     <fragment
         android:id="@+id/nav_grade"
-        android:name="com.xsis.android.batch217.ui.home.HomeFragment"
+        android:name="com.xsis.android.batch217.ui.grade.GradeFragment"
         android:label="@string/menu_grade"
         tools:layout="@layout/fragment_grade" />
 
