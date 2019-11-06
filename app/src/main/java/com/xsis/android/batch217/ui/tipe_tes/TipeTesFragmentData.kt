@@ -54,7 +54,7 @@ class TipeTesFragmentData(context: Context, val fm: FragmentManager) : Fragment(
         val databaseHelper = DatabaseHelper(context!!)
         databaseQueryHelper = TipeTesQueryHelper(databaseHelper)
 
-        getSemuaTipeTes(recyclerView!!, databaseQueryHelper!!)
+        //getSemuaTipeTes(recyclerView!!, databaseQueryHelper!!)
 
         return customView
     }
@@ -110,6 +110,6 @@ class TipeTesFragmentData(context: Context, val fm: FragmentManager) : Fragment(
     }
 
     fun updateContent() {
-        getSemuaTipeTes(recyclerView!!, databaseQueryHelper!!)
+      //  getSemuaTipeTes(recyclerView!!, databaseQueryHelper!!)
     }
 }
