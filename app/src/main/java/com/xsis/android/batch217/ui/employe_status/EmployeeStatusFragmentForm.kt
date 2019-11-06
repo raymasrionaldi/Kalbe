@@ -33,7 +33,7 @@ class EmployeeStatusFragmentForm(context: Context, val fm: FragmentManager) : Fr
     var buttonReset: Button? = null
     var buttonSimpan: Button? = null
     var employeeStatusText: EditText? = null
-    var deskripsi: EditText? = null
+    var notes: EditText? = null
     var buttonDelete: FloatingActionButton? = null
     var defaultColor = 0
     var modeForm = 0
@@ -61,11 +61,11 @@ class EmployeeStatusFragmentForm(context: Context, val fm: FragmentManager) : Fr
 
         title = customView.findViewById(R.id.titleFormEmployeeStatus) as TextView
 
-        buttonSimpan = customView.findViewById(R.id.buttonSimpanEmployeeStatus) as Button
-        buttonReset = customView.findViewById(R.id.buttonBatalEmployeeStatus) as Button
+        buttonSimpan = customView.findViewById(R.id.buttonSaveEmployeeStatus) as Button
+        buttonReset = customView.findViewById(R.id.buttonResetEmployeeStatus) as Button
         employeeStatusText = customView.findViewById(R.id.inputNamaEmployeeStatus) as EditText
         defaultColor = employeeStatusText!!.currentHintTextColor
-        deskripsi = customView.findViewById(R.id.inputNotesEmployeeStatus) as EditText
+        notes = customView.findViewById(R.id.inputNotesEmployeeStatus) as EditText
 
         buttonDelete =
             customView.findViewById(R.id.buttonDeleteEmployeeStatus) as FloatingActionButton
@@ -83,7 +83,7 @@ class EmployeeStatusFragmentForm(context: Context, val fm: FragmentManager) : Fr
         }
 
         employeeStatusText!!.addTextChangedListener(textWatcher)
-        deskripsi!!.addTextChangedListener(textWatcher)
+        notes!!.addTextChangedListener(textWatcher)
 
         title!!.text = TITLE_ADD
 
@@ -92,7 +92,7 @@ class EmployeeStatusFragmentForm(context: Context, val fm: FragmentManager) : Fr
 
     fun resetForm() {
         employeeStatusText!!.setText("")
-        deskripsi!!.setText("")
+        notes!!.setText("")
     }
 
     fun modeEdit(employeeStatus: EmployeeStatus) {
@@ -101,7 +101,7 @@ class EmployeeStatusFragmentForm(context: Context, val fm: FragmentManager) : Fr
 
         idData = employeeStatus.id_employee_status
         employeeStatusText!!.setText(employeeStatus.nama_employee_status)
-        deskripsi!!.setText(employeeStatus.des_employee_status)
+        notes!!.setText(employeeStatus.des_employee_status)
 
         data = employeeStatus
     }
@@ -154,11 +154,11 @@ class EmployeeStatusFragmentForm(context: Context, val fm: FragmentManager) : Fr
 
         override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
             val employeeStatusTeks = employeeStatusText!!.text.toString().trim()
-            val deskripsiTeks = deskripsi!!.text.toString().trim()
+            val notesTeks = notes!!.text.toString().trim()
 
-            val kondisi = !employeeStatusTeks.isEmpty() || !deskripsiTeks.isEmpty()
+            val kondisi = !employeeStatusTeks.isEmpty() || !notesTeks.isEmpty()
 
-            ubahSimpanButton(context!!, kondisi, buttonSimpan!!)
+            ubahResetButton(context, kondisi, buttonReset!!)
 
         }
 
@@ -171,7 +171,7 @@ class EmployeeStatusFragmentForm(context: Context, val fm: FragmentManager) : Fr
         val required = view!!.findViewById(R.id.requiredNamaEmployeeStatus) as TextView
 
         val namaEmployeeStatus = employeeStatusText!!.text.toString().trim()
-        val deskripsiEmployeeStatus = deskripsi!!.text.toString().trim()
+        val notesEmployeeStatus = notes!!.text.toString().trim()
 
         employeeStatusText!!.setHintTextColor(defaultColor)
         required.visibility = View.INVISIBLE
@@ -185,7 +185,7 @@ class EmployeeStatusFragmentForm(context: Context, val fm: FragmentManager) : Fr
             val model = EmployeeStatus()
             model.id_employee_status = data.id_employee_status
             model.nama_employee_status = namaEmployeeStatus
-            model.des_employee_status = deskripsiEmployeeStatus
+            model.des_employee_status = notesEmployeeStatus
 
 
             val cekEmployeeStatus = databaseQueryHelper!!.cekEmployeeStatusSudahAda(model.nama_employee_status!!)
