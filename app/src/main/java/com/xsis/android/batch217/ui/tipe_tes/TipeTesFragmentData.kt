@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import android.widget.TextView
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -18,6 +19,7 @@ import com.xsis.android.batch217.adapters.fragments.TipeTesFragmentAdapter
 import com.xsis.android.batch217.databases.DatabaseHelper
 import com.xsis.android.batch217.databases.TipeTesQueryHelper
 import com.xsis.android.batch217.models.TipeTes
+import kotlinx.android.synthetic.main.fragment_form_tipe_tes.*
 
 class TipeTesFragmentData(context: Context, val fm: FragmentManager) : Fragment() {
     var recyclerView: RecyclerView? = null

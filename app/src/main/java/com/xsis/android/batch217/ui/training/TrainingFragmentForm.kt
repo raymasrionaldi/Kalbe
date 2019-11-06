@@ -66,6 +66,7 @@ class TrainingFragmentForm(context: Context, val fm: FragmentManager) : Fragment
         nama = customView.findViewById(R.id.inputNamaTraining) as EditText
         requiredNama = customView.findViewById(R.id.requiredNamaTraining) as TextView
 
+
         buttonDelete =
             customView.findViewById(R.id.buttonDeleteTraining) as FloatingActionButton
 
