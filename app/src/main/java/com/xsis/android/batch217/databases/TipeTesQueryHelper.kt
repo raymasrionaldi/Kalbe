@@ -48,8 +48,8 @@ class TipeTesQueryHelper(val databaseHelper: DatabaseHelper) {
         var listTipeTes = ArrayList<TipeTes>()
 
         val db = databaseHelper.readableDatabase
-        val queryCari = "SELECT * FROM $TABEL_TIPE_TES WHERE $NAMA_TES LIKE '%$keyword%' OR " +
-                "$DES_TES LIKE '%$keyword%'"
+        val queryCari = "SELECT * FROM $TABEL_TIPE_TES WHERE ($NAMA_TES LIKE '%$keyword%' OR " +
+                "$DES_TES LIKE '%$keyword%') AND $IS_DELETED='false'"
 
         val cursor =db.rawQuery(queryCari,null)
         if(cursor.count > 0){

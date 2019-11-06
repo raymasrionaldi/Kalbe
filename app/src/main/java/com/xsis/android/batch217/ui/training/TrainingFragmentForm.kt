@@ -187,10 +187,12 @@ class TrainingFragmentForm(context: Context, val fm: FragmentManager) : Fragment
             model.codeTraining = codeTraining
             model.namaTraining = namaTraining
 
-            val cekTraining = databaseQueryHelper!!.cekTrainingSudahAda(model.namaTraining!!)
+            val cekTrainingCode = databaseQueryHelper!!.cekTrainingCodeSudahAda(model.codeTraining!!)
+            val cekTrainingNama = databaseQueryHelper!!.cekTrainingNamaSudahAda(model.namaTraining!!)
+
 
             if (modeForm == MODE_ADD) {
-                if (cekTraining > 0) {
+                if (cekTrainingCode > 0 || cekTrainingNama > 0) {
                     Toast.makeText(context, DATA_SUDAH_ADA, Toast.LENGTH_SHORT).show()
                     return
                 }
@@ -201,9 +203,12 @@ class TrainingFragmentForm(context: Context, val fm: FragmentManager) : Fragment
                         .show()
                 }
             } else if (modeForm == MODE_EDIT) {
-                if ((cekTraining != 1 && model.codeTraining == data.codeTraining) ||
-                    (cekTraining != 0 && model.codeTraining != data.codeTraining)
-                ) {
+                if ((cekTrainingCode != 1 && model.codeTraining == data.codeTraining) ||
+                    (cekTrainingCode != 0 && model.codeTraining != data.codeTraining)
+                    ||
+                    (cekTrainingNama != 1 && model.namaTraining == data.namaTraining) ||
+                    (cekTrainingNama != 0 && model.namaTraining != data.namaTraining))
+                {
                     Toast.makeText(context, DATA_SUDAH_ADA, Toast.LENGTH_SHORT).show()
                     return
                 }
