@@ -49,15 +49,17 @@ class JenisCatatanQueryHelper(val databaseHelper: DatabaseHelper) {
 
     fun cariJenisCatatanModels(keyword: String): List<JenisCatatan> {
         var listJenisCatatan = ArrayList<JenisCatatan>()
+        if (keyword.isNotBlank()) {
+            val db = databaseHelper.readableDatabase
+            val queryCari =
+                "SELECT * FROM $TABEL_CATATAN WHERE $NAMA_CATATAN LIKE '%$keyword%' AND " +
+                        "$IS_DELETED = 'false'"
 
-        val db = databaseHelper.readableDatabase
-        val queryCari = "SELECT * FROM $TABEL_CATATAN WHERE ($NAMA_CATATAN LIKE '%$keyword%' OR $DES_CATATAN LIKE '%$keyword%') AND $IS_DELETED='false'"
-
-        val cursor =db.rawQuery(queryCari,null)
-        if(cursor.count > 0){
-            listJenisCatatan = konversiCursorKeListJenisCatatanModel(cursor)
+            val cursor = db.rawQuery(queryCari, null)
+            if (cursor.count > 0) {
+                listJenisCatatan = konversiCursorKeListJenisCatatanModel(cursor)
+            }
         }
-
         return listJenisCatatan
     }
 

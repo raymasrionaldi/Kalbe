@@ -52,7 +52,7 @@ class JenisCatatanFragmentData(context: Context, val fm: FragmentManager) : Frag
         val databaseHelper = DatabaseHelper(context!!)
         databaseQueryHelper = JenisCatatanQueryHelper(databaseHelper)
 
-        getSemuaJenisCatatan(recyclerView!!, databaseQueryHelper!!)
+        //getSemuaJenisCatatan(recyclerView!!, databaseQueryHelper!!)
 
         return customView
     }
@@ -84,7 +84,7 @@ class JenisCatatanFragmentData(context: Context, val fm: FragmentManager) : Frag
     }
 
     fun updateContent() {
-        getSemuaJenisCatatan(recyclerView!!, databaseQueryHelper!!)
+        //getSemuaJenisCatatan(recyclerView!!, databaseQueryHelper!!)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
