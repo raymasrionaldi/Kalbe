@@ -39,8 +39,6 @@ class TipeIdentitasTambahFragment:Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        println("tambah $count")
-        count++
 
         val root = inflater.inflate(R.layout.fragment_tipe_identitas_tambah, container, false)
 

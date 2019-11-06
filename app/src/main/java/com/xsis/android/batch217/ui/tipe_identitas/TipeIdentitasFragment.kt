@@ -4,29 +4,17 @@ import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.*
-import android.widget.Toast
-import android.widget.Toolbar
-import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.widget.SearchView
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.xsis.android.batch217.R
 import com.xsis.android.batch217.adapters.ListTipeIdentitasAdapter
-import com.xsis.android.batch217.databases.AgamaQueryHelper
 import com.xsis.android.batch217.databases.DatabaseHelper
 import com.xsis.android.batch217.databases.TipeIdentitasQueryHelper
 import com.xsis.android.batch217.models.TipeIdentitas
-import kotlinx.android.synthetic.main.fragment_tipe_identitas.*
 import kotlinx.android.synthetic.main.fragment_tipe_identitas.view.*
-import androidx.appcompat.app.AppCompatActivity
-import com.xsis.android.batch217.utils.count
-import java.nio.BufferUnderflowException
 
 
 class TipeIdentitasFragment:Fragment() {
@@ -71,14 +59,6 @@ class TipeIdentitasFragment:Fragment() {
         return root
     }
 
-    override fun onResume() {
-        println("resume $count")
-        super.onResume()
-        if (count != 0){
-            setHasOptionsMenu(false)
-        }
-    }
-
     fun getSemuaTipeIdentitas(recyclerView: RecyclerView, queryHelper:TipeIdentitasQueryHelper){
         val listTipeIdentitas = queryHelper.readSemuaTipeIdentitasModels()
         tampilkanListTipeIdentitas(listTipeIdentitas, recyclerView)
@@ -106,29 +86,27 @@ class TipeIdentitasFragment:Fragment() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        if (count == 0){
-            inflater.inflate(R.menu.main, menu)
+        inflater.inflate(R.menu.main, menu)
 
-            val myActionMenuItem = menu.findItem(R.id.action_search)
-            var searchView = myActionMenuItem.actionView as SearchView
+        val myActionMenuItem = menu.findItem(R.id.action_search)
+        var searchView = myActionMenuItem.actionView as SearchView
 
-            searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
 
-                override fun onQueryTextSubmit(query: String): Boolean {
-                    // collapse the view ?
-                    //menu.findItem(R.id.menu_search).collapseActionView();
-                    Log.e("Fragment queryText", query)
-                    return false
-                }
-                override fun onQueryTextChange(keyword: String): Boolean {
-                    // search goes here !!
-                    // listAdapter.getFilter().filter(query);
-                    // Log.e("Fragment queryText", keyword)
-                    search(keyword,TipeIdentitasQueryHelper(DatabaseHelper(context!!)))
-                    return true
-                }
-            })
-        }
+            override fun onQueryTextSubmit(query: String): Boolean {
+                // collapse the view ?
+                //menu.findItem(R.id.menu_search).collapseActionView();
+                Log.e("Fragment queryText", query)
+                return false
+            }
+            override fun onQueryTextChange(keyword: String): Boolean {
+                // search goes here !!
+                // listAdapter.getFilter().filter(query);
+                // Log.e("Fragment queryText", keyword)
+                search(keyword,TipeIdentitasQueryHelper(DatabaseHelper(context!!)))
+                return true
+            }
+        })
     }
 
     fun search(keyword:String,databaseQueryHelper: TipeIdentitasQueryHelper){
