@@ -17,13 +17,15 @@ import com.google.android.material.textfield.TextInputEditText
 import com.xsis.android.batch217.R
 import com.xsis.android.batch217.databases.DatabaseHelper
 import com.xsis.android.batch217.models.TipeIdentitas
+import com.xsis.android.batch217.ui.jenjang_pendidikan.UbahPendidikanActivity
 import com.xsis.android.batch217.ui.keahlian.UbahDataKeahlianActivity
 import com.xsis.android.batch217.ui.tipe_identitas.TipeIdentitasFragment
-import com.xsis.android.batch217.ui.tipe_identitas.TipeIdentitasTambahFragment
+import com.xsis.android.batch217.ui.tipe_identitas.TipeIdentitasTambahActivity
+//import com.xsis.android.batch217.ui.tipe_identitas.TipeIdentitasTambahFragment
 import com.xsis.android.batch217.utils.*
 import com.xsis.android.batch217.viewholders.ViewHolderListTipeIdentitas
 
-class ListTipeIdentitasAdapter(val context:Context, val listTipeIdentitas:List<TipeIdentitas>):RecyclerView.Adapter<ViewHolderListTipeIdentitas>() {
+class ListTipeIdentitasAdapter(val context:Context, val fragment: TipeIdentitasFragment, val listTipeIdentitas:List<TipeIdentitas>):RecyclerView.Adapter<ViewHolderListTipeIdentitas>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolderListTipeIdentitas {
         val customView = LayoutInflater.from(parent.context).inflate(R.layout.list_dot_layout, parent, false)
         return ViewHolderListTipeIdentitas(customView)
@@ -43,19 +45,25 @@ class ListTipeIdentitasAdapter(val context:Context, val listTipeIdentitas:List<T
             window.setOnItemClickListener{parent, view, position, id ->
                 when (position){
                     0 -> {
-                        val manager = (context as AppCompatActivity).supportFragmentManager
-
-                        val bundle = Bundle()
-                        bundle.putString("judul","Ubah Tipe Identitas")
-                        bundle.putString("nama", model.nama_TipeIdentitas)
-                        bundle.putString("des", model.des_TipeIdentitas)
-                        bundle.putInt("id", model.id_TipeIdentitas)
-
-                        val fragment = TipeIdentitasTambahFragment()
-                        fragment.arguments = bundle
-                        manager.beginTransaction().replace(R.id.fragment_tipe_identitas, fragment).commit()
-
                         window.dismiss()
+
+                        val intentEdit = Intent(context, TipeIdentitasTambahActivity::class.java)
+                        intentEdit.putExtra(ID_IDENTITAS, ID )
+                        context.startActivity(intentEdit)
+
+
+//                        val manager = (context as AppCompatActivity).supportFragmentManager
+//
+//                        val bundle = Bundle()
+//                        bundle.putString("judul","Ubah Tipe Identitas")
+//                        bundle.putString("nama", model.nama_TipeIdentitas)
+//                        bundle.putString("des", model.des_TipeIdentitas)
+//                        bundle.putInt("id", model.id_TipeIdentitas)
+//
+//                        val fragment = TipeIdentitasTambahFragment()
+//                        fragment.arguments = bundle
+//                        manager.beginTransaction().replace(R.id.fragment_tipe_identitas, fragment).commit()
+
                     }
                     1 -> {
                         val konfirmasiDelete = AlertDialog.Builder(context)
@@ -67,6 +75,7 @@ class ListTipeIdentitasAdapter(val context:Context, val listTipeIdentitas:List<T
                                 val db = databaseHelper.writableDatabase
                                 val queryDelete = "UPDATE $TABEL_TIPE_IDENTITAS SET $IS_DELETED = 'true' WHERE $ID_IDENTITAS = $ID"
                                 db.execSQL(queryDelete)
+                                fragment.refreshList()
 
                             })
                             .setNegativeButton("Tidak", DialogInterface.OnClickListener{ dialog, which ->

@@ -1,6 +1,7 @@
 package com.xsis.android.batch217.ui.tipe_identitas
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.*
@@ -14,6 +15,7 @@ import com.xsis.android.batch217.adapters.ListTipeIdentitasAdapter
 import com.xsis.android.batch217.databases.DatabaseHelper
 import com.xsis.android.batch217.databases.TipeIdentitasQueryHelper
 import com.xsis.android.batch217.models.TipeIdentitas
+import com.xsis.android.batch217.ui.jenjang_pendidikan.InputPendidikanActivity
 import kotlinx.android.synthetic.main.fragment_tipe_identitas.view.*
 
 
@@ -22,6 +24,7 @@ class TipeIdentitasFragment:Fragment() {
     private var recyclerView: RecyclerView?=null
     var databaseHelper :DatabaseHelper?=null
     var databaseQueryHelper: TipeIdentitasQueryHelper?= null
+    val fragment = this
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -31,32 +34,25 @@ class TipeIdentitasFragment:Fragment() {
 
         tipeIdentitasViewModel = ViewModelProviders.of(this).get(TipeIdentitasViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_tipe_identitas, container, false)
-
-        if (arguments != null){
-            setHasOptionsMenu(false)
-//            search("a" ,TipeIdentitasQueryHelper(DatabaseHelper(context!!)))
-        }else{
-            setHasOptionsMenu(true)
-        }
-
-
+        setHasOptionsMenu(true)
 
         val layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL,false)
         recyclerView = root.findViewById(R.id.listTipeIdentitasRecycler) as RecyclerView
         recyclerView!!.layoutManager = layoutManager
 
         root.fab.setOnClickListener{view->
-            pindahFragment()
-            setHasOptionsMenu(false)
+            val intent = Intent(context, TipeIdentitasTambahActivity::class.java)
+            startActivity(intent)
         }
-
 
         databaseHelper = DatabaseHelper(context!!)
         databaseQueryHelper = TipeIdentitasQueryHelper(databaseHelper!!)
 
-//        getSemuaTipeIdentitas(recyclerView!!, databaseQueryHelper!!)
-
         return root
+    }
+
+    fun refreshList() {
+        getActivity()!!.invalidateOptionsMenu()
     }
 
     fun getSemuaTipeIdentitas(recyclerView: RecyclerView, queryHelper:TipeIdentitasQueryHelper){
@@ -65,24 +61,24 @@ class TipeIdentitasFragment:Fragment() {
     }
 
     fun tampilkanListTipeIdentitas(listTipeIdentitas:List<TipeIdentitas>,recyclerView: RecyclerView){
-        val adapter = ListTipeIdentitasAdapter(context!!, listTipeIdentitas)
+        val adapter = ListTipeIdentitasAdapter(context!!, this, listTipeIdentitas)
         recyclerView.adapter = adapter
         adapter.notifyDataSetChanged()
     }
 
     fun pindahFragment(){
-        val bundle = Bundle()
-        bundle.putString("judul", null)
-
-        val fragment = TipeIdentitasTambahFragment()
-        fragment.arguments = bundle
-        val fragmentManager = getActivity()!!.getSupportFragmentManager()
-        val fragmentTransaction = fragmentManager.beginTransaction()
-//        fragmentTransaction.remove(TipeIdentitasFragment())
-//        fragmentTransaction.show(fragment).commit()
-        fragmentTransaction.replace(this.id, fragment)
-        fragmentTransaction.addToBackStack(null)
-        fragmentTransaction.commit()
+//        val bundle = Bundle()
+//        bundle.putString("judul", null)
+//
+//        val fragment = TipeIdentitasTambahFragment()
+//        fragment.arguments = bundle
+//        val fragmentManager = getActivity()!!.getSupportFragmentManager()
+//        val fragmentTransaction = fragmentManager.beginTransaction()
+////        fragmentTransaction.remove(TipeIdentitasFragment())
+////        fragmentTransaction.show(fragment).commit()
+//        fragmentTransaction.replace(this.id, fragment)
+//        fragmentTransaction.addToBackStack(null)
+//        fragmentTransaction.commit()
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
