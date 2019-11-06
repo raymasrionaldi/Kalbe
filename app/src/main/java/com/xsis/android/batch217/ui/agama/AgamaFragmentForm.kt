@@ -136,14 +136,6 @@ class AgamaFragmentForm(context: Context, val fm: FragmentManager) : Fragment() 
         agamaText!!.setText(agama.nama_agama)
         deskripsi!!.setText(agama.des_agama)
 
-        /*clearAgama!!.setOnClickListener {
-            agamaText!!.setText("")
-
-        }
-
-        clearDeskripsi!!.setOnClickListener {
-            deskripsi!!.setText("")
-        }*/
         data = agama
     }
 
@@ -156,36 +148,22 @@ class AgamaFragmentForm(context: Context, val fm: FragmentManager) : Fragment() 
         if (modeForm == MODE_ADD) {
             title!!.text = TITLE_ADD
 
-//            deskripsi = view!!.findViewById(R.id.inputDeskripsiAgama) as EditText
-//            agamaText = view!!.findViewById(R.id.inputAgama) as EditText
-
             agamaText!!.visibility=View.VISIBLE
             deskripsi!!.visibility=View.VISIBLE
-
-//            frameEditAgama!!.visibility= View.GONE
-//            frameEditDeskripsiAgama!!.visibility=View.GONE
 
         } else if (modeForm == MODE_EDIT) {
             title!!.text = TITLE_EDIT
 
-            //            val required = view!!.findViewById(R.id.requiredEditAgama) as TextView
             required!!.visibility = View.INVISIBLE
 
             agamaText!!.visibility=View.GONE
             deskripsi!!.visibility=View.GONE
-
-//            deskripsi = view!!.findViewById(R.id.editDeskripsiAgama) as EditText
-//            agamaText = view!!.findViewById(R.id.editAgama) as EditText
 
             agamaText!!.visibility=View.VISIBLE
             deskripsi!!.visibility=View.VISIBLE
 
             agamaText!!.addTextChangedListener(textWatcher)
             deskripsi!!.addTextChangedListener(textWatcher)
-
-//            frameEditAgama!!.visibility= View.VISIBLE
-//            frameEditDeskripsiAgama!!.visibility=View.VISIBLE
-
         }
     }
 
@@ -223,7 +201,6 @@ class AgamaFragmentForm(context: Context, val fm: FragmentManager) : Fragment() 
 
 
     fun simpanAgama() {
-
         val namaAgama = agamaText!!.text.toString().trim()
         val deskripsiAgama = deskripsi!!.text.toString().trim()
 
@@ -263,7 +240,6 @@ class AgamaFragmentForm(context: Context, val fm: FragmentManager) : Fragment() 
             }
 
         } else if (modeForm == AgamaFragmentForm.MODE_EDIT) {
-            //  required = view!!.findViewById(R.id.requiredEditAgama) as TextView
             if ((cekAgama != 1 && model.nama_agama == data.nama_agama) ||
                 (cekAgama != 0 && model.nama_agama != data.nama_agama)
             ) {
