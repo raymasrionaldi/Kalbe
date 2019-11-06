@@ -58,6 +58,7 @@ class FragmentFormContratctStatus(context:Context,val fm: FragmentManager) : Fra
         nama = customView.findViewById(R.id.inputNameNewContractStatus) as EditText
         defaultColor = nama!!.currentHintTextColor
         notes = customView.findViewById(R.id.inputNotesNewContractStatus) as EditText
+
         customView.buttonSaveNewContractStatus.setOnClickListener{
             inputJenisKontrak()
         }
@@ -69,6 +70,7 @@ class FragmentFormContratctStatus(context:Context,val fm: FragmentManager) : Fra
         }
         nama!!.addTextChangedListener(textWatcher)
         notes!!.addTextChangedListener(textWatcher)
+
 
         return customView
     }
@@ -96,6 +98,7 @@ class FragmentFormContratctStatus(context:Context,val fm: FragmentManager) : Fra
 //            val db = databaseHelper.writableDatabase
 //
 //            val hasil = db.insert(TABEL_CONTRACT_STATUS, null,content)
+            requiredContract.isVisible =false
             val model = ContractStatus()
             model.idContract = data!!.idContract
             model.namaContract = jenisKontrak

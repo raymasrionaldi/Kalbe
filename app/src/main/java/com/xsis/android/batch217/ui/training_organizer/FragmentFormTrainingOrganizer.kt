@@ -93,6 +93,7 @@ class FragmentFormTrainingOrganizer(context: Context, val fm: FragmentManager) :
 //            val db = databaseHelper.writableDatabase
 //
 //            val hasil = db.insert(TABEL_CONTRACT_STATUS, null,content)
+            requiredTrainingOrganizer.isVisible = false
             val model = TrainingOrganizer()
             model.idTrainingOrganizer = data!!.idTrainingOrganizer
             model.namaTrainingOrganizer = namaOrganizer
