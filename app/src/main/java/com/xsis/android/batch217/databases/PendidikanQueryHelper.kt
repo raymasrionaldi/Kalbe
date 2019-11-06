@@ -126,7 +126,11 @@ class PendidikanQueryHelper(val databaseHelper:DatabaseHelper) {
     fun readSemuaPendidikanModels():List<Pendidikan>{
         var listPendidikan = ArrayList<Pendidikan>()
 
-        val cursor = getSemuaPendidikan()
+        val db = databaseHelper.readableDatabase
+        val queryCari = "SELECT * FROM $TABEL_PENDIDIKAN " +
+                "WHERE $ID_PENDIDIKAN = '0' "
+        val cursor = db.rawQuery(queryCari, null)
+
         if (cursor.count > 0){
             listPendidikan = konversiCursorKeListPendidikanModel(cursor)
         }

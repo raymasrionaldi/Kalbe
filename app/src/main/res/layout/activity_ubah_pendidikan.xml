@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.jenjang_pendidikan.InputPendidikanActivity"
+    tools:context=".ui.jenjang_pendidikan.UbahPendidikanActivity"
     android:orientation="vertical">
 
     <LinearLayout
@@ -63,7 +63,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
-        android:text="@string/tambah_pendidikan"
+        android:text="@string/ubah_pendidikan"
         android:textSize="20sp"
         android:textStyle="bold" />
 
@@ -97,7 +97,7 @@
 
     </FrameLayout>
     <TextView
-        android:id="@+id/teksErrorPendidikan"
+        android:id="@+id/teksErrorPendidikanUpdate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Error : Tipe identitas tidak boleh kosong"
@@ -138,7 +138,7 @@
         android:padding="20dp">
 
         <Button
-            android:id="@+id/btnBatalPendidikan"
+            android:id="@+id/btnBatalPendidikanUpdate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -146,7 +146,7 @@
             android:text="Batal" />
 
         <Button
-            android:id="@+id/btnSimpanPendidikan"
+            android:id="@+id/btnSimpanPendidikanUpdate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"

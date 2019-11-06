@@ -34,7 +34,7 @@ class JenjangPendidikanFragment : Fragment() {
         val root = inflater.inflate(R.layout.fragment_jenjang_pendidikan, container, false)
 
 //        if(arguments == null){
-            setHasOptionsMenu(true)
+//            setHasOptionsMenu(true)
 //        } else {
 //            setHasOptionsMenu(false)
 //        }
@@ -43,16 +43,18 @@ class JenjangPendidikanFragment : Fragment() {
         recyclerView = root.findViewById(R.id.listPendidikanRecycler) as RecyclerView
         recyclerView!!.layoutManager = layoutManager
 
+        setHasOptionsMenu(true)
 
         root.fab.setOnClickListener{view->
-            pindahFragment()
-
+//            pindahFragment()
+            val intent = Intent(context, InputPendidikanActivity::class.java)
+            startActivity(intent)
         }
 
         databaseHelper = DatabaseHelper(context!!)
         databaseQueryHelper = PendidikanQueryHelper(databaseHelper!!)
 
-//        getSemuaPendidikan(recyclerView!!, PendidikanQueryHelper(DatabaseHelper(context!!)))
+        //getSemuaPendidikan(recyclerView!!, PendidikanQueryHelper(DatabaseHelper(context!!)))
 
         return root
     }
@@ -111,4 +113,16 @@ class JenjangPendidikanFragment : Fragment() {
         recyclerView.adapter = adapter
         adapter.notifyDataSetChanged()
     }
+
+    fun refreshList() {
+        //getSemuaPendidikan(recyclerView!!, databaseQueryHelper!!)
+        getActivity()!!.invalidateOptionsMenu()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        refreshList()
+
+    }
+
 }

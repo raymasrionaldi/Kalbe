@@ -10,13 +10,17 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".ui.jenjang_pendidikan.UbahPendidikanActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+        <activity
             android:name=".ui.keahlian.UbahDataKeahlianActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
             android:name=".ui.keahlian.InputDataKeahlianActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
-        <activity android:name=".ui.jenjang_pendidikan.InputPendidikanActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity
+            android:name=".ui.jenjang_pendidikan.InputPendidikanActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
             android:name=".HomeActivity"
             android:label="@string/app_name"
