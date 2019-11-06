@@ -201,7 +201,7 @@ class EmployeeStatusFragmentForm(context: Context, val fm: FragmentManager) : Fr
                     Toast.makeText(context, SIMPAN_DATA_BERHASIL, Toast.LENGTH_SHORT)
                         .show()
                 }
-            } else if (modeForm == JenisCatatanFragmentForm.MODE_EDIT) {
+            } else if (modeForm == EmployeeStatusFragmentForm.MODE_EDIT) {
                 if ((cekEmployeeStatus != 1 && model.nama_employee_status == data.nama_employee_status) ||
                     (cekEmployeeStatus != 0 && model.nama_employee_status != data.nama_employee_status)
                 ) {
