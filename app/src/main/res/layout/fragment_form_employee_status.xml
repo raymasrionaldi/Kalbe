@@ -23,51 +23,27 @@
             android:textSize="@dimen/title_form_text_size"
             android:textStyle="bold" />
 
-        <FrameLayout
+        <EditText
+            android:id="@+id/inputNamaEmployeeStatus"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/inputNamaEmployeeStatus"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Name*"
-                    android:inputType="text"/>
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-        </FrameLayout>
+            android:hint="Name *"
+            android:inputType="text"/>
 
         <TextView
             android:id="@+id/requiredNamaEmployeeStatus"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Required"
+            android:textSize="11sp"
             android:textColor="@color/warnaMerah"
             android:visibility="invisible" />
 
-        <FrameLayout
+        <EditText
+            android:id="@+id/inputNotesEmployeeStatus"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/inputNotesEmployeeStatus"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Notes"/>
-            </com.google.android.material.textfield.TextInputLayout>
-
-        </FrameLayout>
+            android:hint="Notes"/>
 
         <LinearLayout
             android:layout_width="match_parent"

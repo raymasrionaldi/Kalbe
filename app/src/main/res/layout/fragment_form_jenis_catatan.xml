@@ -36,7 +36,7 @@
                     android:id="@+id/inputNamaJenisCatatan"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Jenis Catatan*"
+                    android:hint="Jenis Catatan *"
                     android:inputType="text"/>
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -57,6 +57,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Error: Jenis Catatan Tidak Boleh Kosong"
+            android:textSize="11sp"
             android:textColor="@color/warnaMerah"
             android:visibility="invisible" />
 
