@@ -23,6 +23,12 @@ val JLN_COMPANY="jln_company"
 val BUILDING_COMPANY="building_company"
 val FLOOR_COMPANY="floor_company"
 
+val TABEL_KELUARGA_DATA = "keluarga_data"
+val ID_JENIS = "id_jenis"
+val JENIS_KELUARGA = "jenis_keluarga"
+val TABEL_KELUARGA_DETAIL = "keluarga_detail"
+val NAMA_ANGGOTA = "nama_anggota"
+
 val TABEL_POSITION_LEVEL ="position_level"
 val ID_POSITION="id_position"
 val NAMA_POSITION="nama_position"
