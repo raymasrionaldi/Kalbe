@@ -6,6 +6,7 @@ import android.content.DialogInterface
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
@@ -15,6 +16,7 @@ import com.xsis.android.batch217.adapters.fragments.TrainingFragmentAdapter
 import com.xsis.android.batch217.databases.DatabaseHelper
 import com.xsis.android.batch217.databases.KeluargaQueryHelper
 import com.xsis.android.batch217.models.KeluargaData
+import com.xsis.android.batch217.ui.keluarga.KeluargaFragmentData
 import com.xsis.android.batch217.ui.keluarga.KeluargaFragmentDetail
 import com.xsis.android.batch217.ui.training.TrainingFragmentForm
 import com.xsis.android.batch217.utils.*
@@ -50,6 +52,7 @@ class ListKeluargaDataAdapter(val context: Context, val listKeluargaData:List<Ke
             window.setOnItemClickListener{parent, view, position, id ->
                 when (position){
                     0 -> {
+                        window.dismiss()
                         val konfirmasiDelete = AlertDialog.Builder(context)
                         konfirmasiDelete.setMessage("Yakin mau hapus data ini ?")
                             .setPositiveButton("Ya", DialogInterface.OnClickListener{ dialog, which ->
@@ -58,6 +61,15 @@ class ListKeluargaDataAdapter(val context: Context, val listKeluargaData:List<Ke
                                 val databaseHelper = DatabaseHelper(context!!)
                                 val databaseQueryHelper = KeluargaQueryHelper(databaseHelper)
                                 databaseQueryHelper.hapusKeluarga(ID)
+
+
+                                val fragment = fm.fragments[0] as KeluargaFragmentData
+                                val viewPager = fragment.view!!.parent as ViewPager
+                                val adapter = viewPager.adapter!! as KeluargaFragmentAdapter
+
+                                fragment.search2()
+                                adapter.notifyDataSetChanged()
+                                viewPager.setCurrentItem(0, true)
 
                             })
                             .setNegativeButton("Tidak", DialogInterface.OnClickListener{ dialog, which ->

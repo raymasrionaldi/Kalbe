@@ -22,6 +22,7 @@ import com.xsis.android.batch217.ui.company.CompanyFragmentForm
 class KeluargaFragmentData(context: Context, val fm: FragmentManager) : Fragment() {
     var recyclerView: RecyclerView? = null
     var databaseQueryHelper: KeluargaQueryHelper? = null
+    var kata:String = ""
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -86,6 +87,7 @@ class KeluargaFragmentData(context: Context, val fm: FragmentManager) : Fragment
 
             override fun onQueryTextChange(keyword: String): Boolean {
                 search(keyword, databaseQueryHelper!!)
+                kata = keyword
                 return true
             }
         })
@@ -93,6 +95,11 @@ class KeluargaFragmentData(context: Context, val fm: FragmentManager) : Fragment
 
     fun search(keyword: String, databaseQueryHelper: KeluargaQueryHelper) {
         val listKeluargaData = databaseQueryHelper.cariKeluargaData(keyword)
+        tampilkanListKeluargaData(listKeluargaData, recyclerView!!)
+    }
+
+    fun search2(){
+        val listKeluargaData = databaseQueryHelper!!.cariKeluargaData(kata)
         tampilkanListKeluargaData(listKeluargaData, recyclerView!!)
     }
 }
