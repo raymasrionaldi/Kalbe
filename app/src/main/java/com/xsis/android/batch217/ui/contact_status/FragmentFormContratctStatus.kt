@@ -189,7 +189,7 @@ class FragmentFormContratctStatus(context:Context,val fm: FragmentManager) : Fra
     }
     fun changeMode() {
         if (modeForm == MODE_ADD) {
-            fragmenForm!!.text = TITLE_ADD
+            titleFromContractStatus.isVisible =true
 
             buttonDeleteContractStatus!!.hide()
         } else if (modeForm == MODE_EDIT) {

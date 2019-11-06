@@ -182,7 +182,7 @@ class FragmentFormTrainingOrganizer(context: Context, val fm: FragmentManager) :
     }
     fun changeMode() {
         if (modeForm == MODE_ADD) {
-            fragmenFormTrainingOrganizer!!.text = TITLE_ADD
+            titleFromTrainingOrganizer.isVisible = true
 
             buttonDeleteTrainingOrganizer!!.hide()
         } else if (modeForm == MODE_EDIT) {
