@@ -100,7 +100,7 @@
         android:id="@+id/teksErrorPendidikanUpdate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Error : Tipe identitas tidak boleh kosong"
+        android:text="Error : Nama Pendidikan tidak boleh kosong"
         android:textColor="@android:color/holo_red_dark"
         android:visibility="invisible"
         android:paddingLeft="10dp"/>

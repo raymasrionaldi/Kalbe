@@ -38,8 +38,8 @@ class EmployeeFragmentForm(context: Context, val fm: FragmentManager) : Fragment
     var databaseQueryHelper: EmployeeTypeQueryHelper? = null
 
     companion object {
-        const val TITLE_ADD = "Add New Grade"
-        const val TITLE_EDIT = "Edit Grade"
+        const val TITLE_ADD = "Add New Employee Type"
+        const val TITLE_EDIT = "Edit Employee Type"
         const val MODE_ADD = 0
         const val MODE_EDIT = 1
     }
