@@ -43,8 +43,7 @@ class TipeTesFragmentData(context: Context, val fm: FragmentManager) : Fragment(
         val dividerItemDecoration = DividerItemDecoration(context, layoutManager.orientation)
         recyclerView!!.addItemDecoration(dividerItemDecoration)
 
-        val buttonAdd =
-            customView.findViewById(R.id.buttonTambahTipeTes) as FloatingActionButton
+        val buttonAdd = customView.findViewById(R.id.buttonTambahTipeTes) as FloatingActionButton
         buttonAdd.setOnClickListener {
             addData()
         }
@@ -92,18 +91,12 @@ class TipeTesFragmentData(context: Context, val fm: FragmentManager) : Fragment(
         viewPager.setCurrentItem(1, true)
     }
 
-    fun getSemuaTipeTes(
-        recyclerView: RecyclerView,
-        databaseQueryHelper: TipeTesQueryHelper
-    ) {
+    fun getSemuaTipeTes(recyclerView: RecyclerView, databaseQueryHelper: TipeTesQueryHelper) {
         val listTipeTes = databaseQueryHelper.readSemuaTipeTesModels()
         tampilkanListTipeTes(listTipeTes, recyclerView)
     }
 
-    fun tampilkanListTipeTes(
-        listTipeTes: List<TipeTes>,
-        recyclerView: RecyclerView
-    ) {
+    fun tampilkanListTipeTes(listTipeTes: List<TipeTes>, recyclerView: RecyclerView) {
         val adapterTipeTes = ListTipeTesAdapter(context!!, listTipeTes, fm)
         recyclerView.adapter = adapterTipeTes
         adapterTipeTes.notifyDataSetChanged()
