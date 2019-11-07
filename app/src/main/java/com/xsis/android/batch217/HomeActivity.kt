@@ -14,15 +14,11 @@ import androidx.navigation.ui.AppBarConfiguration
 import com.google.android.material.navigation.NavigationView
 import com.xsis.android.batch217.adapters.expandablelist.ExpandableListAdapter
 import com.xsis.android.batch217.databases.DatabaseHelper
-import com.xsis.android.batch217.models.EmployeeStatus
-import com.xsis.android.batch217.models.JenisCatatan
 import com.xsis.android.batch217.models.expandablelist.ExpandedMenuModel
 import com.xsis.android.batch217.ui.agama.AgamaFragment
 import com.xsis.android.batch217.ui.back_office_position.BackOfficePositionFragment
 import com.xsis.android.batch217.ui.company.CompanyFragment
-import com.xsis.android.batch217.ui.employe_status.EmployeStatusFragment
 import com.xsis.android.batch217.ui.home.HomeFragment
-import com.xsis.android.batch217.ui.jenis_catatan.JenisCatatanFragment
 import com.xsis.android.batch217.ui.position_level.PositionLevelFragment
 import com.xsis.android.batch217.utils.OnBackPressedListener
 
@@ -86,12 +82,14 @@ class HomeActivity : AppCompatActivity() {
                 R.id.nav_agama,
                 R.id.nav_tipe_identitas,
                 R.id.nav_backOfficePosition,
+                R.id.nav_contactStatus,
                 R.id.nav_employeStatus,
                 R.id.nav_employeType,
                 R.id.nav_grade,
                 R.id.nav_jadwal,
                 R.id.nav_jenisCatatan,
                 R.id.nav_keahlian,
+                R.id.nav_providerTools,
                 R.id.nav_jenjangPendidikan,
                 R.id.nav_employee
             ), drawerLayout
@@ -151,15 +149,6 @@ class HomeActivity : AppCompatActivity() {
         // Adding data header
         listDataHeader.add(item3)
 
-        val item4 = ExpandedMenuModel()
-        item4.name = getString(R.string.menu_jenis_catatan)
-        // Adding data header
-        listDataHeader.add(item4)
-
-        val item5 = ExpandedMenuModel()
-        item5.name = getString(R.string.menu_employe_status)
-        // Adding data header
-        listDataHeader.add(item5)
 
         // Adding child data
         val heading2 = ArrayList<String>()
@@ -255,30 +244,6 @@ class HomeActivity : AppCompatActivity() {
                         R.id.nav_host_fragment,
                         fragment,
                         getString(R.string.menu_agama)
-                    )
-                    fragmentTransaction.commit()
-                    closeNavDrawer()
-                }
-
-                4 -> {
-                    val fragment = JenisCatatanFragment()
-                    val fragmentTransaction = supportFragmentManager.beginTransaction()
-                    fragmentTransaction.replace(
-                        R.id.nav_host_fragment,
-                        fragment,
-                        getString(R.string.menu_jenis_catatan)
-                    )
-                    fragmentTransaction.commit()
-                    closeNavDrawer()
-                }
-
-                5 -> {
-                    val fragment = EmployeStatusFragment()
-                    val fragmentTransaction = supportFragmentManager.beginTransaction()
-                    fragmentTransaction.replace(
-                        R.id.nav_host_fragment,
-                        fragment,
-                        getString(R.string.menu_employe_status)
                     )
                     fragmentTransaction.commit()
                     closeNavDrawer()
