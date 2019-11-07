@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -211,5 +212,22 @@ class PositionLevelFragmentForm(context: Context, val fm: FragmentManager) : Fra
             adapter.notifyDataSetChanged()
             viewPager.setCurrentItem(0, true)
         }
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                kembaliKeData()
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(this, callback)
+    }
+
+    fun kembaliKeData(){
+        val fragment = fm.fragments[0] as PositionLevelFragmentData
+        val viewPager = fragment.view!!.parent as ViewPager
+
+        viewPager.setCurrentItem(0, true)
     }
 }
