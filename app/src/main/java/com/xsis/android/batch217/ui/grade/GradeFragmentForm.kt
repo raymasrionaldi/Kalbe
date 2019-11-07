@@ -109,6 +109,7 @@ class GradeFragmentForm(context: Context, val fm: FragmentManager) : Fragment() 
     fun resetForm() {
         nama!!.setText("")
         notes!!.setText("")
+        nama!!.setHintTextColor(Color.GRAY)
         required!!.visibility=View.GONE
     }
 
