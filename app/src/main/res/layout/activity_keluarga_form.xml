@@ -100,7 +100,7 @@
             android:layout_weight="1"
             android:background="#FF9800"
             android:text="Simpan"
-            android:enabled="false"/>
+            android:enabled="true"/>
 
     </LinearLayout>
 

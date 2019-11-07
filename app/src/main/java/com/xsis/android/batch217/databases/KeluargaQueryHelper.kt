@@ -64,6 +64,7 @@ class KeluargaQueryHelper(val databaseHelper: DatabaseHelper) {
     fun readJenisKeluarga(id:Int):String{
         var listKeluargaData = ArrayList<KeluargaData>()
         val db = databaseHelper.readableDatabase
+        println("------- $id")
         val queryRead = "SELECT * FROM $TABEL_KELUARGA_DATA WHERE $ID_JENIS=$id"
         val cursor =  db.rawQuery(queryRead, null)
         if (cursor.count > 0){
@@ -98,7 +99,7 @@ class KeluargaQueryHelper(val databaseHelper: DatabaseHelper) {
         return listKeluargaData
     }
 
-    fun tambahKeluargaData(keluargaData: KeluargaData, listKeluargaDetail: ArrayList<String>) {
+    fun tambahKeluargaData(jenisKeluarga:String, listKeluargaDetail: ArrayList<String>) {
         //WARNING 1 : Belum cek jika ada nama jenis keluarga yang sama
         //WARNING 2 : Belum cek jika ada anggota keluarga yang sama
         //WARNING 3 : Simpan data listKeluargaDetail di edit text apa ?
@@ -108,13 +109,13 @@ class KeluargaQueryHelper(val databaseHelper: DatabaseHelper) {
 
         //1.Insert ke tabel keluarga data
         val values_data = ContentValues()
-        values_data.put(JENIS_KELUARGA, keluargaData.jenisKeluarga)
-        db.insert(TABEL_COMPANY, null, values_data)
+        values_data.put(JENIS_KELUARGA, jenisKeluarga)
+        db.insert(TABEL_KELUARGA_DATA, null, values_data)
 
         //2.Insert ke tabel keluarga detail
         //2.1. cari id
         var list = ArrayList<KeluargaData>()
-        val queryRead = "SELECT * FROM $TABEL_KELUARGA_DATA WHERE $JENIS_KELUARGA='${keluargaData.jenisKeluarga}'"
+        val queryRead = "SELECT * FROM $TABEL_KELUARGA_DATA WHERE $JENIS_KELUARGA='${jenisKeluarga}'"
         val cursor = db_read.rawQuery(queryRead, null)
         if (cursor.count>0){list  = konversiCursorKeListKeluargaData(cursor)}
         val id = list[0].idKeluargaData
@@ -130,14 +131,20 @@ class KeluargaQueryHelper(val databaseHelper: DatabaseHelper) {
 
     }
 
-    fun editKeluarga(listAnggota: ArrayList<String>, id:Int) {
+    fun editKeluarga(listAnggota: ArrayList<String>, id:Int, Jenis:String) {
         val db = databaseHelper.writableDatabase
 
+        //A. Edit Jenis Keluarga
+        val content = ContentValues()
+        content.put(JENIS_KELUARGA, Jenis)
+        db.update(TABEL_KELUARGA_DATA, content, "$ID_JENIS=$id", null)
+
+        //B. Edit anggota keluarga
         //1. Delete semua anggota pada id jenis
         val queryDeleteDetail = "DELETE FROM $TABEL_KELUARGA_DETAIL WHERE $ID_JENIS=$id"
         db.execSQL(queryDeleteDetail)
 
-        //2. Insert
+        //2. Insert anggota
         val values_detail = ContentValues()
         var count = 0
         for (i in 0 until listAnggota.size){
@@ -151,6 +158,8 @@ class KeluargaQueryHelper(val databaseHelper: DatabaseHelper) {
             }
 
         }
+
+
     }
 
     fun hapusKeluarga(id: Int) {

@@ -77,8 +77,17 @@ class KeluargaFormActivity : AppCompatActivity() {
 
     fun simpan(listAnggota:ArrayList<String>, id:Int){
         simpan!!.setOnClickListener {
+
+            val Jenis = jenisKeluarga!!.text.toString().trim()
             println(listAnggota)
-            databaseQueryHelper.editKeluarga(listAnggota, id)
+
+            if (id != 0){
+                databaseQueryHelper.editKeluarga(listAnggota, id, Jenis)
+            } else{
+                databaseQueryHelper.tambahKeluargaData(Jenis, listAnggota)
+            }
+
+
             finish()
         }
     }

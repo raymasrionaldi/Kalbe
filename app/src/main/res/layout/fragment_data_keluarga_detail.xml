@@ -13,6 +13,15 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <TextView
+            android:id="@+id/judulJenisKeluarga"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:text="jenis keluarga"
+            android:paddingLeft="20dp"/>
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/listKeluargaDetailRecycler"
             android:layout_width="match_parent"

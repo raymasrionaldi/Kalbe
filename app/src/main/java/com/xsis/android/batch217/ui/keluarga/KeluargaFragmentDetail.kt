@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -30,6 +31,7 @@ import com.xsis.android.batch217.utils.ID_KEAHLIAN
 
 class KeluargaFragmentDetail (context: Context, val fm: FragmentManager) : Fragment(){
     var recyclerView: RecyclerView? = null
+    var judulJenis:TextView? = null
     var databaseHelper:DatabaseHelper? = null
     var databaseQueryHelper: KeluargaQueryHelper? = null
     var ID:Int = 0
@@ -45,6 +47,7 @@ class KeluargaFragmentDetail (context: Context, val fm: FragmentManager) : Fragm
 
         val layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
 
+        judulJenis = customView.findViewById(R.id.judulJenisKeluarga) as TextView
         recyclerView = customView.findViewById(R.id.listKeluargaDetailRecycler) as RecyclerView
         recyclerView!!.layoutManager = layoutManager
 
@@ -68,6 +71,7 @@ class KeluargaFragmentDetail (context: Context, val fm: FragmentManager) : Fragm
         databaseHelper = DatabaseHelper(context!!)
         databaseQueryHelper = KeluargaQueryHelper(databaseHelper!!)
         getSemuaKeluargaDetail(ID, recyclerView!!, databaseQueryHelper!!)
+        judulJenis!!.text = databaseQueryHelper!!.readJenisKeluarga(ID)
     }
 
     fun getSemuaKeluargaDetail(id:Int, recyclerView: RecyclerView, queryHelper: KeluargaQueryHelper){
