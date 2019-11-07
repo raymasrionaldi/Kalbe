@@ -361,25 +361,25 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
-    override fun onBackPressed() {
-        val drawer = findViewById(R.id.drawer_layout) as DrawerLayout
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START)
-        } else {
-//           super.onBackPressed()
-            var isCanShowAlertDialog = false
-            val fragmentList = supportFragmentManager.fragments
-            if (fragmentList != null) {
-                //TODO: Perform your logic to pass back press here
-                for (fragment in fragmentList) {
-                    if (fragment is OnBackPressedListener) {
-                        isCanShowAlertDialog = true
-                        (fragment as OnBackPressedListener).onBackPressed()
-                    }
-                }
-            }
-            if (fragmentList[fragmentList.lastIndex] is HomeFragment)
-                Toast.makeText(this, "ini mau keluar", Toast.LENGTH_SHORT).show()
-        }
-    }
+//    override fun onBackPressed() {
+//        val drawer = findViewById(R.id.drawer_layout) as DrawerLayout
+//        if (drawer.isDrawerOpen(GravityCompat.START)) {
+//            drawer.closeDrawer(GravityCompat.START)
+//        } else {
+////           super.onBackPressed()
+//            var isCanShowAlertDialog = false
+//            val fragmentList = supportFragmentManager.fragments
+//            if (fragmentList != null) {
+//                //TODO: Perform your logic to pass back press here
+//                for (fragment in fragmentList) {
+//                    if (fragment is OnBackPressedListener) {
+//                        isCanShowAlertDialog = true
+//                        (fragment as OnBackPressedListener).onBackPressed()
+//                    }
+//                }
+//            }
+//            if (fragmentList[fragmentList.lastIndex] is HomeFragment)
+//                Toast.makeText(this, "ini mau keluar", Toast.LENGTH_SHORT).show()
+//        }
+//    }
 }
