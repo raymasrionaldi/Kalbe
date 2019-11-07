@@ -95,6 +95,7 @@ class InputPendidikanActivity : AppCompatActivity() {
         simpan.setOnClickListener {
             if (teksPendidikan.text.toString().trim().isEmpty()) {
                 Toast.makeText(context, DATA_BELUM_LENGKAP, Toast.LENGTH_SHORT).show()
+                teksErrorPendidikan.isVisible = true
             } else {
                 insertKeDatabase()
             }
