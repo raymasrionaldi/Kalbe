@@ -238,7 +238,7 @@ class HomeActivity : AppCompatActivity() {
 
             }
             if (groupIndex == 8 && childIndex == 0) {
-                val fragment = CompanyFragment()
+                val fragment = TrainingOrganizerFragment()
                 val fragmentTransaction = supportFragmentManager.beginTransaction()
                 fragmentTransaction.replace(
                     R.id.nav_host_fragment,
@@ -249,7 +249,7 @@ class HomeActivity : AppCompatActivity() {
                 closeNavDrawer()
 
             } else if (groupIndex == 8  && childIndex == 1) {
-                val fragment = PositionLevelFragment()
+                val fragment = TrainingOrganizerFragment()
                 val fragmentTransaction = supportFragmentManager.beginTransaction()
                 fragmentTransaction.replace(
                     R.id.nav_host_fragment,
