@@ -56,7 +56,7 @@
             android:id="@+id/requiredTipeTes"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Error: Jenis Catatan Tidak Boleh Kosong"
+            android:text="Error: Tipe Tes tidak boleh kosong"
             android:textSize="11sp"
             android:textColor="@color/warnaMerah"
             android:visibility="invisible" />
