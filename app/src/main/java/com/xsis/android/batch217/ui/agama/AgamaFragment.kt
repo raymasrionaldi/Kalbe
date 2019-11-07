@@ -12,15 +12,15 @@ import com.xsis.android.batch217.utils.CustomViewPager
 
 class AgamaFragment : Fragment() {
 
-    private lateinit var agamaViewModel: AgamaViewModel
+    //private lateinit var agamaViewModel: AgamaViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        agamaViewModel =
-            ViewModelProviders.of(this).get(AgamaViewModel::class.java)
+//        agamaViewModel =
+//            ViewModelProviders.of(this).get(AgamaViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_agama, container, false)
         val fragmentAdapter = AgamaFragmentAdapter(context!!, childFragmentManager)
         val viewPager = root.findViewById(R.id.viewPagerAgama) as CustomViewPager
