@@ -43,7 +43,6 @@ class HomeActivity : AppCompatActivity() {
                 R.id.nav_jadwal,
                 R.id.nav_jenisCatatan,
                 R.id.nav_keahlian,
-                R.id.nav_providerTools,
                 R.id.nav_jenjangPendidikan,
                 R.id.nav_employee
             ), drawerLayout

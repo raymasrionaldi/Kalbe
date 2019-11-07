@@ -13,6 +13,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -167,7 +168,6 @@ class ProviderToolsFragmentForm(ontext: Context, val fm: FragmentManager) : Frag
 
         val required = view!!.findViewById(R.id.requiredNamaProviderTools) as TextView
 
-
         nama!!.setHintTextColor(defaultColor)
         required.visibility = View.INVISIBLE
 
@@ -180,7 +180,8 @@ class ProviderToolsFragmentForm(ontext: Context, val fm: FragmentManager) : Frag
             model.nama_provider = namaProviderTools
             model.des_provider = notesProviderTools
 
-            val cekProviderTools = databaseQueryHelper!!.cekProviderToolsSudahAda(model.nama_provider!!)
+            val cekProviderTools =
+                databaseQueryHelper!!.cekProviderToolsSudahAda(model.nama_provider!!)
 
             if (modeForm == MODE_ADD) {
                 if (cekProviderTools > 0) {
@@ -216,5 +217,26 @@ class ProviderToolsFragmentForm(ontext: Context, val fm: FragmentManager) : Frag
             adapter.notifyDataSetChanged()
             viewPager.setCurrentItem(0, true)
         }
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                kembaliKeData()
+                val required = view!!.findViewById(R.id.requiredNamaProviderTools) as TextView
+
+                nama!!.setHintTextColor(defaultColor)
+                required.visibility = View.INVISIBLE
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(this, callback)
+    }
+
+    fun kembaliKeData() {
+        val fragment = fm.fragments[0] as ProviderToolsFragmentData
+        val viewPager = fragment.view!!.parent as ViewPager
+
+        viewPager.setCurrentItem(0, true)
     }
 }
