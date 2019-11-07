@@ -31,6 +31,9 @@ class UbahDataKeahlianActivity : AppCompatActivity() {
             ID_Keahlian = bundle!!.getInt(ID_KEAHLIAN)
             loadDataKeahlian(ID_Keahlian)
         }
+        buttonBackUbahKeahlian.setOnClickListener {
+            finish()
+        }
     }
 
     fun simpan(id: Int) {
@@ -85,7 +88,7 @@ class UbahDataKeahlianActivity : AppCompatActivity() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 //Enable tombol simpan ketika user sudah mulai mengisi form
                 tipeKeahlianSimpanEdit.isEnabled = true
-                tipeKeahlianSimpanEdit.setBackgroundResource(R.drawable.button_simpan_on)
+                tipeKeahlianSimpanEdit.setBackgroundResource(R.drawable.button_simpan_on_2)
                 tipeKeahlianSimpanEdit.setTextColor(Color.WHITE)
 
                 //Tipe identitas tidak boleh kosong

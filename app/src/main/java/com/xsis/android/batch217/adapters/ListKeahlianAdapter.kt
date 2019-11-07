@@ -19,6 +19,7 @@ import com.xsis.android.batch217.viewholders.ViewHolderListKeahlian
 import kotlinx.android.synthetic.main.popup_layout.view.*
 
 class ListKeahlianAdapter(val context: Context?,
+                          val fragment: KeahlianFragment,
                           val listKeahlian: List<Keahlian>): RecyclerView.Adapter<ViewHolderListKeahlian>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolderListKeahlian {
         val customView = LayoutInflater.from(parent.context).inflate(R.layout.list_dot_layout,parent,false)
@@ -49,18 +50,16 @@ class ListKeahlianAdapter(val context: Context?,
                         val intentEdit = Intent(context, UbahDataKeahlianActivity::class.java)
                             intentEdit.putExtra(ID_KEAHLIAN, selectedListKeahlain.id_keahlian )
                         context.startActivity(intentEdit)
+                        window.dismiss()
                     }
                     1 -> {
                         val konfirmasiDelete = AlertDialog.Builder(context)
                         konfirmasiDelete.setMessage("Hapus data ${selectedListKeahlain.nama_keahlian} ?")
                             .setPositiveButton("HAPUS", DialogInterface.OnClickListener{ dialog, which ->
-                                if (databaseQueryHelper!!.hapusKeahlian(selectedListKeahlain.id_keahlian) != 0) {
-                                    Toast.makeText(context!!, HAPUS_DATA_BERHASIL, Toast.LENGTH_SHORT).show()
-
-                                } else {
-                                    Toast.makeText(context!!, HAPUS_DATA_GAGAL, Toast.LENGTH_SHORT).show()
-                                }
-
+                                Toast.makeText(context, HAPUS_DATA_BERHASIL, Toast.LENGTH_SHORT).show()
+                                val queryDelete = "UPDATE $TABEL_KEAHLIAN SET $IS_DELETED = 'true' WHERE $ID_KEAHLIAN = ${selectedListKeahlain.id_keahlian}"
+                                db.execSQL(queryDelete)
+                                fragment.refreshList()
                             })
                             .setNegativeButton("BATAL", DialogInterface.OnClickListener{ dialog, which ->
                                 dialog.cancel()
@@ -68,6 +67,7 @@ class ListKeahlianAdapter(val context: Context?,
                             .setCancelable(true)
 
                         konfirmasiDelete.create().show()
+                        window.dismiss()
                     }
                 }
             }
