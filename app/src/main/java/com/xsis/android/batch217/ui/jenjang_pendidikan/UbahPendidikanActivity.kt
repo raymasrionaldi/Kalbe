@@ -119,7 +119,7 @@ class UbahPendidikanActivity : AppCompatActivity() {
         val simpan = btnSimpanPendidikanUpdate as Button
         simpan.setOnClickListener {
             if (teksPendidikan.text.toString().trim().isEmpty()) {
-                //tidak ada aksi
+                Toast.makeText(context, DATA_BELUM_LENGKAP, Toast.LENGTH_SHORT).show()
             } else {
                 insertKeDatabase(id)
             }

@@ -75,14 +75,15 @@
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            app:hintTextAppearance="@style/TextAppearance.App.TextInputLayout">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/teksPendidikan"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:hint="@string/menu_jenjang_pendidikan"
+                android:hint="@string/man_jenjang_pendidikan"
                 android:text="" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -151,8 +152,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@color/warnaButtonSimpan"
-            android:text="Simpan"
-            android:enabled="false"/>
+            android:text="Simpan"/>
 
     </LinearLayout>
 
