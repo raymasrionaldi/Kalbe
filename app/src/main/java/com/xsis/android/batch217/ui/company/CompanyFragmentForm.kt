@@ -137,6 +137,11 @@ class CompanyFragmentForm(context: Context, val fm: FragmentManager) : Fragment(
             title!!.text = TITLE_EDIT
             buttonDelete!!.show()
         }
+
+        nama!!.setHintTextColor(defaultColor)
+        kota!!.setHintTextColor(defaultColor)
+        requiredNama!!.visibility = View.INVISIBLE
+        requiredKota!!.visibility = View.INVISIBLE
     }
 
     fun showDeleteDialog() {

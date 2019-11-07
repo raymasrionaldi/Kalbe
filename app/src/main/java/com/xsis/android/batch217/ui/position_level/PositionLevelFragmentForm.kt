@@ -27,6 +27,7 @@ class PositionLevelFragmentForm(context: Context, val fm: FragmentManager) : Fra
     var title: TextView? = null
     var buttonReset: Button? = null
     var nama: EditText? = null
+    var required: TextView? = null
     var notes: EditText? = null
     var buttonDelete: FloatingActionButton? = null
     var defaultColor = 0
@@ -59,6 +60,7 @@ class PositionLevelFragmentForm(context: Context, val fm: FragmentManager) : Fra
         buttonReset = customView.findViewById(R.id.buttonResetPositionLevel) as Button
         nama = customView.findViewById(R.id.inputNamaPositionLevel) as EditText
         defaultColor = nama!!.currentHintTextColor
+        required = customView.findViewById(R.id.requiredNamaPositionLevel) as TextView
         notes = customView.findViewById(R.id.inputNotesPositionLevel) as EditText
         buttonDelete =
             customView.findViewById(R.id.buttonDeletePositionLevel) as FloatingActionButton
@@ -113,6 +115,9 @@ class PositionLevelFragmentForm(context: Context, val fm: FragmentManager) : Fra
             title!!.text = TITLE_EDIT
             buttonDelete!!.show()
         }
+
+        nama!!.setHintTextColor(defaultColor)
+        required!!.visibility = View.INVISIBLE
     }
 
     fun showDeleteDialog() {
@@ -161,15 +166,12 @@ class PositionLevelFragmentForm(context: Context, val fm: FragmentManager) : Fra
         val namaPositionLevel = nama!!.text.toString().trim()
         val notesPositionLevel = notes!!.text.toString().trim()
 
-        val required = view!!.findViewById(R.id.requiredNamaPositionLevel) as TextView
-
-
         nama!!.setHintTextColor(defaultColor)
-        required.visibility = View.INVISIBLE
+        required!!.visibility = View.INVISIBLE
 
         if (namaPositionLevel.isEmpty()) {
             nama!!.setHintTextColor(Color.RED)
-            required.visibility = View.VISIBLE
+            required!!.visibility = View.VISIBLE
         } else {
             val model = PositionLevel()
             model.idPostionLevel = data.idPostionLevel
