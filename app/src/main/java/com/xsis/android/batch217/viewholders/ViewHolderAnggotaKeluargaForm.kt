@@ -1,5 +1,7 @@
 package com.xsis.android.batch217.viewholders
 
+import android.content.Context
+import android.content.Intent
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
@@ -8,6 +10,8 @@ import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.xsis.android.batch217.R
+import com.xsis.android.batch217.ui.keluarga.KeluargaFormActivity
+import com.xsis.android.batch217.utils.ID_JENIS
 import org.w3c.dom.Text
 
 class ViewHolderAnggotaKeluargaForm(itemView:View):RecyclerView.ViewHolder(itemView) {
@@ -41,8 +45,20 @@ class ViewHolderAnggotaKeluargaForm(itemView:View):RecyclerView.ViewHolder(itemV
 
         val anggotaBaru = teksEdit.text.toString().trim()
         teksTidakEdit.text = anggotaBaru
-        listAnggota.add(anggotaBaru)
+        listAnggota.set(listAnggota.size-1, anggotaBaru)
         println("konfirm : $listAnggota")
+    }
+
+    fun trash(id:Int, listAnggota:ArrayList<String>, indeks:Int, context: Context){
+        println("----------------------------------------------------------------------")
+        println("List anggota sebelum terhapus : $listAnggota")
+        listAnggota.removeAt(indeks)
+        println("List anggota sesudah terhapus : $listAnggota")
+
+
+        val intent = Intent(context, KeluargaFormActivity::class.java)
+        intent.putExtra(ID_JENIS, id)
+        context.startActivity(intent)
     }
 
     fun hapus(){

@@ -61,7 +61,7 @@ class KeluargaFormActivity : AppCompatActivity() {
 
         val layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         anggotaRecycler!!.layoutManager = layoutManager
-        anggotaRecycler!!.adapter = KeluargaFormAdapter(listAnggota)
+        anggotaRecycler!!.adapter = KeluargaFormAdapter(id, context, listAnggota)
 
         tambahAnggota(listAnggota, anggotaRecycler!!)
         simpan(listAnggota, id)
@@ -71,7 +71,7 @@ class KeluargaFormActivity : AppCompatActivity() {
     fun tambahAnggota(listAnggota:ArrayList<String>, anggotaRecycler:RecyclerView){
         tambah!!.setOnClickListener {
             listAnggota.add("")
-            anggotaRecycler.adapter = KeluargaFormAdapter(listAnggota)
+            anggotaRecycler.adapter = KeluargaFormAdapter(id, context, listAnggota)
         }
     }
 
