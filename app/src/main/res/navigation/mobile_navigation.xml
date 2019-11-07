@@ -127,4 +127,22 @@
         android:label="@string/menu_employee"
         tools:layout="@layout/fragment_employee" />
 
+    <fragment
+        android:id="@+id/nav_timesheet"
+        android:name="com.xsis.android.batch217.ui.timesheet.TimesheetFragment"
+        android:label="@string/timesheet"
+        tools:layout="@layout/fragment_timesheet"/>
+
+    <fragment
+        android:id="@+id/nav_timesheet_entry"
+        android:name="com.xsis.android.batch217.ui.timesheet.timesheet_entry.TimesheetEntryFragment"
+        android:label="@string/timesheet_entry"
+        tools:layout="@layout/fragment_entry_timesheet"/>
+    <fragment
+        android:id="@+id/nav_timesheet_history"
+        android:name="com.xsis.android.batch217.ui.timesheet.timesheet_history.TimesheetHistoryFragment"
+        android:label="@string/timesheet_history"
+        tools:layout="@layout/fragment_history_timesheet"/>
+
+
 </navigation>

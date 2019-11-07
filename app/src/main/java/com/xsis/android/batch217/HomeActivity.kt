@@ -23,6 +23,8 @@ import com.xsis.android.batch217.ui.employe_status.EmployeStatusFragment
 import com.xsis.android.batch217.ui.home.HomeFragment
 import com.xsis.android.batch217.ui.jenis_catatan.JenisCatatanFragment
 import com.xsis.android.batch217.ui.position_level.PositionLevelFragment
+import com.xsis.android.batch217.ui.timesheet.timesheet_entry.TimesheetEntryFragment
+import com.xsis.android.batch217.ui.timesheet.timesheet_history.TimesheetHistoryFragment
 import com.xsis.android.batch217.ui.training_organizer.TrainingOrganizerFragment
 import com.xsis.android.batch217.utils.OnBackPressedListener
 
@@ -173,6 +175,12 @@ class HomeActivity : AppCompatActivity() {
         // Adding data header
         listDataHeader.add(item7)
 
+        val item8 = ExpandedMenuModel()
+        item8.name = getString(R.string.timesheet)
+        item8.icon = R.drawable.ic_folder_black
+        // Adding data header
+        listDataHeader.add(item8)
+
         // Adding child data
         val heading2 = ArrayList<String>()
         heading2.add(getString(R.string.menu_company))
@@ -181,6 +189,14 @@ class HomeActivity : AppCompatActivity() {
 
         // Header, Child data
         listDataChild[listDataHeader[2]] = heading2
+
+        // Adding child data
+        val heading8 = ArrayList<String>()
+        heading8.add(getString(R.string.timesheet_entry))
+        heading8.add(getString(R.string.timesheet_history))
+
+        // Header, Child data
+        listDataChild[listDataHeader[8]] = heading8
 
     }
 
@@ -220,6 +236,28 @@ class HomeActivity : AppCompatActivity() {
                 fragmentTransaction.commit()
                 closeNavDrawer()
 
+            }
+            if (groupIndex == 8 && childIndex == 0) {
+                val fragment = CompanyFragment()
+                val fragmentTransaction = supportFragmentManager.beginTransaction()
+                fragmentTransaction.replace(
+                    R.id.nav_host_fragment,
+                    fragment,
+                    getString(R.string.timesheet_entry)
+                )
+                fragmentTransaction.commit()
+                closeNavDrawer()
+
+            } else if (groupIndex == 8  && childIndex == 1) {
+                val fragment = PositionLevelFragment()
+                val fragmentTransaction = supportFragmentManager.beginTransaction()
+                fragmentTransaction.replace(
+                    R.id.nav_host_fragment,
+                    fragment,
+                    getString(R.string.timesheet_history)
+                )
+                fragmentTransaction.commit()
+                closeNavDrawer()
             }
 
             return false
@@ -317,6 +355,7 @@ class HomeActivity : AppCompatActivity() {
                     fragmentTransaction.commit()
                     closeNavDrawer()
                 }
+
             }
             return false
         }

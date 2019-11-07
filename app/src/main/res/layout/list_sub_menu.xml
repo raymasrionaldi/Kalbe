@@ -5,13 +5,10 @@
     android:layout_height="wrap_content"
     android:layout_margin="10dp"
     android:background="@color/warnaBiru"
-    android:gravity="center_vertical"
+    android:paddingLeft="60dp"
     android:orientation="horizontal">
 
-    <ImageView
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:layout_margin="10dp" />
+
 
     <TextView
         android:id="@+id/submenu"
