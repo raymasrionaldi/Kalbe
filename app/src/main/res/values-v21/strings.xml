@@ -10,6 +10,7 @@
 
     <string name="menu_home">Home</string>
     <string name="menu_tipe_identitas">Tipe Identitas</string>
+    <string name="nama_tipe_identitas">Tipe Identitas*</string>
     <string name="tambah_tipe_identitas">Tambah Tipe Identitas</string>
     <string name="ubah_tipe_identitas">Ubah Tipe Identitas</string>
     <string name="menu_agama">Agama</string>

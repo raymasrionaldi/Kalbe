@@ -57,6 +57,8 @@ class TipeIdentitasTambahActivity : AppCompatActivity() {
 
             nama!!.setText(data.nama_TipeIdentitas)
             des!!.setText(data.des_TipeIdentitas)
+
+            enableUbah()
         }
 
         cekIsi()
@@ -70,6 +72,16 @@ class TipeIdentitasTambahActivity : AppCompatActivity() {
         batal!!.setOnClickListener { finish() }
     }
 
+    fun enableUbah(){
+        simpan!!.isEnabled = true
+
+        val Nama = nama!!.text.toString().trim()
+        error!!.isVisible = Nama.isEmpty()
+        clearNama!!.isVisible = !Nama.isEmpty()
+        val Des = des!!.text.toString().trim()
+        clearDes!!.isVisible = !Des.isEmpty()
+    }
+
     fun cekIsi(){
         teksTipeIdentitas.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {}
@@ -77,8 +89,6 @@ class TipeIdentitasTambahActivity : AppCompatActivity() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 //Enable tombol simpan ketika user sudah mulai mengisi form
                 simpan!!.isEnabled = true
-                simpan!!.setBackgroundResource(R.drawable.button_simpan_on_2)
-                simpan!!.setTextColor(Color.WHITE)
 
                 val Nama = nama!!.text.toString().trim()
                 error!!.isVisible = Nama.isEmpty()
@@ -91,8 +101,6 @@ class TipeIdentitasTambahActivity : AppCompatActivity() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 //Enable tombol simpan ketika user sudah mulai mengisi form
                 simpan!!.isEnabled = true
-                simpan!!.setBackgroundResource(R.drawable.button_simpan_on_2)
-                simpan!!.setTextColor(Color.WHITE)
 
                 val Des = des!!.text.toString().trim()
                 clearDes!!.isVisible = !Des.isEmpty()
@@ -101,20 +109,15 @@ class TipeIdentitasTambahActivity : AppCompatActivity() {
     }
 
     fun simpan(id:Int) {
-        val Nama = nama!!.text.toString().trim()
-        val Des = des!!.text.toString().trim()
         simpan!!.setOnClickListener {
-            println("----------- $id")
-            if (id == 0){
-                if (!Nama.isEmpty()) { insertKeDatabase() }
-            } else{
-                //WARNING : Belum milah kalau ada nama yang sama dengan yang ada di database
-                if (!Nama.isEmpty()) {
-                    databaseQueryHelper.updateTipeIdentitas(Nama, Des)
-                    finish()
-                }
-            }
+            val Nama = nama!!.text.toString().trim()
+            val Des = des!!.text.toString().trim()
 
+            if (id == 0){
+                insertKeDatabase()
+            } else{
+                update(id)
+            }
         }
     }
 
@@ -126,12 +129,15 @@ class TipeIdentitasTambahActivity : AppCompatActivity() {
         if(Nama.isEmpty()){
             Toast.makeText(this, DATA_BELUM_LENGKAP, Toast.LENGTH_SHORT).show()
         } else {
-            val listTipeIdentitas = databaseQueryHelper.readNamaTipeIdentitas(Nama)
-            if (!listTipeIdentitas.isEmpty()){
+            val sudahAda = databaseQueryHelper.readNamaTipeIdentitas(Nama)
+            println(sudahAda)
+
+            if (!sudahAda.isEmpty()){
                 //cek id_deleted
-                if(listTipeIdentitas[0].is_deleted == "true"){
+                if(sudahAda[0].is_deleted == "true"){
+                    println(sudahAda[0])
                     //update true jadi false
-                    databaseQueryHelper.updateTipeIdentitas(Nama,Des)
+                    databaseQueryHelper.updatePernahAda(Nama,Des)
                     Toast.makeText(this, SIMPAN_DATA_BERHASIL, Toast.LENGTH_SHORT).show()
                     finish()
                 } else {
@@ -152,8 +158,34 @@ class TipeIdentitasTambahActivity : AppCompatActivity() {
         }
     }
 
+    fun update(id:Int){
+        val Nama = nama!!.text.toString().trim()
+        val Des = des!!.text.toString().trim()
+        val lain = databaseQueryHelper.readDataLain(id)
+
+        //read
+        if(Nama.isEmpty()){
+            Toast.makeText(this, DATA_BELUM_LENGKAP, Toast.LENGTH_SHORT).show()
+        } else {
+            var lainAda = false
+            lain.forEach{
+                if(it.nama_TipeIdentitas == Nama){
+                    lainAda = true
+                }
+            }
+
+            if (lainAda == true){
+                Toast.makeText(this, DATA_SUDAH_ADA, Toast.LENGTH_SHORT).show()
+            } else{
+                databaseQueryHelper.updateTipeIdentitas(Nama, Des, id)
+                Toast.makeText(this, SIMPAN_DATA_BERHASIL, Toast.LENGTH_SHORT).show()
+                finish()
+            }
+        }
+    }
+
     fun hapus(){
-        clearDes!!.setOnClickListener {teksDesPendidikan.setText("") }
-        clearNama!!.setOnClickListener {teksPendidikan.setText("") }
+        clearDes!!.setOnClickListener {des!!.setText("") }
+        clearNama!!.setOnClickListener {nama!!.setText("") }
     }
 }

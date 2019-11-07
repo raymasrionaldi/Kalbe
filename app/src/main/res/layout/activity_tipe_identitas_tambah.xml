@@ -64,7 +64,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
-        android:text="@string/tambah_pendidikan"
+        android:text="@string/menu_tipe_identitas"
         android:textSize="20sp"
         android:textStyle="bold" />
 
@@ -76,15 +76,16 @@
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            app:hintTextAppearance="@style/TextAppearance.App.TextInputLayout">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/teksTipeIdentitas"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:hint="@string/menu_tipe_identitas"
-                android:text="" />
+                android:hint="@string/nama_tipe_identitas"
+                android:text=""/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -113,7 +114,8 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            app:hintTextAppearance="@style/TextAppearance.App.TextInputLayout">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/teksDesTipeIdentitas"
