@@ -118,6 +118,10 @@ class EmployeeStatusFragmentForm(context: Context, val fm: FragmentManager) : Fr
             title!!.text = TITLE_EDIT
             buttonDelete!!.show()
         }
+
+        val required = view!!.findViewById(R.id.requiredNamaEmployeeStatus) as TextView
+        employeeStatusText!!.setHintTextColor(defaultColor)
+        required.visibility = View.INVISIBLE
     }
 
 
@@ -229,10 +233,6 @@ class EmployeeStatusFragmentForm(context: Context, val fm: FragmentManager) : Fr
         val callback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 kembaliKeData()
-
-                val required = view!!.findViewById(R.id.requiredNamaEmployeeStatus) as TextView
-                employeeStatusText!!.setHintTextColor(defaultColor)
-                required.visibility = View.INVISIBLE
 
             }
         }
