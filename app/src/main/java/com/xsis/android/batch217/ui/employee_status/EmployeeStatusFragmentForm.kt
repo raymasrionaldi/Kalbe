@@ -229,6 +229,11 @@ class EmployeeStatusFragmentForm(context: Context, val fm: FragmentManager) : Fr
         val callback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 kembaliKeData()
+
+                val required = view!!.findViewById(R.id.requiredNamaEmployeeStatus) as TextView
+                employeeStatusText!!.setHintTextColor(defaultColor)
+                required.visibility = View.INVISIBLE
+
             }
         }
         requireActivity().onBackPressedDispatcher.addCallback(this, callback)

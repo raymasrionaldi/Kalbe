@@ -233,6 +233,8 @@ class JenisCatatanFragmentForm(context: Context, val fm: FragmentManager) : Frag
         val callback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 kembaliKeData()
+                val required = view!!.findViewById(R.id.requiredNamaJenisCatatan) as TextView
+                required.visibility = View.INVISIBLE
             }
         }
         requireActivity().onBackPressedDispatcher.addCallback(this, callback)
