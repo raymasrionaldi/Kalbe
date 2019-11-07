@@ -69,17 +69,20 @@ class AgamaFragmentData(context: Context, val fm: FragmentManager) : Fragment() 
             override fun onQueryTextSubmit(query: String): Boolean {
                 return false
             }
+
             override fun onQueryTextChange(keyword: String): Boolean {
-                search(keyword,databaseQueryHelper!!)
+                if (keyword != null && databaseQueryHelper != null) {
+                    search(keyword, databaseQueryHelper!!)
+                }
                 return true
             }
         })
     }
 
-    fun search(keyword:String,databaseQueryHelper: AgamaQueryHelper){
-        val listAgama= databaseQueryHelper.cariAgamaModels(keyword)
+    fun search(keyword: String, databaseQueryHelper: AgamaQueryHelper) {
+        val listAgama = databaseQueryHelper.cariAgamaModels(keyword)
 //        val listCompany = databaseQueryHelper.cariCompanyModels(keyword)
-        tampilkanListAgama(listAgama,recyclerView!!)
+        tampilkanListAgama(listAgama, recyclerView!!)
     }
 
 
@@ -105,9 +108,11 @@ class AgamaFragmentData(context: Context, val fm: FragmentManager) : Fragment() 
         listAgama: List<Agama>,
         recyclerView: RecyclerView
     ) {
+        context?.let{
         val adapterAgama = ListAgamaAdapter(context!!, listAgama, fm)
         recyclerView.adapter = adapterAgama
         adapterAgama.notifyDataSetChanged()
+    }
     }
 
     fun updateContent() {
