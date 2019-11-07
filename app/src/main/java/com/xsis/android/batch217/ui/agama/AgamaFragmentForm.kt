@@ -13,16 +13,12 @@ import android.widget.*
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
 import com.xsis.android.batch217.R
-import com.xsis.android.batch217.adapters.ListAgamaAdapter
 import com.xsis.android.batch217.adapters.fragments.AgamaFragmentAdapter
-import com.xsis.android.batch217.adapters.fragments.KeluargaFragmentAdapter
 import com.xsis.android.batch217.databases.AgamaQueryHelper
 import com.xsis.android.batch217.databases.DatabaseHelper
 import com.xsis.android.batch217.models.Agama
-import com.xsis.android.batch217.ui.keluarga.KeluargaFragmentData
 import com.xsis.android.batch217.utils.*
 
 class AgamaFragmentForm(context: Context, val fm: FragmentManager) : Fragment() {
@@ -36,8 +32,6 @@ class AgamaFragmentForm(context: Context, val fm: FragmentManager) : Fragment() 
 
     var required: TextView? = null
 
-    var frameEditAgama: FrameLayout? = null
-    var frameEditDeskripsiAgama: FrameLayout? = null
     var defaultColor = 0
     var modeForm = 0
     var idData = 0
@@ -168,6 +162,7 @@ class AgamaFragmentForm(context: Context, val fm: FragmentManager) : Fragment() 
     }
 
     fun changeMode() {
+        resetForm()
         if (modeForm == MODE_ADD) {
             title!!.text = TITLE_ADD
 

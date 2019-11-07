@@ -9,16 +9,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.xsis.android.batch217.R
+import com.xsis.android.batch217.adapters.fragments.AgamaFragmentAdapter
 import com.xsis.android.batch217.adapters.fragments.GradeFragmentAdapter
 import com.xsis.android.batch217.databases.DatabaseHelper
 import com.xsis.android.batch217.databases.GradeQueryHelper
 import com.xsis.android.batch217.models.Grade
+import com.xsis.android.batch217.ui.agama.AgamaFragmentData
 import com.xsis.android.batch217.utils.*
 
 
@@ -31,6 +34,7 @@ class GradeFragmentForm(context: Context, val fm: FragmentManager) : Fragment() 
     var defaultColor = 0
     var modeForm = 0
     var idData = 0
+    var required:TextView? =null
     var data = Grade()
 
     var databaseQueryHelper: GradeQueryHelper? = null
@@ -61,6 +65,7 @@ class GradeFragmentForm(context: Context, val fm: FragmentManager) : Fragment() 
         notes = customView.findViewById(R.id.inputNotesGrade) as EditText
         buttonDelete =
             customView.findViewById(R.id.buttonDeleteGrade) as FloatingActionButton
+        required = customView.findViewById(R.id.requiredNamaGrade) as TextView
 
         buttonSave.setOnClickListener {
             simpanGrade()
@@ -82,9 +87,29 @@ class GradeFragmentForm(context: Context, val fm: FragmentManager) : Fragment() 
         return customView
     }
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                kembaliKeData()
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(this, callback)
+    }
+
+    fun kembaliKeData(){
+        val fragment = fm.fragments[0] as GradeFragmentData
+        val viewPager = fragment.view!!.parent as ViewPager
+        val adapter = viewPager.adapter!! as GradeFragmentAdapter
+
+        adapter.notifyDataSetChanged()
+        viewPager.setCurrentItem(0, true)
+    }
+
     fun resetForm() {
         nama!!.setText("")
         notes!!.setText("")
+        required!!.visibility=View.GONE
     }
 
     fun modeEdit(grade: Grade) {
@@ -105,6 +130,7 @@ class GradeFragmentForm(context: Context, val fm: FragmentManager) : Fragment() 
     }
 
     fun changeMode() {
+        resetForm()
         if (modeForm == MODE_ADD) {
             title!!.text = TITLE_ADD
             buttonDelete!!.hide()
