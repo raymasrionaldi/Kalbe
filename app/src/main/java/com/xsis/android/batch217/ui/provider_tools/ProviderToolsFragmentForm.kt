@@ -92,14 +92,14 @@ class ProviderToolsFragmentForm(ontext: Context, val fm: FragmentManager) : Frag
         notes!!.setText("")
     }
 
-    fun modeEdit(positionLevel: ProviderTools) {
+    fun modeEdit(providerToolse: ProviderTools) {
         modeForm = MODE_EDIT
         changeMode()
 
-        idData = positionLevel.id_provider
-        nama!!.setText(positionLevel.nama_provider)
-        notes!!.setText(positionLevel.des_provider)
-        data = positionLevel
+        idData = providerToolse.id_provider
+        nama!!.setText(providerToolse.nama_provider)
+        notes!!.setText(providerToolse.des_provider)
+        data = providerToolse
     }
 
     fun modeAdd() {
@@ -180,10 +180,10 @@ class ProviderToolsFragmentForm(ontext: Context, val fm: FragmentManager) : Frag
             model.nama_provider = namaProviderTools
             model.des_provider = notesProviderTools
 
-            val cekPostionLevel = databaseQueryHelper!!.cekPositionLevelSudahAda(model.nama_provider!!)
+            val cekProviderTools = databaseQueryHelper!!.cekProviderToolsSudahAda(model.nama_provider!!)
 
             if (modeForm == MODE_ADD) {
-                if (cekPostionLevel > 0) {
+                if (cekProviderTools > 0) {
                     Toast.makeText(context, DATA_SUDAH_ADA, Toast.LENGTH_SHORT).show()
                     return
                 }
@@ -194,8 +194,8 @@ class ProviderToolsFragmentForm(ontext: Context, val fm: FragmentManager) : Frag
                         .show()
                 }
             } else if (modeForm == MODE_EDIT) {
-                if ((cekPostionLevel != 1 && model.nama_provider == data.nama_provider) ||
-                    (cekPostionLevel != 0 && model.nama_provider != data.nama_provider)
+                if ((cekProviderTools != 1 && model.nama_provider == data.nama_provider) ||
+                    (cekProviderTools != 0 && model.nama_provider != data.nama_provider)
                 ) {
                     Toast.makeText(context, DATA_SUDAH_ADA, Toast.LENGTH_SHORT).show()
                     return
