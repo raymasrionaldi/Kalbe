@@ -84,7 +84,8 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:hint="@string/man_jenjang_pendidikan"
-                android:text="" />
+                android:text=""
+                android:textColorHint="@android:color/holo_red_light"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
