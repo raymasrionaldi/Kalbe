@@ -237,6 +237,14 @@ class TrainingFragmentForm(context: Context, val fm: FragmentManager) : Fragment
         val callback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 kembaliKeData()
+
+                val required1 = view!!.findViewById(R.id.requiredCodeTraining) as TextView
+                required1.visibility = View.INVISIBLE
+                val required2 = view!!.findViewById(R.id.requiredNamaTraining) as TextView
+                required2.visibility = View.INVISIBLE
+
+                code!!.setHintTextColor(defaultColor)
+                nama!!.setHintTextColor(defaultColor)
             }
         }
         requireActivity().onBackPressedDispatcher.addCallback(this, callback)
