@@ -69,6 +69,7 @@ class AgamaFragmentData(context: Context, val fm: FragmentManager) : Fragment() 
             override fun onQueryTextSubmit(query: String): Boolean {
                 return false
             }
+
             override fun onQueryTextChange(keyword: String): Boolean {
                 SEARCH_KEYWORD=keyword
                 search(keyword,databaseQueryHelper!!)
