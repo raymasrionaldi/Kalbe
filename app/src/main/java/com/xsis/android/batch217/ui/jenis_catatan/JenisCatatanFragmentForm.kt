@@ -12,6 +12,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.viewpager.widget.ViewPager
@@ -20,6 +21,7 @@ import com.xsis.android.batch217.adapters.fragments.JenisCatatanFragmentAdapter
 import com.xsis.android.batch217.databases.DatabaseHelper
 import com.xsis.android.batch217.databases.JenisCatatanQueryHelper
 import com.xsis.android.batch217.models.JenisCatatan
+import com.xsis.android.batch217.ui.company.CompanyFragmentData
 import com.xsis.android.batch217.utils.*
 
 class JenisCatatanFragmentForm(context: Context, val fm: FragmentManager) : Fragment() {
@@ -224,5 +226,22 @@ class JenisCatatanFragmentForm(context: Context, val fm: FragmentManager) : Frag
             adapter.notifyDataSetChanged()
             viewPager.setCurrentItem(0, true)
         }
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                kembaliKeData()
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(this, callback)
+    }
+
+    fun kembaliKeData(){
+        val fragment = fm.fragments[0] as JenisCatatanFragmentData
+        val viewPager = fragment.view!!.parent as ViewPager
+
+        viewPager.setCurrentItem(0, true)
     }
 }

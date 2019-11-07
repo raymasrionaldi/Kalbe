@@ -1,4 +1,4 @@
-package com.xsis.android.batch217.ui.employe_status
+package com.xsis.android.batch217.ui.employee_status
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,9 +11,9 @@ import com.xsis.android.batch217.R
 import com.xsis.android.batch217.adapters.fragments.EmployeeStatusFragmentAdapter
 import com.xsis.android.batch217.utils.CustomViewPager
 
-class EmployeStatusFragment : Fragment() {
+class EmployeeStatusFragment : Fragment() {
 
-    private lateinit var employeeStatusViewModel: EmployeStatusViewModel
+    private lateinit var employeeStatusViewModel: EmployeeStatusViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -21,7 +21,7 @@ class EmployeStatusFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         employeeStatusViewModel =
-            ViewModelProviders.of(this).get(EmployeStatusViewModel::class.java)
+            ViewModelProviders.of(this).get(EmployeeStatusViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_employe_status, container, false)
 
         val fragmentAdapter = EmployeeStatusFragmentAdapter(context!!, childFragmentManager)

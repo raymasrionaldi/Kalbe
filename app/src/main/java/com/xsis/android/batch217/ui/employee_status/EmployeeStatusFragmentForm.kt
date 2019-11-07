@@ -1,4 +1,4 @@
-package com.xsis.android.batch217.ui.employe_status
+package com.xsis.android.batch217.ui.employee_status
 
 import android.content.Context
 import android.graphics.Color
@@ -12,6 +12,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -19,13 +20,9 @@ import androidx.viewpager.widget.ViewPager
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.xsis.android.batch217.R
 import com.xsis.android.batch217.adapters.fragments.EmployeeStatusFragmentAdapter
-import com.xsis.android.batch217.adapters.fragments.JenisCatatanFragmentAdapter
 import com.xsis.android.batch217.databases.DatabaseHelper
 import com.xsis.android.batch217.databases.EmployeeStatusQueryHelper
 import com.xsis.android.batch217.models.EmployeeStatus
-import com.xsis.android.batch217.models.JenisCatatan
-import com.xsis.android.batch217.ui.jenis_catatan.JenisCatatanFragmentData
-import com.xsis.android.batch217.ui.jenis_catatan.JenisCatatanFragmentForm
 import com.xsis.android.batch217.utils.*
 
 class EmployeeStatusFragmentForm(context: Context, val fm: FragmentManager) : Fragment() {
@@ -225,5 +222,22 @@ class EmployeeStatusFragmentForm(context: Context, val fm: FragmentManager) : Fr
             viewPager.setCurrentItem(0, true)
         }
 
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                kembaliKeData()
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(this, callback)
+    }
+
+    fun kembaliKeData(){
+        val fragment = fm.fragments[0] as EmployeeStatusFragmentData
+        val viewPager = fragment.view!!.parent as ViewPager
+
+        viewPager.setCurrentItem(0, true)
     }
 }

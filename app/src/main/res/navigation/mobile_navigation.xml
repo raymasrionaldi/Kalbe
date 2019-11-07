@@ -49,7 +49,7 @@
 
     <fragment
         android:id="@+id/nav_employeStatus"
-        android:name="com.xsis.android.batch217.ui.employe_status.EmployeStatusFragment"
+        android:name="com.xsis.android.batch217.ui.employee_status.EmployeeStatusFragment"
         android:label="@string/menu_employe_status"
         tools:layout="@layout/fragment_employe_status" />
 

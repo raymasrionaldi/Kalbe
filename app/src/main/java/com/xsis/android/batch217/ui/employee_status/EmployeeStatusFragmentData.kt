@@ -1,4 +1,4 @@
-package com.xsis.android.batch217.ui.employe_status
+package com.xsis.android.batch217.ui.employee_status
 
 import android.content.Context
 import android.os.Bundle

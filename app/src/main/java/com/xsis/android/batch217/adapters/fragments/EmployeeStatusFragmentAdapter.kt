@@ -4,8 +4,8 @@ import android.content.Context
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
-import com.xsis.android.batch217.ui.employe_status.EmployeeStatusFragmentData
-import com.xsis.android.batch217.ui.employe_status.EmployeeStatusFragmentForm
+import com.xsis.android.batch217.ui.employee_status.EmployeeStatusFragmentData
+import com.xsis.android.batch217.ui.employee_status.EmployeeStatusFragmentForm
 
 
 class EmployeeStatusFragmentAdapter(val context: Context, val fm: FragmentManager) :

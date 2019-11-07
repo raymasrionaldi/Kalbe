@@ -7,13 +7,9 @@ import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
 import com.xsis.android.batch217.R
-import com.xsis.android.batch217.adapters.fragments.CompanyFragmentAdapter
 import com.xsis.android.batch217.adapters.fragments.EmployeeStatusFragmentAdapter
-import com.xsis.android.batch217.models.Company
 import com.xsis.android.batch217.models.EmployeeStatus
-import com.xsis.android.batch217.ui.company.CompanyFragmentForm
-import com.xsis.android.batch217.ui.employe_status.EmployeeStatusFragmentForm
-import com.xsis.android.batch217.viewholders.ViewHolderListCompany
+import com.xsis.android.batch217.ui.employee_status.EmployeeStatusFragmentForm
 import com.xsis.android.batch217.viewholders.ViewHolderListEmployeeStatus
 
 class ListEmployeeStatusAdapter(
