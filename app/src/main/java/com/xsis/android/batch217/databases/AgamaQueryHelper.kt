@@ -64,7 +64,7 @@ class AgamaQueryHelper(val databaseHelper: DatabaseHelper) {
     fun cekAgamaSudahAda(nama: String): Int {
         val db = databaseHelper.readableDatabase
         val queryCari =
-            "SELECT * FROM $TABEL_AGAMA WHERE $NAMA_AGAMA= '$nama' AND " +
+            "SELECT * FROM $TABEL_AGAMA WHERE $NAMA_AGAMA LIKE '$nama' AND " +
                     "$IS_DELETED = 'false'"
 
         val cursor = db.rawQuery(queryCari, null)
