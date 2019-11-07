@@ -190,6 +190,8 @@ class FragmentFormTrainingOrganizer(context: Context, val fm: FragmentManager) :
             titleFromTrainingOrganizer!!.text = TITLE_EDIT
             buttonDeleteTrainingOrganizer!!.show()
         }
+        nama!!.setHintTextColor(defaultColor)
+        requiredTrainingOrganizer.visibility = View.INVISIBLE
     }
     private val textWatcher = object : TextWatcher {
         override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {

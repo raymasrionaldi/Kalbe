@@ -197,6 +197,8 @@ class FragmentFormContratctStatus(context:Context,val fm: FragmentManager) : Fra
             titleFromContractStatus!!.text = TITLE_EDIT
             buttonDeleteContractStatus!!.show()
         }
+        nama!!.setHintTextColor(defaultColor)
+        requiredContract!!.visibility =View.INVISIBLE
     }
     private val textWatcher = object : TextWatcher {
         override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {

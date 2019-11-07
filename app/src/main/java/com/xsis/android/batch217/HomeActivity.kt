@@ -36,7 +36,6 @@ class HomeActivity : AppCompatActivity() {
                 R.id.nav_agama,
                 R.id.nav_tipe_identitas,
                 R.id.nav_backOfficePosition,
-                R.id.nav_contactStatus,
                 R.id.nav_employeStatus,
                 R.id.nav_employeType,
                 R.id.nav_grade,
