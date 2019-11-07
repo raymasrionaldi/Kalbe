@@ -100,4 +100,13 @@ class KeluargaFragmentDetail (context: Context, val fm: FragmentManager) : Fragm
         viewPager.setCurrentItem(0, true)
     }
 
+    override fun onResume() {
+        super.onResume()
+        refreshList()
+    }
+
+    fun refreshList() {
+        getActivity()!!.invalidateOptionsMenu()
+    }
+
 }

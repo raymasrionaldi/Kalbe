@@ -1,9 +1,107 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.keluarga.KeluargaFormActivity">
+    tools:context="ui.keluarga.KeluargaFormActivity"
+    android:orientation="vertical"
+    android:id="@+id/KeluargaTambah">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="9">
+
+        <LinearLayout
+            android:id="@+id/formTambah"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:orientation="vertical">
+
+            <TextView android:id="@+id/judulFormKeluarga"
+                android:text="Tambah Keluarga"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:textStyle="bold"
+                android:textSize="30sp"/>
+
+            <TextView android:text="Jenis Keluarga"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:textStyle="bold"
+                android:textSize="25sp"/>
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <com.google.android.material.textfield.TextInputEditText android:id="@+id/jenisKeluarga"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:layout_margin="5dp"
+                        android:hint="Jenis Keluarga*"/>
+
+                </com.google.android.material.textfield.TextInputLayout>
+            </FrameLayout>
+            <TextView android:id="@+id/errorJenisKeluarga"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Error : Jenis keluarga tidak boleh kosong"
+                android:textColor="@android:color/holo_red_dark"
+                android:visibility="invisible"/>
+
+            <Button android:id="@+id/tambahHubunganKeluarga"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="end|center_vertical"
+                android:background="@android:drawable/ic_menu_add" />
+
+
+            <TextView android:text="Hubungan Keluarga"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:textStyle="bold"
+                android:textSize="25sp"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/anggotaKeluarga"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+    </ScrollView>
+
+    <!--Button batal dan simpan-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="5dp"
+        android:layout_weight="1">
+
+        <Button android:id="@+id/keluargaBatal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#03A9F4"
+            android:text="Batal" />
+        <Button android:id="@+id/keluargaSimpan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#FF9800"
+            android:text="Simpan"
+            android:enabled="false"/>
+
+    </LinearLayout>
+
+</LinearLayout>

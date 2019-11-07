@@ -60,7 +60,20 @@ class KeluargaQueryHelper(val databaseHelper: DatabaseHelper) {
 
         return listKeluargaData
     }
-    fun readSemuaKeluargaDetail(id:Int): List<KeluargaDetail> {
+
+    fun readJenisKeluarga(id:Int):String{
+        var listKeluargaData = ArrayList<KeluargaData>()
+        val db = databaseHelper.readableDatabase
+        val queryRead = "SELECT * FROM $TABEL_KELUARGA_DATA WHERE $ID_JENIS=$id"
+        val cursor =  db.rawQuery(queryRead, null)
+        if (cursor.count > 0){
+            listKeluargaData = konversiCursorKeListKeluargaData(cursor)
+        }
+        return listKeluargaData[0].jenisKeluarga
+
+    }
+
+    fun readSemuaKeluargaDetail(id:Int): ArrayList<KeluargaDetail> {
         var listKeluargaDetail = ArrayList<KeluargaDetail>()
 
         val cursor = getSemuaKeluargaDetail(id)
@@ -112,13 +125,32 @@ class KeluargaQueryHelper(val databaseHelper: DatabaseHelper) {
             values_detail.put(ID_JENIS, id)
             values_detail.put(ID_ANGGOTA, i)
             values_detail.put(NAMA_ANGGOTA, listKeluargaDetail[i])
+            db.insert(TABEL_KELUARGA_DETAIL, null, values_detail)
         }
-        db.insert(TABEL_KELUARGA_DETAIL, null, values_detail)
 
     }
 
-    fun editKeluarga(model: KeluargaData) {
+    fun editKeluarga(listAnggota: ArrayList<String>, id:Int) {
+        val db = databaseHelper.writableDatabase
 
+        //1. Delete semua anggota pada id jenis
+        val queryDeleteDetail = "DELETE FROM $TABEL_KELUARGA_DETAIL WHERE $ID_JENIS=$id"
+        db.execSQL(queryDeleteDetail)
+
+        //2. Insert
+        val values_detail = ContentValues()
+        var count = 0
+        for (i in 0 until listAnggota.size){
+            if (listAnggota[i].isNotEmpty()){
+                count++
+
+                values_detail.put(ID_JENIS, id)
+                values_detail.put(ID_ANGGOTA, count)
+                values_detail.put(NAMA_ANGGOTA, listAnggota[i])
+                db.insert(TABEL_KELUARGA_DETAIL, null, values_detail)
+            }
+
+        }
     }
 
     fun hapusKeluarga(id: Int) {

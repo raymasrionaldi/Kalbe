@@ -1,6 +1,7 @@
 package com.xsis.android.batch217.ui.keluarga
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import androidx.appcompat.widget.SearchView
@@ -18,9 +19,12 @@ import com.xsis.android.batch217.databases.DatabaseHelper
 import com.xsis.android.batch217.databases.KeluargaQueryHelper
 import com.xsis.android.batch217.models.KeluargaData
 import com.xsis.android.batch217.ui.company.CompanyFragmentForm
+import com.xsis.android.batch217.ui.tipe_identitas.TipeIdentitasTambahActivity
 
 class KeluargaFragmentData(context: Context, val fm: FragmentManager) : Fragment() {
     var recyclerView: RecyclerView? = null
+    var add:FloatingActionButton? = null
+
     var databaseQueryHelper: KeluargaQueryHelper? = null
     var kata:String = ""
 
@@ -34,6 +38,7 @@ class KeluargaFragmentData(context: Context, val fm: FragmentManager) : Fragment
 
         val layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
 
+        add = customView.findViewById(R.id.buttonAddKeluarga)
         recyclerView = customView.findViewById(R.id.listKeluargaRecycler) as RecyclerView
         recyclerView!!.layoutManager = layoutManager
 
@@ -52,7 +57,8 @@ class KeluargaFragmentData(context: Context, val fm: FragmentManager) : Fragment
     }
 
     fun addData() {
-
+        val intent = Intent(context, KeluargaFormActivity::class.java)
+        startActivity(intent)
     }
 
     fun tampilkanListKeluargaData(
