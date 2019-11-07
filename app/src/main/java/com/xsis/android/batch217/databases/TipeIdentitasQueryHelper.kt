@@ -68,13 +68,28 @@ class TipeIdentitasQueryHelper(val databasehelper:DatabaseHelper) {
         return listTipeIdentitas
     }
 
-    fun updateTipeIdentitas(nama:String, des:String):List<TipeIdentitas> {
+    fun updateTipeIdentitas(nama:String, des:String, id:Int):List<TipeIdentitas> {
+        var listTipeIdentitas = ArrayList<TipeIdentitas>()
+
+        val db = databasehelper.writableDatabase
+        val queryUpdate = "UPDATE $TABEL_TIPE_IDENTITAS " +
+                "SET $DES_IDENTITAS = '$des', $NAMA_IDENTITAS = '$nama' " +
+                "WHERE $ID_IDENTITAS = $id "
+        val cursor = db.rawQuery(queryUpdate, null)
+        if (cursor.count > 0) {
+            listTipeIdentitas = konversiCursorKeListTipeIdentitasModel(cursor)
+        }
+        println(queryUpdate)
+        return listTipeIdentitas
+    }
+
+    fun updatePernahAda(nama:String, des:String):List<TipeIdentitas>{
         var listTipeIdentitas = ArrayList<TipeIdentitas>()
 
         val db = databasehelper.writableDatabase
         val queryUpdate = "UPDATE $TABEL_TIPE_IDENTITAS " +
                 "SET $DES_IDENTITAS = '$des', $IS_DELETED = 'false' " +
-                "WHERE $NAMA_IDENTITAS = '$nama' AND $IS_DELETED = 'true'"
+                "WHERE $NAMA_IDENTITAS = $nama "
         val cursor = db.rawQuery(queryUpdate, null)
         if (cursor.count > 0) {
             listTipeIdentitas = konversiCursorKeListTipeIdentitasModel(cursor)
@@ -121,6 +136,21 @@ class TipeIdentitasQueryHelper(val databasehelper:DatabaseHelper) {
         val db = databasehelper.readableDatabase
         val queryCari = "SELECT * FROM $TABEL_TIPE_IDENTITAS " +
                 "WHERE $NAMA_IDENTITAS = '$nama' "
+        val cursor = db.rawQuery(queryCari, null)
+
+        if (cursor.count > 0){
+            listTipeIdentitas = konversiCursorKeListTipeIdentitasModel(cursor)
+        }
+
+        return listTipeIdentitas
+    }
+
+    fun readDataLain(id:Int):List<TipeIdentitas>{
+        var listTipeIdentitas = ArrayList<TipeIdentitas>()
+
+        val db = databasehelper.readableDatabase
+        val queryCari = "SELECT * FROM $TABEL_TIPE_IDENTITAS " +
+                "WHERE $ID_IDENTITAS != '$id' "
         val cursor = db.rawQuery(queryCari, null)
 
         if (cursor.count > 0){

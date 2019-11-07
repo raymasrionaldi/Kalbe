@@ -109,4 +109,10 @@ class TipeIdentitasFragment:Fragment() {
         val listTipeIdentitas= databaseQueryHelper.cariTipeIdentitasModels(keyword)
         tampilkanListTipeIdentitas(listTipeIdentitas,recyclerView!!)
     }
+
+    override fun onResume() {
+        super.onResume()
+        refreshList()
+    }
+
 }
