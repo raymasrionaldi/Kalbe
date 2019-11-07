@@ -23,8 +23,8 @@
 
             <ImageView
                 android:id="@+id/buttonBackUbahKeahlian"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
+                android:layout_width="23dp"
+                android:layout_height="23dp"
                 android:layout_margin="5dp"
                 android:src="@drawable/ic_arrow_back_white"/>
         </LinearLayout>
@@ -37,9 +37,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Keahlian"
-                android:textSize="25sp"
+                android:textSize="23sp"
                 android:textColor="@color/colorWhite"
-                android:paddingLeft="13dp"/>
+                android:paddingLeft="25dp"/>
         </LinearLayout>
 
         <LinearLayout
