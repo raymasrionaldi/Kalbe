@@ -30,7 +30,7 @@ class JenjangPendidikanInputFragment: Fragment() {
     ): View? {
         val root = inflater.inflate(R.layout.fragment_jenjang_pendidikan_input, container, false)
         val title = root.findViewById(R.id.titlePendidikan) as TextView
-        title.text = INPUT_PENDIDIKAN
+        //title.text = INPUT_PENDIDIKAN
 
 
         cekIsi(root)

@@ -97,7 +97,7 @@ class ProviderToolsQueryHelper(val databaseHelper: DatabaseHelper) {
         return db.update(TABEL_PROVIDER, values, "$ID_PROVIDER = ?", arrayOf(id.toString()))
     }
 
-    fun cekPositionLevelSudahAda(nama: String): Int {
+    fun cekProviderToolsSudahAda(nama: String): Int {
         val db = databaseHelper.readableDatabase
         val queryCari =
             "SELECT * FROM $TABEL_PROVIDER WHERE $NAMA_PROVIDER = '$nama' AND " +

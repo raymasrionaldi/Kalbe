@@ -47,13 +47,15 @@ class TipeTesQueryHelper(val databaseHelper: DatabaseHelper) {
     fun cariTipeTesModels(keyword:String): List<TipeTes>{
         var listTipeTes = ArrayList<TipeTes>()
 
-        val db = databaseHelper.readableDatabase
-        val queryCari = "SELECT * FROM $TABEL_TIPE_TES WHERE $NAMA_TES LIKE '%$keyword%' OR " +
-                "$DES_TES LIKE '%$keyword%'"
+        if (keyword.isNotBlank()) {
+            val db = databaseHelper.readableDatabase
+            val queryCari = "SELECT * FROM $TABEL_TIPE_TES WHERE ($NAMA_TES LIKE '%$keyword%' OR " +
+                    "$DES_TES LIKE '%$keyword%') AND $IS_DELETED='false'"
 
-        val cursor =db.rawQuery(queryCari,null)
-        if(cursor.count > 0){
-            listTipeTes = konversiCursorKeListTipeTesModel(cursor)
+            val cursor = db.rawQuery(queryCari, null)
+            if (cursor.count > 0) {
+                listTipeTes = konversiCursorKeListTipeTesModel(cursor)
+            }
         }
 
         return listTipeTes

@@ -33,7 +33,6 @@ class JenjangPendidikanUpdateFragment:Fragment() {
         val des = root.findViewById(R.id.teksDesPendidikan) as TextView
         var idPendidikan = 0
 
-        title.text = UPDATE_PENDIDIKAN
         if(arguments!!.getString("nama") != null){
             idPendidikan = arguments!!.getInt("id")
             nama.setText(arguments!!.getString("nama"))

@@ -28,7 +28,7 @@ class KeahlianFragment : Fragment() {
     var databaseHelper: DatabaseHelper? = null
     private var searchView: SearchView? = null
     private var queryTextListener: SearchView.OnQueryTextListener? = null
-    var hitung = 1
+    val fragment = this
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -73,7 +73,7 @@ class KeahlianFragment : Fragment() {
     }
 
     fun tampilkanListKeahlian(listKeahlian:List<Keahlian>, recyclerView: RecyclerView){
-        val adapterKeahlian = ListKeahlianAdapter(context,listKeahlian)
+        val adapterKeahlian = ListKeahlianAdapter(context, fragment,  listKeahlian)
         recyclerView.adapter = adapterKeahlian
         adapterKeahlian.notifyDataSetChanged()
     }
@@ -115,7 +115,7 @@ class KeahlianFragment : Fragment() {
     }
 
     fun refreshList() {
-        getSemuaKeahlian(recyclerView!!, databaseQueryHelper!!)
+        getActivity()!!.invalidateOptionsMenu()
     }
 
 }

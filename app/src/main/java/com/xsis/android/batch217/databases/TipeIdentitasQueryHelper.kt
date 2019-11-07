@@ -1,8 +1,6 @@
 package com.xsis.android.batch217.databases
 
 import android.database.Cursor
-import android.widget.Toast
-import com.xsis.android.batch217.models.Agama
 import com.xsis.android.batch217.models.TipeIdentitas
 import com.xsis.android.batch217.utils.*
 
@@ -23,6 +21,20 @@ class TipeIdentitasQueryHelper(val databasehelper:DatabaseHelper) {
         }
         return listTipeIdentitas
     }
+
+    fun loadTipeIdentitas(id:Int):TipeIdentitas{
+        var listTipeIdentitas = ArrayList<TipeIdentitas>()
+
+        val db = databasehelper.readableDatabase
+        val queryLoad = "SELECT * FROM $TABEL_TIPE_IDENTITAS WHERE $ID_IDENTITAS=$id"
+        val cursor = db.rawQuery(queryLoad, null)
+        if (cursor.count > 0){
+            listTipeIdentitas = konversiCursorKeListTipeIdentitasModel(cursor)
+        }
+        return listTipeIdentitas[0]
+
+    }
+
     fun konversiCursorKeListTipeIdentitasModel(cursor: Cursor):ArrayList<TipeIdentitas>{
         val listTipeIdentitas = ArrayList<TipeIdentitas>()
 
@@ -56,7 +68,37 @@ class TipeIdentitasQueryHelper(val databasehelper:DatabaseHelper) {
         return listTipeIdentitas
     }
 
-    fun updateTipeIdentitas (nama:String, des:String, id:Int): Boolean{//: List<TipeIdentitas>{
+    fun updateTipeIdentitas(nama:String, des:String, id:Int):List<TipeIdentitas> {
+        var listTipeIdentitas = ArrayList<TipeIdentitas>()
+
+        val db = databasehelper.writableDatabase
+        val queryUpdate = "UPDATE $TABEL_TIPE_IDENTITAS " +
+                "SET $DES_IDENTITAS = '$des', $NAMA_IDENTITAS = '$nama' " +
+                "WHERE $ID_IDENTITAS = $id "
+        val cursor = db.rawQuery(queryUpdate, null)
+        if (cursor.count > 0) {
+            listTipeIdentitas = konversiCursorKeListTipeIdentitasModel(cursor)
+        }
+        println(queryUpdate)
+        return listTipeIdentitas
+    }
+
+    fun updatePernahAda(nama:String, des:String):List<TipeIdentitas>{
+        var listTipeIdentitas = ArrayList<TipeIdentitas>()
+
+        val db = databasehelper.writableDatabase
+        val queryUpdate = "UPDATE $TABEL_TIPE_IDENTITAS " +
+                "SET $DES_IDENTITAS = '$des', $IS_DELETED = 'false' " +
+                "WHERE $NAMA_IDENTITAS = $nama "
+        val cursor = db.rawQuery(queryUpdate, null)
+        if (cursor.count > 0) {
+            listTipeIdentitas = konversiCursorKeListTipeIdentitasModel(cursor)
+        }
+        println(queryUpdate)
+        return listTipeIdentitas
+    }
+
+    fun updateTipeIdentitas_0 (nama:String, des:String, id:Int): Boolean{//: List<TipeIdentitas>{
         var listTipeIdentitas = ArrayList<TipeIdentitas>()
         val listTipeIdentitasAll = readSemuaTipeIdentitasModels()
 
@@ -86,12 +128,6 @@ class TipeIdentitasQueryHelper(val databasehelper:DatabaseHelper) {
             }
         }
         return ada
-
-
-//        if(cursor.count > 0){
-//            listTipeIdentitas = konversiCursorKeListTipeIdentitasModel(cursor)
-//        }
-//        return listTipeIdentitas
     }
 
     fun readNamaTipeIdentitas(nama:String):List<TipeIdentitas>{
@@ -100,6 +136,21 @@ class TipeIdentitasQueryHelper(val databasehelper:DatabaseHelper) {
         val db = databasehelper.readableDatabase
         val queryCari = "SELECT * FROM $TABEL_TIPE_IDENTITAS " +
                 "WHERE $NAMA_IDENTITAS = '$nama' "
+        val cursor = db.rawQuery(queryCari, null)
+
+        if (cursor.count > 0){
+            listTipeIdentitas = konversiCursorKeListTipeIdentitasModel(cursor)
+        }
+
+        return listTipeIdentitas
+    }
+
+    fun readDataLain(id:Int):List<TipeIdentitas>{
+        var listTipeIdentitas = ArrayList<TipeIdentitas>()
+
+        val db = databasehelper.readableDatabase
+        val queryCari = "SELECT * FROM $TABEL_TIPE_IDENTITAS " +
+                "WHERE $ID_IDENTITAS != '$id' "
         val cursor = db.rawQuery(queryCari, null)
 
         if (cursor.count > 0){

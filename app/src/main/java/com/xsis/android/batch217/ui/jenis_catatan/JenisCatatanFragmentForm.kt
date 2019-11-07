@@ -85,6 +85,10 @@ class JenisCatatanFragmentForm(context: Context, val fm: FragmentManager) : Frag
             fragment.updateContent()
             adapter.notifyDataSetChanged()
             viewPager.setCurrentItem(0, true)
+
+            val required = view!!.findViewById(R.id.requiredNamaJenisCatatan) as TextView
+            required.visibility = View.INVISIBLE
+
         }
 
         jenisCatatanText!!.addTextChangedListener(textWatcher)

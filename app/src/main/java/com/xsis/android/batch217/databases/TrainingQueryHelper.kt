@@ -95,7 +95,18 @@ class TrainingQueryHelper(val databaseHelper: DatabaseHelper) {
         return db.update(TABEL_TRAINING, values, "$ID_TRAINING = ?", arrayOf(id.toString()))
     }
 
-    fun cekTrainingSudahAda(nama: String): Int {
+    fun cekTrainingCodeSudahAda(code: String): Int {
+        val db = databaseHelper.readableDatabase
+        val queryCari =
+            "SELECT * FROM $TABEL_TRAINING WHERE $CODE_TRAINING = '$code' AND " +
+                    "$IS_DELETED = 'false'"
+
+        val cursor = db.rawQuery(queryCari, null)
+
+        return cursor.count
+    }
+/*
+    fun cekTrainingNamaSudahAda(nama: String): Int {
         val db = databaseHelper.readableDatabase
         val queryCari =
             "SELECT * FROM $TABEL_TRAINING WHERE $NAMA_TRAINING = '$nama' AND " +
@@ -105,4 +116,6 @@ class TrainingQueryHelper(val databaseHelper: DatabaseHelper) {
 
         return cursor.count
     }
+
+ */
 }

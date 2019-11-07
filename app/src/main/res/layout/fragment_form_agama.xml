@@ -30,7 +30,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:visibility="gone">
+            android:layout_marginBottom="0dp">
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
@@ -38,7 +38,7 @@
                 android:orientation="horizontal">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/editAgama"
+                    android:id="@+id/inputAgama"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text=""
@@ -53,28 +53,30 @@
                 android:layout_height="30dp"
                 android:layout_gravity="end|center_vertical"
                 android:layout_marginRight="5dp"
-                android:background="@drawable/ic_cancel_black" />
+                android:background="@drawable/ic_cancel_black"
+                android:visibility="gone"/>
         </FrameLayout>
         <TextView
-            android:id="@+id/requiredEditAgama"
+            android:id="@+id/requiredAgama"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Error : Tipe identitas tidak boleh kosong"
+            android:text="Error : Agama tidak boleh kosong"
+            android:textSize="11sp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="0dp"
             android:textColor="@android:color/holo_red_dark"
             android:visibility="gone"/>
-
         <FrameLayout
             android:id="@+id/frameEditDeskripsiAgama"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="gone">
+            android:layout_height="wrap_content">
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/editDeskripsiAgama"
+                    android:id="@+id/inputDeskripsiAgama"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text=""
@@ -89,12 +91,13 @@
                 android:layout_height="30dp"
                 android:layout_gravity="end|center_vertical"
                 android:layout_marginRight="5dp"
-                android:background="@drawable/ic_cancel_black" />
+                android:background="@drawable/ic_cancel_black"
+                android:visibility="gone"/>
         </FrameLayout>
 
         <!--ADD MODE-->
 
-        <EditText
+        <!--<EditText
             android:id="@+id/inputAgama"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -113,8 +116,7 @@
             android:id="@+id/inputDeskripsiAgama"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/hint_deskripsi" />
-
+            android:hint="@string/hint_deskripsi" />-->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

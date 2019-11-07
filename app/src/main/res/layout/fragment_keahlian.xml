@@ -24,7 +24,8 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/listKeahlianRecycler"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:paddingBottom="40dp"/>
     </LinearLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton

@@ -83,7 +83,7 @@ class ProviderToolsFragmentData(context: Context, val fm: FragmentManager): Frag
     }
 
     fun updateContent() {
-        getSemuaProviderTools(recyclerView!!, databaseQueryHelper!!)
+//        getSemuaPositionLevel(recyclerView!!, databaseQueryHelper!!)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

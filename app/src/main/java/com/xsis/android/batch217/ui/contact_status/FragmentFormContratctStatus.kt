@@ -13,6 +13,7 @@ import android.widget.EditText
 import android.widget.ListAdapter
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -189,7 +190,7 @@ class FragmentFormContratctStatus(context:Context,val fm: FragmentManager) : Fra
     }
     fun changeMode() {
         if (modeForm == MODE_ADD) {
-            fragmenForm!!.text = TITLE_ADD
+            titleFromContractStatus.isVisible =true
 
             buttonDeleteContractStatus!!.hide()
         } else if (modeForm == MODE_EDIT) {
@@ -214,6 +215,22 @@ class FragmentFormContratctStatus(context:Context,val fm: FragmentManager) : Fra
         override fun afterTextChanged(s: Editable) {
 
         }
+    }
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                tampilkanTabData()
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(this, callback)
+    }
+
+    fun tampilkanTabData(){
+        val fragment = fm.fragments[0] as FragmentDataContractStatus
+        val viewPager = fragment.view!!.parent as ViewPager
+
+        viewPager.setCurrentItem(0, true)
     }
 
 

@@ -12,6 +12,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -22,6 +23,7 @@ import com.xsis.android.batch217.adapters.fragments.TrainingFragmentAdapter
 import com.xsis.android.batch217.databases.DatabaseHelper
 import com.xsis.android.batch217.databases.TrainingQueryHelper
 import com.xsis.android.batch217.models.Training
+import com.xsis.android.batch217.ui.tipe_tes.TipeTesFragmentData
 import com.xsis.android.batch217.utils.*
 
 class TrainingFragmentForm(context: Context, val fm: FragmentManager) : Fragment() {
@@ -65,6 +67,7 @@ class TrainingFragmentForm(context: Context, val fm: FragmentManager) : Fragment
         requiredCode = customView.findViewById(R.id.requiredCodeTraining) as TextView
         nama = customView.findViewById(R.id.inputNamaTraining) as EditText
         requiredNama = customView.findViewById(R.id.requiredNamaTraining) as TextView
+
 
         buttonDelete =
             customView.findViewById(R.id.buttonDeleteTraining) as FloatingActionButton
@@ -186,10 +189,12 @@ class TrainingFragmentForm(context: Context, val fm: FragmentManager) : Fragment
             model.codeTraining = codeTraining
             model.namaTraining = namaTraining
 
-            val cekTraining = databaseQueryHelper!!.cekTrainingSudahAda(model.namaTraining!!)
+            val cekTrainingCode = databaseQueryHelper!!.cekTrainingCodeSudahAda(model.codeTraining!!)
+           // val cekTrainingNama = databaseQueryHelper!!.cekTrainingNamaSudahAda(model.namaTraining!!)
+
 
             if (modeForm == MODE_ADD) {
-                if (cekTraining > 0) {
+                if (cekTrainingCode > 0 /*|| cekTrainingNama > 0*/) {
                     Toast.makeText(context, DATA_SUDAH_ADA, Toast.LENGTH_SHORT).show()
                     return
                 }
@@ -200,9 +205,12 @@ class TrainingFragmentForm(context: Context, val fm: FragmentManager) : Fragment
                         .show()
                 }
             } else if (modeForm == MODE_EDIT) {
-                if ((cekTraining != 1 && model.codeTraining == data.codeTraining) ||
-                    (cekTraining != 0 && model.codeTraining != data.codeTraining)
-                ) {
+                if ((cekTrainingCode != 1 && model.codeTraining == data.codeTraining) ||
+                    (cekTrainingCode != 0 && model.codeTraining != data.codeTraining)
+                    /*||
+                    (cekTrainingNama != 1 && model.namaTraining == data.namaTraining) ||
+                    (cekTrainingNama != 0 && model.namaTraining != data.namaTraining)*/)
+                {
                     Toast.makeText(context, DATA_SUDAH_ADA, Toast.LENGTH_SHORT).show()
                     return
                 }
@@ -222,5 +230,22 @@ class TrainingFragmentForm(context: Context, val fm: FragmentManager) : Fragment
             adapter.notifyDataSetChanged()
             viewPager.setCurrentItem(0, true)
         }
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                kembaliKeData()
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(this, callback)
+    }
+
+    fun kembaliKeData(){
+        val fragment = fm.fragments[0] as TrainingFragmentData
+        val viewPager = fragment.view!!.parent as ViewPager
+
+        viewPager.setCurrentItem(0, true)
     }
 }

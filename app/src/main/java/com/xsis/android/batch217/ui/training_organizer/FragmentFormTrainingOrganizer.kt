@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -182,7 +183,7 @@ class FragmentFormTrainingOrganizer(context: Context, val fm: FragmentManager) :
     }
     fun changeMode() {
         if (modeForm == MODE_ADD) {
-            fragmenFormTrainingOrganizer!!.text = TITLE_ADD
+            titleFromTrainingOrganizer.isVisible = true
 
             buttonDeleteTrainingOrganizer!!.hide()
         } else if (modeForm == MODE_EDIT) {
@@ -211,6 +212,22 @@ class FragmentFormTrainingOrganizer(context: Context, val fm: FragmentManager) :
         override fun afterTextChanged(s: Editable) {
 
         }
+    }
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                tampilkanTabData()
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(this, callback)
+    }
+
+    fun tampilkanTabData(){
+        val fragment = fm.fragments[0] as FragmentDataTrainingOrganizer
+        val viewPager = fragment.view!!.parent as ViewPager
+
+        viewPager.setCurrentItem(0, true)
     }
 
 }

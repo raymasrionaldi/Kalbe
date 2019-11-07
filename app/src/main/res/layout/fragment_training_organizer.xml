@@ -16,6 +16,9 @@
             android:id="@+id/slidingTabsTrainingOrg"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:tabIndicatorColor="@color/warnaBiru"
+            app:tabSelectedTextColor="@color/warnaBiru"
+            app:tabTextColor="@color/warnaBiruUnselected"
             app:tabMode="fixed"/>
 
         <com.xsis.android.batch217.utils.CustomViewPager

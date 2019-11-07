@@ -10,12 +10,16 @@
 
     <string name="menu_home">Home</string>
     <string name="menu_tipe_identitas">Tipe Identitas</string>
+    <string name="nama_tipe_identitas">Tipe Identitas*</string>
+    <string name="tambah_tipe_identitas">Tambah Tipe Identitas</string>
+    <string name="ubah_tipe_identitas">Ubah Tipe Identitas</string>
     <string name="menu_agama">Agama</string>
     <string name="menu_back_office_position">Back Office Position</string>
     <string name="menu_company">Company</string>
+    <string name="menu_keluarga">Keluarga</string>
     <string name="menu_contact_status">Contact Status</string>
-    <string name="menu_employe_status">Employe Status</string>
-    <string name="menu_employe_type">Employe Type</string>
+    <string name="menu_employe_status">Employee Status</string>
+    <string name="menu_employe_type">Employee Type</string>
     <string name="menu_grade">Grade</string>
     <string name="menu_jadwal">Jadwal</string>
     <string name="menu_jenis_catatan">Jenis Catatan</string>
@@ -27,6 +31,9 @@
     <string name="menu_provider_tools">Provider Tools</string>
     <string name="menu_training">Training</string>
     <string name="menu_jenjang_pendidikan">Jenjang Pendidikan</string>
+    <string name="man_jenjang_pendidikan">Jenjang Pendidikan*</string>
+    <string name="tambah_pendidikan">Tambah Jenjang Pendidikan</string>
+    <string name="ubah_pendidikan">Ubah Jenjang Pendidikan</string>
     <string name="deskripsi">Deskripsi</string>
     <string name="tambah_agama">Tambah Agama</string>
 

@@ -2,6 +2,7 @@ package com.xsis.android.batch217.adapters
 
 import android.content.Context
 import android.content.DialogInterface
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -14,16 +15,19 @@ import com.xsis.android.batch217.databases.DatabaseHelper
 import com.xsis.android.batch217.models.Pendidikan
 import com.xsis.android.batch217.ui.jenjang_pendidikan.JenjangPendidikanFragment
 import com.xsis.android.batch217.ui.jenjang_pendidikan.JenjangPendidikanUpdateFragment
-import com.xsis.android.batch217.utils.ID_PENDIDIKAN
-import com.xsis.android.batch217.utils.IS_DELETED
-import com.xsis.android.batch217.utils.TABEL_PENDIDIKAN
-import com.xsis.android.batch217.utils.showPopupMenuUbahHapus
 import com.xsis.android.batch217.viewholders.ViewHolderListPendidikan
 import kotlinx.android.synthetic.main.popup_layout.view.*
 import androidx.appcompat.app.AppCompatActivity
+import com.xsis.android.batch217.databases.KeahlianQueryHelper
+import com.xsis.android.batch217.databases.PendidikanQueryHelper
+import com.xsis.android.batch217.ui.jenjang_pendidikan.UbahPendidikanActivity
+import com.xsis.android.batch217.utils.*
+import kotlinx.android.synthetic.main.fragment_jenjang_pendidikan.view.*
 
 
-class ListPendidikanAdapter(val context: Context?, val listPendidikan:List<Pendidikan>): RecyclerView.Adapter<ViewHolderListPendidikan>() {
+
+
+class ListPendidikanAdapter(val context: Context?, val fragment: JenjangPendidikanFragment, val listPendidikan:List<Pendidikan>): RecyclerView.Adapter<ViewHolderListPendidikan>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolderListPendidikan {
         val customView = LayoutInflater.from(parent.context).inflate(R.layout.list_dot_layout,parent,false)
         return  ViewHolderListPendidikan(customView)
@@ -36,14 +40,15 @@ class ListPendidikanAdapter(val context: Context?, val listPendidikan:List<Pendi
     override fun onBindViewHolder(holder: ViewHolderListPendidikan, position: Int) {
         holder.setModel(listPendidikan[position])
         val ID = listPendidikan[position].id_pendidikan
-        val model = listPendidikan[position]
+        val nama = (listPendidikan[position].nama_pendidikan)
+//        val model = listPendidikan[position]
 
         holder.bukaMenu.setOnClickListener { view ->
             val window = showPopupMenuUbahHapus(context!!, view)
             window.setOnItemClickListener { parent, view, position, id ->
                 when (position){
                     0 -> {
-                        val fragment = JenjangPendidikanUpdateFragment() as Fragment
+                        /*val fragment = JenjangPendidikanUpdateFragment() as Fragment
                         val bundle = Bundle()
                         bundle.putInt("id", model.id_pendidikan)
                         bundle.putString("nama", model.nama_pendidikan)
@@ -52,28 +57,30 @@ class ListPendidikanAdapter(val context: Context?, val listPendidikan:List<Pendi
                         val manager = (context as AppCompatActivity).supportFragmentManager
                         manager.beginTransaction()
                             .replace(R.id.fragment_jenjang_pendidikan, fragment)
-                            .commit()
-                        window.dismiss()
+                            .commit()*/
 
+                        val intentEdit = Intent(context, UbahPendidikanActivity::class.java)
+                        intentEdit.putExtra(ID_PENDIDIKAN, ID )
+                        context.startActivity(intentEdit)
+                        window.dismiss()
                     }
                     1 -> {
                         val konfirmasiDelete = AlertDialog.Builder(context)
-                        konfirmasiDelete.setMessage("Yakin mau hapus data ini ?")
+                        konfirmasiDelete.setMessage("Hapus data $nama ?")
                             .setPositiveButton("Ya", DialogInterface.OnClickListener{ dialog, which ->
-                                Toast.makeText(context,"Hapus data", Toast.LENGTH_SHORT).show()
-
+                                Toast.makeText(context, HAPUS_DATA_BERHASIL, Toast.LENGTH_SHORT).show()
                                 val databaseHelper = DatabaseHelper(context)
                                 val db = databaseHelper.writableDatabase
                                 val queryDelete = "UPDATE $TABEL_PENDIDIKAN SET $IS_DELETED = 'true' WHERE $ID_PENDIDIKAN = $ID"
                                 db.execSQL(queryDelete)
-
+                                fragment.refreshList()
                             })
                             .setNegativeButton("Tidak", DialogInterface.OnClickListener{ dialog, which ->
                                 dialog.cancel()
                             })
                             .setCancelable(true)
-
                         konfirmasiDelete.create().show()
+                        window.dismiss()
                     }
                 }
             }

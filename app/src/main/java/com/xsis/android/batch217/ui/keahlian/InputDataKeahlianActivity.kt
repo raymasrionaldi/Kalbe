@@ -27,6 +27,9 @@ class InputDataKeahlianActivity : AppCompatActivity() {
         hapus()
         simpan()
         batal()
+        buttonBackInputKeahlian.setOnClickListener {
+            finish()
+        }
     }
 
     fun simpan(){

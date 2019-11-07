@@ -86,18 +86,14 @@ class HomeActivity : AppCompatActivity() {
                 R.id.nav_agama,
                 R.id.nav_tipe_identitas,
                 R.id.nav_backOfficePosition,
-                R.id.nav_company,
                 R.id.nav_contactStatus,
                 R.id.nav_employeStatus,
                 R.id.nav_employeType,
                 R.id.nav_grade,
                 R.id.nav_jadwal,
-                R.id.nav_tipeTes,
                 R.id.nav_jenisCatatan,
-                R.id.nav_positionLevel,
                 R.id.nav_keahlian,
                 R.id.nav_providerTools,
-                R.id.nav_training,
                 R.id.nav_jenjangPendidikan,
                 R.id.nav_employee
             ), drawerLayout

@@ -18,6 +18,7 @@ import com.xsis.android.batch217.adapters.fragments.TipeTesFragmentAdapter
 import com.xsis.android.batch217.databases.DatabaseHelper
 import com.xsis.android.batch217.databases.TipeTesQueryHelper
 import com.xsis.android.batch217.models.TipeTes
+import kotlinx.android.synthetic.main.fragment_form_tipe_tes.*
 
 class TipeTesFragmentData(context: Context, val fm: FragmentManager) : Fragment() {
     var recyclerView: RecyclerView? = null
@@ -42,8 +43,7 @@ class TipeTesFragmentData(context: Context, val fm: FragmentManager) : Fragment(
         val dividerItemDecoration = DividerItemDecoration(context, layoutManager.orientation)
         recyclerView!!.addItemDecoration(dividerItemDecoration)
 
-        val buttonAdd =
-            customView.findViewById(R.id.buttonTambahTipeTes) as FloatingActionButton
+        val buttonAdd = customView.findViewById(R.id.buttonTambahTipeTes) as FloatingActionButton
         buttonAdd.setOnClickListener {
             addData()
         }
@@ -53,7 +53,7 @@ class TipeTesFragmentData(context: Context, val fm: FragmentManager) : Fragment(
         val databaseHelper = DatabaseHelper(context!!)
         databaseQueryHelper = TipeTesQueryHelper(databaseHelper)
 
-        getSemuaTipeTes(recyclerView!!, databaseQueryHelper!!)
+        //getSemuaTipeTes(recyclerView!!, databaseQueryHelper!!)
 
         return customView
     }
@@ -91,24 +91,18 @@ class TipeTesFragmentData(context: Context, val fm: FragmentManager) : Fragment(
         viewPager.setCurrentItem(1, true)
     }
 
-    fun getSemuaTipeTes(
-        recyclerView: RecyclerView,
-        databaseQueryHelper: TipeTesQueryHelper
-    ) {
+    fun getSemuaTipeTes(recyclerView: RecyclerView, databaseQueryHelper: TipeTesQueryHelper) {
         val listTipeTes = databaseQueryHelper.readSemuaTipeTesModels()
         tampilkanListTipeTes(listTipeTes, recyclerView)
     }
 
-    fun tampilkanListTipeTes(
-        listTipeTes: List<TipeTes>,
-        recyclerView: RecyclerView
-    ) {
+    fun tampilkanListTipeTes(listTipeTes: List<TipeTes>, recyclerView: RecyclerView) {
         val adapterTipeTes = ListTipeTesAdapter(context!!, listTipeTes, fm)
         recyclerView.adapter = adapterTipeTes
         adapterTipeTes.notifyDataSetChanged()
     }
 
     fun updateContent() {
-        getSemuaTipeTes(recyclerView!!, databaseQueryHelper!!)
+      //  getSemuaTipeTes(recyclerView!!, databaseQueryHelper!!)
     }
 }

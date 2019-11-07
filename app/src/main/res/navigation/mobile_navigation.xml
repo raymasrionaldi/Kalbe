@@ -36,6 +36,12 @@
         tools:layout="@layout/fragment_company" />
 
     <fragment
+        android:id="@+id/nav_keluarga"
+        android:name="com.xsis.android.batch217.ui.keluarga.KeluargaFragment"
+        android:label="@string/menu_keluarga"
+        tools:layout="@layout/fragment_keluarga" />
+
+    <fragment
         android:id="@+id/nav_contactStatus"
         android:name="com.xsis.android.batch217.ui.contact_status.ContactStatusFragment"
         android:label="@string/menu_contact_status"
@@ -49,9 +55,9 @@
 
     <fragment
         android:id="@+id/nav_employeType"
-        android:name="com.xsis.android.batch217.ui.home.HomeFragment"
+        android:name="com.xsis.android.batch217.ui.employee.EmployeeFragment"
         android:label="@string/menu_employe_type"
-        tools:layout="@layout/fragment_employe_type" />
+        tools:layout="@layout/fragment_employee" />
 
     <fragment
         android:id="@+id/nav_grade"
