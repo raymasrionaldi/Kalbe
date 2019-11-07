@@ -80,13 +80,26 @@
             android:id="@+id/nav_trainingOrganizer"
             android:title="Training Organizer"/>
         <item
+            android:id="@+id/nav_timesheet_entry"
+            android:title="@string/timesheet_entry"/>
+        <item
+            android:id="@+id/nav_timesheet_history"
+            android:title="@string/timesheet_history"/>
+        <item
             android:id="@+id/nav_employee"
             android:icon="@drawable/ic_folder_black"
             android:title="@string/menu_employee">
 
+        </item>
+        <item
+            android:id="@+id/nav_timesheet"
+            android:icon="@drawable/ic_folder_black"
+            android:title="@string/timesheet">
+
 
 
         </item>
+
 
 
     </group>

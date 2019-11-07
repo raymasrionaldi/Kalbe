@@ -20,8 +20,7 @@ class ExpandableListAdapter(
 ) : BaseExpandableListAdapter() {
 
     override fun getGroupCount(): Int {
-        val i = mListDataHeader.size
-        return this.mListDataHeader.size
+        return mListDataHeader.size
     }
 
     override fun getChildrenCount(groupPosition: Int): Int {
@@ -38,7 +37,7 @@ class ExpandableListAdapter(
     }
 
     override fun getChild(groupPosition: Int, childPosition: Int): Any {
-        return this.mListDataChild[this.mListDataHeader[groupPosition]]!![childPosition]
+        return mListDataChild[mListDataHeader[groupPosition]]!![childPosition]
     }
 
     override fun getGroupId(groupPosition: Int): Long {
@@ -72,6 +71,8 @@ class ExpandableListAdapter(
 
         if(headerTitle.icon != -1) {
             headerIcon.setImageResource(headerTitle.icon)
+        }else {
+            headerIcon.setImageResource(android.R.color.transparent)
         }
 
         val arrowDown = convertView.findViewById(R.id.arrowDown) as ImageView
