@@ -49,6 +49,11 @@ class KeluargaFormAdapter(val id:Int,val context: Context, val listAnggota:Array
                 .setPositiveButton("Ya", { dialog, which ->
                     listAnggota.removeAt(position)
                     notifyDataSetChanged()
+
+                    if (listAnggota.size == 0){
+                        Toast.makeText(context, "Minimal harus ada 1 hubungan keluarga !", Toast.LENGTH_SHORT).show()
+                        listAnggota.add("")
+                    }
                 })
                 .setNegativeButton("Tidak", DialogInterface.OnClickListener{ dialog, which ->
                     dialog.cancel()

@@ -98,7 +98,8 @@
                         android:layout_height="wrap_content"
                         android:text=""
                         android:layout_margin="5dp"
-                        android:hint="Jenis Keluarga*"/>
+                        android:hint="Jenis Keluarga*"
+                        android:maxLines="one"/>
 
                 </com.google.android.material.textfield.TextInputLayout>
             </FrameLayout>
