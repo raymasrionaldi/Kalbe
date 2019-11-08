@@ -97,9 +97,12 @@ class TipeTesFragmentData(context: Context, val fm: FragmentManager) : Fragment(
     }
 
     fun tampilkanListTipeTes(listTipeTes: List<TipeTes>, recyclerView: RecyclerView) {
-        val adapterTipeTes = ListTipeTesAdapter(context!!, listTipeTes, fm)
-        recyclerView.adapter = adapterTipeTes
-        adapterTipeTes.notifyDataSetChanged()
+        context?.let {
+            val adapterTipeTes = ListTipeTesAdapter(context!!, listTipeTes, fm)
+            recyclerView.adapter = adapterTipeTes
+            adapterTipeTes.notifyDataSetChanged()
+        }
+
     }
 
     fun updateContent() {

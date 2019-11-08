@@ -34,6 +34,8 @@ import com.xsis.android.batch217.ui.position_level.PositionLevelFragment
 import com.xsis.android.batch217.ui.provider_tools.ProviderToolsFragment
 import com.xsis.android.batch217.ui.timesheet.timesheet_entry.TimesheetEntryFragment
 import com.xsis.android.batch217.ui.timesheet.timesheet_history.TimesheetHistoryFragment
+import com.xsis.android.batch217.ui.tipe_tes.TipeTesFragment
+import com.xsis.android.batch217.ui.training.TrainingFragment
 import com.xsis.android.batch217.ui.tipe_identitas.TipeIdentitasFragment
 import com.xsis.android.batch217.ui.tipe_tes.TipeTesFragment
 import com.xsis.android.batch217.ui.training.TrainingFragment
@@ -314,37 +316,36 @@ class HomeActivity : AppCompatActivity() {
             childIndex: Int,
             l: Long
         ): Boolean {
-            if (groupIndex == 17 && childIndex == 0) {
-                val fragment = TrainingOrganizerFragment()
+            if (groupIndex == 2 && childIndex == 0) {
+                val fragment = CompanyFragment()
                 val fragmentTransaction = supportFragmentManager.beginTransaction()
                 fragmentTransaction.replace(
                     R.id.nav_host_fragment,
                     fragment,
-                    getString(R.string.training_organizer)
+                    getString(R.string.menu_company)
+                )
+                fragmentTransaction.commit()
+                closeNavDrawer()
+
+            } else if (groupIndex == 2 && childIndex == 1) {
+                val fragment = PositionLevelFragment()
+                val fragmentTransaction = supportFragmentManager.beginTransaction()
+                fragmentTransaction.replace(
+                    R.id.nav_host_fragment,
+                    fragment,
+                    getString(R.string.menu_position_level)
                 )
                 fragmentTransaction.commit()
                 closeNavDrawer()
 
             }
-            else if (groupIndex == 17 && childIndex == 1) {
+            if (groupIndex == 8 && childIndex == 0) {
                 val fragment = TrainingOrganizerFragment()
                 val fragmentTransaction = supportFragmentManager.beginTransaction()
                 fragmentTransaction.replace(
                     R.id.nav_host_fragment,
                     fragment,
-                    getString(R.string.training_organizer)
-                )
-                fragmentTransaction.commit()
-                closeNavDrawer()
-            }
-
-            else if (groupIndex == 18 && childIndex == 0) {
-                val fragment = TrainingOrganizerFragment()
-                val fragmentTransaction = supportFragmentManager.beginTransaction()
-                fragmentTransaction.replace(
-                    R.id.nav_host_fragment,
-                    fragment,
-                    getString(R.string.training_organizer)
+                    getString(R.string.timesheet_entry)
                 )
                 fragmentTransaction.commit()
                 closeNavDrawer()
