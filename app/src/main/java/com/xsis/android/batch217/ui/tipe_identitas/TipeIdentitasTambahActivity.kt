@@ -18,6 +18,7 @@ import com.xsis.android.batch217.databases.TipeIdentitasQueryHelper
 import com.xsis.android.batch217.utils.*
 import kotlinx.android.synthetic.main.activity_input_pendidikan.*
 import kotlinx.android.synthetic.main.activity_input_pendidikan.clearDeskripsi
+import kotlinx.android.synthetic.main.activity_keluarga_form.*
 import kotlinx.android.synthetic.main.activity_tipe_identitas_tambah.*
 import kotlinx.android.synthetic.main.fragment_tipe_identitas_tambah.*
 //WARNING : Tombol simpan belum berfungsi dengan baik (belum bisa tambah dan ubah)
@@ -66,6 +67,7 @@ class TipeIdentitasTambahActivity : AppCompatActivity() {
         simpan(id)
         batal()
 
+        backTipeIdentitasForm.setOnClickListener { finish() }
     }
 
     fun batal(){

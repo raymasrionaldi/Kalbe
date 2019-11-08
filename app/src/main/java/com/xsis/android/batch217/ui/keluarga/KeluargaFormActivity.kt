@@ -81,7 +81,7 @@ class KeluargaFormActivity : AppCompatActivity() {
         simpan(listAnggota, id)
         batal()
         cekIsiJenis()
-        btnNavDrawer.setOnClickListener { finish() }
+        backKeluargaForm.setOnClickListener { finish() }
     }
 
 

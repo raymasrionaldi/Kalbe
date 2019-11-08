@@ -23,7 +23,7 @@
             android:layout_weight="1">
 
             <ImageView
-                android:id="@+id/btnNavDrawer"
+                android:id="@+id/backKeluargaForm"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:layout_margin="5dp"
@@ -39,7 +39,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingLeft="13dp"
-                android:text="@string/menu_tipe_identitas"
+                android:text="@string/menu_keluarga"
                 android:textColor="@color/colorWhite"
                 android:textSize="20sp"
                 android:textStyle="bold" />

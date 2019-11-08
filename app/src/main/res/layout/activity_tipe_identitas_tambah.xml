@@ -22,11 +22,11 @@
             android:layout_weight="1">
 
             <ImageView
-                android:id="@+id/btnNavDrawer"
+                android:id="@+id/backTipeIdentitasForm"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:layout_margin="5dp"
-                android:src="@drawable/ic_menu_three_line_white" />
+                android:src="@drawable/ic_arrow_back_white" />
         </LinearLayout>
         <LinearLayout
             android:layout_width="0dp"
