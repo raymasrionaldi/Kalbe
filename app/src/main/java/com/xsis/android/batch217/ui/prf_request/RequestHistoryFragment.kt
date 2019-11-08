@@ -29,8 +29,8 @@ class RequestHistoryFragment : Fragment() {
         )
         val viewPager = root.findViewById(R.id.viewPagerRequestHistory) as CustomViewPager
         viewPager.adapter = tabKontrak
-        viewPager.setSwipePagingEnabled(false)
-        viewPager.setOnTouchListener { v, event -> true  }
+        viewPager.setSwipePagingEnabled(true)
+//        viewPager.setOnTouchListener { v, event -> true  }
 
         val slidingTabs = root.findViewById(R.id.slidingTabsRequestHistory) as TabLayout
 
