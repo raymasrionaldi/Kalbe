@@ -18,7 +18,7 @@ class ListPRFRequestAdapter(
 ) : RecyclerView.Adapter<ViewHolderListPRFRequest>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolderListPRFRequest {
         val customLayout =
-            LayoutInflater.from(parent.context).inflate(R.layout.list_layout, parent, false)
+            LayoutInflater.from(parent.context).inflate(R.layout.list_dot_layout_dua, parent, false)
         return ViewHolderListPRFRequest(customLayout)
     }
 

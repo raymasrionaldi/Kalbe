@@ -55,7 +55,7 @@ class PRFRequestQueryHelper (val databaseHelper: DatabaseHelper) {
         return listPRFRequest
     }
 
-    fun cariEmployeeStatusModels(keyword: String): List<PRFRequest> {
+    fun cariPRFRequestModels(keyword: String): List<PRFRequest> {
         var listPRFRequest = ArrayList<PRFRequest>()
         if (keyword.isNotBlank()) {
             val db = databaseHelper.readableDatabase

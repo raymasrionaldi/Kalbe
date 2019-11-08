@@ -51,7 +51,7 @@ class FragmentDataRequestHistory(context: Context, val fm: FragmentManager) : Fr
         val databaseHelper = DatabaseHelper(context!!)
         databaseQueryHelper = PRFRequestQueryHelper(databaseHelper)
 
-        //getSemuaEmployeeStatus(recyclerView!!, databaseQueryHelper!!)
+        //getSemuaRequestHistory(recyclerView!!, databaseQueryHelper!!)
 
         return customView
     }
@@ -97,8 +97,8 @@ class FragmentDataRequestHistory(context: Context, val fm: FragmentManager) : Fr
     }
 
     fun search(keyword: String, databaseQueryHelper: PRFRequestQueryHelper) {
-        val listEmployeeStatus = databaseQueryHelper.cariEmployeeStatusModels(keyword)
-        tampilkanListRequestHistory(listEmployeeStatus, recyclerView!!)
+        val listPRFRequest = databaseQueryHelper.cariPRFRequestModels(keyword)
+        tampilkanListRequestHistory(listPRFRequest, recyclerView!!)
     }
 
 }

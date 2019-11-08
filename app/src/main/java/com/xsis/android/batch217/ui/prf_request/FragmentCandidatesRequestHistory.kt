@@ -95,8 +95,8 @@ class FragmentCandidateRequestHistory(context: Context, val fm: FragmentManager)
     }
 
     fun search(keyword: String, databaseQueryHelper: PRFRequestQueryHelper) {
-        val listEmployeeStatus = databaseQueryHelper.cariEmployeeStatusModels(keyword)
-        tampilkanListRequestHistory(listEmployeeStatus, recyclerView!!)
+        val listPRFRequest = databaseQueryHelper.cariPRFRequestModels(keyword)
+        tampilkanListRequestHistory(listPRFRequest, recyclerView!!)
     }
 
 }

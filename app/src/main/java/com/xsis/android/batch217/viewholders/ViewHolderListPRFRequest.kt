@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.github.ramiz.nameinitialscircleimageview.NameInitialsCircleImageView
 import com.xsis.android.batch217.R
 import com.xsis.android.batch217.models.PRFRequest
-import com.xsis.android.batch217.utils.ambilDuaInisial
 import com.xsis.android.batch217.utils.ambilSemuaInisial
 
 class ViewHolderListPRFRequest(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -18,12 +17,13 @@ class ViewHolderListPRFRequest(itemView: View) : RecyclerView.ViewHolder(itemVie
     var inisial = itemView.findViewById(R.id.gambarLingkaran) as NameInitialsCircleImageView
 
     fun setModel(model: PRFRequest) {
-        val nama = model.placement
-        teksUtama.text = nama
-        teksTambahan.text = ""
+        val placement = model.placement
+        val pid = model.pid
+        teksUtama.text = placement
+        teksTambahan.text = pid
 
         val image = NameInitialsCircleImageView.ImageInfo
-            .Builder(ambilSemuaInisial(nama!!))
+            .Builder(ambilSemuaInisial(placement!!))
             .setTextColor(android.R.color.black)
             .setCircleBackgroundColorRes(R.color.warnaAbu)
             .build()
