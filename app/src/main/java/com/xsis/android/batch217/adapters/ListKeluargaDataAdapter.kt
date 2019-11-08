@@ -35,7 +35,7 @@ class ListKeluargaDataAdapter(val context: Context, val listKeluargaData:List<Ke
 
     override fun onBindViewHolder(holder: ViewHolderListKeluargaData, position: Int) {
         val model = listKeluargaData[position]
-        holder.setModel(model)
+        holder.setModel(model, position+1)
         val ID = model.idKeluargaData
 
         holder.layoutList.setOnClickListener { view ->
