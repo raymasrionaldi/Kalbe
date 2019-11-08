@@ -1,5 +1,6 @@
 package com.xsis.android.batch217
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
@@ -29,6 +30,7 @@ import com.xsis.android.batch217.ui.position_level.PositionLevelFragment
 import com.xsis.android.batch217.ui.prf_request.FragmentDataRequestHistory
 import com.xsis.android.batch217.ui.prf_request.RequestHistoryFragment
 import com.xsis.android.batch217.ui.provider_tools.ProviderToolsFragment
+import com.xsis.android.batch217.ui.timesheet.timesheet_entry.EntryTimesheetActivity
 import com.xsis.android.batch217.ui.timesheet.timesheet_entry.TimesheetEntryFragment
 import com.xsis.android.batch217.ui.timesheet.timesheet_history.TimesheetHistoryFragment
 import com.xsis.android.batch217.ui.tipe_tes.TipeTesFragment
@@ -38,6 +40,7 @@ import com.xsis.android.batch217.ui.training_organizer.TrainingOrganizerFragment
 import com.xsis.android.batch217.utils.OnBackPressedListener
 
 class HomeActivity : AppCompatActivity() {
+    val context = this
     val databaseHelper = DatabaseHelper(this)
 
     private var drawerLayout: DrawerLayout? = null
@@ -315,14 +318,8 @@ class HomeActivity : AppCompatActivity() {
             expandableListView.setItemChecked(index,true)
 
             if (groupIndex == 17 && childIndex == 0) {
-                val fragment = TimesheetEntryFragment()
-                val fragmentTransaction = supportFragmentManager.beginTransaction()
-                fragmentTransaction.replace(
-                    R.id.nav_host_fragment,
-                    fragment,
-                    getString(R.string.timesheet_entry)
-                )
-                fragmentTransaction.commit()
+                val intent = Intent(context,EntryTimesheetActivity::class.java)
+                startActivity(intent)
                 closeNavDrawer()
 
             }
