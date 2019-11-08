@@ -85,7 +85,8 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:hint="@string/nama_tipe_identitas"
-                android:text=""/>
+                android:text=""
+                android:singleLine="true"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -123,7 +124,8 @@
                 android:layout_height="wrap_content"
                 android:text=""
                 android:layout_margin="5dp"
-                android:hint="Deskripsi" />
+                android:hint="Deskripsi"
+                android:singleLine="true"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 

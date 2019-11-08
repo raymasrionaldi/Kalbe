@@ -99,7 +99,7 @@
                         android:text=""
                         android:layout_margin="5dp"
                         android:hint="Jenis Keluarga*"
-                        android:maxLines="one"/>
+                        android:singleLine="true"/>
 
                 </com.google.android.material.textfield.TextInputLayout>
             </FrameLayout>
