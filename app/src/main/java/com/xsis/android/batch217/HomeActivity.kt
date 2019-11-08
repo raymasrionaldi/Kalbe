@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
 import android.widget.ExpandableListView
-import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -14,16 +13,12 @@ import androidx.navigation.ui.AppBarConfiguration
 import com.google.android.material.navigation.NavigationView
 import com.xsis.android.batch217.adapters.expandablelist.ExpandableListAdapter
 import com.xsis.android.batch217.databases.DatabaseHelper
-import com.xsis.android.batch217.models.ContractStatus
-import com.xsis.android.batch217.models.EmployeeStatus
-import com.xsis.android.batch217.models.ProviderTools
 import com.xsis.android.batch217.models.expandablelist.ExpandedMenuModel
 import com.xsis.android.batch217.ui.agama.AgamaFragment
-import com.xsis.android.batch217.ui.back_office_position.BackOfficePositionFragment
 import com.xsis.android.batch217.ui.company.CompanyFragment
 import com.xsis.android.batch217.ui.contact_status.ContactStatusFragment
-import com.xsis.android.batch217.ui.employe_status.EmployeStatusFragment
 import com.xsis.android.batch217.ui.employee.EmployeeFragment
+import com.xsis.android.batch217.ui.employee_status.EmployeeStatusFragment
 import com.xsis.android.batch217.ui.grade.GradeFragment
 import com.xsis.android.batch217.ui.home.HomeFragment
 import com.xsis.android.batch217.ui.jenis_catatan.JenisCatatanFragment
@@ -32,13 +27,9 @@ import com.xsis.android.batch217.ui.keahlian.KeahlianFragment
 import com.xsis.android.batch217.ui.keluarga.KeluargaFragment
 import com.xsis.android.batch217.ui.position_level.PositionLevelFragment
 import com.xsis.android.batch217.ui.provider_tools.ProviderToolsFragment
-import com.xsis.android.batch217.ui.timesheet.timesheet_entry.TimesheetEntryFragment
-import com.xsis.android.batch217.ui.timesheet.timesheet_history.TimesheetHistoryFragment
 import com.xsis.android.batch217.ui.tipe_tes.TipeTesFragment
 import com.xsis.android.batch217.ui.training.TrainingFragment
 import com.xsis.android.batch217.ui.tipe_identitas.TipeIdentitasFragment
-import com.xsis.android.batch217.ui.tipe_tes.TipeTesFragment
-import com.xsis.android.batch217.ui.training.TrainingFragment
 import com.xsis.android.batch217.ui.training_organizer.TrainingOrganizerFragment
 import com.xsis.android.batch217.utils.OnBackPressedListener
 
@@ -316,40 +307,40 @@ class HomeActivity : AppCompatActivity() {
             childIndex: Int,
             l: Long
         ): Boolean {
-            if (groupIndex == 2 && childIndex == 0) {
-                val fragment = CompanyFragment()
-                val fragmentTransaction = supportFragmentManager.beginTransaction()
-                fragmentTransaction.replace(
-                    R.id.nav_host_fragment,
-                    fragment,
-                    getString(R.string.menu_company)
-                )
-                fragmentTransaction.commit()
-                closeNavDrawer()
-
-            } else if (groupIndex == 2 && childIndex == 1) {
-                val fragment = PositionLevelFragment()
-                val fragmentTransaction = supportFragmentManager.beginTransaction()
-                fragmentTransaction.replace(
-                    R.id.nav_host_fragment,
-                    fragment,
-                    getString(R.string.menu_position_level)
-                )
-                fragmentTransaction.commit()
-                closeNavDrawer()
-
-            }
-            if (groupIndex == 8 && childIndex == 0) {
+            if (groupIndex == 17 && childIndex == 0) {
                 val fragment = TrainingOrganizerFragment()
                 val fragmentTransaction = supportFragmentManager.beginTransaction()
                 fragmentTransaction.replace(
                     R.id.nav_host_fragment,
                     fragment,
-                    getString(R.string.timesheet_entry)
+                    getString(R.string.training_organizer)
                 )
                 fragmentTransaction.commit()
                 closeNavDrawer()
 
+            }
+            else if (groupIndex == 17 && childIndex == 1) {
+                val fragment = TrainingOrganizerFragment()
+                val fragmentTransaction = supportFragmentManager.beginTransaction()
+                fragmentTransaction.replace(
+                    R.id.nav_host_fragment,
+                    fragment,
+                    getString(R.string.training_organizer)
+                )
+                fragmentTransaction.commit()
+                closeNavDrawer()
+            }
+
+            else if (groupIndex == 18 && childIndex == 0) {
+                val fragment = TrainingOrganizerFragment()
+                val fragmentTransaction = supportFragmentManager.beginTransaction()
+                fragmentTransaction.replace(
+                    R.id.nav_host_fragment,
+                    fragment,
+                    getString(R.string.training_organizer)
+                )
+                fragmentTransaction.commit()
+                closeNavDrawer()
             }
             else if (groupIndex == 18 && childIndex == 1) {
                 val fragment = TrainingOrganizerFragment()
@@ -447,7 +438,7 @@ class HomeActivity : AppCompatActivity() {
                     closeNavDrawer()
                 }
                 4 -> {
-                    val fragment = EmployeStatusFragment()
+                    val fragment = EmployeeStatusFragment()
                     val fragmentTransaction = supportFragmentManager.beginTransaction()
                     fragmentTransaction.replace(
                         R.id.nav_host_fragment,
