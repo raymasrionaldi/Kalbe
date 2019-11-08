@@ -68,11 +68,12 @@ class FragmentDataTrainingOrganizer(context: Context, val fm: FragmentManager): 
         listKontrakKerja: List<TrainingOrganizer>,
         recyclerView: RecyclerView?
     ) {
-        val adapterKontrakKerja = ListTrainingOrganizerAdapter(context!!,listKontrakKerja, fm)
-        if (recyclerView != null) {
-            recyclerView.adapter = adapterKontrakKerja
-        }
-        adapterKontrakKerja.notifyDataSetChanged()
+        context?.let { val adapterKontrakKerja = ListTrainingOrganizerAdapter(context!!,listKontrakKerja, fm)
+            if (recyclerView != null) {
+                recyclerView.adapter = adapterKontrakKerja
+            }
+            adapterKontrakKerja.notifyDataSetChanged() }
+
     }
     fun updateKontrak() {
 
