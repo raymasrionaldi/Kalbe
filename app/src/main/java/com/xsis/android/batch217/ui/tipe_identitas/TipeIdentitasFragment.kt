@@ -8,6 +8,7 @@ import android.view.*
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.xsis.android.batch217.R
@@ -42,6 +43,8 @@ class TipeIdentitasFragment:Fragment() {
         val layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL,false)
         recyclerView = root.findViewById(R.id.listTipeIdentitasRecycler) as RecyclerView
         recyclerView!!.layoutManager = layoutManager
+        val dividerItemDecoration = DividerItemDecoration(context, layoutManager.orientation)
+        recyclerView!!.addItemDecoration(dividerItemDecoration)
 
         root.fab.setOnClickListener{view->
             val intent = Intent(context, TipeIdentitasTambahActivity::class.java)
