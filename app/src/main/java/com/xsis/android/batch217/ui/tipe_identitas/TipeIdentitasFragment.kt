@@ -16,6 +16,7 @@ import com.xsis.android.batch217.databases.DatabaseHelper
 import com.xsis.android.batch217.databases.TipeIdentitasQueryHelper
 import com.xsis.android.batch217.models.TipeIdentitas
 import com.xsis.android.batch217.ui.jenjang_pendidikan.InputPendidikanActivity
+import com.xsis.android.batch217.utils.CustomViewPager
 import kotlinx.android.synthetic.main.fragment_tipe_identitas.view.*
 
 
@@ -35,6 +36,8 @@ class TipeIdentitasFragment:Fragment() {
         tipeIdentitasViewModel = ViewModelProviders.of(this).get(TipeIdentitasViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_tipe_identitas, container, false)
         setHasOptionsMenu(true)
+
+        activity!!.title = getString(R.string.menu_tipe_identitas)
 
         val layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL,false)
         recyclerView = root.findViewById(R.id.listTipeIdentitasRecycler) as RecyclerView
@@ -114,5 +117,7 @@ class TipeIdentitasFragment:Fragment() {
         super.onResume()
         refreshList()
     }
+
+
 
 }
