@@ -43,6 +43,10 @@
     <string name="menu_PRF">PRF</string>
     <string name="request">Request</string>
     <string name="request_history">Request History</string>
+    <string name="menu_employee_training">Employee Training</string>
+    <string name="menu_set_training">Set Training</string>
+    <string name="menu_leave_request">Leave</string>
+    <string name="menu_ce_leave">Create / Edit Leave</string>
 
     <string name="ubah_agama">Ubah Agama</string>
 
