@@ -25,6 +25,8 @@ import com.xsis.android.batch217.ui.jenis_catatan.JenisCatatanFragment
 import com.xsis.android.batch217.ui.position_level.PositionLevelFragment
 import com.xsis.android.batch217.ui.timesheet.timesheet_entry.TimesheetEntryFragment
 import com.xsis.android.batch217.ui.timesheet.timesheet_history.TimesheetHistoryFragment
+import com.xsis.android.batch217.ui.tipe_tes.TipeTesFragment
+import com.xsis.android.batch217.ui.training.TrainingFragment
 import com.xsis.android.batch217.ui.training_organizer.TrainingOrganizerFragment
 import com.xsis.android.batch217.utils.OnBackPressedListener
 
@@ -193,6 +195,17 @@ class HomeActivity : AppCompatActivity() {
         item9.icon = R.drawable.ic_folder_black
         // Adding data header
         listDataHeader.add(item9)
+
+        //punya fajri
+        val item10 = ExpandedMenuModel()
+        item10.name = getString(R.string.menu_tipe_tes)
+        // Adding data header
+        listDataHeader.add(item10)
+
+        val item11 = ExpandedMenuModel()
+        item11.name = getString(R.string.menu_training)
+        // Adding data header
+        listDataHeader.add(item11)
 
         // Adding child data
         val heading9 = ArrayList<String>()
@@ -393,6 +406,28 @@ class HomeActivity : AppCompatActivity() {
                         R.id.nav_host_fragment,
                         fragment,
                         getString(R.string.training_organizer)
+                    )
+                    fragmentTransaction.commit()
+                    closeNavDrawer()
+                }
+                10-> {
+                    val fragment = TipeTesFragment()
+                    val fragmentTransaction = supportFragmentManager.beginTransaction()
+                    fragmentTransaction.replace(
+                        R.id.nav_host_fragment,
+                        fragment,
+                        getString(R.string.menu_tipe_tes)
+                    )
+                    fragmentTransaction.commit()
+                    closeNavDrawer()
+                }
+                11-> {
+                    val fragment = TrainingFragment()
+                    val fragmentTransaction = supportFragmentManager.beginTransaction()
+                    fragmentTransaction.replace(
+                        R.id.nav_host_fragment,
+                        fragment,
+                        getString(R.string.menu_training)
                     )
                     fragmentTransaction.commit()
                     closeNavDrawer()

@@ -76,9 +76,12 @@ class TrainingFragmentData(context: Context, val fm: FragmentManager) : Fragment
         listTraining: List<Training>,
         recyclerView: RecyclerView
     ) {
-        val adapterTraining = ListTrainingAdapter(context!!, listTraining, fm)
-        recyclerView.adapter = adapterTraining
-        adapterTraining.notifyDataSetChanged()
+        context?.let {
+            val adapterTraining = ListTrainingAdapter(context!!, listTraining, fm)
+            recyclerView.adapter = adapterTraining
+            adapterTraining.notifyDataSetChanged()
+        }
+
     }
 
     fun updateContent() {
