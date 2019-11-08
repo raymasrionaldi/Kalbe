@@ -26,6 +26,7 @@ import com.xsis.android.batch217.ui.jenjang_pendidikan.JenjangPendidikanFragment
 import com.xsis.android.batch217.ui.keahlian.KeahlianFragment
 import com.xsis.android.batch217.ui.keluarga.KeluargaFragment
 import com.xsis.android.batch217.ui.position_level.PositionLevelFragment
+import com.xsis.android.batch217.ui.project.ProjectFragment
 import com.xsis.android.batch217.ui.provider_tools.ProviderToolsFragment
 import com.xsis.android.batch217.ui.timesheet.timesheet_entry.TimesheetEntryFragment
 import com.xsis.android.batch217.ui.tipe_tes.TipeTesFragment
@@ -291,6 +292,18 @@ class HomeActivity : AppCompatActivity() {
 // Header, Child data
         listDataChild[listDataHeader[20]] = heading20
 
+        //Project
+        val item21 = ExpandedMenuModel()
+        item21.name = getString(R.string.menu_project)
+        item21.icon = R.drawable.ic_folder_black
+// Adding data header
+        listDataHeader.add(item20)
+// Adding child data
+        val heading21 = ArrayList<String>()
+        heading21.add(getString(R.string.menu_project_entry))
+        heading21.add(getString(R.string.menu_project_history))
+// Header, Child data
+        listDataChild[listDataHeader[21]] = heading21
 
     }
 
@@ -367,6 +380,17 @@ class HomeActivity : AppCompatActivity() {
             }
             else if (groupIndex == 20 && childIndex == 0) {
                 val fragment = TrainingOrganizerFragment()
+                val fragmentTransaction = supportFragmentManager.beginTransaction()
+                fragmentTransaction.replace(
+                    R.id.nav_host_fragment,
+                    fragment,
+                    getString(R.string.menu_ce_leave)
+                )
+                fragmentTransaction.commit()
+                closeNavDrawer()
+            }
+            else if (groupIndex == 21 && childIndex == 0) {
+                val fragment = ProjectFragment()
                 val fragmentTransaction = supportFragmentManager.beginTransaction()
                 fragmentTransaction.replace(
                     R.id.nav_host_fragment,
