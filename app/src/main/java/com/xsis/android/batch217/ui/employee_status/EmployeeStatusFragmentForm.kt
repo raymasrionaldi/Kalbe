@@ -228,21 +228,4 @@ class EmployeeStatusFragmentForm(context: Context, val fm: FragmentManager) : Fr
 
     }
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        val callback = object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                kembaliKeData()
-
-            }
-        }
-        requireActivity().onBackPressedDispatcher.addCallback(this, callback)
-    }
-
-    fun kembaliKeData(){
-        val fragment = fm.fragments[0] as EmployeeStatusFragmentData
-        val viewPager = fragment.view!!.parent as ViewPager
-
-        viewPager.setCurrentItem(0, true)
-    }
 }
