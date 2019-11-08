@@ -9,9 +9,10 @@ import androidx.lifecycle.ViewModelProviders
 import com.xsis.android.batch217.R
 import com.xsis.android.batch217.adapters.fragments.JenisCatatanFragmentAdapter
 import com.xsis.android.batch217.utils.CustomViewPager
+import com.xsis.android.batch217.utils.OnBackPressedListener
 
 
-class JenisCatatanFragment: Fragment() {
+class JenisCatatanFragment: Fragment(), OnBackPressedListener {
 
     private lateinit var jenisCatatanViewModel: JenisCatatanViewModel
 
@@ -23,6 +24,10 @@ class JenisCatatanFragment: Fragment() {
         jenisCatatanViewModel =
             ViewModelProviders.of(this).get(JenisCatatanViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_jenis_catatan, container, false)
+
+        activity!!.title = getString(R.string.menu_jenis_catatan)
+
+
         val fragmentAdapter = JenisCatatanFragmentAdapter(context!!, childFragmentManager)
         val viewPager = root.findViewById(R.id.viewPagerJenisCatatan) as CustomViewPager
         viewPager.adapter = fragmentAdapter
@@ -30,5 +35,14 @@ class JenisCatatanFragment: Fragment() {
         viewPager.setSwipePagingEnabled(false)
 
         return root
+    }
+
+    override fun onBackPressed(): Boolean {
+        val viewPager = view!!.findViewById(R.id.viewPagerJenisCatatan) as CustomViewPager
+        if (viewPager.currentItem !=0) {
+            viewPager.setCurrentItem(0, true)
+            return true
+        }
+        return false
     }
 }

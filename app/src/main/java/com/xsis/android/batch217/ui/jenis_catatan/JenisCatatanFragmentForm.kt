@@ -115,6 +115,8 @@ class JenisCatatanFragmentForm(context: Context, val fm: FragmentManager) : Frag
         deskripsi!!.setText(jenisCatatan.des_catatan)
 
         data = jenisCatatan
+
+        backInJenisCatatan()
     }
 
     fun modeAdd() {
@@ -122,6 +124,8 @@ class JenisCatatanFragmentForm(context: Context, val fm: FragmentManager) : Frag
         changeMode()
         resetForm()
         data = JenisCatatan()
+
+        backInJenisCatatan()
     }
 
     fun changeMode() {
@@ -228,22 +232,10 @@ class JenisCatatanFragmentForm(context: Context, val fm: FragmentManager) : Frag
         }
     }
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        val callback = object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                kembaliKeData()
-                val required = view!!.findViewById(R.id.requiredNamaJenisCatatan) as TextView
-                required.visibility = View.INVISIBLE
-            }
-        }
-        requireActivity().onBackPressedDispatcher.addCallback(this, callback)
+    fun backInJenisCatatan(){
+        val required = view!!.findViewById(R.id.requiredNamaJenisCatatan) as TextView
+        jenisCatatanText!!.setHintTextColor(defaultColor)
+        required.visibility = View.INVISIBLE
     }
 
-    fun kembaliKeData(){
-        val fragment = fm.fragments[0] as JenisCatatanFragmentData
-        val viewPager = fragment.view!!.parent as ViewPager
-
-        viewPager.setCurrentItem(0, true)
-    }
 }
