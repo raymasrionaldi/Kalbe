@@ -33,7 +33,6 @@ import com.xsis.android.batch217.ui.prf_request.FragmentDataRequestHistory
 import com.xsis.android.batch217.ui.prf_request.RequestHistoryFragment
 import com.xsis.android.batch217.ui.provider_tools.ProviderToolsFragment
 import com.xsis.android.batch217.ui.timesheet.timesheet_entry.EntryTimesheetActivity
-import com.xsis.android.batch217.ui.timesheet.timesheet_entry.TimesheetEntryFragment
 import com.xsis.android.batch217.ui.timesheet.timesheet_history.TimesheetHistoryFragment
 import com.xsis.android.batch217.ui.tipe_tes.TipeTesFragment
 import com.xsis.android.batch217.ui.training.TrainingFragment

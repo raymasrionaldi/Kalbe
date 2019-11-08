@@ -16,6 +16,9 @@
             android:name=".ui.keluarga.KeluargaFormActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
+            android:name=".ui.timesheet.timesheet_entry.EntryTimesheetActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity
             android:name=".ui.jenjang_pendidikan.UbahPendidikanActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity android:name=".ui.keahlian.UbahDataKeahlianActivity" />
