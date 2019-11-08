@@ -10,8 +10,10 @@ import com.google.android.material.tabs.TabLayout
 import com.xsis.android.batch217.R
 import com.xsis.android.batch217.adapters.fragments.GradeFragmentAdapter
 import com.xsis.android.batch217.utils.CustomViewPager
+import com.xsis.android.batch217.utils.OnBackPressedListener
 
-class GradeFragment : Fragment() {
+class GradeFragment : Fragment(), OnBackPressedListener {
+
 
     private lateinit var gradeViewModel: GradeViewModel
 
@@ -22,6 +24,8 @@ class GradeFragment : Fragment() {
     ): View? {
         gradeViewModel = ViewModelProviders.of(this).get(GradeViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_grade, container, false)
+
+        activity!!.title= getString(R.string.menu_grade)
 
         val fragmentAdapter = GradeFragmentAdapter(context!!, childFragmentManager)
         val viewPager = root.findViewById(R.id.viewPagerGrade) as CustomViewPager
@@ -36,4 +40,12 @@ class GradeFragment : Fragment() {
 
         return root
     }
+
+    override fun onBackPressed(): Boolean {
+        val viewPager = view!!.findViewById(R.id.viewPagerGrade) as CustomViewPager
+        if (viewPager.currentItem !=0) {
+            viewPager.setCurrentItem(0, true)
+            return true
+        }
+        return false    }
 }

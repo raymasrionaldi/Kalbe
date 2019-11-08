@@ -1,4 +1,4 @@
-package com.xsis.android.batch217.ui.grade
+package com.xsis.android.batch217.ui.prf_request
 
 import android.content.Context
 import android.os.Bundle
@@ -12,15 +12,15 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.xsis.android.batch217.R
-import com.xsis.android.batch217.adapters.ListGradeAdapter
-import com.xsis.android.batch217.adapters.fragments.GradeFragmentAdapter
+import com.xsis.android.batch217.adapters.ListPRFRequestAdapter
+import com.xsis.android.batch217.adapters.fragments.RequestHistoryFragmentAdapter
 import com.xsis.android.batch217.databases.DatabaseHelper
-import com.xsis.android.batch217.databases.GradeQueryHelper
-import com.xsis.android.batch217.models.Grade
+import com.xsis.android.batch217.databases.PRFRequestQueryHelper
+import com.xsis.android.batch217.models.PRFRequest
 
-class GradeFragmentData(context: Context, val fm: FragmentManager) : Fragment() {
+class FragmentDataRequestHistory(context: Context, val fm: FragmentManager) : Fragment() {
     var recyclerView: RecyclerView? = null
-    var databaseQueryHelper: GradeQueryHelper? = null
+    var databaseQueryHelper: PRFRequestQueryHelper? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -28,7 +28,7 @@ class GradeFragmentData(context: Context, val fm: FragmentManager) : Fragment() 
         savedInstanceState: Bundle?
     ): View? {
         val customView = inflater.inflate(
-            R.layout.fragment_data_grade,
+            R.layout.fragment_data_request_history,
             container,
             false
         )
@@ -36,56 +36,45 @@ class GradeFragmentData(context: Context, val fm: FragmentManager) : Fragment() 
 
         val layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
 
-        recyclerView = customView.findViewById(R.id.listGradeRecycler) as RecyclerView
+        recyclerView = customView.findViewById(R.id.listRequestHistoryRecycler) as RecyclerView
         recyclerView!!.layoutManager = layoutManager
 
         val dividerItemDecoration = DividerItemDecoration(context, layoutManager.orientation)
         recyclerView!!.addItemDecoration(dividerItemDecoration)
 
         val buttonAdd =
-            customView.findViewById(R.id.buttonAddGrade) as FloatingActionButton
+            customView.findViewById(R.id.buttonAddRequestHistory) as FloatingActionButton
         buttonAdd.setOnClickListener {
-            addData()
+
         }
 
         val databaseHelper = DatabaseHelper(context!!)
-        databaseQueryHelper =GradeQueryHelper(databaseHelper)
+        databaseQueryHelper = PRFRequestQueryHelper(databaseHelper)
 
-//        getSemuaGrade(recyclerView!!, databaseQueryHelper!!)
+        //getSemuaEmployeeStatus(recyclerView!!, databaseQueryHelper!!)
 
         return customView
     }
 
-    fun addData() {
-        val viewPager = view!!.parent as ViewPager
-        val adapter = viewPager.adapter!! as GradeFragmentAdapter
-        val fragment = fm.fragments[1] as GradeFragmentForm
-        fragment.modeAdd()
-        adapter.notifyDataSetChanged()
-        viewPager.setCurrentItem(1, true)
-    }
-
-    fun getSemuaGrade(
+    fun getSemuaRequestHistory(
         recyclerView: RecyclerView,
-        databaseQueryHelper: GradeQueryHelper
+        databaseQueryHelper: PRFRequestQueryHelper
     ) {
-        val listGrade = databaseQueryHelper.readSemuaGradeModels()
-        tampilkanListGrade(listGrade, recyclerView)
+        val listPRFRequest = databaseQueryHelper.readSemuaEmployeeStatusModels()
+        tampilkanListRequestHistory(listPRFRequest, recyclerView)
     }
 
-    fun tampilkanListGrade(
-        listGrade: List<Grade>,
+    fun tampilkanListRequestHistory(
+        listEmployeeStatus: List<PRFRequest>,
         recyclerView: RecyclerView
     ) {
-        context?.let {
-            val adapterGrade = ListGradeAdapter(context!!, listGrade, fm)
-            recyclerView.adapter = adapterGrade
-            adapterGrade.notifyDataSetChanged()
-        }
+        val adapterEmployeeStatus = ListPRFRequestAdapter(context!!, listEmployeeStatus, fm)
+        recyclerView.adapter = adapterEmployeeStatus
+        adapterEmployeeStatus.notifyDataSetChanged()
     }
 
     fun updateContent() {
-//        getSemuaGrade(recyclerView!!, databaseQueryHelper!!)
+        //getSemuaEmployeeStatus(recyclerView!!, databaseQueryHelper!!)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -107,8 +96,9 @@ class GradeFragmentData(context: Context, val fm: FragmentManager) : Fragment() 
         })
     }
 
-    fun search(keyword: String, databaseQueryHelper: GradeQueryHelper) {
-        val listGrade = databaseQueryHelper.cariGradeModels(keyword)
-        tampilkanListGrade(listGrade, recyclerView!!)
+    fun search(keyword: String, databaseQueryHelper: PRFRequestQueryHelper) {
+        val listEmployeeStatus = databaseQueryHelper.cariEmployeeStatusModels(keyword)
+        tampilkanListRequestHistory(listEmployeeStatus, recyclerView!!)
     }
+
 }

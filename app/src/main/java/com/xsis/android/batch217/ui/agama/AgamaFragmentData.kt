@@ -108,10 +108,10 @@ class AgamaFragmentData(context: Context, val fm: FragmentManager) : Fragment() 
         recyclerView: RecyclerView
     ) {
         context?.let{
-        val adapterAgama = ListAgamaAdapter(context!!, listAgama, fm)
-        recyclerView.adapter = adapterAgama
-        adapterAgama.notifyDataSetChanged()
-    }
+            val adapterAgama = ListAgamaAdapter(context!!, listAgama, fm)
+            recyclerView.adapter = adapterAgama
+            adapterAgama.notifyDataSetChanged()
+        }
     }
 
     fun updateContent() {

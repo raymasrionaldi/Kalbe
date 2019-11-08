@@ -13,8 +13,9 @@ import com.xsis.android.batch217.R
 import com.xsis.android.batch217.adapters.fragments.EmployeeTypeFragmentAdapter
 import com.xsis.android.batch217.adapters.fragments.GradeFragmentAdapter
 import com.xsis.android.batch217.utils.CustomViewPager
+import com.xsis.android.batch217.utils.OnBackPressedListener
 
-class EmployeeFragment : Fragment() {
+class EmployeeFragment : Fragment(), OnBackPressedListener {
 
     private lateinit var employeeViewModel: EmployeeViewModel
 
@@ -26,6 +27,9 @@ class EmployeeFragment : Fragment() {
         employeeViewModel =
             ViewModelProviders.of(this).get(EmployeeViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_employee, container, false)
+
+        activity!!.title = getString(R.string.menu_employe_type)
+
         val fragmentAdapter = EmployeeTypeFragmentAdapter(context!!, childFragmentManager)
         val viewPager = root.findViewById(R.id.viewPagerEmployeeType) as CustomViewPager
 
@@ -42,5 +46,14 @@ class EmployeeFragment : Fragment() {
         slidingTabs.touchables.forEach { view -> view.isEnabled = false }
 
         return root
+    }
+
+    override fun onBackPressed(): Boolean {
+        val viewPager = view!!.findViewById(R.id.viewPagerEmployeeType) as CustomViewPager
+        if (viewPager.currentItem !=0) {
+            viewPager.setCurrentItem(0, true)
+            return true
+        }
+        return false
     }
 }

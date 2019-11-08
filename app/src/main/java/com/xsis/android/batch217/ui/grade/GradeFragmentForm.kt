@@ -87,25 +87,6 @@ class GradeFragmentForm(context: Context, val fm: FragmentManager) : Fragment() 
         return customView
     }
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        val callback = object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                kembaliKeData()
-            }
-        }
-        requireActivity().onBackPressedDispatcher.addCallback(this, callback)
-    }
-
-    fun kembaliKeData(){
-        val fragment = fm.fragments[0] as GradeFragmentData
-        val viewPager = fragment.view!!.parent as ViewPager
-        val adapter = viewPager.adapter!! as GradeFragmentAdapter
-
-        adapter.notifyDataSetChanged()
-        viewPager.setCurrentItem(0, true)
-    }
-
     fun resetForm() {
         nama!!.setText("")
         notes!!.setText("")

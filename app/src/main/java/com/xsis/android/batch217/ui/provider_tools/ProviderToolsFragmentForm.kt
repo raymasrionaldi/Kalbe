@@ -219,24 +219,24 @@ class ProviderToolsFragmentForm(ontext: Context, val fm: FragmentManager) : Frag
         }
     }
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        val callback = object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                kembaliKeData()
-                val required = view!!.findViewById(R.id.requiredNamaProviderTools) as TextView
+//    override fun onAttach(context: Context) {
+//        super.onAttach(context)
+//        val callback = object : OnBackPressedCallback(true) {
+//            override fun handleOnBackPressed() {
+//                kembaliKeData()
+//                val required = view!!.findViewById(R.id.requiredNamaProviderTools) as TextView
+//
+//                nama!!.setHintTextColor(defaultColor)
+//                required.visibility = View.INVISIBLE
+//            }
+//        }
+//        requireActivity().onBackPressedDispatcher.addCallback(this, callback)
+//    }
 
-                nama!!.setHintTextColor(defaultColor)
-                required.visibility = View.INVISIBLE
-            }
-        }
-        requireActivity().onBackPressedDispatcher.addCallback(this, callback)
-    }
-
-    fun kembaliKeData() {
-        val fragment = fm.fragments[0] as ProviderToolsFragmentData
-        val viewPager = fragment.view!!.parent as ViewPager
-
-        viewPager.setCurrentItem(0, true)
-    }
+//    fun kembaliKeData() {
+//        val fragment = fm.fragments[0] as ProviderToolsFragmentData
+//        val viewPager = fragment.view!!.parent as ViewPager
+//
+//        viewPager.setCurrentItem(0, true)
+//    }
 }
