@@ -77,9 +77,11 @@ class PositionLevelFragmentData(context: Context, val fm: FragmentManager) : Fra
         listPositionLevel: List<PositionLevel>,
         recyclerView: RecyclerView
     ) {
-        val adapterPositionLevel = ListPositionLevelAdapter(context!!, listPositionLevel, fm)
-        recyclerView.adapter = adapterPositionLevel
-        adapterPositionLevel.notifyDataSetChanged()
+        context?.let {
+            val adapterPositionLevel = ListPositionLevelAdapter(context!!, listPositionLevel, fm)
+            recyclerView.adapter = adapterPositionLevel
+            adapterPositionLevel.notifyDataSetChanged()
+        }
     }
 
     fun updateContent() {

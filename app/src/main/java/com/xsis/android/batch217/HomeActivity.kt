@@ -23,8 +23,6 @@ import com.xsis.android.batch217.ui.employe_status.EmployeStatusFragment
 import com.xsis.android.batch217.ui.home.HomeFragment
 import com.xsis.android.batch217.ui.jenis_catatan.JenisCatatanFragment
 import com.xsis.android.batch217.ui.position_level.PositionLevelFragment
-import com.xsis.android.batch217.ui.timesheet.timesheet_entry.TimesheetEntryFragment
-import com.xsis.android.batch217.ui.timesheet.timesheet_history.TimesheetHistoryFragment
 import com.xsis.android.batch217.ui.training_organizer.TrainingOrganizerFragment
 import com.xsis.android.batch217.utils.OnBackPressedListener
 
@@ -248,7 +246,7 @@ class HomeActivity : AppCompatActivity() {
                 fragmentTransaction.commit()
                 closeNavDrawer()
 
-            } else if (groupIndex == 8  && childIndex == 1) {
+            } else if (groupIndex == 8 && childIndex == 1) {
                 val fragment = TrainingOrganizerFragment()
                 val fragmentTransaction = supportFragmentManager.beginTransaction()
                 fragmentTransaction.replace(
@@ -361,25 +359,30 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
-//    override fun onBackPressed() {
-//        val drawer = findViewById(R.id.drawer_layout) as DrawerLayout
-//        if (drawer.isDrawerOpen(GravityCompat.START)) {
-//            drawer.closeDrawer(GravityCompat.START)
-//        } else {
-////           super.onBackPressed()
-//            var isCanShowAlertDialog = false
-//            val fragmentList = supportFragmentManager.fragments
-//            if (fragmentList != null) {
-//                //TODO: Perform your logic to pass back press here
-//                for (fragment in fragmentList) {
-//                    if (fragment is OnBackPressedListener) {
-//                        isCanShowAlertDialog = true
-//                        (fragment as OnBackPressedListener).onBackPressed()
-//                    }
-//                }
-//            }
-//            if (fragmentList[fragmentList.lastIndex] is HomeFragment)
-//                Toast.makeText(this, "ini mau keluar", Toast.LENGTH_SHORT).show()
-//        }
-//    }
+    override fun onBackPressed() {
+        val drawer = findViewById(R.id.drawer_layout) as DrawerLayout
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START)
+        } else {
+            val fragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment)
+
+            //cek bila fragment memiliki back yang harus dihandle
+            if (fragment !is OnBackPressedListener || !(fragment as OnBackPressedListener).onBackPressed()) {
+                //bila fragment bukan HomeFragment, kembali ke home
+                if (fragment !is HomeFragment) {
+                    val fragment = HomeFragment()
+                    val fragmentTransaction = supportFragmentManager.beginTransaction()
+                    fragmentTransaction.replace(
+                        R.id.nav_host_fragment,
+                        fragment,
+                        getString(R.string.menu_home)
+                    )
+                    fragmentTransaction.commit()
+                    //bila HomeFragment, keluar
+                } else {
+                    super.onBackPressed()
+                }
+            }
+        }
+    }
 }
