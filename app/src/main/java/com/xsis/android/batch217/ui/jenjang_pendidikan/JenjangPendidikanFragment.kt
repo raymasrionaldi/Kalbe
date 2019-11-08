@@ -33,6 +33,8 @@ class JenjangPendidikanFragment : Fragment() {
         pendidikanViewModel = ViewModelProviders.of(this).get(JenjangPendidikanViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_jenjang_pendidikan, container, false)
 
+        activity!!.title = getString(R.string.menu_jenjang_pendidikan)
+
 //        if(arguments == null){
 //            setHasOptionsMenu(true)
 //        } else {
