@@ -310,6 +310,9 @@ class HomeActivity : AppCompatActivity() {
             childIndex: Int,
             l: Long
         ): Boolean {
+            val index= expandableListView.getFlatListPosition(ExpandableListView.getPackedPositionForChild(groupIndex,childIndex))
+            expandableListView.setItemChecked(index,true)
+
             if (groupIndex == 17 && childIndex == 0) {
                 val fragment = TimesheetEntryFragment()
                 val fragmentTransaction = supportFragmentManager.beginTransaction()
@@ -380,7 +383,7 @@ class HomeActivity : AppCompatActivity() {
             }
 
 
-            return false
+            return true
         }
     }
 
@@ -394,6 +397,7 @@ class HomeActivity : AppCompatActivity() {
         ): Boolean {
             println("heading clicked > $index")
 
+            expandableListView.setItemChecked(index,true)
             //action click group menu disini
             when (index) {
                 0 -> {
