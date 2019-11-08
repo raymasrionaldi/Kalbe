@@ -40,6 +40,9 @@
     <string name="timesheet">Timesheet</string>
     <string name="timesheet_entry">Timesheet Entry</string>
     <string name="timesheet_history">Timesheet History</string>
+    <string name="menu_PRF">PRF</string>
+    <string name="request">Request</string>
+    <string name="request_history">Request History</string>
 
     <string name="ubah_agama">Ubah Agama</string>
 

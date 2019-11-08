@@ -23,6 +23,8 @@ import com.xsis.android.batch217.ui.employe_status.EmployeStatusFragment
 import com.xsis.android.batch217.ui.home.HomeFragment
 import com.xsis.android.batch217.ui.jenis_catatan.JenisCatatanFragment
 import com.xsis.android.batch217.ui.position_level.PositionLevelFragment
+import com.xsis.android.batch217.ui.timesheet.timesheet_entry.TimesheetEntryFragment
+import com.xsis.android.batch217.ui.timesheet.timesheet_history.TimesheetHistoryFragment
 import com.xsis.android.batch217.ui.training_organizer.TrainingOrganizerFragment
 import com.xsis.android.batch217.utils.OnBackPressedListener
 
@@ -180,6 +182,28 @@ class HomeActivity : AppCompatActivity() {
         listDataHeader.add(item8)
 
         // Adding child data
+        val heading8 = ArrayList<String>()
+        heading8.add(getString(R.string.timesheet_entry))
+        heading8.add(getString(R.string.timesheet_history))
+
+        // Header, Child data
+        listDataChild[listDataHeader[8]] = heading8
+
+        val item9 = ExpandedMenuModel()
+        item9.name = getString(R.string.menu_PRF)
+        item9.icon = R.drawable.ic_folder_black
+        // Adding data header
+        listDataHeader.add(item9)
+
+        // Adding child data
+        val heading9 = ArrayList<String>()
+        heading9.add(getString(R.string.request))
+        heading9.add(getString(R.string.request_history))
+
+        // Header, Child data
+        listDataChild[listDataHeader[9]] = heading9
+
+        // Adding child data
         val heading2 = ArrayList<String>()
         heading2.add(getString(R.string.menu_company))
         heading2.add(getString(R.string.menu_position_level))
@@ -188,13 +212,6 @@ class HomeActivity : AppCompatActivity() {
         // Header, Child data
         listDataChild[listDataHeader[2]] = heading2
 
-        // Adding child data
-        val heading8 = ArrayList<String>()
-        heading8.add(getString(R.string.timesheet_entry))
-        heading8.add(getString(R.string.timesheet_history))
-
-        // Header, Child data
-        listDataChild[listDataHeader[8]] = heading8
 
     }
 
@@ -256,6 +273,32 @@ class HomeActivity : AppCompatActivity() {
                 )
                 fragmentTransaction.commit()
                 closeNavDrawer()
+            }
+
+            if (groupIndex == 9 && childIndex == 0) {
+                val fragment = TrainingOrganizerFragment()
+                val fragmentTransaction = supportFragmentManager.beginTransaction()
+                fragmentTransaction.replace(
+                    R.id.nav_host_fragment,
+                    fragment,
+                    getString(R.string.request)
+                )
+                fragmentTransaction.commit()
+                closeNavDrawer()
+
+            }
+
+            else if (groupIndex == 9 && childIndex == 1) {
+                val fragment = TrainingOrganizerFragment()
+                val fragmentTransaction = supportFragmentManager.beginTransaction()
+                fragmentTransaction.replace(
+                    R.id.nav_host_fragment,
+                    fragment,
+                    getString(R.string.request_history)
+                )
+                fragmentTransaction.commit()
+                closeNavDrawer()
+
             }
 
             return false
