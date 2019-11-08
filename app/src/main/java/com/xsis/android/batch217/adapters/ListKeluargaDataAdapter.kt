@@ -48,7 +48,8 @@ class ListKeluargaDataAdapter(val context: Context, val listKeluargaData:List<Ke
             viewPager.setCurrentItem(1, true)
         }
 
-        holder.bukaMenu.setOnClickListener { view ->val window = showPopupMenuHapus(context, view)
+        holder.bukaMenu.setOnClickListener { view ->
+            val window = showPopupMenuHapus(context, view)
             window.setOnItemClickListener{parent, view, position, id ->
                 when (position){
                     0 -> {

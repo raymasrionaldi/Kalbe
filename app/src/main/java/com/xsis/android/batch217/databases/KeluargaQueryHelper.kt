@@ -124,7 +124,7 @@ class KeluargaQueryHelper(val databaseHelper: DatabaseHelper) {
         val values_detail = ContentValues()
         for (i in 0 until listKeluargaDetail.size){
             values_detail.put(ID_JENIS, id)
-            values_detail.put(ID_ANGGOTA, i)
+            values_detail.put(ID_ANGGOTA, i+1)
             values_detail.put(NAMA_ANGGOTA, listKeluargaDetail[i])
             db.insert(TABEL_KELUARGA_DETAIL, null, values_detail)
         }
@@ -172,19 +172,29 @@ class KeluargaQueryHelper(val databaseHelper: DatabaseHelper) {
         db.execSQL(queryDeleteDetail)
     }
 
-    fun cekKeluargaDataSudahAda(nama: String): Int {
+    fun cekKeluargaDataSudahAda(nama: String): Boolean {
         val db = databaseHelper.readableDatabase
         val queryCari = "SELECT * FROM $TABEL_KELUARGA_DATA WHERE $JENIS_KELUARGA LIKE '$nama' "
         val cursor = db.rawQuery(queryCari, null)
 
-        return cursor.count
+        return (cursor.count != 0)
     }
 
-    fun cekKeluargaDetailSudahAda(nama: String, id:Int): Int {
+    fun cekKeluargaDetailSudahAda(nama: String, id:Int): Boolean {
         val db = databaseHelper.readableDatabase
         val queryCari = "SELECT * FROM $TABEL_KELUARGA_DETAIL WHERE $NAMA_ANGGOTA LIKE '$nama' AND $ID_JENIS=$id"
         val cursor = db.rawQuery(queryCari, null)
 
-        return cursor.count
+
+        if (cursor.count > 0) {
+            val listKeluargaData = konversiCursorKeListKeluargaData(cursor)
+            println("CEK KELUARGA DETAIL SUDAH ADA : $listKeluargaData")
+        } else{
+
+            println("CEK KELUARGA DETAIL SUDAH ADA : -")
+        }
+
+
+        return (cursor.count != 0)
     }
 }

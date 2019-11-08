@@ -34,14 +34,14 @@
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_marginRight="5dp"
-                    android:background="@android:drawable/ic_menu_edit" />
+                    android:background="@drawable/ic_create_black" />
 
                 <Button
                     android:id="@+id/hapus"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_marginRight="5dp"
-                    android:background="@android:drawable/ic_menu_delete" />
+                    android:background="@drawable/ic_delete_black" />
 
             </LinearLayout>
         </FrameLayout>
@@ -86,14 +86,14 @@
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_marginRight="5dp"
-                    android:background="@android:drawable/ic_notification_clear_all" />
+                    android:background="@drawable/ic_cancel_black" />
 
                 <Button
                     android:id="@+id/confirm"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_marginRight="5dp"
-                    android:background="@android:drawable/checkbox_on_background" />
+                    android:background="@drawable/ic_check_circle_black" />
 
             </LinearLayout>
         </FrameLayout>

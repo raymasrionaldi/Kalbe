@@ -3,10 +3,7 @@ package com.xsis.android.batch217.viewholders
 import android.content.Context
 import android.content.Intent
 import android.view.View
-import android.widget.Button
-import android.widget.EditText
-import android.widget.LinearLayout
-import android.widget.TextView
+import android.widget.*
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.xsis.android.batch217.R
@@ -40,31 +37,21 @@ class ViewHolderAnggotaKeluargaForm(itemView:View):RecyclerView.ViewHolder(itemV
     }
 
     fun setModelKonfirm(listAnggota:ArrayList<String>){
-        layoutEdit.isVisible = false
-        layoutTidakEdit.isVisible = true
-
         val anggotaBaru = teksEdit.text.toString().trim()
-        teksTidakEdit.text = anggotaBaru
-        listAnggota.set(listAnggota.size-1, anggotaBaru)
-        println("konfirm : $listAnggota")
-    }
 
-    fun trash(id:Int, listAnggota:ArrayList<String>, indeks:Int, context: Context){
-        println("----------------------------------------------------------------------")
-        println("List anggota sebelum terhapus : $listAnggota")
-        listAnggota.removeAt(indeks)
-        println("List anggota sesudah terhapus : $listAnggota")
-
-
-        val intent = Intent(context, KeluargaFormActivity::class.java)
-        intent.putExtra(ID_JENIS, id)
-        context.startActivity(intent)
+        if (listAnggota.contains(anggotaBaru)){
+            Toast.makeText(itemView.context, "Hubungan Keluarga ini sudah ada ! Mohon ganti hubungan keluarga.", Toast.LENGTH_SHORT).show()
+            println("konfirm (sudah ada !) : $listAnggota")
+        } else{
+            layoutEdit.isVisible = false
+            layoutTidakEdit.isVisible = true
+            teksTidakEdit.text = anggotaBaru
+            listAnggota.set(listAnggota.size-1, anggotaBaru)
+            println("konfirm (aman) : $listAnggota")
+        }
     }
 
     fun hapus(){
         teksEdit.setText("")
     }
-
-//    val namaAnggota = itemView.findViewById(R.id.hubunganKeluarga) as EditText
-
 }

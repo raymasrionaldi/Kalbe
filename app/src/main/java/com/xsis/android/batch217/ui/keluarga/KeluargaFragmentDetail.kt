@@ -28,6 +28,7 @@ import com.xsis.android.batch217.models.TipeIdentitas
 import com.xsis.android.batch217.ui.keahlian.UbahDataKeahlianActivity
 import com.xsis.android.batch217.utils.ID_JENIS
 import com.xsis.android.batch217.utils.ID_KEAHLIAN
+import kotlinx.android.synthetic.main.activity_keluarga_form.*
 
 class KeluargaFragmentDetail (context: Context, val fm: FragmentManager) : Fragment(){
     var recyclerView: RecyclerView? = null
@@ -106,11 +107,7 @@ class KeluargaFragmentDetail (context: Context, val fm: FragmentManager) : Fragm
 
     override fun onResume() {
         super.onResume()
-        refreshList()
-    }
-
-    fun refreshList() {
-        getActivity()!!.invalidateOptionsMenu()
+        getSemuaKeluargaDetail(ID, recyclerView!!, databaseQueryHelper!!)
     }
 
 }

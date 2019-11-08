@@ -103,4 +103,9 @@ class KeluargaFragmentData(context: Context, val fm: FragmentManager) : Fragment
         val listKeluargaData = databaseQueryHelper!!.cariKeluargaData(kata)
         tampilkanListKeluargaData(listKeluargaData, recyclerView!!)
     }
+
+    override fun onResume() {
+        super.onResume()
+        search2()
+    }
 }

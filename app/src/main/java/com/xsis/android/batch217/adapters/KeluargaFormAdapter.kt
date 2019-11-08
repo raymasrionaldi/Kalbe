@@ -1,10 +1,15 @@
 package com.xsis.android.batch217.adapters
 
+import android.app.AlertDialog
 import android.content.Context
+import android.content.DialogInterface
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.xsis.android.batch217.R
+import com.xsis.android.batch217.databases.DatabaseHelper
+import com.xsis.android.batch217.databases.KeluargaQueryHelper
 import com.xsis.android.batch217.viewholders.ViewHolderAnggotaKeluargaForm
 
 class KeluargaFormAdapter(val id:Int,val context: Context, val listAnggota:ArrayList<String>):RecyclerView.Adapter<ViewHolderAnggotaKeluargaForm>() {
@@ -30,8 +35,27 @@ class KeluargaFormAdapter(val id:Int,val context: Context, val listAnggota:Array
         }
 
         holder.edit.setOnClickListener { holder.setModelEdit(model) }
-        holder.hapus.setOnClickListener { /*holder.trash(id, listAnggota, position, context) */}
-        holder.confirm.setOnClickListener { holder.setModelKonfirm(listAnggota) }
         holder.clear.setOnClickListener { holder.hapus() }
+
+
+        holder.confirm.setOnClickListener {
+            holder.setModelKonfirm(listAnggota)
+        }
+
+
+        holder.hapus.setOnClickListener {
+            val konfirmasiDelete = AlertDialog.Builder(context)
+            konfirmasiDelete.setMessage("Yakin mau hapus data ini ?")
+                .setPositiveButton("Ya", { dialog, which ->
+                    listAnggota.removeAt(position)
+                    notifyDataSetChanged()
+                })
+                .setNegativeButton("Tidak", DialogInterface.OnClickListener{ dialog, which ->
+                    dialog.cancel()
+                })
+                .setCancelable(true)
+
+            konfirmasiDelete.create().show()
+        }
     }
 }
