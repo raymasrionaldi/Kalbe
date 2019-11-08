@@ -77,9 +77,11 @@ class CompanyFragmentData(context: Context, val fm: FragmentManager) : Fragment(
         listCompany: List<Company>,
         recyclerView: RecyclerView
     ) {
-        val adapterCompany = ListCompanyAdapter(context!!, listCompany, fm)
-        recyclerView.adapter = adapterCompany
-        adapterCompany.notifyDataSetChanged()
+        context?.let {
+            val adapterCompany = ListCompanyAdapter(context!!, listCompany, fm)
+            recyclerView.adapter = adapterCompany
+            adapterCompany.notifyDataSetChanged()
+        }
     }
 
     fun updateContent() {
