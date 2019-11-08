@@ -30,6 +30,7 @@ import com.xsis.android.batch217.ui.prf_request.FragmentDataRequestHistory
 import com.xsis.android.batch217.ui.prf_request.RequestHistoryFragment
 import com.xsis.android.batch217.ui.provider_tools.ProviderToolsFragment
 import com.xsis.android.batch217.ui.timesheet.timesheet_entry.TimesheetEntryFragment
+import com.xsis.android.batch217.ui.timesheet.timesheet_history.TimesheetHistoryFragment
 import com.xsis.android.batch217.ui.tipe_tes.TipeTesFragment
 import com.xsis.android.batch217.ui.training.TrainingFragment
 import com.xsis.android.batch217.ui.tipe_identitas.TipeIdentitasFragment
@@ -326,7 +327,7 @@ class HomeActivity : AppCompatActivity() {
 
             }
             else if (groupIndex == 17 && childIndex == 1) {
-                val fragment = TimesheetEntryFragment()
+                val fragment = TimesheetHistoryFragment()
                 val fragmentTransaction = supportFragmentManager.beginTransaction()
                 fragmentTransaction.replace(
                     R.id.nav_host_fragment,
