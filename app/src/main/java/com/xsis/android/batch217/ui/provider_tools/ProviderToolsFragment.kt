@@ -11,8 +11,9 @@ import com.xsis.android.batch217.R
 import com.xsis.android.batch217.adapters.fragments.ProviderToolsFragmentAdapter
 import com.xsis.android.batch217.ui.agama.ProviderToolsViewModel
 import com.xsis.android.batch217.utils.CustomViewPager
+import com.xsis.android.batch217.utils.OnBackPressedListener
 
-class ProviderToolsFragment : Fragment() {
+class ProviderToolsFragment : Fragment(), OnBackPressedListener {
 
     private lateinit var providerToolsViewModel: ProviderToolsViewModel
 
@@ -25,6 +26,8 @@ class ProviderToolsFragment : Fragment() {
             ViewModelProviders.of(this).get(ProviderToolsViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_provider_tools, container, false)
 
+        activity!!.title = getString(R.string.menu_provider_tools)
+
         val fragmentAdapter = ProviderToolsFragmentAdapter(context!!, childFragmentManager)
         val viewPager = root.findViewById(R.id.viewPagerProviderTools) as CustomViewPager
         viewPager.adapter = fragmentAdapter
@@ -36,6 +39,16 @@ class ProviderToolsFragment : Fragment() {
         slidingTabs.setupWithViewPager(viewPager)
         slidingTabs.touchables.forEach { view -> view.isEnabled = false }
 
+
         return root
+    }
+
+    override fun onBackPressed(): Boolean {
+        val viewPager = view!!.findViewById(R.id.viewPagerProviderTools) as CustomViewPager
+        if (viewPager.currentItem !=0) {
+            viewPager.setCurrentItem(0, true)
+            return true
+        }
+        return false
     }
 }

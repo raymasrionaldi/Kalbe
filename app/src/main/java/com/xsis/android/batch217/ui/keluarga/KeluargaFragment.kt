@@ -10,8 +10,9 @@ import com.google.android.material.tabs.TabLayout
 import com.xsis.android.batch217.R
 import com.xsis.android.batch217.adapters.fragments.KeluargaFragmentAdapter
 import com.xsis.android.batch217.utils.CustomViewPager
+import com.xsis.android.batch217.utils.OnBackPressedListener
 
-class KeluargaFragment: Fragment() {
+class KeluargaFragment: Fragment(), OnBackPressedListener {
     private lateinit var keluargaViewModel: KeluargaViewModel
 
     override fun onCreateView(
@@ -26,6 +27,8 @@ class KeluargaFragment: Fragment() {
         val fragmentAdapter = KeluargaFragmentAdapter(context!!, childFragmentManager)
         val viewPager = root.findViewById(R.id.viewPagerKeluarga) as CustomViewPager
 
+        activity!!.title = getString(R.string.menu_keluarga)
+
         //tambah tab di atas fragment
         viewPager.adapter = fragmentAdapter
 
@@ -39,5 +42,14 @@ class KeluargaFragment: Fragment() {
         slidingTabs.touchables.forEach { view -> view.isEnabled = false }
 
         return root
+    }
+
+    override fun onBackPressed(): Boolean {
+        val viewPager = view!!.findViewById(R.id.viewPagerKeluarga) as CustomViewPager
+        if (viewPager.currentItem !=0) {
+            viewPager.setCurrentItem(0, true)
+            return true
+        }
+        return false
     }
 }

@@ -14,10 +14,10 @@ class ViewHolderListTipeIdentitas(itemView:View): RecyclerView.ViewHolder(itemVi
     val inisial = itemView.findViewById(R.id.gambarLingkaran) as NameInitialsCircleImageView
     val bukaMenu = itemView.findViewById(R.id.bukaMenu) as ImageView
 
-    fun setModel(model:TipeIdentitas){
+    fun setModel(model:TipeIdentitas, position:Int){
         isiText.text = model.nama_TipeIdentitas
         val image = NameInitialsCircleImageView.ImageInfo
-            .Builder(model.id_TipeIdentitas.toString())
+            .Builder(position.toString())
             .setTextColor(android.R.color.black)
             .setCircleBackgroundColorRes(R.color.warnaAbu)
             .build()

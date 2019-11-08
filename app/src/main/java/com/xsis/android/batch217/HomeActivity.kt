@@ -1,5 +1,6 @@
 package com.xsis.android.batch217
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
@@ -19,6 +20,8 @@ import com.xsis.android.batch217.ui.company.CompanyFragment
 import com.xsis.android.batch217.ui.contact_status.ContactStatusFragment
 import com.xsis.android.batch217.ui.employee.EmployeeFragment
 import com.xsis.android.batch217.ui.employee_status.EmployeeStatusFragment
+import com.xsis.android.batch217.ui.employee_training.EmployeeTrainingFragment
+import com.xsis.android.batch217.ui.employee_training.EmployeeTrainingFragmentData
 import com.xsis.android.batch217.ui.grade.GradeFragment
 import com.xsis.android.batch217.ui.home.HomeFragment
 import com.xsis.android.batch217.ui.jenis_catatan.JenisCatatanFragment
@@ -27,8 +30,11 @@ import com.xsis.android.batch217.ui.keahlian.KeahlianFragment
 import com.xsis.android.batch217.ui.keluarga.KeluargaFragment
 import com.xsis.android.batch217.ui.position_level.PositionLevelFragment
 import com.xsis.android.batch217.ui.project.ProjectFragment
+import com.xsis.android.batch217.ui.prf_request.FragmentDataRequestHistory
+import com.xsis.android.batch217.ui.prf_request.RequestHistoryFragment
 import com.xsis.android.batch217.ui.provider_tools.ProviderToolsFragment
-import com.xsis.android.batch217.ui.timesheet.timesheet_entry.TimesheetEntryFragment
+import com.xsis.android.batch217.ui.timesheet.timesheet_entry.EntryTimesheetActivity
+import com.xsis.android.batch217.ui.timesheet.timesheet_history.TimesheetHistoryFragment
 import com.xsis.android.batch217.ui.tipe_tes.TipeTesFragment
 import com.xsis.android.batch217.ui.training.TrainingFragment
 import com.xsis.android.batch217.ui.tipe_identitas.TipeIdentitasFragment
@@ -36,6 +42,7 @@ import com.xsis.android.batch217.ui.training_organizer.TrainingOrganizerFragment
 import com.xsis.android.batch217.utils.OnBackPressedListener
 
 class HomeActivity : AppCompatActivity() {
+    val context = this
     val databaseHelper = DatabaseHelper(this)
 
     private var drawerLayout: DrawerLayout? = null
@@ -321,20 +328,17 @@ class HomeActivity : AppCompatActivity() {
             childIndex: Int,
             l: Long
         ): Boolean {
+            val index= expandableListView.getFlatListPosition(ExpandableListView.getPackedPositionForChild(groupIndex,childIndex))
+            expandableListView.setItemChecked(index,true)
+
             if (groupIndex == 17 && childIndex == 0) {
-                val fragment = TimesheetEntryFragment()
-                val fragmentTransaction = supportFragmentManager.beginTransaction()
-                fragmentTransaction.replace(
-                    R.id.nav_host_fragment,
-                    fragment,
-                    getString(R.string.timesheet_entry)
-                )
-                fragmentTransaction.commit()
+                val intent = Intent(context,EntryTimesheetActivity::class.java)
+                startActivity(intent)
                 closeNavDrawer()
 
             }
             else if (groupIndex == 17 && childIndex == 1) {
-                val fragment = TimesheetEntryFragment()
+                val fragment = TimesheetHistoryFragment()
                 val fragmentTransaction = supportFragmentManager.beginTransaction()
                 fragmentTransaction.replace(
                     R.id.nav_host_fragment,
@@ -351,24 +355,24 @@ class HomeActivity : AppCompatActivity() {
                 fragmentTransaction.replace(
                     R.id.nav_host_fragment,
                     fragment,
-                    getString(R.string.training_organizer)
+                    getString(R.string.request)
                 )
                 fragmentTransaction.commit()
                 closeNavDrawer()
             }
             else if (groupIndex == 18 && childIndex == 1) {
-                val fragment = TrainingOrganizerFragment()
+                val fragment = RequestHistoryFragment()
                 val fragmentTransaction = supportFragmentManager.beginTransaction()
                 fragmentTransaction.replace(
                     R.id.nav_host_fragment,
                     fragment,
-                    getString(R.string.training_organizer)
+                    getString(R.string.request_history)
                 )
                 fragmentTransaction.commit()
                 closeNavDrawer()
             }
             else if (groupIndex == 19 && childIndex == 0) {
-                val fragment = TrainingOrganizerFragment()
+                val fragment = EmployeeTrainingFragment()
                 val fragmentTransaction = supportFragmentManager.beginTransaction()
                 fragmentTransaction.replace(
                     R.id.nav_host_fragment,
@@ -402,7 +406,7 @@ class HomeActivity : AppCompatActivity() {
             }
 
 
-            return false
+            return true
         }
     }
 
@@ -416,6 +420,7 @@ class HomeActivity : AppCompatActivity() {
         ): Boolean {
             println("heading clicked > $index")
 
+            expandableListView.setItemChecked(index,true)
             //action click group menu disini
             when (index) {
                 0 -> {

@@ -35,7 +35,9 @@
                 android:id="@+id/navigationmenu"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:choiceMode ="singleChoice"
                 android:background="@color/warnaBiru"
+                android:listSelector="@drawable/selector_expandable_item"
                 android:groupIndicator="@null" >
 
             </ExpandableListView>

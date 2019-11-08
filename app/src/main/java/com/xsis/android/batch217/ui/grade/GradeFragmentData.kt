@@ -77,9 +77,11 @@ class GradeFragmentData(context: Context, val fm: FragmentManager) : Fragment() 
         listGrade: List<Grade>,
         recyclerView: RecyclerView
     ) {
-        val adapterGrade = ListGradeAdapter(context!!, listGrade, fm)
-        recyclerView.adapter = adapterGrade
-        adapterGrade.notifyDataSetChanged()
+        context?.let {
+            val adapterGrade = ListGradeAdapter(context!!, listGrade, fm)
+            recyclerView.adapter = adapterGrade
+            adapterGrade.notifyDataSetChanged()
+        }
     }
 
     fun updateContent() {
