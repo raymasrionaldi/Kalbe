@@ -12,7 +12,6 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
-import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -23,7 +22,6 @@ import com.xsis.android.batch217.adapters.fragments.TrainingFragmentAdapter
 import com.xsis.android.batch217.databases.DatabaseHelper
 import com.xsis.android.batch217.databases.TrainingQueryHelper
 import com.xsis.android.batch217.models.Training
-import com.xsis.android.batch217.ui.tipe_tes.TipeTesFragmentData
 import com.xsis.android.batch217.utils.*
 
 class TrainingFragmentForm(context: Context, val fm: FragmentManager) : Fragment() {
