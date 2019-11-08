@@ -20,6 +20,8 @@ import com.xsis.android.batch217.ui.company.CompanyFragment
 import com.xsis.android.batch217.ui.contact_status.ContactStatusFragment
 import com.xsis.android.batch217.ui.employee.EmployeeFragment
 import com.xsis.android.batch217.ui.employee_status.EmployeeStatusFragment
+import com.xsis.android.batch217.ui.employee_training.EmployeeTrainingFragment
+import com.xsis.android.batch217.ui.employee_training.EmployeeTrainingFragmentData
 import com.xsis.android.batch217.ui.grade.GradeFragment
 import com.xsis.android.batch217.ui.home.HomeFragment
 import com.xsis.android.batch217.ui.jenis_catatan.JenisCatatanFragment
@@ -358,7 +360,7 @@ class HomeActivity : AppCompatActivity() {
                 closeNavDrawer()
             }
             else if (groupIndex == 19 && childIndex == 0) {
-                val fragment = TrainingOrganizerFragment()
+                val fragment = EmployeeTrainingFragment()
                 val fragmentTransaction = supportFragmentManager.beginTransaction()
                 fragmentTransaction.replace(
                     R.id.nav_host_fragment,

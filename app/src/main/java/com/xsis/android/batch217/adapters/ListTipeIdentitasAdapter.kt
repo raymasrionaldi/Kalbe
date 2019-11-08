@@ -36,7 +36,7 @@ class ListTipeIdentitasAdapter(val context:Context, val fragment: TipeIdentitasF
     }
 
     override fun onBindViewHolder(holder: ViewHolderListTipeIdentitas, position: Int) {
-        holder.setModel(listTipeIdentitas[position])
+        holder.setModel(listTipeIdentitas[position], position+1)
         val ID = listTipeIdentitas[position].id_TipeIdentitas
         val model = listTipeIdentitas[position]
 
@@ -50,20 +50,6 @@ class ListTipeIdentitasAdapter(val context:Context, val fragment: TipeIdentitasF
                         val intentEdit = Intent(context, TipeIdentitasTambahActivity::class.java)
                         intentEdit.putExtra(ID_IDENTITAS, ID )
                         context.startActivity(intentEdit)
-
-
-//                        val manager = (context as AppCompatActivity).supportFragmentManager
-//
-//                        val bundle = Bundle()
-//                        bundle.putString("judul","Ubah Tipe Identitas")
-//                        bundle.putString("nama", model.nama_TipeIdentitas)
-//                        bundle.putString("des", model.des_TipeIdentitas)
-//                        bundle.putInt("id", model.id_TipeIdentitas)
-//
-//                        val fragment = TipeIdentitasTambahFragment()
-//                        fragment.arguments = bundle
-//                        manager.beginTransaction().replace(R.id.fragment_tipe_identitas, fragment).commit()
-
                     }
                     1 -> {
                         val konfirmasiDelete = AlertDialog.Builder(context)
