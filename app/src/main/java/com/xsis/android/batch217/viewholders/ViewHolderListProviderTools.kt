@@ -8,6 +8,7 @@ import com.github.ramiz.nameinitialscircleimageview.NameInitialsCircleImageView
 import com.xsis.android.batch217.R
 import com.xsis.android.batch217.models.ProviderTools
 import com.xsis.android.batch217.utils.ambilDuaInisial
+import com.xsis.android.batch217.utils.ambilSemuaInisial
 
 class ViewHolderListProviderTools(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
@@ -22,7 +23,7 @@ class ViewHolderListProviderTools(itemView: View) : RecyclerView.ViewHolder(item
         teksTambahan.text = ""
 
         val image = NameInitialsCircleImageView.ImageInfo
-            .Builder(ambilDuaInisial(nama!!))
+            .Builder(ambilSemuaInisial(nama!!))
             .setTextColor(android.R.color.black)
             .setCircleBackgroundColorRes(R.color.warnaAbu)
             .build()
