@@ -1,3 +1,4 @@
+
 package com.xsis.android.batch217.ui.tipe_tes
 
 import android.content.Context
@@ -111,6 +112,8 @@ class TipeTesFragmentForm(context: Context, val fm: FragmentManager) : Fragment(
         deskripsi!!.setText(tipeTes.deskripsi_tipe_tes)
 
         data = tipeTes
+
+        backInTipeTes()
     }
 
     fun modeAdd() {
@@ -118,6 +121,8 @@ class TipeTesFragmentForm(context: Context, val fm: FragmentManager) : Fragment(
         changeMode()
         resetForm()
         data = TipeTes()
+
+        backInTipeTes()
     }
 
     fun changeMode() {
@@ -224,23 +229,9 @@ class TipeTesFragmentForm(context: Context, val fm: FragmentManager) : Fragment(
         }
     }
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        val callback = object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                kembaliKeData()
-
-                val required = view!!.findViewById(R.id.requiredTipeTes) as TextView
-                required.visibility = View.INVISIBLE
-            }
-        }
-        requireActivity().onBackPressedDispatcher.addCallback(this, callback)
-    }
-
-    fun kembaliKeData(){
-        val fragment = fm.fragments[0] as TipeTesFragmentData
-        val viewPager = fragment.view!!.parent as ViewPager
-
-        viewPager.setCurrentItem(0, true)
+    fun backInTipeTes(){
+        val required = view!!.findViewById(R.id.requiredTipeTes) as TextView
+        tipeTesText!!.setHintTextColor(defaultColor)
+        required.visibility = View.INVISIBLE
     }
 }

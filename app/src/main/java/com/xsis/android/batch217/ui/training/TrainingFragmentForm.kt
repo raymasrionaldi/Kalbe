@@ -105,6 +105,8 @@ class TrainingFragmentForm(context: Context, val fm: FragmentManager) : Fragment
         code!!.setText(training.codeTraining)
         nama!!.setText(training.namaTraining)
         data = training
+
+        backInTraining()
     }
 
     fun modeAdd() {
@@ -112,6 +114,8 @@ class TrainingFragmentForm(context: Context, val fm: FragmentManager) : Fragment
         changeMode()
         resetForm()
         data = Training()
+
+        backInTraining()
     }
 
     fun changeMode() {
@@ -190,7 +194,7 @@ class TrainingFragmentForm(context: Context, val fm: FragmentManager) : Fragment
             model.namaTraining = namaTraining
 
             val cekTrainingCode = databaseQueryHelper!!.cekTrainingCodeSudahAda(model.codeTraining!!)
-           // val cekTrainingNama = databaseQueryHelper!!.cekTrainingNamaSudahAda(model.namaTraining!!)
+            // val cekTrainingNama = databaseQueryHelper!!.cekTrainingNamaSudahAda(model.namaTraining!!)
 
 
             if (modeForm == MODE_ADD) {
@@ -207,9 +211,9 @@ class TrainingFragmentForm(context: Context, val fm: FragmentManager) : Fragment
             } else if (modeForm == MODE_EDIT) {
                 if ((cekTrainingCode != 1 && model.codeTraining == data.codeTraining) ||
                     (cekTrainingCode != 0 && model.codeTraining != data.codeTraining)
-                    /*||
-                    (cekTrainingNama != 1 && model.namaTraining == data.namaTraining) ||
-                    (cekTrainingNama != 0 && model.namaTraining != data.namaTraining)*/)
+                /*||
+                (cekTrainingNama != 1 && model.namaTraining == data.namaTraining) ||
+                (cekTrainingNama != 0 && model.namaTraining != data.namaTraining)*/)
                 {
                     Toast.makeText(context, DATA_SUDAH_ADA, Toast.LENGTH_SHORT).show()
                     return
@@ -232,28 +236,10 @@ class TrainingFragmentForm(context: Context, val fm: FragmentManager) : Fragment
         }
     }
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        val callback = object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                kembaliKeData()
-
-                val required1 = view!!.findViewById(R.id.requiredCodeTraining) as TextView
-                required1.visibility = View.INVISIBLE
-                val required2 = view!!.findViewById(R.id.requiredNamaTraining) as TextView
-                required2.visibility = View.INVISIBLE
-
-                code!!.setHintTextColor(defaultColor)
-                nama!!.setHintTextColor(defaultColor)
-            }
-        }
-        requireActivity().onBackPressedDispatcher.addCallback(this, callback)
-    }
-
-    fun kembaliKeData(){
-        val fragment = fm.fragments[0] as TrainingFragmentData
-        val viewPager = fragment.view!!.parent as ViewPager
-
-        viewPager.setCurrentItem(0, true)
+    fun backInTraining(){
+        code!!.setHintTextColor(defaultColor)
+        nama!!.setHintTextColor(defaultColor)
+        requiredCode!!.visibility = View.INVISIBLE
+        requiredNama!!.visibility = View.INVISIBLE
     }
 }
