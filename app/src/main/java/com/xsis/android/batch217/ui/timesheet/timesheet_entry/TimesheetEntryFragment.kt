@@ -30,15 +30,15 @@ class TimesheetEntryFragment: Fragment() {
             context!!,
             childFragmentManager
         )
-        val viewPager = root.findViewById(R.id.viewPagerTimesheetEntry) as CustomViewPager
-        viewPager.adapter = tabTimesheetEntry
-        viewPager.setSwipePagingEnabled(false)
-        viewPager.setOnTouchListener { v, event -> true  }
-
-        val slidingTabs = root.findViewById(R.id.slidingTabsTimesheetEntry) as TabLayout
-
-        slidingTabs.setupWithViewPager(viewPager)
-        slidingTabs.touchables.forEach { view -> view.isEnabled = false }
+//        val viewPager = root.findViewById(R.id.viewPagerTimesheetEntry) as CustomViewPager
+//        viewPager.adapter = tabTimesheetEntry
+//        viewPager.setSwipePagingEnabled(false)
+//        viewPager.setOnTouchListener { v, event -> true  }
+//
+//        val slidingTabs = root.findViewById(R.id.slidingTabsTimesheetEntry) as TabLayout
+//
+//        slidingTabs.setupWithViewPager(viewPager)
+//        slidingTabs.touchables.forEach { view -> view.isEnabled = false }
 
         return root
     }

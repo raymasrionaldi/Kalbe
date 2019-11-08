@@ -218,15 +218,15 @@ class FragmentFormContratctStatus(context:Context,val fm: FragmentManager) : Fra
 
         }
     }
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        val callback = object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                tampilkanTabData()
-            }
-        }
-        requireActivity().onBackPressedDispatcher.addCallback(this, callback)
-    }
+//    override fun onAttach(context: Context) {
+//        super.onAttach(context)
+//        val callback = object : OnBackPressedCallback(true) {
+//            override fun handleOnBackPressed() {
+//                tampilkanTabData()
+//            }
+//        }
+//        requireActivity().onBackPressedDispatcher.addCallback(this, callback)
+//    }
 
     fun tampilkanTabData(){
         val fragment = fm.fragments[0] as FragmentDataContractStatus

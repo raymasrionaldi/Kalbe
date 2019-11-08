@@ -13,8 +13,9 @@ import com.google.android.material.tabs.TabLayout
 import com.xsis.android.batch217.R
 import com.xsis.android.batch217.adapters.fragments.TrainingOrganizerFragmentAdapter
 import com.xsis.android.batch217.utils.CustomViewPager
+import com.xsis.android.batch217.utils.OnBackPressedListener
 
-class TrainingOrganizerFragment: Fragment() {
+class TrainingOrganizerFragment: Fragment(), OnBackPressedListener {
     private lateinit var trainingViewModel: TrainingOrganizerViewModel
 
     override fun onCreateView(
@@ -22,9 +23,10 @@ class TrainingOrganizerFragment: Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        trainingViewModel =
-            ViewModelProviders.of(this).get(TrainingOrganizerViewModel::class.java)
+//        trainingViewModel =
+//            ViewModelProviders.of(this).get(TrainingOrganizerViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_training_organizer, container, false)
+        activity!!.title = getString(R.string.training_organizer)
 //        val textView: TextView = root.findViewById(R.id.text_training)
 //        trainingViewModel.text.observe(this, Observer {
 //            textView.text = it
@@ -44,5 +46,13 @@ class TrainingOrganizerFragment: Fragment() {
         slidingTabs.touchables.forEach { view -> view.isEnabled = false }
 
         return root
+    }
+    override fun onBackPressed(): Boolean {
+        val viewPager = view!!.findViewById(R.id.viewPagerTrainingOrg) as CustomViewPager
+        if (viewPager.currentItem !=0) {
+            viewPager.setCurrentItem(0, true)
+            return true
+        }
+        return false
     }
 }

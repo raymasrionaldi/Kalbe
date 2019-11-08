@@ -14,9 +14,10 @@ import com.google.android.material.tabs.TabLayout
 import com.xsis.android.batch217.R
 import com.xsis.android.batch217.adapters.fragments.ContractStatusFragmentAdapter
 import com.xsis.android.batch217.utils.CustomViewPager
+import com.xsis.android.batch217.utils.OnBackPressedListener
 
 
-class ContactStatusFragment : Fragment() {
+class ContactStatusFragment : Fragment(),OnBackPressedListener {
 
     private lateinit var contactStatusViewModel: ContactStatusViewModel
 
@@ -25,9 +26,10 @@ class ContactStatusFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        contactStatusViewModel =
-            ViewModelProviders.of(this).get(ContactStatusViewModel::class.java)
+//        contactStatusViewModel =
+//            ViewModelProviders.of(this).get(ContactStatusViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_contact_status, container, false)
+        activity!!.title = getString(R.string.menu_contract_status)
 //        val textView: TextView = root.findViewById(R.id.text_contact_status)
 //        contactStatusViewModel.text.observe(this, Observer {
 //            textView.text = it
@@ -48,5 +50,13 @@ class ContactStatusFragment : Fragment() {
 
 
         return root
+    }
+    override fun onBackPressed(): Boolean {
+        val viewPager = view!!.findViewById(R.id.viewPagerContractStatus) as CustomViewPager
+        if (viewPager.currentItem !=0) {
+            viewPager.setCurrentItem(0, true)
+            return true
+        }
+        return false
     }
 }
