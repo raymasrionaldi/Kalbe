@@ -72,11 +72,12 @@ class FragmentDataContractStatus(context:Context, val fm: FragmentManager): Frag
         listKontrakKerja: List<ContractStatus>,
         recyclerView: RecyclerView?
     ) {
-        val adapterKontrakKerja = ListContractStatusAdapter(context!!,listKontrakKerja, fm)
-        if (recyclerView != null) {
-            recyclerView.adapter = adapterKontrakKerja
-        }
-        adapterKontrakKerja.notifyDataSetChanged()
+        context?.let { val adapterKontrakKerja = ListContractStatusAdapter(context!!,listKontrakKerja, fm)
+            if (recyclerView != null) {
+                recyclerView.adapter = adapterKontrakKerja
+            }
+            adapterKontrakKerja.notifyDataSetChanged() }
+
     }
     fun updateKontrak() {
 
