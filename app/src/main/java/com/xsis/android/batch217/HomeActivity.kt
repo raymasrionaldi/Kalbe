@@ -202,13 +202,13 @@ class HomeActivity : AppCompatActivity() {
 // Adding data header
         listDataHeader.add(item10)
 
-//Tipe Tes
+//Tipe Tes natuza
         val item11 = ExpandedMenuModel()
         item11.name = getString(R.string.menu_tipe_tes)
 // Adding data header
         listDataHeader.add(item11)
 
-//Training
+//Training natuza
         val item12 = ExpandedMenuModel()
         item12.name = getString(R.string.menu_training)
 // Adding data header
@@ -514,6 +514,7 @@ class HomeActivity : AppCompatActivity() {
                     fragmentTransaction.commit()
                     closeNavDrawer()
                 }
+                //punya natuza
                 11 -> {
                     val fragment = TipeTesFragment()
                     val fragmentTransaction = supportFragmentManager.beginTransaction()
@@ -525,6 +526,7 @@ class HomeActivity : AppCompatActivity() {
                     fragmentTransaction.commit()
                     closeNavDrawer()
                 }
+                //punya natuza
                 12 -> {
                     val fragment = TrainingFragment()
                     val fragmentTransaction = supportFragmentManager.beginTransaction()

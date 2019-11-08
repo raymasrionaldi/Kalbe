@@ -9,8 +9,9 @@ import androidx.lifecycle.ViewModelProviders
 import com.xsis.android.batch217.R
 import com.xsis.android.batch217.adapters.fragments.TipeTesFragmentAdapter
 import com.xsis.android.batch217.utils.CustomViewPager
+import com.xsis.android.batch217.utils.OnBackPressedListener
 
-class TipeTesFragment : Fragment() {
+class TipeTesFragment : Fragment(), OnBackPressedListener {
 
     private lateinit var tipeTesViewModel: TipeTesViewModel
 
@@ -22,6 +23,9 @@ class TipeTesFragment : Fragment() {
         tipeTesViewModel =
             ViewModelProviders.of(this).get(TipeTesViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_tipe_tes, container, false)
+
+        activity!!.title = getString(R.string.menu_tipe_tes)
+
         val fragmentAdapter = TipeTesFragmentAdapter(context!!, childFragmentManager)
         val viewPager = root.findViewById(R.id.viewPagerTipeTes) as CustomViewPager
         viewPager.adapter = fragmentAdapter
@@ -29,5 +33,15 @@ class TipeTesFragment : Fragment() {
         viewPager.setSwipePagingEnabled(false)
 
         return root
+    }
+
+    override fun onBackPressed(): Boolean {
+        val viewPager = view!!.findViewById(R.id.viewPagerTipeTes) as CustomViewPager
+        if (viewPager.currentItem !=0) {
+            viewPager.setCurrentItem(0, true)
+            return true
+
+        }
+        return false
     }
 }
