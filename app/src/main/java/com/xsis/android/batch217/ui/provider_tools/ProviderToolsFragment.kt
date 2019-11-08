@@ -25,6 +25,8 @@ class ProviderToolsFragment : Fragment() {
             ViewModelProviders.of(this).get(ProviderToolsViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_provider_tools, container, false)
 
+        activity!!.title = getString(R.string.menu_provider_tools)
+
         val fragmentAdapter = ProviderToolsFragmentAdapter(context!!, childFragmentManager)
         val viewPager = root.findViewById(R.id.viewPagerProviderTools) as CustomViewPager
         viewPager.adapter = fragmentAdapter
