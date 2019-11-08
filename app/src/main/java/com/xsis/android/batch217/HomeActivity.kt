@@ -14,15 +14,27 @@ import androidx.navigation.ui.AppBarConfiguration
 import com.google.android.material.navigation.NavigationView
 import com.xsis.android.batch217.adapters.expandablelist.ExpandableListAdapter
 import com.xsis.android.batch217.databases.DatabaseHelper
+import com.xsis.android.batch217.models.ContractStatus
+import com.xsis.android.batch217.models.EmployeeStatus
+import com.xsis.android.batch217.models.ProviderTools
 import com.xsis.android.batch217.models.expandablelist.ExpandedMenuModel
 import com.xsis.android.batch217.ui.agama.AgamaFragment
 import com.xsis.android.batch217.ui.back_office_position.BackOfficePositionFragment
 import com.xsis.android.batch217.ui.company.CompanyFragment
 import com.xsis.android.batch217.ui.contact_status.ContactStatusFragment
 import com.xsis.android.batch217.ui.employe_status.EmployeStatusFragment
+import com.xsis.android.batch217.ui.employee.EmployeeFragment
+import com.xsis.android.batch217.ui.grade.GradeFragment
 import com.xsis.android.batch217.ui.home.HomeFragment
 import com.xsis.android.batch217.ui.jenis_catatan.JenisCatatanFragment
+import com.xsis.android.batch217.ui.jenjang_pendidikan.JenjangPendidikanFragment
+import com.xsis.android.batch217.ui.keahlian.KeahlianFragment
+import com.xsis.android.batch217.ui.keluarga.KeluargaFragment
 import com.xsis.android.batch217.ui.position_level.PositionLevelFragment
+import com.xsis.android.batch217.ui.provider_tools.ProviderToolsFragment
+import com.xsis.android.batch217.ui.tipe_identitas.TipeIdentitasFragment
+import com.xsis.android.batch217.ui.tipe_tes.TipeTesFragment
+import com.xsis.android.batch217.ui.training.TrainingFragment
 import com.xsis.android.batch217.ui.training_organizer.TrainingOrganizerFragment
 import com.xsis.android.batch217.utils.OnBackPressedListener
 
@@ -127,74 +139,162 @@ class HomeActivity : AppCompatActivity() {
         listDataHeader = ArrayList<ExpandedMenuModel>()
         listDataChild = HashMap<ExpandedMenuModel, List<String>>()
 
+        //Home
         val item0 = ExpandedMenuModel()
         item0.name = getString(R.string.menu_home)
         item0.icon = R.drawable.ic_menu_home_black
-
-        // Adding data header
+// Adding data header
         listDataHeader.add(item0)
 
+//Menu Master
+//Agama
         val item1 = ExpandedMenuModel()
         item1.name = getString(R.string.menu_agama)
-
-        // Adding data header
+// Adding data header
         listDataHeader.add(item1)
 
+//Grade
         val item2 = ExpandedMenuModel()
-        item2.name = getString(R.string.menu_tipe_identitas)
-        item2.icon = R.drawable.ic_folder_black
-
-        // Adding data header
+        item2.name = getString(R.string.menu_grade)
+// Adding data header
         listDataHeader.add(item2)
 
+//Jenis Catatan
         val item3 = ExpandedMenuModel()
-        item3.name = getString(R.string.menu_back_office_position)
-
-        // Adding data header
+        item3.name = getString(R.string.menu_jenis_catatan)
+// Adding data header
         listDataHeader.add(item3)
 
+//employee status
         val item4 = ExpandedMenuModel()
-        item4.name = getString(R.string.menu_jenis_catatan)
-        // Adding data header
+        item4.name = getString(R.string.menu_employe_status)
+// Adding data header
         listDataHeader.add(item4)
 
+//Company
         val item5 = ExpandedMenuModel()
-        item5.name = getString(R.string.menu_employe_status)
-        // Adding data header
+        item5.name = getString(R.string.menu_company)
+// Adding data header
         listDataHeader.add(item5)
 
+//Position Level
         val item6 = ExpandedMenuModel()
-        item6.name = getString(R.string.menu_contract_status)
-        // Adding data header
+        item6.name = getString(R.string.menu_position_level)
+// Adding data header
         listDataHeader.add(item6)
 
+//Contract Status
         val item7 = ExpandedMenuModel()
-        item7.name = getString(R.string.training_organizer)
-        // Adding data header
+        item7.name = getString(R.string.menu_contract_status)
+// Adding data header
         listDataHeader.add(item7)
 
+//Training Organizer
         val item8 = ExpandedMenuModel()
-        item8.name = getString(R.string.timesheet)
-        item8.icon = R.drawable.ic_folder_black
-        // Adding data header
+        item8.name = getString(R.string.training_organizer)
+// Adding data header
         listDataHeader.add(item8)
 
-        // Adding child data
-        val heading2 = ArrayList<String>()
-        heading2.add(getString(R.string.menu_company))
-        heading2.add(getString(R.string.menu_position_level))
+//Jenjang Pendidikan
+        val item9 = ExpandedMenuModel()
+        item9.name = getString(R.string.menu_jenjang_pendidikan)
+// Adding data header
+        listDataHeader.add(item9)
+
+//Employee Type
+        val item10 = ExpandedMenuModel()
+        item10.name = getString(R.string.menu_employe_type)
+// Adding data header
+        listDataHeader.add(item10)
+
+//Tipe Tes
+        val item11 = ExpandedMenuModel()
+        item11.name = getString(R.string.menu_tipe_tes)
+// Adding data header
+        listDataHeader.add(item11)
+
+//Training
+        val item12 = ExpandedMenuModel()
+        item12.name = getString(R.string.menu_training)
+// Adding data header
+        listDataHeader.add(item12)
+
+//Tipe Identitas
+        val item13 = ExpandedMenuModel()
+        item13.name = getString(R.string.menu_tipe_identitas)
+// Adding data header
+        listDataHeader.add(item13)
+
+//Keluarga
+        val item14 = ExpandedMenuModel()
+        item14.name = getString(R.string.menu_keluarga)
+// Adding data header
+        listDataHeader.add(item14)
+
+//Keahlian
+        val item15 = ExpandedMenuModel()
+        item15.name = getString(R.string.menu_Keahlian)
+// Adding data header
+        listDataHeader.add(item15)
+
+//Provider Tools
+        val item16 = ExpandedMenuModel()
+        item16.name = getString(R.string.menu_provider_tools)
+// Adding data header
+        listDataHeader.add(item16)
 
 
-        // Header, Child data
-        listDataChild[listDataHeader[2]] = heading2
+//Transaksi
+        //Timesheet
+        val item17 = ExpandedMenuModel()
+        item17.name = getString(R.string.timesheet)
+        item17.icon = R.drawable.ic_folder_black
+// Adding data header
+        listDataHeader.add(item17)
+// Adding child data
+        val heading17 = ArrayList<String>()
+        heading17.add(getString(R.string.timesheet_entry))
+        heading17.add(getString(R.string.timesheet_history))
+// Header, Child data
+        listDataChild[listDataHeader[17]] = heading17
 
-        // Adding child data
-        val heading8 = ArrayList<String>()
-        heading8.add(getString(R.string.timesheet_entry))
-        heading8.add(getString(R.string.timesheet_history))
+        //PRF Request
+        val item18 = ExpandedMenuModel()
+        item18.name = getString(R.string.menu_PRF)
+        item18.icon = R.drawable.ic_folder_black
+// Adding data header
+        listDataHeader.add(item18)
+// Adding child data
+        val heading18 = ArrayList<String>()
+        heading18.add(getString(R.string.request))
+        heading18.add(getString(R.string.request_history))
+// Header, Child data
+        listDataChild[listDataHeader[18]] = heading18
 
-        // Header, Child data
-        listDataChild[listDataHeader[8]] = heading8
+        //Employee Training
+        val item19 = ExpandedMenuModel()
+        item19.name = getString(R.string.menu_employee_training)
+        item19.icon = R.drawable.ic_folder_black
+// Adding data header
+        listDataHeader.add(item19)
+// Adding child data
+        val heading19 = ArrayList<String>()
+        heading19.add(getString(R.string.menu_set_training))
+// Header, Child data
+        listDataChild[listDataHeader[19]] = heading19
+
+        //Leave Request
+        val item20 = ExpandedMenuModel()
+        item20.name = getString(R.string.menu_leave_request)
+        item20.icon = R.drawable.ic_folder_black
+// Adding data header
+        listDataHeader.add(item20)
+// Adding child data
+        val heading20 = ArrayList<String>()
+        heading20.add(getString(R.string.menu_ce_leave))
+// Header, Child data
+        listDataChild[listDataHeader[20]] = heading20
+
 
     }
 
@@ -212,51 +312,75 @@ class HomeActivity : AppCompatActivity() {
             childIndex: Int,
             l: Long
         ): Boolean {
-            if (groupIndex == 2 && childIndex == 0) {
-                val fragment = CompanyFragment()
-                val fragmentTransaction = supportFragmentManager.beginTransaction()
-                fragmentTransaction.replace(
-                    R.id.nav_host_fragment,
-                    fragment,
-                    getString(R.string.menu_company)
-                )
-                fragmentTransaction.commit()
-                closeNavDrawer()
-
-            } else if (groupIndex == 2 && childIndex == 1) {
-                val fragment = PositionLevelFragment()
-                val fragmentTransaction = supportFragmentManager.beginTransaction()
-                fragmentTransaction.replace(
-                    R.id.nav_host_fragment,
-                    fragment,
-                    getString(R.string.menu_position_level)
-                )
-                fragmentTransaction.commit()
-                closeNavDrawer()
-
-            }
-            if (groupIndex == 8 && childIndex == 0) {
+            if (groupIndex == 17 && childIndex == 0) {
                 val fragment = TrainingOrganizerFragment()
                 val fragmentTransaction = supportFragmentManager.beginTransaction()
                 fragmentTransaction.replace(
                     R.id.nav_host_fragment,
                     fragment,
-                    getString(R.string.timesheet_entry)
+                    getString(R.string.training_organizer)
                 )
                 fragmentTransaction.commit()
                 closeNavDrawer()
 
-            } else if (groupIndex == 8 && childIndex == 1) {
+            }
+            else if (groupIndex == 17 && childIndex == 1) {
                 val fragment = TrainingOrganizerFragment()
                 val fragmentTransaction = supportFragmentManager.beginTransaction()
                 fragmentTransaction.replace(
                     R.id.nav_host_fragment,
                     fragment,
-                    getString(R.string.timesheet_history)
+                    getString(R.string.training_organizer)
                 )
                 fragmentTransaction.commit()
                 closeNavDrawer()
             }
+
+            else if (groupIndex == 18 && childIndex == 0) {
+                val fragment = TrainingOrganizerFragment()
+                val fragmentTransaction = supportFragmentManager.beginTransaction()
+                fragmentTransaction.replace(
+                    R.id.nav_host_fragment,
+                    fragment,
+                    getString(R.string.training_organizer)
+                )
+                fragmentTransaction.commit()
+                closeNavDrawer()
+            }
+            else if (groupIndex == 18 && childIndex == 1) {
+                val fragment = TrainingOrganizerFragment()
+                val fragmentTransaction = supportFragmentManager.beginTransaction()
+                fragmentTransaction.replace(
+                    R.id.nav_host_fragment,
+                    fragment,
+                    getString(R.string.training_organizer)
+                )
+                fragmentTransaction.commit()
+                closeNavDrawer()
+            }
+            else if (groupIndex == 19 && childIndex == 0) {
+                val fragment = TrainingOrganizerFragment()
+                val fragmentTransaction = supportFragmentManager.beginTransaction()
+                fragmentTransaction.replace(
+                    R.id.nav_host_fragment,
+                    fragment,
+                    getString(R.string.menu_set_training)
+                )
+                fragmentTransaction.commit()
+                closeNavDrawer()
+            }
+            else if (groupIndex == 20 && childIndex == 0) {
+                val fragment = TrainingOrganizerFragment()
+                val fragmentTransaction = supportFragmentManager.beginTransaction()
+                fragmentTransaction.replace(
+                    R.id.nav_host_fragment,
+                    fragment,
+                    getString(R.string.menu_ce_leave)
+                )
+                fragmentTransaction.commit()
+                closeNavDrawer()
+            }
+
 
             return false
         }
@@ -296,19 +420,18 @@ class HomeActivity : AppCompatActivity() {
                     fragmentTransaction.commit()
                     closeNavDrawer()
                 }
-                3 -> {
-                    val fragment = BackOfficePositionFragment()
+                2 -> {
+                    val fragment = GradeFragment()
                     val fragmentTransaction = supportFragmentManager.beginTransaction()
                     fragmentTransaction.replace(
                         R.id.nav_host_fragment,
                         fragment,
-                        getString(R.string.menu_agama)
+                        getString(R.string.menu_grade)
                     )
                     fragmentTransaction.commit()
                     closeNavDrawer()
                 }
-
-                4 -> {
+                3 -> {
                     val fragment = JenisCatatanFragment()
                     val fragmentTransaction = supportFragmentManager.beginTransaction()
                     fragmentTransaction.replace(
@@ -319,8 +442,7 @@ class HomeActivity : AppCompatActivity() {
                     fragmentTransaction.commit()
                     closeNavDrawer()
                 }
-
-                5 -> {
+                4 -> {
                     val fragment = EmployeStatusFragment()
                     val fragmentTransaction = supportFragmentManager.beginTransaction()
                     fragmentTransaction.replace(
@@ -331,7 +453,29 @@ class HomeActivity : AppCompatActivity() {
                     fragmentTransaction.commit()
                     closeNavDrawer()
                 }
+                5 -> {
+                    val fragment = CompanyFragment()
+                    val fragmentTransaction = supportFragmentManager.beginTransaction()
+                    fragmentTransaction.replace(
+                        R.id.nav_host_fragment,
+                        fragment,
+                        getString(R.string.menu_company)
+                    )
+                    fragmentTransaction.commit()
+                    closeNavDrawer()
+                }
                 6 -> {
+                    val fragment = PositionLevelFragment()
+                    val fragmentTransaction = supportFragmentManager.beginTransaction()
+                    fragmentTransaction.replace(
+                        R.id.nav_host_fragment,
+                        fragment,
+                        getString(R.string.menu_position_level)
+                    )
+                    fragmentTransaction.commit()
+                    closeNavDrawer()
+                }
+                7 -> {
                     val fragment = ContactStatusFragment()
                     val fragmentTransaction = supportFragmentManager.beginTransaction()
                     fragmentTransaction.replace(
@@ -342,7 +486,7 @@ class HomeActivity : AppCompatActivity() {
                     fragmentTransaction.commit()
                     closeNavDrawer()
                 }
-                7 -> {
+                8 -> {
                     val fragment = TrainingOrganizerFragment()
                     val fragmentTransaction = supportFragmentManager.beginTransaction()
                     fragmentTransaction.replace(
@@ -353,7 +497,94 @@ class HomeActivity : AppCompatActivity() {
                     fragmentTransaction.commit()
                     closeNavDrawer()
                 }
-
+                9 -> {
+                    val fragment = JenjangPendidikanFragment()
+                    val fragmentTransaction = supportFragmentManager.beginTransaction()
+                    fragmentTransaction.replace(
+                        R.id.nav_host_fragment,
+                        fragment,
+                        getString(R.string.menu_jenjang_pendidikan)
+                    )
+                    fragmentTransaction.commit()
+                    closeNavDrawer()
+                }
+                10 -> {
+                    val fragment = EmployeeFragment()
+                    val fragmentTransaction = supportFragmentManager.beginTransaction()
+                    fragmentTransaction.replace(
+                        R.id.nav_host_fragment,
+                        fragment,
+                        getString(R.string.menu_employe_type)
+                    )
+                    fragmentTransaction.commit()
+                    closeNavDrawer()
+                }
+                11 -> {
+                    val fragment = TipeTesFragment()
+                    val fragmentTransaction = supportFragmentManager.beginTransaction()
+                    fragmentTransaction.replace(
+                        R.id.nav_host_fragment,
+                        fragment,
+                        getString(R.string.menu_tipe_tes)
+                    )
+                    fragmentTransaction.commit()
+                    closeNavDrawer()
+                }
+                12 -> {
+                    val fragment = TrainingFragment()
+                    val fragmentTransaction = supportFragmentManager.beginTransaction()
+                    fragmentTransaction.replace(
+                        R.id.nav_host_fragment,
+                        fragment,
+                        getString(R.string.menu_training)
+                    )
+                    fragmentTransaction.commit()
+                    closeNavDrawer()
+                }
+                13 -> {
+                    val fragment = TipeIdentitasFragment()
+                    val fragmentTransaction = supportFragmentManager.beginTransaction()
+                    fragmentTransaction.replace(
+                        R.id.nav_host_fragment,
+                        fragment,
+                        getString(R.string.menu_tipe_identitas)
+                    )
+                    fragmentTransaction.commit()
+                    closeNavDrawer()
+                }
+                14 -> {
+                    val fragment = KeluargaFragment()
+                    val fragmentTransaction = supportFragmentManager.beginTransaction()
+                    fragmentTransaction.replace(
+                        R.id.nav_host_fragment,
+                        fragment,
+                        getString(R.string.menu_position_level)
+                    )
+                    fragmentTransaction.commit()
+                    closeNavDrawer()
+                }
+                15 -> {
+                    val fragment = KeahlianFragment()
+                    val fragmentTransaction = supportFragmentManager.beginTransaction()
+                    fragmentTransaction.replace(
+                        R.id.nav_host_fragment,
+                        fragment,
+                        getString(R.string.menu_Keahlian)
+                    )
+                    fragmentTransaction.commit()
+                    closeNavDrawer()
+                }
+                16 -> {
+                    val fragment = ProviderToolsFragment()
+                    val fragmentTransaction = supportFragmentManager.beginTransaction()
+                    fragmentTransaction.replace(
+                        R.id.nav_host_fragment,
+                        fragment,
+                        getString(R.string.menu_provider_tools)
+                    )
+                    fragmentTransaction.commit()
+                    closeNavDrawer()
+                }
             }
             return false
         }
