@@ -89,7 +89,7 @@ class TipeIdentitasQueryHelper(val databasehelper:DatabaseHelper) {
         val db = databasehelper.writableDatabase
         val queryUpdate = "UPDATE $TABEL_TIPE_IDENTITAS " +
                 "SET $DES_IDENTITAS = '$des', $IS_DELETED = 'false' " +
-                "WHERE $NAMA_IDENTITAS = $nama "
+                "WHERE $NAMA_IDENTITAS = '$nama' "
         val cursor = db.rawQuery(queryUpdate, null)
         if (cursor.count > 0) {
             listTipeIdentitas = konversiCursorKeListTipeIdentitasModel(cursor)

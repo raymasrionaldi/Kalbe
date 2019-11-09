@@ -63,7 +63,7 @@ class ListTipeIdentitasAdapter(val context:Context, val fragment: TipeIdentitasF
                                 val db = databaseHelper.writableDatabase
                                 val queryDelete = "UPDATE $TABEL_TIPE_IDENTITAS SET $IS_DELETED = 'true' WHERE $ID_IDENTITAS = $ID"
                                 db.execSQL(queryDelete)
-                                fragment.refreshList()
+                                fragment.search2()
 
                             })
                             .setNegativeButton("Tidak", DialogInterface.OnClickListener{ dialog, which ->

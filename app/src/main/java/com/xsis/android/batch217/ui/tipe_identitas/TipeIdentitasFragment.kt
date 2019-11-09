@@ -27,6 +27,7 @@ class TipeIdentitasFragment:Fragment() {
     var databaseHelper :DatabaseHelper?=null
     var databaseQueryHelper: TipeIdentitasQueryHelper?= null
     val fragment = this
+    var kata = ""
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -72,21 +73,6 @@ class TipeIdentitasFragment:Fragment() {
         adapter.notifyDataSetChanged()
     }
 
-    fun pindahFragment(){
-//        val bundle = Bundle()
-//        bundle.putString("judul", null)
-//
-//        val fragment = TipeIdentitasTambahFragment()
-//        fragment.arguments = bundle
-//        val fragmentManager = getActivity()!!.getSupportFragmentManager()
-//        val fragmentTransaction = fragmentManager.beginTransaction()
-////        fragmentTransaction.remove(TipeIdentitasFragment())
-////        fragmentTransaction.show(fragment).commit()
-//        fragmentTransaction.replace(this.id, fragment)
-//        fragmentTransaction.addToBackStack(null)
-//        fragmentTransaction.commit()
-    }
-
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.main, menu)
 
@@ -96,16 +82,12 @@ class TipeIdentitasFragment:Fragment() {
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
 
             override fun onQueryTextSubmit(query: String): Boolean {
-                // collapse the view ?
-                //menu.findItem(R.id.menu_search).collapseActionView();
                 Log.e("Fragment queryText", query)
                 return false
             }
             override fun onQueryTextChange(keyword: String): Boolean {
-                // search goes here !!
-                // listAdapter.getFilter().filter(query);
-                // Log.e("Fragment queryText", keyword)
                 search(keyword,TipeIdentitasQueryHelper(DatabaseHelper(context!!)))
+                kata = keyword
                 return true
             }
         })
@@ -116,9 +98,15 @@ class TipeIdentitasFragment:Fragment() {
         tampilkanListTipeIdentitas(listTipeIdentitas,recyclerView!!)
     }
 
+    fun search2(){
+        val listTipeIdentitas= databaseQueryHelper!!.cariTipeIdentitasModels(kata)
+        tampilkanListTipeIdentitas(listTipeIdentitas,recyclerView!!)
+    }
+
     override fun onResume() {
         super.onResume()
-        refreshList()
+//        refreshList()
+        search2()
     }
 
 
