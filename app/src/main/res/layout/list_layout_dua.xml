@@ -35,8 +35,9 @@
                 android:id="@+id/textUtama2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Teks Utama"
                 android:layout_marginTop="15dp"
+                android:maxLines="1"
+                android:text="Teks Utama"
                 android:textStyle="bold" />
 
         </LinearLayout>

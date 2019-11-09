@@ -35,6 +35,7 @@
                 android:id="@+id/textUtama"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:maxLines="1"
                 android:text="Teks Utama"
                 android:textStyle="bold" />
 
@@ -42,6 +43,7 @@
                 android:id="@+id/textTambahan"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:maxLines="1"
                 android:text="Teks Tambahan" />
         </LinearLayout>
 
