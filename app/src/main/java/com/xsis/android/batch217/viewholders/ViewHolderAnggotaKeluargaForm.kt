@@ -1,15 +1,14 @@
 package com.xsis.android.batch217.viewholders
 
 import android.content.Context
-import android.content.Intent
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.xsis.android.batch217.R
-import com.xsis.android.batch217.ui.keluarga.KeluargaFormActivity
-import com.xsis.android.batch217.utils.ID_JENIS
-import org.w3c.dom.Text
+
+
 
 class ViewHolderAnggotaKeluargaForm(itemView:View):RecyclerView.ViewHolder(itemView) {
     val layoutEdit = itemView.findViewById(R.id.kondisiEditKeluarga) as LinearLayout
@@ -27,6 +26,7 @@ class ViewHolderAnggotaKeluargaForm(itemView:View):RecyclerView.ViewHolder(itemV
         layoutTidakEdit.isVisible = false
 
         teksEdit.setText(namaAnggota)
+        teksEdit.requestFocus()
     }
 
     fun setModelRead(namaAnggota: String){

@@ -100,10 +100,6 @@ class KeluargaQueryHelper(val databaseHelper: DatabaseHelper) {
     }
 
     fun tambahKeluargaData(jenisKeluarga:String, listKeluargaDetail: ArrayList<String>) {
-        //WARNING 1 : Belum cek jika ada nama jenis keluarga yang sama
-        //WARNING 2 : Belum cek jika ada anggota keluarga yang sama
-        //WARNING 3 : Simpan data listKeluargaDetail di edit text apa ?
-
         val db = databaseHelper.writableDatabase
         val db_read = databaseHelper.readableDatabase
 
@@ -176,24 +172,6 @@ class KeluargaQueryHelper(val databaseHelper: DatabaseHelper) {
         val db = databaseHelper.readableDatabase
         val queryCari = "SELECT * FROM $TABEL_KELUARGA_DATA WHERE $JENIS_KELUARGA LIKE '$nama' "
         val cursor = db.rawQuery(queryCari, null)
-
-        return (cursor.count != 0)
-    }
-
-    fun cekKeluargaDetailSudahAda(nama: String, id:Int): Boolean {
-        val db = databaseHelper.readableDatabase
-        val queryCari = "SELECT * FROM $TABEL_KELUARGA_DETAIL WHERE $NAMA_ANGGOTA LIKE '$nama' AND $ID_JENIS=$id"
-        val cursor = db.rawQuery(queryCari, null)
-
-
-        if (cursor.count > 0) {
-            val listKeluargaData = konversiCursorKeListKeluargaData(cursor)
-            println("CEK KELUARGA DETAIL SUDAH ADA : $listKeluargaData")
-        } else{
-
-            println("CEK KELUARGA DETAIL SUDAH ADA : -")
-        }
-
 
         return (cursor.count != 0)
     }
