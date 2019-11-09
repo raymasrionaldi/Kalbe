@@ -304,7 +304,7 @@ class HomeActivity : AppCompatActivity() {
         item21.name = getString(R.string.menu_project)
         item21.icon = R.drawable.ic_folder_black
 // Adding data header
-        listDataHeader.add(item20)
+        listDataHeader.add(item21)
 // Adding child data
         val heading21 = ArrayList<String>()
         heading21.add(getString(R.string.menu_project_entry))
