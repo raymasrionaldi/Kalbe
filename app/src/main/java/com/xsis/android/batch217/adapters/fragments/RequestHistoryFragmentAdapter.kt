@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
-import com.xsis.android.batch217.ui.prf_request.FragmentCandidateRequestHistory
+import com.xsis.android.batch217.ui.prf_request.FragmentCandidatePRFRequest
 import com.xsis.android.batch217.ui.prf_request.FragmentDataRequestHistory
 
 class RequestHistoryFragmentAdapter(
@@ -16,7 +16,7 @@ class RequestHistoryFragmentAdapter(
             return FragmentDataRequestHistory(context,fm)
         }
         else if (position == 1){
-            return FragmentCandidateRequestHistory(context,fm)
+            return FragmentCandidatePRFRequest(context,fm)
         }
         else
             return Fragment()

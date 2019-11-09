@@ -11,14 +11,17 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.xsis.android.batch217.R
+import com.xsis.android.batch217.adapters.ListPRFCandidateAdapter
 import com.xsis.android.batch217.adapters.ListPRFRequestAdapter
 import com.xsis.android.batch217.databases.DatabaseHelper
+import com.xsis.android.batch217.databases.PRFCandidateQueryHelper
 import com.xsis.android.batch217.databases.PRFRequestQueryHelper
+import com.xsis.android.batch217.models.PRFCandidate
 import com.xsis.android.batch217.models.PRFRequest
 
-class FragmentCandidateRequestHistory(context: Context, val fm: FragmentManager) : Fragment() {
+class FragmentCandidatePRFRequest(context: Context, val fm: FragmentManager) : Fragment() {
     var recyclerView: RecyclerView? = null
-    var databaseQueryHelper: PRFRequestQueryHelper? = null
+    var databaseQueryHelper: PRFCandidateQueryHelper? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -26,7 +29,7 @@ class FragmentCandidateRequestHistory(context: Context, val fm: FragmentManager)
         savedInstanceState: Bundle?
     ): View? {
         val customView = inflater.inflate(
-            R.layout.fragment_data_request_history,
+            R.layout.fragment_candidates_request_history,
             container,
             false
         )
@@ -34,39 +37,39 @@ class FragmentCandidateRequestHistory(context: Context, val fm: FragmentManager)
 
         val layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
 
-        recyclerView = customView.findViewById(R.id.listRequestHistoryRecycler) as RecyclerView
+        recyclerView = customView.findViewById(R.id.listPRFCandidateRecycler) as RecyclerView
         recyclerView!!.layoutManager = layoutManager
 
         val dividerItemDecoration = DividerItemDecoration(context, layoutManager.orientation)
         recyclerView!!.addItemDecoration(dividerItemDecoration)
 
         val buttonAdd =
-            customView.findViewById(R.id.buttonAddRequestHistory) as FloatingActionButton
+            customView.findViewById(R.id.buttonAddPRFCandidate) as FloatingActionButton
         buttonAdd.setOnClickListener {
 
         }
 
         val databaseHelper = DatabaseHelper(context!!)
-        databaseQueryHelper = PRFRequestQueryHelper(databaseHelper)
+        databaseQueryHelper = PRFCandidateQueryHelper(databaseHelper)
 
         //getSemuaEmployeeStatus(recyclerView!!, databaseQueryHelper!!)
 
         return customView
     }
 
-    fun getSemuaRequestHistory(
+    fun getSemuaPRFCandidate(
         recyclerView: RecyclerView,
-        databaseQueryHelper: PRFRequestQueryHelper
+        databaseQueryHelper: PRFCandidateQueryHelper
     ) {
-        val listPRFRequest = databaseQueryHelper.readSemuaEmployeeStatusModels()
-        tampilkanListRequestHistory(listPRFRequest, recyclerView)
+        val listPRFCandidate = databaseQueryHelper.readSemuaPRFCandidateModels()
+        tampilkanListPRFCandidate(listPRFCandidate, recyclerView)
     }
 
-    fun tampilkanListRequestHistory(
-        listEmployeeStatus: List<PRFRequest>,
+    fun tampilkanListPRFCandidate(
+        listPRFCandidate: List<PRFCandidate>,
         recyclerView: RecyclerView
     ) {
-        val adapterEmployeeStatus = ListPRFRequestAdapter(context!!, listEmployeeStatus, fm)
+        val adapterEmployeeStatus = ListPRFCandidateAdapter(context!!, listPRFCandidate, fm)
         recyclerView.adapter = adapterEmployeeStatus
         adapterEmployeeStatus.notifyDataSetChanged()
     }
@@ -94,9 +97,9 @@ class FragmentCandidateRequestHistory(context: Context, val fm: FragmentManager)
         })
     }
 
-    fun search(keyword: String, databaseQueryHelper: PRFRequestQueryHelper) {
-        val listPRFRequest = databaseQueryHelper.cariPRFRequestModels(keyword)
-        tampilkanListRequestHistory(listPRFRequest, recyclerView!!)
+    fun search(keyword: String, databaseQueryHelper: PRFCandidateQueryHelper) {
+        val listPRFRequest = databaseQueryHelper.cariPRFCandidateModels(keyword)
+        tampilkanListPRFCandidate(listPRFRequest, recyclerView!!)
     }
 
 }

@@ -60,7 +60,7 @@ class FragmentDataRequestHistory(context: Context, val fm: FragmentManager) : Fr
         recyclerView: RecyclerView,
         databaseQueryHelper: PRFRequestQueryHelper
     ) {
-        val listPRFRequest = databaseQueryHelper.readSemuaEmployeeStatusModels()
+        val listPRFRequest = databaseQueryHelper.readSemuaPRFRequestModels()
         tampilkanListRequestHistory(listPRFRequest, recyclerView)
     }
 

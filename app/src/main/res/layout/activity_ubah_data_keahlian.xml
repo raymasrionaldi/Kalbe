@@ -80,7 +80,8 @@
                 android:layout_height="wrap_content"
                 android:text=""
                 android:layout_margin="5dp"
-                android:hint="Keahlian*"/>
+                android:hint="Keahlian*"
+                android:singleLine="true"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -116,7 +117,8 @@
                 android:layout_height="wrap_content"
                 android:text=""
                 android:layout_margin="5dp"
-                android:hint="Deskripsi" />
+                android:hint="Deskripsi" 
+                android:singleLine="true"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 

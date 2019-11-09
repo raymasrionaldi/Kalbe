@@ -44,7 +44,7 @@ class PRFRequestQueryHelper (val databaseHelper: DatabaseHelper) {
         return listPRFRequest
     }
 
-    fun readSemuaEmployeeStatusModels(): List<PRFRequest> {
+    fun readSemuaPRFRequestModels(): List<PRFRequest> {
         var listPRFRequest = ArrayList<PRFRequest>()
 
         val cursor = getSemuaPRFRequest()
