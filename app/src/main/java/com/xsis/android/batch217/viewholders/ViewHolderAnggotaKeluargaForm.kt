@@ -40,8 +40,15 @@ class ViewHolderAnggotaKeluargaForm(itemView:View):RecyclerView.ViewHolder(itemV
         val anggotaBaru = teksEdit.text.toString().trim()
 
         if (listAnggota.contains(anggotaBaru)){
-            Toast.makeText(itemView.context, "Hubungan Keluarga ini sudah ada ! Mohon ganti hubungan keluarga.", Toast.LENGTH_SHORT).show()
-            println("konfirm (sudah ada !) : $listAnggota")
+            if (anggotaBaru.isEmpty() && listAnggota.size==1){
+                Toast.makeText(itemView.context, "Minimal harus ada 1 hubungan keluarga !", Toast.LENGTH_SHORT).show()
+
+            } else if (anggotaBaru.isEmpty() && listAnggota.size != 1){
+                listAnggota.removeAt(listAnggota.size-1)
+            } else{
+                Toast.makeText(itemView.context, "Hubungan Keluarga ini sudah ada ! Mohon ganti hubungan keluarga.", Toast.LENGTH_SHORT).show()
+                println("konfirm (sudah ada !) : $listAnggota")
+            }
         } else{
             layoutEdit.isVisible = false
             layoutTidakEdit.isVisible = true

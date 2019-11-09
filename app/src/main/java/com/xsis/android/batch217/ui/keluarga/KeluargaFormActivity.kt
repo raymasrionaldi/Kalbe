@@ -5,26 +5,25 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.Button
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.view.isVisible
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.viewpager.widget.ViewPager
 import com.google.android.material.textfield.TextInputEditText
 import com.xsis.android.batch217.R
 import com.xsis.android.batch217.adapters.KeluargaFormAdapter
-import com.xsis.android.batch217.adapters.fragments.KeluargaFragmentAdapter
 import com.xsis.android.batch217.databases.DatabaseHelper
 import com.xsis.android.batch217.databases.KeluargaQueryHelper
 import com.xsis.android.batch217.models.KeluargaDetail
-import com.xsis.android.batch217.utils.ID_IDENTITAS
 import com.xsis.android.batch217.utils.ID_JENIS
 import kotlinx.android.synthetic.main.activity_keluarga_form.*
+import android.app.Activity
+import android.content.Context
+import android.view.inputmethod.InputMethodManager
 
-//WARNING : Masih untuk form ubah saja. Untuh tambah belum disetting untuk bisa menyimpan ke database (harus atur id).
+
 class KeluargaFormActivity : AppCompatActivity() {
     val context = this
     val databaseHelper = DatabaseHelper(context)
@@ -52,6 +51,7 @@ class KeluargaFormActivity : AppCompatActivity() {
         anggotaRecycler = findViewById(R.id.anggotaKeluarga)
         batal = findViewById(R.id.keluargaBatal)
         simpan = findViewById(R.id.keluargaSimpan)
+        val linearLayout = findViewById(R.id.KeluargaTambah) as LinearLayout
 
         val bundle: Bundle? = intent.extras
         bundle?.let {
@@ -82,6 +82,12 @@ class KeluargaFormActivity : AppCompatActivity() {
         batal()
         cekIsiJenis()
         backKeluargaForm.setOnClickListener { finish() }
+        linearLayout.setOnClickListener{ hideSoftKeyboard() }
+    }
+
+    fun hideSoftKeyboard() {
+        val hide = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        hide.hideSoftInputFromWindow(currentFocus!!.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
     }
 
 
