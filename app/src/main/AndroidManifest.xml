@@ -9,16 +9,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-        <activity android:name=".ui.project.ProjectActivityForm"></activity>
+        <activity android:name=".ui.prf_request.InputPRFRequestActivity"></activity>
+        <activity android:name=".ui.project.ProjectActivityForm" />
         <activity
             android:name=".ui.tipe_identitas.TipeIdentitasTambahActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-            android:windowSoftInputMode="stateAlwaysHidden"/>
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".ui.keluarga.KeluargaFormActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-            android:windowSoftInputMode="stateAlwaysHidden"/>
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".ui.timesheet.timesheet_entry.EntryTimesheetActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
