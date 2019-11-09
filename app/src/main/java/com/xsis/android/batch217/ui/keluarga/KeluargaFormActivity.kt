@@ -21,7 +21,9 @@ import com.xsis.android.batch217.utils.ID_JENIS
 import kotlinx.android.synthetic.main.activity_keluarga_form.*
 import android.app.Activity
 import android.content.Context
+import android.view.View
 import android.view.inputmethod.InputMethodManager
+import androidx.fragment.app.Fragment
 
 
 class KeluargaFormActivity : AppCompatActivity() {
@@ -37,6 +39,7 @@ class KeluargaFormActivity : AppCompatActivity() {
     var anggotaRecycler:RecyclerView? = null
     var batal:Button? = null
     var simpan:Button? = null
+    var linearLayout:LinearLayout? = null
     var listKeluargaDetail:ArrayList<KeluargaDetail> = ArrayList<KeluargaDetail>()
     var listAnggota:ArrayList<String> = ArrayList<String>()
 
@@ -51,7 +54,6 @@ class KeluargaFormActivity : AppCompatActivity() {
         anggotaRecycler = findViewById(R.id.anggotaKeluarga)
         batal = findViewById(R.id.keluargaBatal)
         simpan = findViewById(R.id.keluargaSimpan)
-        val linearLayout = findViewById(R.id.KeluargaTambah) as LinearLayout
 
         val bundle: Bundle? = intent.extras
         bundle?.let {
@@ -76,18 +78,14 @@ class KeluargaFormActivity : AppCompatActivity() {
         val layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         anggotaRecycler!!.layoutManager = layoutManager
         anggotaRecycler!!.adapter = KeluargaFormAdapter(id, context, listAnggota)
+        linearLayout = findViewById(R.id.linearLayoutKeluargaForm)
 
         tambahAnggota(listAnggota, anggotaRecycler!!)
         simpan(listAnggota, id)
         batal()
         cekIsiJenis()
         backKeluargaForm.setOnClickListener { finish() }
-        linearLayout.setOnClickListener{ hideSoftKeyboard() }
-    }
-
-    fun hideSoftKeyboard() {
-        val hide = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        hide.hideSoftInputFromWindow(currentFocus!!.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
+        linearLayout!!.setOnClickListener{ hideKeyboard() }
     }
 
 
@@ -154,5 +152,14 @@ class KeluargaFormActivity : AppCompatActivity() {
             }
 
         })
+    }
+
+    fun Activity.hideKeyboard() {
+        hideKeyboard(currentFocus ?: View(this))
+    }
+
+    fun Context.hideKeyboard(view: View) {
+        val inputMethodManager = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
     }
 }
