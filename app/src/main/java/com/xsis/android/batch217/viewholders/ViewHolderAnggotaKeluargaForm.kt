@@ -21,12 +21,14 @@ class ViewHolderAnggotaKeluargaForm(itemView:View):RecyclerView.ViewHolder(itemV
     val edit = itemView.findViewById(R.id.edit) as Button
     val hapus = itemView.findViewById(R.id.hapus) as Button
 
-    fun setModelEdit(namaAnggota:String){
+    fun setModelEdit(namaAnggota:String, listAnggota: ArrayList<String>){
         layoutEdit.isVisible = true
         layoutTidakEdit.isVisible = false
 
         teksEdit.setText(namaAnggota)
-        teksEdit.requestFocus()
+        if (listAnggota.size != 1){
+            teksEdit.requestFocus()
+        }
     }
 
     fun setModelRead(namaAnggota: String){

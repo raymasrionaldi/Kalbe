@@ -29,12 +29,12 @@ class KeluargaFormAdapter(val id:Int,val context: Context, val listAnggota:Array
         val model = listAnggota[position]
 
         if (model.isEmpty()){
-            holder.setModelEdit(model)
+            holder.setModelEdit(model, listAnggota)
         } else{
             holder.setModelRead(model)
         }
 
-        holder.edit.setOnClickListener { holder.setModelEdit(model) }
+        holder.edit.setOnClickListener { holder.setModelEdit(model, listAnggota) }
         holder.clear.setOnClickListener { holder.hapus() }
 
 
