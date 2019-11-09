@@ -28,7 +28,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Name *"
-            android:inputType="text" />
+            android:inputType="text"
+            android:singleLine="true"/>
 
         <TextView
             android:id="@+id/requiredNamaProviderTools"
@@ -43,7 +44,8 @@
             android:id="@+id/inputNotesProviderTools"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Notes" />
+            android:hint="Notes"
+            android:singleLine="true"/>
 
         <LinearLayout
             android:layout_width="match_parent"
