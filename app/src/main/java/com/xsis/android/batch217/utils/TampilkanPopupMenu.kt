@@ -1,6 +1,7 @@
 package com.xsis.android.batch217.utils
 
 import android.content.Context
+import android.graphics.drawable.BitmapDrawable
 import android.view.View
 import android.view.WindowManager
 import android.widget.ArrayAdapter
@@ -20,6 +21,7 @@ fun showPopupMenuUbahHapus(context: Context, view: View): ListPopupWindow {
     window.anchorView = view/*it will be the overflow view of yours*/
     window.horizontalOffset = -150
     window.setContentWidth(200)
+    window.isModal = true
 
     return window
 }
@@ -37,6 +39,7 @@ fun showPopupMenuHapus(context: Context, view: View): ListPopupWindow {
     window.anchorView = view/*it will be the overflow view of yours*/
     window.horizontalOffset = -150
     window.setContentWidth(200)
+    window.isModal = true
 
     return window
 }
