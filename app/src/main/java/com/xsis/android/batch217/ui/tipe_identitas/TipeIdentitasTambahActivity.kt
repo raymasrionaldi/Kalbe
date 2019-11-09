@@ -1,15 +1,21 @@
 package com.xsis.android.batch217.ui.tipe_identitas
 
+import android.app.Activity
 import android.content.ContentValues
+import android.content.Context
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.Button
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
 import com.google.android.material.textfield.TextInputEditText
 import com.xsis.android.batch217.R
 import com.xsis.android.batch217.databases.DatabaseHelper
@@ -30,6 +36,7 @@ class TipeIdentitasTambahActivity : AppCompatActivity() {
     var clearNama:Button? = null
     var clearDes:Button? = null
     var error:TextView? = null
+    var linearLayout:LinearLayout? = null
     var id:Int = 0
 
     val databaseHelper = DatabaseHelper(this)
@@ -47,6 +54,7 @@ class TipeIdentitasTambahActivity : AppCompatActivity() {
         clearNama = findViewById(R.id.clearTipeIdentitas)
         clearDes = findViewById(R.id.clearDeskripsi)
         error = findViewById(R.id.teksErrorTipeIdentitas)
+        linearLayout = findViewById(R.id.linearLayoutTipeIdentitasForm)
 
         val bundle: Bundle? = intent.extras
         bundle?.let {
@@ -67,6 +75,7 @@ class TipeIdentitasTambahActivity : AppCompatActivity() {
         batal()
 
         backTipeIdentitasForm.setOnClickListener { finish() }
+        linearLayout!!.setOnClickListener{ hideKeyboard()}
     }
 
     fun batal(){
@@ -188,5 +197,14 @@ class TipeIdentitasTambahActivity : AppCompatActivity() {
     fun hapus(){
         clearDes!!.setOnClickListener {des!!.setText("") }
         clearNama!!.setOnClickListener {nama!!.setText("") }
+    }
+
+    fun Activity.hideKeyboard() {
+        hideKeyboard(currentFocus ?: View(this))
+    }
+
+    fun Context.hideKeyboard(view: View) {
+        val inputMethodManager = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
     }
 }
