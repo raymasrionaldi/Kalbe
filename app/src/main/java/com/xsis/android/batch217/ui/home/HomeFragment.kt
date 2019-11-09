@@ -27,6 +27,7 @@ class HomeFragment : Fragment() {
             textView.text = it
         })
 
+        activity!!.title = getString(R.string.menu_home)
 
         return root
     }

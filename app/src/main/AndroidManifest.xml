@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".ui.prf_request.InputPRFRequestActivity"></activity>
-        <activity android:name=".ui.project.ProjectActivityForm" />
+        <activity android:name=".ui.project.ProjectFormActivity" />
         <activity
             android:name=".ui.tipe_identitas.TipeIdentitasTambahActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
