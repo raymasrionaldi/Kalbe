@@ -13,10 +13,12 @@
         <activity android:name=".ui.project.ProjectActivityForm"></activity>
         <activity
             android:name=".ui.tipe_identitas.TipeIdentitasTambahActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:windowSoftInputMode="stateAlwaysHidden"/>
         <activity
             android:name=".ui.keluarga.KeluargaFormActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:windowSoftInputMode="stateAlwaysHidden"/>
         <activity
             android:name=".ui.timesheet.timesheet_entry.EntryTimesheetActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
