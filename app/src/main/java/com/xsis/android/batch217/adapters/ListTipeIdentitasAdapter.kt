@@ -52,6 +52,8 @@ class ListTipeIdentitasAdapter(val context:Context, val fragment: TipeIdentitasF
                         context.startActivity(intentEdit)
                     }
                     1 -> {
+                        window.dismiss()
+
                         val konfirmasiDelete = AlertDialog.Builder(context)
                         konfirmasiDelete.setMessage("Yakin mau hapus data ini ?")
                             .setPositiveButton("Ya", DialogInterface.OnClickListener{ dialog, which ->
