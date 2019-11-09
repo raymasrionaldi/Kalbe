@@ -144,6 +144,18 @@ val STATUS_CANDIDATE = "status_candidate"
 val SIGN_CONTRACT_DATE = "sign_contract_date"
 val NOTES = "notes"
 
+val TABEL_TIMESHEET = "timesheet"
+val ID_TIMESHEET = "id_timesheet"
+val STATUS_TIMESHEET = "status_timesheet"
+val CLIENT_DATABASE = "client_timesheet"
+val REPORT_DATE_TIMESHEET = "report_date_timesheet"
+val START_REPORT_DATE_TIMESHEET = "start_report_date_timesheet"
+val END_REPORT_DATE_TIMESHEET ="end_report_date_timesheet"
+val OVERTIME_TIMESHEET ="overtime_timesheet"
+val START_REPORT_OVERTIME = "start_overtime_timesheet"
+val END_REPORT_OVERTIME ="end_overtime_timesheet"
+val NOTES_TIMESHEET ="notes_timesheet"
+
 //nama field sama
 val IS_DELETED= "is_deleted"
 /*=================================================*/
