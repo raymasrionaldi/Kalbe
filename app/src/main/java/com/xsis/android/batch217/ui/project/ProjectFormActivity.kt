@@ -3,7 +3,6 @@ package com.xsis.android.batch217.ui.project
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
-import androidx.appcompat.widget.Toolbar
 import com.xsis.android.batch217.R
 
 class ProjectFormActivity : AppCompatActivity() {
