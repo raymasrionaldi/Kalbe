@@ -13,7 +13,10 @@
         <activity android:name=".ui.prf_request.InputPRFCandidateActivity" />
         <activity android:name=".ui.prf_request.EditPRFRequestActivity" />
         <activity android:name=".ui.prf_request.InputPRFRequestActivity" />
+        <activity android:name=".ui.leave_request.LeaveRequestDetailActivity"/>
+        <activity android:name=".ui.leave_request.LeaveRequestAddActivity" />
         <activity android:name=".ui.project.ProjectFormActivity" />
+
         <activity
             android:name=".ui.tipe_identitas.TipeIdentitasTambahActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"

@@ -172,6 +172,26 @@ val DES_PROJECT ="des_project"
 val TECH_PROJECT ="tech_project"
 val TASK_PROJECT ="task_project"
 
+val TABEL_LEAVE_REQUEST = "leave_request"
+val ID_LEAVE= "id_leave_request"
+val START = "start"
+val END = "end"
+val ADDRESS = "address"
+val CONTACT = "contact"
+val REASON = "reason"
+val APPROVAL1= ""
+val APPROVAL2 = ""
+val APPROVAL3 =""
+
+val TABEL_LEAVE_TYPE="leave_type"
+val ID_LEAVE_TYPE = "id_leave_type"
+val LEAVE_TYPE="leave_type"
+val QUOTA ="quota"
+
+val TABEL_CUTI_KHUSUS="cuti_khusus"
+val ID_CUTI_KHUSUS= "id_cuti_khusus"
+val LEAVE_NAME= "leave_name"
+
 
 //nama field sama
 val IS_DELETED= "is_deleted"

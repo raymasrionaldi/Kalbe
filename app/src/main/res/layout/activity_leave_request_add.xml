@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="10dp"
+    tools:context=".ui.leave_request.LeaveRequestAddActivity">
+    <TextView
+        android:id="@+id/titleAddLeaveRequest"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Leave Request"
+        android:textSize="20sp"
+        android:textStyle="bold"/>
+
+    <com.chivorn.smartmaterialspinner.SmartMaterialSpinner
+        android:id="@+id/spinnerLeaveType"
+        android:layout_below="@+id/titleAddLeaveRequest"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/spinnerStyle"
+        app:smsp_errorText="Required"
+        app:smsp_hint="Leave Type"
+        app:smsp_multilineError="false" />
+
+</RelativeLayout>

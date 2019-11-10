@@ -43,4 +43,7 @@ dependencies {
     implementation 'androidx.recyclerview:recyclerview:1.0.0'
 
     implementation 'com.google.android.material:material:1.0.0'
+
+    implementation 'com.github.chivorns:smartmaterialspinner:1.1.6'
+
 }
