@@ -1,6 +1,7 @@
 package com.xsis.android.batch217.viewholders
 
 import android.view.View
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -14,6 +15,7 @@ class ViewHolderListPRFCandidate(itemView: View) : RecyclerView.ViewHolder(itemV
     var teksUtama = itemView.findViewById(R.id.textUtama) as TextView
     var teksTambahan = itemView.findViewById(R.id.textTambahan) as TextView
     var inisial = itemView.findViewById(R.id.gambarLingkaran) as NameInitialsCircleImageView
+    var bukaMenu = itemView.findViewById(R.id.bukaMenu) as ImageView
 
     fun setModel(model: PRFCandidate) {
         val nama = model.nama_prf_candidate

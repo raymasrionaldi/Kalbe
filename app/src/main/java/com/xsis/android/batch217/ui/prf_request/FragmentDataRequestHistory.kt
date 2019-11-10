@@ -21,6 +21,7 @@ import com.xsis.android.batch217.models.PRFRequest
 class FragmentDataRequestHistory(context: Context, val fm: FragmentManager) : Fragment() {
     var recyclerView: RecyclerView? = null
     var databaseQueryHelper: PRFRequestQueryHelper? = null
+    var fragment = this
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -68,7 +69,7 @@ class FragmentDataRequestHistory(context: Context, val fm: FragmentManager) : Fr
         listEmployeeStatus: List<PRFRequest>,
         recyclerView: RecyclerView
     ) {
-        val adapterEmployeeStatus = ListPRFRequestAdapter(context!!, listEmployeeStatus, fm)
+        val adapterEmployeeStatus = ListPRFRequestAdapter(context!!,fragment, listEmployeeStatus)
         recyclerView.adapter = adapterEmployeeStatus
         adapterEmployeeStatus.notifyDataSetChanged()
     }
@@ -101,4 +102,12 @@ class FragmentDataRequestHistory(context: Context, val fm: FragmentManager) : Fr
         tampilkanListRequestHistory(listPRFRequest, recyclerView!!)
     }
 
+    override fun onResume() {
+        super.onResume()
+        refreshList()
+    }
+
+    fun refreshList() {
+        getActivity()!!.invalidateOptionsMenu()
+    }
 }

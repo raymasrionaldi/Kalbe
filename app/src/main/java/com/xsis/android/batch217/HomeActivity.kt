@@ -28,6 +28,7 @@ import com.xsis.android.batch217.ui.jenjang_pendidikan.JenjangPendidikanFragment
 import com.xsis.android.batch217.ui.keahlian.KeahlianFragment
 import com.xsis.android.batch217.ui.keluarga.KeluargaFragment
 import com.xsis.android.batch217.ui.position_level.PositionLevelFragment
+import com.xsis.android.batch217.ui.prf_request.InputPRFRequestActivity
 import com.xsis.android.batch217.ui.project.ProjectFragment
 import com.xsis.android.batch217.ui.prf_request.RequestHistoryFragment
 import com.xsis.android.batch217.ui.project.ProjectFormActivity
@@ -349,14 +350,8 @@ class HomeActivity : AppCompatActivity() {
             }
 
             else if (groupIndex == 18 && childIndex == 0) {
-                val fragment = TrainingOrganizerFragment()
-                val fragmentTransaction = supportFragmentManager.beginTransaction()
-                fragmentTransaction.replace(
-                    R.id.nav_host_fragment,
-                    fragment,
-                    getString(R.string.request)
-                )
-                fragmentTransaction.commit()
+                val intent = Intent(context, InputPRFRequestActivity::class.java)
+                startActivity(intent)
                 closeNavDrawer()
             }
             else if (groupIndex == 18 && childIndex == 1) {

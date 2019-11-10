@@ -9,7 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.prf_request.InputPRFRequestActivity"></activity>
+        <activity android:name=".ui.prf_request.EditPRFCandidateActivity"></activity>
+        <activity android:name=".ui.prf_request.InputPRFCandidateActivity" />
+        <activity android:name=".ui.prf_request.EditPRFRequestActivity" />
+        <activity android:name=".ui.prf_request.InputPRFRequestActivity" />
         <activity android:name=".ui.project.ProjectFormActivity" />
         <activity
             android:name=".ui.tipe_identitas.TipeIdentitasTambahActivity"

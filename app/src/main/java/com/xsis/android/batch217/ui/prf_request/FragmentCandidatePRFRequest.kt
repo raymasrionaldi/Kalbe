@@ -22,6 +22,7 @@ import com.xsis.android.batch217.models.PRFRequest
 class FragmentCandidatePRFRequest(context: Context, val fm: FragmentManager) : Fragment() {
     var recyclerView: RecyclerView? = null
     var databaseQueryHelper: PRFCandidateQueryHelper? = null
+    var fragment = this
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -69,7 +70,7 @@ class FragmentCandidatePRFRequest(context: Context, val fm: FragmentManager) : F
         listPRFCandidate: List<PRFCandidate>,
         recyclerView: RecyclerView
     ) {
-        val adapterEmployeeStatus = ListPRFCandidateAdapter(context!!, listPRFCandidate, fm)
+        val adapterEmployeeStatus = ListPRFCandidateAdapter(context!!, fragment, listPRFCandidate)
         recyclerView.adapter = adapterEmployeeStatus
         adapterEmployeeStatus.notifyDataSetChanged()
     }
@@ -100,6 +101,15 @@ class FragmentCandidatePRFRequest(context: Context, val fm: FragmentManager) : F
     fun search(keyword: String, databaseQueryHelper: PRFCandidateQueryHelper) {
         val listPRFRequest = databaseQueryHelper.cariPRFCandidateModels(keyword)
         tampilkanListPRFCandidate(listPRFRequest, recyclerView!!)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        refreshList()
+    }
+
+    fun refreshList() {
+        getActivity()!!.invalidateOptionsMenu()
     }
 
 }

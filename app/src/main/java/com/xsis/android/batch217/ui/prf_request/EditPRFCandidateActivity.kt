@@ -6,7 +6,7 @@ import android.view.Window
 import android.view.WindowManager
 import com.xsis.android.batch217.R
 
-class InputPRFRequestActivity : AppCompatActivity() {
+class EditPRFCandidateActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -16,7 +16,7 @@ class InputPRFRequestActivity : AppCompatActivity() {
             WindowManager.LayoutParams.FLAG_FULLSCREEN,
             WindowManager.LayoutParams.FLAG_FULLSCREEN
         )
-        setContentView(R.layout.activity_input_prfrequest)
+        setContentView(R.layout.activity_edit_prfcandidate)
         try {
             this.supportActionBar!!.hide()
         } catch (e: NullPointerException){

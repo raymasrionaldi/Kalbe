@@ -22,11 +22,11 @@
             android:orientation="vertical">
 
             <ImageView
-                android:id="@+id/buttonBackInputPRFRequest"
+                android:id="@+id/buttonBackInputPRFCandidate"
                 android:layout_width="23dp"
                 android:layout_height="23dp"
                 android:layout_margin="5dp"
-                android:src="@drawable/ic_arrow_back_white" />
+                android:src="@drawable/ic_close_white" />
         </LinearLayout>
 
         <LinearLayout
@@ -39,23 +39,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingLeft="25dp"
-                android:text="@string/menu_PRF"
+                android:text="@string/candidate"
                 android:textColor="@color/colorWhite"
                 android:textSize="23sp" />
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical">
-
-            <ImageView
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:layout_margin="5dp"
-                android:src="@drawable/ic_three_dots_option_white" />
-        </LinearLayout>
 
     </LinearLayout>
 
@@ -73,7 +61,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:text="PRF Request Form"
+                android:text="Candidate Form"
                 android:textColor="@android:color/black"
                 android:textSize="30sp"
                 android:textStyle="bold" />
@@ -83,33 +71,40 @@
                 android:layout_height="wrap_content">
 
                 <EditText
-                    android:id="@+id/inputTanggalPRF"
+                    android:id="@+id/inputNamaPRFCandidate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
-                    android:hint="24/10/2019" />
+                    android:hint="Name *" />
 
                 <Spinner
-                    android:id="@+id/spinnerInputTanggalPRF"
+                    android:id="@+id/spinnerInputNamaPRFCandidate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_margin="5dp"></Spinner>
             </FrameLayout>
+
+            <EditText
+                android:id="@+id/inputBatchBootcampPRFCandidate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:hint="Batch Bootcamp" />
 
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <EditText
-                    android:id="@+id/inputTypePRF"
+                    android:id="@+id/inputPositionPRFCandidate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
-                    android:hint="Type *" />
+                    android:hint="Position *" />
 
                 <Spinner
-                    android:id="@+id/spinnerInputTypePRF"
+                    android:id="@+id/spinnerInputPositionPRFCandidate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -117,25 +112,25 @@
             </FrameLayout>
 
             <EditText
-                android:id="@+id/inputPlacementPRF"
+                android:id="@+id/inputPlacementDatePRFCandidate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:hint="Placement In *" />
+                android:hint="Placement Date" />
 
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <EditText
-                    android:id="@+id/inputPIDPRF"
+                    android:id="@+id/inputSRFNumberPRFCandidate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
-                    android:hint="PID *" />
+                    android:hint="SRF Number *" />
 
                 <Spinner
-                    android:id="@+id/spinnerInputPIDPRF"
+                    android:id="@+id/spinnerSRFNumberPRFCandidate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -143,53 +138,25 @@
             </FrameLayout>
 
             <EditText
-                android:id="@+id/inputLocationPRF"
+                android:id="@+id/inputCustomeAllowencePRFCandidate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:hint="Location" />
-
-            <EditText
-                android:id="@+id/inputPeriodPRF"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:hint="Period *" />
-
-            <EditText
-                android:id="@+id/inputUserNamePRF"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:hint="User Name *" />
-
-            <EditText
-                android:id="@+id/inputTelpPRF"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:hint="Telp/Mobile Phone *" />
-
-            <EditText
-                android:id="@+id/inputEmailPRF"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:hint="Email *" />
+                android:hint="Custome Allowence In SOC" />
 
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <EditText
-                    android:id="@+id/inputNotebookPRF"
+                    android:id="@+id/inputCandidateStatusPRFCandidate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
-                    android:hint="Notebook *" />
+                    android:hint="Candidate Status *" />
 
                 <Spinner
-                    android:id="@+id/spinnerInputNotebookPRF"
+                    android:id="@+id/spinnerInputCandidateStatusPRFCandidate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -197,37 +164,17 @@
             </FrameLayout>
 
             <EditText
-                android:id="@+id/inputOvertimePRF"
+                android:id="@+id/inputSignContractDatePRFCandidate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:hint="Overtime" />
-
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <EditText
-                    android:id="@+id/inputBastPRF"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:hint="BAST" />
-
-                <Spinner
-                    android:id="@+id/spinnerInputBastPRF"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_margin="5dp"></Spinner>
-            </FrameLayout>
-
+                android:hint="Sign Contract Date" />
             <EditText
-                android:id="@+id/inputBillingPRF"
+                android:id="@+id/inputNotesPRFCandidate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:hint="Billing" />
+                android:hint="Notes" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -239,7 +186,7 @@
                 android:orientation="horizontal">
 
                 <Button
-                    android:id="@+id/buttonResetPRFRequest"
+                    android:id="@+id/buttonResetPRFCandidate"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -249,7 +196,7 @@
                     android:textColor="@color/warnaTeksResetOff" />
 
                 <Button
-                    android:id="@+id/buttonSubmitPRFRequest"
+                    android:id="@+id/buttonSubmitPRFCandidate"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
