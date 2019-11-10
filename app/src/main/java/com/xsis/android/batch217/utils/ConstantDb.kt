@@ -156,6 +156,22 @@ val START_REPORT_OVERTIME = "start_overtime_timesheet"
 val END_REPORT_OVERTIME ="end_overtime_timesheet"
 val NOTES_TIMESHEET ="notes_timesheet"
 
+val TABEL_PROJECT = "project"
+val ID_PROJECT = "id_project"
+val KODE_COMPANY_PROJECT = "kode_comp_project"
+val LOCATION_PROJECT = "location_project"
+val DEPARTMENT_PROJECT = "department_project"
+val USER_PROJECT = "user_project"
+val NAME_PROJECT = "name_project"
+val START_PROJECT = "start_project"
+val END_PROJECT ="end_project"
+val ROLE_PROJECT ="role_project"
+val PHASE_PROJECT = "phase_project"
+val DES_PROJECT ="des_project"
+val TECH_PROJECT ="tech_project"
+val TASK_PROJECT ="task_project"
+
+
 //nama field sama
 val IS_DELETED= "is_deleted"
 /*=================================================*/
