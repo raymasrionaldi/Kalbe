@@ -28,5 +28,7 @@ class ViewHolderListEmployeeTraining(itemView: View) : RecyclerView.ViewHolder(i
             .setCircleBackgroundColorRes(R.color.warnaAbu)
             .build()
         inisial.setImageInfo(image)
+
     }
+
 }
