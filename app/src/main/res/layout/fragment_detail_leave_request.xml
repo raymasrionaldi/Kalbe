@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_margin="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Leave Type"
+        android:textColor="@color/warnaAbu"
+        android:textSize="11sp"/>
+    <TextView
+        android:id="@+id/textLeaveType"
+        android:layout_marginLeft="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="-"/>
+    <TextView
+        android:layout_margin="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Leave Name"
+        android:textColor="@color/warnaAbu"
+        android:textSize="11sp"/>
+    <TextView
+        android:id="@+id/textLeaveName"
+        android:layout_marginLeft="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="-"/>
+    <TextView
+        android:layout_margin="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Started On"
+        android:textColor="@color/warnaAbu"
+        android:textSize="11sp"/>
+    <TextView
+        android:id="@+id/textStart"
+        android:layout_marginLeft="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="-"/>
+    <TextView
+        android:layout_margin="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Ended On"
+        android:textColor="@color/warnaAbu"
+        android:textSize="11sp"/>
+    <TextView
+        android:id="@+id/textEnd"
+        android:layout_marginLeft="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="-"/>
+    <TextView
+        android:layout_margin="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Address"
+        android:textColor="@color/warnaAbu"
+        android:textSize="11sp"/>
+    <TextView
+        android:id="@+id/textAddress"
+        android:layout_marginLeft="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="-"/>
+    <TextView
+        android:layout_margin="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Contact Number"
+        android:textColor="@color/warnaAbu"
+        android:textSize="11sp"/>
+    <TextView
+        android:id="@+id/textContactNumber"
+        android:layout_marginLeft="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="-"/>
+    <TextView
+        android:layout_margin="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Reason"
+        android:textColor="@color/warnaAbu"
+        android:textSize="11sp"/>
+    <TextView
+        android:id="@+id/textReason"
+        android:layout_marginLeft="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="-"/>
+
+
+
+</LinearLayout>

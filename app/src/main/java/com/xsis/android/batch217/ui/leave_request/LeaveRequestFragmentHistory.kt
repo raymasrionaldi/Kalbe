@@ -11,7 +11,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.xsis.android.batch217.R
 import com.xsis.android.batch217.adapters.fragments.ListLeaveRequestAdapter
+import com.xsis.android.batch217.databases.DatabaseHelper
 import com.xsis.android.batch217.databases.LeaveRequestQueryHelper
+import com.xsis.android.batch217.databases.PositionLevelQueryHelper
 import com.xsis.android.batch217.models.LeaveRequest
 
 class LeaveRequestFragmentHistory(context: Context, val fm: FragmentManager):Fragment() {
@@ -31,12 +33,15 @@ class LeaveRequestFragmentHistory(context: Context, val fm: FragmentManager):Fra
         setHasOptionsMenu(true)
 
         val layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        val databaseHelper = DatabaseHelper(context!!)
+        databaseQueryHelper = LeaveRequestQueryHelper(databaseHelper)
 
         recyclerView = customView.findViewById(R.id.listLeaveRequestRecycler) as RecyclerView
         recyclerView!!.layoutManager = layoutManager
 
         val dividerItemDecoration = DividerItemDecoration(context, layoutManager.orientation)
         recyclerView!!.addItemDecoration(dividerItemDecoration)
+
 
         return customView
     }

@@ -1,12 +1,18 @@
 package com.xsis.android.batch217.adapters.fragments
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat.startActivity
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager.widget.ViewPager
 import com.xsis.android.batch217.R
 import com.xsis.android.batch217.models.LeaveRequest
+import com.xsis.android.batch217.ui.leave_request.LeaveRequestDetailActivity
+import com.xsis.android.batch217.ui.leave_request.LeaveRequestFragmentDetail
+import com.xsis.android.batch217.ui.position_level.PositionLevelFragmentForm
 import com.xsis.android.batch217.viewholders.ViewHolderListLeaveRequest
 
 class ListLeaveRequestAdapter(val context: Context,
@@ -27,15 +33,19 @@ class ListLeaveRequestAdapter(val context: Context,
         val model = listLeaveRequest[position]
         holder.setModel(model)
 
-       /* holder.layoutList.setOnClickListener { view ->
-            val fragment = fm.fragments[1] as LeaveRequestFragmentForm
-            val viewPager = fragment.view!!.parent as ViewPager
-            val adapter = viewPager.adapter!! as PositionLevelFragmentAdapter
+        holder.layoutList.setOnClickListener { view ->
+            val intent= Intent(context, LeaveRequestDetailActivity::class.java)
+            intent.putExtra("idLeaveRequest", model.idLeaveRequest)
+            context.startActivity(intent)
 
-            fragment.modeEdit(model)
-            adapter.notifyDataSetChanged()
-            viewPager.setCurrentItem(1, true)
-        }*/
+            //            val fragment = fm.fragments[1] as LeaveRequestFragmentDetail
+            //            val viewPager = fragment.view!!.parent as ViewPager
+            //            val adapter = viewPager.adapter!! as LeaveRequestDetailFragmentAdapter
+            //
+            //            fragment.setDetail(model)
+            //            adapter.notifyDataSetChanged()
+            //            viewPager.setCurrentItem(1, true)
+        }
     }
 
 

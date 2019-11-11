@@ -12,7 +12,7 @@ class LeaveRequest {
     var approval2:String?=null
     var approval3:String?=null
 
-    var idLeaveType: String? = null
+    var idLeaveType: Int? = null
     var leaveType:String?=null
     var quota:Int=0
 

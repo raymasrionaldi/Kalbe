@@ -21,13 +21,15 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Previous Year Leave Quota:"
+                android:text="Previous Year Leave Quota : "
+                android:textStyle="bold"
                 />
             <TextView
                 android:id="@+id/prevYearQuota"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="-"
+                android:textStyle="bold"
                 />
 
         </LinearLayout>
@@ -40,13 +42,15 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Regular Leave Quota:"
+                android:text="Regular Leave Quota : "
+                android:textStyle="bold"
                 />
             <TextView
                 android:id="@+id/regularQuota"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="-"
+                android:textStyle="bold"
                 />
         </LinearLayout>
         <LinearLayout
@@ -58,13 +62,15 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Annual Collective Leave:"
+                android:text="Annual Collective Leave : "
+                android:textStyle="bold"
                 />
             <TextView
                 android:id="@+id/annualQuota"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="-"
+                android:textStyle="bold"
                 />
         </LinearLayout>
         <LinearLayout
@@ -76,13 +82,15 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Leave Already Taken:"
+                android:text="Leave Already Taken : "
+                android:textStyle="bold"
                 />
             <TextView
                 android:id="@+id/takenQuota"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="-"
+                android:textStyle="bold"
                 />
         </LinearLayout>
         <LinearLayout
@@ -94,13 +102,15 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Total Leave Remaining:"
+                android:text="Total Leave Remaining : "
+                android:textStyle="bold"
                 />
             <TextView
                 android:id="@+id/remainingQuota"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="-"
+                android:textStyle="bold"
                 />
         </LinearLayout>
     </LinearLayout>

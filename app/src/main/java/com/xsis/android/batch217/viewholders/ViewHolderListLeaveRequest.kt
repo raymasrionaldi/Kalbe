@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.github.ramiz.nameinitialscircleimageview.NameInitialsCircleImageView
 import com.xsis.android.batch217.R
 import com.xsis.android.batch217.models.LeaveRequest
-import com.xsis.android.batch217.utils.ambilDuaInisial
 
 class ViewHolderListLeaveRequest(itemView: View): RecyclerView.ViewHolder(itemView) {
     var layoutList = itemView.findViewById(R.id.layoutList) as LinearLayout
@@ -28,5 +27,4 @@ class ViewHolderListLeaveRequest(itemView: View): RecyclerView.ViewHolder(itemVi
             .build()
         inisial.setImageInfo(image)
     }
-
 }

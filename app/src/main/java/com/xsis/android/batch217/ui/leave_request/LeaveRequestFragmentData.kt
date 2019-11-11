@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.viewpager.widget.ViewPager
@@ -14,11 +15,14 @@ import com.xsis.android.batch217.R
 import com.xsis.android.batch217.adapters.fragments.LeaveRequestFragmentAdapter
 
 class LeaveRequestFragmentData(context: Context, val fm: FragmentManager):Fragment() {
+    val regularLeaveQuota= 16
+    val annualLeaveQuota=4
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View?{
         val customView = inflater.inflate(
             R.layout.fragment_data_leave_request,
             container,
@@ -31,7 +35,16 @@ class LeaveRequestFragmentData(context: Context, val fm: FragmentManager):Fragme
             addData()
         }
 
-
+        val prevLeave: TextView = customView.findViewById(R.id.prevYearQuota) as TextView
+            prevLeave.text="0"
+        val regularLeave: TextView = customView.findViewById(R.id.regularQuota) as TextView
+            regularLeave.text=regularLeaveQuota.toString()
+        val annualLeave: TextView = customView.findViewById(R.id.annualQuota) as TextView
+            annualLeave.text=annualLeaveQuota.toString()
+        val takenLeave: TextView = customView.findViewById(R.id.takenQuota) as TextView
+            takenLeave.text="0"
+        val remainingLeave: TextView = customView.findViewById(R.id.remainingQuota) as TextView
+            remainingLeave.text="0"
 
         /*
         DATE OPERATIONS
