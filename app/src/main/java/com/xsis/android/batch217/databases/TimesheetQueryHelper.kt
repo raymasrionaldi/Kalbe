@@ -1,9 +1,11 @@
 package com.xsis.android.batch217.databases
 
 import android.database.Cursor
+import com.xsis.android.batch217.models.StatusTimesheet
 import com.xsis.android.batch217.models.Timesheet
 import com.xsis.android.batch217.utils.IS_DELETED
 import com.xsis.android.batch217.utils.REPORT_DATE_TIMESHEET
+import com.xsis.android.batch217.utils.TABEL_STATUS_TIMESHEET
 import com.xsis.android.batch217.utils.TABEL_TIMESHEET
 
 class TimesheetQueryHelper (val databaseHelper: DatabaseHelper) {
@@ -66,5 +68,26 @@ class TimesheetQueryHelper (val databaseHelper: DatabaseHelper) {
             }
         }
         return listTimesheet
+    }
+    fun tampilkanStatusTimesheet(): List<StatusTimesheet> {
+        val db = databaseHelper.readableDatabase
+
+        val queryRead = "SELECT * FROM $TABEL_STATUS_TIMESHEET"
+        val cursor = db.rawQuery(queryRead, null)
+
+
+        var listStatusTimesheet = ArrayList<StatusTimesheet>()
+
+        for (c in 0 until cursor.count) {
+            cursor.moveToPosition(c)
+
+            val stsTimesheet = StatusTimesheet()
+            stsTimesheet.idStsTimesheet = cursor.getInt(0)
+            stsTimesheet.namaStsTimesheet = cursor.getString(1)
+
+
+           listStatusTimesheet.add(stsTimesheet)
+        }
+        return  listStatusTimesheet
     }
 }

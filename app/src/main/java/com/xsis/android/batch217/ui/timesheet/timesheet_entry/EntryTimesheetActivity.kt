@@ -5,16 +5,15 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ArrayAdapter
 import androidx.core.view.isVisible
-import androidx.viewpager.widget.ViewPager
+
 import com.xsis.android.batch217.R
-import com.xsis.android.batch217.adapters.fragments.TimesheetHistoryAdapter
+
 import com.xsis.android.batch217.databases.DatabaseHelper
 import com.xsis.android.batch217.databases.TimesheetQueryHelper
+
 import com.xsis.android.batch217.models.Timesheet
 import com.xsis.android.batch217.ui.timesheet.ARRAY_CLIENT_TIMESHEET
 import com.xsis.android.batch217.ui.timesheet.ARRAY_OVERTIME_TIMESHEET
-import com.xsis.android.batch217.ui.timesheet.ARRAY_STATUS_TIMESHEET
-import com.xsis.android.batch217.ui.timesheet.timesheet_history.FragmentDataHistoryTimesheet
 import kotlinx.android.synthetic.main.fragment_entry_timesheet.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -99,13 +98,14 @@ class EntryTimesheetActivity : AppCompatActivity() {
 
     }
     fun isiSpinnerStatusTimesheet(){
+        val statusTimesheet = databaseQueryHelper.tampilkanStatusTimesheet()
+        val isiData = statusTimesheet.map {
+            it.namaStsTimesheet
+        }.toList()
         val adapterStatusTimesheet = ArrayAdapter<String>(context,android.R.layout.simple_spinner_item,
-            ARRAY_STATUS_TIMESHEET)
+            isiData)
         adapterStatusTimesheet.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         inputStatusTimesheet.adapter = adapterStatusTimesheet
-
-
-
     }
     fun setReportDateTimesheetPicker(){
         val today = Calendar.getInstance()
