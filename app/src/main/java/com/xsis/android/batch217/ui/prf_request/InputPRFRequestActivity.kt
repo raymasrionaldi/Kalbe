@@ -195,9 +195,30 @@ class InputPRFRequestActivity : AppCompatActivity() {
         }
 
         override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-            buttonResetPRFRequest.isEnabled = true
-            buttonResetPRFRequest.setBackgroundResource(R.drawable.button_reset_on)
-            buttonResetPRFRequest.setTextColor(Color.WHITE)
+            val buttonReset = buttonResetPRFRequest
+            val tanggal = inputTanggalPRF.text.toString().trim()
+            val placement = inputPlacementPRF.text.toString().trim()
+            val location = inputLocationPRF.text.toString().trim()
+            val period = inputPeriodPRF.text.toString().trim()
+            val userName = inputUserNamePRF.text.toString().trim()
+            val telpMobilePhone = inputTelpPRF.text.toString().trim()
+            val email = inputEmailPRF.text.toString().trim()
+            val overtime = inputOvertimePRF.text.toString().trim()
+            val billing = inputBillingPRF.text.toString().trim()
+            val type = spinnerInputTypePRF.selectedItemPosition
+            val PID = spinnerInputPIDPRF.selectedItemPosition
+            val notebook = spinnerInputNotebookPRF.selectedItemPosition
+            val BAST = spinnerInputBastPRF.selectedItemPosition
+
+
+            val kondisi = !tanggal.isEmpty() || !placement.isEmpty()
+                                    || !location.isEmpty() || !period.isEmpty()
+                                    || !userName.isEmpty() || !telpMobilePhone.isEmpty()
+                                    || !email.isEmpty() || !overtime.isEmpty()
+                                    || !billing.isEmpty() || type != 0 || PID != 0
+                                    || notebook != 0 || BAST != 0
+
+            ubahResetButton(context, kondisi, buttonReset)
         }
 
         override fun afterTextChanged(s: Editable) {
