@@ -44,16 +44,5 @@ class TipeTesFragment : Fragment(), OnBackPressedListener {
         }
         return false
     }
-
-
-    fun refreshList() {
-        //getSemuaPendidikan(recyclerView!!, databaseQueryHelper!!)
-        getActivity()!!.invalidateOptionsMenu()
-    }
-
-    override fun onResume() {
-        super.onResume()
-        refreshList()
-
-    }
+    
 }
