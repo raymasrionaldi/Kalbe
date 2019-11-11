@@ -69,7 +69,7 @@ class FragmentDataRequestHistory(context: Context, val fm: FragmentManager) : Fr
         listEmployeeStatus: List<PRFRequest>,
         recyclerView: RecyclerView
     ) {
-        val adapterEmployeeStatus = ListPRFRequestAdapter(context!!,fragment, listEmployeeStatus)
+        val adapterEmployeeStatus = ListPRFRequestAdapter(context!!,fragment, listEmployeeStatus,fm)
         recyclerView.adapter = adapterEmployeeStatus
         adapterEmployeeStatus.notifyDataSetChanged()
     }

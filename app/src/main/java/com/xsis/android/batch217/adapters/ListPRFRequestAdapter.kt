@@ -12,10 +12,12 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
 import com.xsis.android.batch217.R
 import com.xsis.android.batch217.adapters.fragments.EmployeeStatusFragmentAdapter
+import com.xsis.android.batch217.adapters.fragments.RequestHistoryFragmentAdapter
 import com.xsis.android.batch217.databases.DatabaseHelper
 import com.xsis.android.batch217.databases.PRFRequestQueryHelper
 import com.xsis.android.batch217.models.PRFRequest
 import com.xsis.android.batch217.ui.prf_request.EditPRFRequestActivity
+import com.xsis.android.batch217.ui.prf_request.FragmentCandidatePRFRequest
 import com.xsis.android.batch217.ui.prf_request.FragmentDataRequestHistory
 import com.xsis.android.batch217.utils.*
 import com.xsis.android.batch217.viewholders.ViewHolderListPRFRequest
@@ -23,7 +25,8 @@ import com.xsis.android.batch217.viewholders.ViewHolderListPRFRequest
 class ListPRFRequestAdapter(
     val context: Context,
     val fragment: FragmentDataRequestHistory,
-    val listPRFRequest: List<PRFRequest>
+    val listPRFRequest: List<PRFRequest>,
+    val fm: FragmentManager
 ) : RecyclerView.Adapter<ViewHolderListPRFRequest>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolderListPRFRequest {
         val customLayout =
@@ -41,6 +44,17 @@ class ListPRFRequestAdapter(
         val databaseHelper = DatabaseHelper(context!!)
         val databaseQueryHelper = PRFRequestQueryHelper(databaseHelper)
         val db = databaseHelper.writableDatabase
+        val ID = model.id_prf_request
+
+        holder.layoutList.setOnClickListener { view ->
+            val fragment = fm.fragments[1] as FragmentCandidatePRFRequest
+            val viewPager = fragment.view!!.parent as ViewPager
+            val adapter = viewPager.adapter!! as RequestHistoryFragmentAdapter
+
+            fragment.bawaID(ID)
+            adapter.notifyDataSetChanged()
+            viewPager.setCurrentItem(1, true)
+        }
 
         holder.bukaMenu.setOnClickListener {view ->
             val window = showPopupMenuEditDelete(

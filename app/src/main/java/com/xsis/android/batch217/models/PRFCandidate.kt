@@ -1,6 +1,7 @@
 package com.xsis.android.batch217.models
 
 class PRFCandidate {
+    var id_from_prf: Int = 0
     var id_prf_candidate:Int= 0
     var nama_prf_candidate:String?=null
     var batch:String? =null

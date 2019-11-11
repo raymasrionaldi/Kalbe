@@ -21,8 +21,10 @@ import com.xsis.android.batch217.models.PRFRequest
 
 class FragmentCandidatePRFRequest(context: Context, val fm: FragmentManager) : Fragment() {
     var recyclerView: RecyclerView? = null
+    var databaseHelper:DatabaseHelper? = null
     var databaseQueryHelper: PRFCandidateQueryHelper? = null
     var fragment = this
+    var ID = 0
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,7 +36,6 @@ class FragmentCandidatePRFRequest(context: Context, val fm: FragmentManager) : F
             container,
             false
         )
-        setHasOptionsMenu(true)
 
         val layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
 
@@ -59,10 +60,11 @@ class FragmentCandidatePRFRequest(context: Context, val fm: FragmentManager) : F
     }
 
     fun getSemuaPRFCandidate(
+        ID: Int,
         recyclerView: RecyclerView,
         databaseQueryHelper: PRFCandidateQueryHelper
     ) {
-        val listPRFCandidate = databaseQueryHelper.readSemuaPRFCandidateModels()
+        val listPRFCandidate = databaseQueryHelper.readSemuaPRFCandidateModels(ID)
         tampilkanListPRFCandidate(listPRFCandidate, recyclerView)
     }
 
@@ -79,28 +81,13 @@ class FragmentCandidatePRFRequest(context: Context, val fm: FragmentManager) : F
         //getSemuaEmployeeStatus(recyclerView!!, databaseQueryHelper!!)
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.main, menu)
 
-        val myActionMenuItem = menu.findItem(R.id.action_search)
-        val searchView = myActionMenuItem.actionView as SearchView
+    fun bawaID(id:Int){
+        ID = id
 
-        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-
-            override fun onQueryTextSubmit(query: String): Boolean {
-                return false
-            }
-
-            override fun onQueryTextChange(keyword: String): Boolean {
-                search(keyword, databaseQueryHelper!!)
-                return true
-            }
-        })
-    }
-
-    fun search(keyword: String, databaseQueryHelper: PRFCandidateQueryHelper) {
-        val listPRFRequest = databaseQueryHelper.cariPRFCandidateModels(keyword)
-        tampilkanListPRFCandidate(listPRFRequest, recyclerView!!)
+        databaseHelper = DatabaseHelper(context!!)
+        databaseQueryHelper = PRFCandidateQueryHelper(databaseHelper!!)
+        getSemuaPRFCandidate(ID, recyclerView!!, databaseQueryHelper!!)
     }
 
     override fun onResume() {

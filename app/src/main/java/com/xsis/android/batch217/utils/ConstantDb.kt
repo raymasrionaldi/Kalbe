@@ -134,6 +134,7 @@ val BAST = "bast"
 val BILLING = "billing"
 
 val TABEL_PRF_CANDIDATE = "prf_candidates"
+val ID_FROM_PRF = "id_from_prf"
 val ID_PRF_CANDIDATE = "id_prf_candidate"
 val NAMA_PRF_CANDIDATE = "nama_prf_candidate"
 val BATCH = "batch"
