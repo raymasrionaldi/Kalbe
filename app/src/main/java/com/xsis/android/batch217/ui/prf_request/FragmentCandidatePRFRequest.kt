@@ -1,6 +1,7 @@
 package com.xsis.android.batch217.ui.prf_request
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import androidx.appcompat.widget.SearchView
@@ -48,7 +49,8 @@ class FragmentCandidatePRFRequest(context: Context, val fm: FragmentManager) : F
         val buttonAdd =
             customView.findViewById(R.id.buttonAddPRFCandidate) as FloatingActionButton
         buttonAdd.setOnClickListener {
-
+            val intent = Intent(context, InputPRFCandidateActivity::class.java)
+            startActivity(intent)
         }
 
         val databaseHelper = DatabaseHelper(context!!)
