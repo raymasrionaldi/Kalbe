@@ -155,10 +155,10 @@ class EmployeeTrainingEditActivity : AppCompatActivity() {
             model.typeEmployeeCertification = certificationEmployeeTraining
 
             val cekEmployeeTraining =
-                databaseQueryHelper!!.cekEmployeeTrainingSudahAda(model.namaEmployeeTraining!!)
+                databaseQueryHelper!!.cekEmployeeTrainingSudahAda(model.namaTrainee!!)
 
-            if ((cekEmployeeTraining != 1 && model.namaEmployeeTraining == data.namaEmployeeTraining) ||
-                (cekEmployeeTraining != 0 && model.namaEmployeeTraining != data.namaEmployeeTraining)
+            if ((cekEmployeeTraining != 1 && model.namaTrainee == data.namaTrainee) ||
+                (cekEmployeeTraining != 0 && model.namaTrainee != data.namaTrainee)
             ) {
                 Toast.makeText(context, DATA_SUDAH_ADA, Toast.LENGTH_SHORT).show()
                 return
@@ -172,6 +172,9 @@ class EmployeeTrainingEditActivity : AppCompatActivity() {
             }
 
         }
+
+        finish()
+
     }
 
     fun loadDataEmployeeTraining(id: Int) {

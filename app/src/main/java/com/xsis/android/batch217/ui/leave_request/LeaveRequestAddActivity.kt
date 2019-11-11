@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.AdapterView
-import android.widget.Toast
 import com.chivorn.smartmaterialspinner.SmartMaterialSpinner
 import com.xsis.android.batch217.R
 import java.util.ArrayList

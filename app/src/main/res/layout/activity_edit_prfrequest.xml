@@ -87,15 +87,18 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
-                    android:hint="24/10/2019" />
+                    android:hint="January 2, 2019"
+                    android:focusable="false"
+                    android:longClickable="false"/>
 
-                <Spinner
-                    android:id="@+id/spinnerInputTanggalPRFEdit"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_margin="5dp"></Spinner>
-            </FrameLayout>
+                <ImageView
+                    android:id="@+id/iconInputTanggalPRFEdit"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_margin="15dp"
+                    android:layout_gravity="right|center_vertical"
+                    android:src="@android:drawable/ic_menu_my_calendar" />
+            </FrameLayout>t>
 
             <FrameLayout
                 android:layout_width="match_parent"
@@ -131,6 +134,16 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:hint="Placement In *" />
+
+            <TextView
+                android:id="@+id/requiredPlacementPRFRequestEdit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Required"
+                android:textColor="@color/warnaMerah"
+                android:textSize="@dimen/text_size_small"
+                android:visibility="invisible"
+                android:layout_marginLeft="10dp"/>
 
             <FrameLayout
                 android:layout_width="match_parent"
@@ -207,7 +220,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:hint="Telp/Mobile Phone *" />
+                android:hint="Telp/Mobile Phone *"
+                android:inputType="number"/>
 
             <TextView
                 android:id="@+id/requiredTelpPRFRequestEdit"

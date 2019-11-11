@@ -2,16 +2,20 @@ package com.xsis.android.batch217.databases
 
 import android.content.ContentValues
 import android.database.Cursor
+import com.xsis.android.batch217.models.Company
 import com.xsis.android.batch217.models.Project
 import com.xsis.android.batch217.utils.*
 
 class ProjectQueryHelper(val databaseHelper: DatabaseHelper) {
 
+    private val companyQueryHelper = CompanyQueryHelper(databaseHelper)
+
     private fun getSemuaProject(): Cursor {
         val db = databaseHelper.readableDatabase
 
-        val queryRead = "SELECT p.*, c.$NAMA_COMPANY FROM $TABEL_PROJECT p, $TABEL_COMPANY c WHERE" +
-                "p.$IS_DELETED = 'false' AND p.$KODE_COMPANY_PROJECT = c.$ID_COMPANY"
+        val queryRead =
+            "SELECT p.*, c.$NAMA_COMPANY FROM $TABEL_PROJECT p, $TABEL_COMPANY c WHERE" +
+                    "p.$IS_DELETED = 'false' AND p.$KODE_COMPANY_PROJECT = c.$ID_COMPANY"
 
         return db.rawQuery(queryRead, null)
     }
@@ -73,6 +77,23 @@ class ProjectQueryHelper(val databaseHelper: DatabaseHelper) {
         return listProject
     }
 
+    fun cariProjectModelById(id: Int): Project {
+        var listProject = ArrayList<Project>()
+        if (id != 0) {
+            val db = databaseHelper.readableDatabase
+            val queryCari =
+                "SELECT p.*, c.$NAMA_COMPANY FROM $TABEL_PROJECT p, $TABEL_COMPANY c WHERE p.$ID_PROJECT = $id AND " +
+                        "p.$IS_DELETED = 'false' AND p.$KODE_COMPANY_PROJECT = c.$ID_COMPANY"
+
+            val cursor = db.rawQuery(queryCari, null)
+            if (cursor.count == 1) {
+                return konversiCursorKeListProjectModel(cursor)[0]
+            } else
+                return Project()
+        }
+        return Project()
+    }
+
     fun tambahProject(model: Project): Long {
         val db = databaseHelper.writableDatabase
 
@@ -128,15 +149,7 @@ class ProjectQueryHelper(val databaseHelper: DatabaseHelper) {
         return db.update(TABEL_PROJECT, values, "$ID_PROJECT = ?", arrayOf(id.toString()))
     }
 
-    fun cekProjectSudahAda(kode: Int): Int {
-        TODO("bikin logic buat ngecek project yg sudah ada")
-        val db = databaseHelper.readableDatabase
-        val queryCari =
-            "SELECT * FROM $TABEL_PROJECT WHERE $KODE_COMPANY_PROJECT = '$kode' AND " +
-                    "$IS_DELETED = 'false'"
-
-        val cursor = db.rawQuery(queryCari, null)
-
-        return cursor.count
+    fun getSemuaCompany(): List<Company> {
+        return companyQueryHelper.readSemuaCompanyModels()
     }
 }

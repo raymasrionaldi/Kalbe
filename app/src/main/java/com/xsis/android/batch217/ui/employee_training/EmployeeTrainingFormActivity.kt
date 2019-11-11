@@ -155,7 +155,7 @@ class EmployeeTrainingFormActivity : AppCompatActivity() {
             model.typeEmployeeCertification = certificationEmployeeTraining
 
             val cekEmployeeTraining =
-                databaseQueryHelper!!.cekEmployeeTrainingSudahAda(model.namaEmployeeTraining!!)
+                databaseQueryHelper!!.cekEmployeeTrainingSudahAda(model.namaTrainee!!)
 
             if (cekEmployeeTraining > 0) {
                 Toast.makeText(context, DATA_SUDAH_ADA, Toast.LENGTH_SHORT).show()
@@ -169,6 +169,8 @@ class EmployeeTrainingFormActivity : AppCompatActivity() {
             }
 
         }
+
+        finish()
     }
 
     fun loadDataEmployeeTraining(id: Int) {

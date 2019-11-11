@@ -119,6 +119,14 @@ val DATE_EMPLOYEE_TRAINING="date_employee_training"
 val TYPE_EMPLOYEE_TRAINING="type_employee_training"
 val TYPE_EMPLOYEE_CERTIFICATION="type_employee_certification"
 
+val TABEL_TRAINING_TYPE ="training_type"
+val ID_TRAINING_TYPE ="id_training_type"
+val NAMA_TRAINING_TYPE ="nama_training_type"
+
+val TABEL_CERTIFICATION_TYPE ="certification_type"
+val ID_CERTIFICATION_TYPE ="id_certification_type"
+val NAMA_CERTIFICATION_TYPE ="nama_certification_type"
+
 val TABEL_PRF_REQUEST = "prf_request"
 val ID_PRF_REQUEST = "id_prf_request"
 val TANGGAL = "tanggal"

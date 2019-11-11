@@ -1,5 +1,6 @@
 package com.xsis.android.batch217.viewholders
 
+import android.util.TypedValue
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -21,6 +22,8 @@ class ViewHolderListProject(itemView: View) : RecyclerView.ViewHolder(itemView) 
         val durasi = "${model.startProject} - ${model.endProject}"
         teksUtama.text = nama
         teksTambahan.text = durasi
+
+        teksTambahan.setTextSize(TypedValue.COMPLEX_UNIT_SP,12f )
 
         val image = NameInitialsCircleImageView.ImageInfo
             .Builder(ambilDuaInisial(nama!!))
