@@ -74,8 +74,7 @@
                     android:id="@+id/inputNamaPRFCandidate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:hint="Name *" />
+                    android:layout_margin="5dp"/>
 
                 <Spinner
                     android:id="@+id/spinnerInputNamaPRFCandidate"
@@ -110,8 +109,7 @@
                     android:id="@+id/inputPositionPRFCandidate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:hint="Position *" />
+                    android:layout_margin="5dp" />
 
                 <Spinner
                     android:id="@+id/spinnerInputPositionPRFCandidate"
@@ -169,8 +167,7 @@
                     android:id="@+id/inputSRFNumberPRFCandidate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:hint="SRF Number *" />
+                    android:layout_margin="5dp"/>
 
                 <Spinner
                     android:id="@+id/spinnerSRFNumberPRFCandidate"
@@ -205,8 +202,7 @@
                     android:id="@+id/inputCandidateStatusPRFCandidate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:hint="Candidate Status *" />
+                    android:layout_margin="5dp" />
 
                 <Spinner
                     android:id="@+id/spinnerInputCandidateStatusPRFCandidate"
@@ -232,6 +228,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:hint="Sign Contract Date" />
+
             <EditText
                 android:id="@+id/inputNotesPRFCandidate"
                 android:layout_width="match_parent"

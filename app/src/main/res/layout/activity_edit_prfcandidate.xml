@@ -74,8 +74,7 @@
                     android:id="@+id/inputNamaPRFCandidateEdit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:hint="Name *" />
+                    android:layout_margin="5dp" />
 
                 <Spinner
                     android:id="@+id/spinnerInputNamaPRFCandidateEdit"
@@ -110,8 +109,7 @@
                     android:id="@+id/inputPositionPRFCandidateEdit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:hint="Position *" />
+                    android:layout_margin="5dp" />
 
                 <Spinner
                     android:id="@+id/spinnerInputPositionPRFCandidateEdit"
@@ -139,8 +137,7 @@
                     android:id="@+id/inputPlacementDatePRFCandidateEdit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:hint="Placement Date *" />
+                    android:layout_margin="5dp"/>
 
                 <ImageView
                     android:id="@+id/iconInputTanggalPRFCandidateEdit"
@@ -169,8 +166,7 @@
                     android:id="@+id/inputSRFNumberPRFCandidateEdit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:hint="SRF Number *" />
+                    android:layout_margin="5dp"/>
 
                 <Spinner
                     android:id="@+id/spinnerSRFNumberPRFCandidateEdit"
@@ -205,8 +201,7 @@
                     android:id="@+id/inputCandidateStatusPRFCandidateEdit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:hint="Candidate Status *" />
+                    android:layout_margin="5dp"/>
 
                 <Spinner
                     android:id="@+id/spinnerInputCandidateStatusPRFCandidateEdit"
