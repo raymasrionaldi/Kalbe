@@ -87,14 +87,16 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
-                    android:hint="24/10/2019" />
+                    android:hint="January 2, 2019"
+                    />
 
-                <Spinner
-                    android:id="@+id/spinnerInputTanggalPRF"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_margin="5dp"></Spinner>
+                <ImageView
+                    android:id="@+id/iconInputTanggalPRF"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_margin="15dp"
+                    android:layout_gravity="right|center_vertical"
+                    android:src="@android:drawable/ic_menu_my_calendar" />
             </FrameLayout>
 
             <FrameLayout
@@ -115,6 +117,15 @@
                     android:layout_gravity="center_vertical"
                     android:layout_margin="5dp"></Spinner>
             </FrameLayout>
+
+            <TextView
+                android:id="@+id/requiredTypePRFRequest"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Required"
+                android:textColor="@color/warnaMerah"
+                android:textSize="@dimen/text_size_small"
+                android:visibility="invisible" />
 
             <EditText
                 android:id="@+id/inputPlacementPRF"
@@ -142,6 +153,16 @@
                     android:layout_margin="5dp"></Spinner>
             </FrameLayout>
 
+            <TextView
+                android:id="@+id/requiredPIDPRFRequest"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="Required"
+                android:textColor="@color/warnaMerah"
+                android:textSize="@dimen/text_size_small"
+                android:visibility="invisible"/>
+
             <EditText
                 android:id="@+id/inputLocationPRF"
                 android:layout_width="match_parent"
@@ -156,6 +177,16 @@
                 android:layout_margin="5dp"
                 android:hint="Period *" />
 
+            <TextView
+                android:id="@+id/requiredPeriodPRFRequest"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="Required"
+                android:textColor="@color/warnaMerah"
+                android:textSize="@dimen/text_size_small"
+                android:visibility="invisible"/>
+
             <EditText
                 android:id="@+id/inputUserNamePRF"
                 android:layout_width="match_parent"
@@ -163,12 +194,33 @@
                 android:layout_margin="5dp"
                 android:hint="User Name *" />
 
+            <TextView
+                android:id="@+id/requiredUsernamePRFRequest"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="Required"
+                android:textColor="@color/warnaMerah"
+                android:textSize="@dimen/text_size_small"
+                android:visibility="invisible"/>
+
             <EditText
                 android:id="@+id/inputTelpPRF"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
+                android:inputType="number"
                 android:hint="Telp/Mobile Phone *" />
+
+            <TextView
+                android:id="@+id/requiredTelpPRFRequest"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="Required"
+                android:textColor="@color/warnaMerah"
+                android:textSize="@dimen/text_size_small"
+                android:visibility="invisible"/>
 
             <EditText
                 android:id="@+id/inputEmailPRF"
@@ -176,6 +228,16 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:hint="Email *" />
+
+            <TextView
+                android:id="@+id/requiredEmailPRFRequest"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="Required"
+                android:textColor="@color/warnaMerah"
+                android:textSize="@dimen/text_size_small"
+                android:visibility="invisible"/>
 
             <FrameLayout
                 android:layout_width="match_parent"
@@ -195,6 +257,16 @@
                     android:layout_gravity="center_vertical"
                     android:layout_margin="5dp"></Spinner>
             </FrameLayout>
+
+            <TextView
+                android:id="@+id/requiredNotebookPRFRequest"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="Required"
+                android:textColor="@color/warnaMerah"
+                android:textSize="@dimen/text_size_small"
+                android:visibility="invisible"/>
 
             <EditText
                 android:id="@+id/inputOvertimePRF"

@@ -116,6 +116,15 @@
                     android:layout_margin="5dp"></Spinner>
             </FrameLayout>
 
+            <TextView
+                android:id="@+id/requiredTypePRFRequestEdit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Required"
+                android:textColor="@color/warnaMerah"
+                android:textSize="@dimen/text_size_small"
+                android:visibility="invisible" />
+
             <EditText
                 android:id="@+id/inputPlacementPRFEdit"
                 android:layout_width="match_parent"
@@ -142,6 +151,16 @@
                     android:layout_margin="5dp"></Spinner>
             </FrameLayout>
 
+            <TextView
+                android:id="@+id/requiredPIDPRFRequestEdit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="Required"
+                android:textColor="@color/warnaMerah"
+                android:textSize="@dimen/text_size_small"
+                android:visibility="invisible"/>
+
             <EditText
                 android:id="@+id/inputLocationPRFEdit"
                 android:layout_width="match_parent"
@@ -156,12 +175,32 @@
                 android:layout_margin="5dp"
                 android:hint="Period *" />
 
+            <TextView
+                android:id="@+id/requiredPeriodPRFRequestEdit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="Required"
+                android:textColor="@color/warnaMerah"
+                android:textSize="@dimen/text_size_small"
+                android:visibility="invisible"/>
+
             <EditText
                 android:id="@+id/inputUserNamePRFEdit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:hint="User Name *" />
+
+            <TextView
+                android:id="@+id/requiredUsernamePRFRequestEdit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="Required"
+                android:textColor="@color/warnaMerah"
+                android:textSize="@dimen/text_size_small"
+                android:visibility="invisible"/>
 
             <EditText
                 android:id="@+id/inputTelpPRFEdit"
@@ -170,12 +209,32 @@
                 android:layout_margin="5dp"
                 android:hint="Telp/Mobile Phone *" />
 
+            <TextView
+                android:id="@+id/requiredTelpPRFRequestEdit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="Required"
+                android:textColor="@color/warnaMerah"
+                android:textSize="@dimen/text_size_small"
+                android:visibility="invisible"/>
+
             <EditText
                 android:id="@+id/inputEmailPRFEdit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:hint="Email *" />
+
+            <TextView
+                android:id="@+id/requiredEmailPRFRequestEdit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="Required"
+                android:textColor="@color/warnaMerah"
+                android:textSize="@dimen/text_size_small"
+                android:visibility="invisible"/>
 
             <FrameLayout
                 android:layout_width="match_parent"
@@ -195,6 +254,16 @@
                     android:layout_gravity="center_vertical"
                     android:layout_margin="5dp"></Spinner>
             </FrameLayout>
+
+            <TextView
+                android:id="@+id/requiredNotebookPRFRequestEdit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="Required"
+                android:textColor="@color/warnaMerah"
+                android:textSize="@dimen/text_size_small"
+                android:visibility="invisible"/>
 
             <EditText
                 android:id="@+id/inputOvertimePRFEdit"

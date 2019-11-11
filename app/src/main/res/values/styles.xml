@@ -21,4 +21,13 @@
         <item name="colorAccent">@color/warnaBiru</item>
     </style>
 
+<!--    custom date picker-->
+    <style name="CustomDatePicker" parent="Theme.AppCompat.Light.Dialog">
+        <item name="android:calendarViewShown">false</item>
+        <item name="android:spinnersShown">true</item>
+        <item name="colorPrimary">@color/warnaBiru</item>
+        <item name="colorPrimaryDark">#550000</item>
+        <item name="colorAccent">@color/warnaBiru</item>
+    </style>
+
 </resources>

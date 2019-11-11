@@ -85,6 +85,16 @@
                     android:layout_margin="5dp"></Spinner>
             </FrameLayout>
 
+            <TextView
+                android:id="@+id/requiredNamePRFCandidate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="Required"
+                android:textColor="@color/warnaMerah"
+                android:textSize="@dimen/text_size_small"
+                android:visibility="invisible"/>
+
             <EditText
                 android:id="@+id/inputBatchBootcampPRFCandidate"
                 android:layout_width="match_parent"
@@ -111,12 +121,45 @@
                     android:layout_margin="5dp"></Spinner>
             </FrameLayout>
 
-            <EditText
-                android:id="@+id/inputPlacementDatePRFCandidate"
+            <TextView
+                android:id="@+id/requiredPositionPRFCandidate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:hint="Placement Date" />
+                android:layout_marginLeft="10dp"
+                android:text="Required"
+                android:textColor="@color/warnaMerah"
+                android:textSize="@dimen/text_size_small"
+                android:visibility="invisible"/>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/inputPlacementDatePRFCandidate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:hint="Placement Date *" />
+
+                <ImageView
+                    android:id="@+id/iconInputTanggalPRFCandidate"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_margin="15dp"
+                    android:layout_gravity="right|center_vertical"
+                    android:src="@android:drawable/ic_menu_my_calendar" />
+            </FrameLayout>
+
+            <TextView
+                android:id="@+id/requiredPlacementDatePRFCandidate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="Required"
+                android:textColor="@color/warnaMerah"
+                android:textSize="@dimen/text_size_small"
+                android:visibility="invisible"/>
 
             <FrameLayout
                 android:layout_width="match_parent"
@@ -136,6 +179,16 @@
                     android:layout_gravity="center_vertical"
                     android:layout_margin="5dp"></Spinner>
             </FrameLayout>
+
+            <TextView
+                android:id="@+id/requiredSRFNumberPRFCandidate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="Required"
+                android:textColor="@color/warnaMerah"
+                android:textSize="@dimen/text_size_small"
+                android:visibility="invisible"/>
 
             <EditText
                 android:id="@+id/inputCustomeAllowencePRFCandidate"
@@ -162,6 +215,16 @@
                     android:layout_gravity="center_vertical"
                     android:layout_margin="5dp"></Spinner>
             </FrameLayout>
+
+            <TextView
+                android:id="@+id/requiredCandidateStatusPRFCandidate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="Required"
+                android:textColor="@color/warnaMerah"
+                android:textSize="@dimen/text_size_small"
+                android:visibility="invisible"/>
 
             <EditText
                 android:id="@+id/inputSignContractDatePRFCandidate"

@@ -1,5 +1,6 @@
 package com.xsis.android.batch217.ui.prf_request
 
+import android.app.DatePickerDialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Window
@@ -8,6 +9,8 @@ import android.widget.ArrayAdapter
 import com.xsis.android.batch217.R
 import com.xsis.android.batch217.utils.*
 import kotlinx.android.synthetic.main.activity_input_prfrequest.*
+import java.text.SimpleDateFormat
+import java.util.*
 
 class InputPRFRequestActivity : AppCompatActivity() {
     val context = this
@@ -30,7 +33,7 @@ class InputPRFRequestActivity : AppCompatActivity() {
             finish()
         }
 
-        isiSpinnerTanggal()
+        setReportDatePRFRequestPicker()
         isiSpinnerType()
         isiSpinnerPID()
         isiSpinnerNotebook()
@@ -38,13 +41,26 @@ class InputPRFRequestActivity : AppCompatActivity() {
 
     }
 
-    fun isiSpinnerTanggal(){
-        val adapterTanggal = ArrayAdapter<String>(context,
-            android.R.layout.simple_spinner_item,
-            ARRAY_TANGGAL
-        )
-        adapterTanggal.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        spinnerInputTanggalPRF.adapter = adapterTanggal
+    fun setReportDatePRFRequestPicker(){
+        val today = Calendar.getInstance()
+        val yearNow = today.get(Calendar.YEAR)
+        val monthNow = today.get(Calendar.MONTH)
+        val dayNow = today.get(Calendar.DATE)
+
+        iconInputTanggalPRF.setOnClickListener {
+            val datePickerDialog = DatePickerDialog(context, R.style.CustomDatePicker, DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
+                val selectedDate = Calendar.getInstance()
+                selectedDate.set(year, month, dayOfMonth)
+
+                //konversi ke string
+                val formatDate = SimpleDateFormat("MMMM dd, yyyy")
+                val tanggal = formatDate.format(selectedDate.time)
+
+                //set tampilan
+                inputTanggalPRF.setText(tanggal)
+            }, yearNow,monthNow,dayNow )
+            datePickerDialog.show()
+        }
     }
 
     fun isiSpinnerType(){
