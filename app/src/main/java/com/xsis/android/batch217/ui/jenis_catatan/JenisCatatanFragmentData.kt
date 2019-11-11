@@ -22,6 +22,7 @@ import com.xsis.android.batch217.models.JenisCatatan
 class JenisCatatanFragmentData(context: Context, val fm: FragmentManager) : Fragment() {
     var recyclerView: RecyclerView? = null
     var databaseQueryHelper: JenisCatatanQueryHelper? = null
+    var SEARCH_KEYWORD :String =""
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -84,7 +85,7 @@ class JenisCatatanFragmentData(context: Context, val fm: FragmentManager) : Frag
     }
 
     fun updateContent() {
-        //getSemuaJenisCatatan(recyclerView!!, databaseQueryHelper!!)
+        search(SEARCH_KEYWORD,databaseQueryHelper!!)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

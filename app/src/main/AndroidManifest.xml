@@ -13,6 +13,7 @@
         <activity android:name=".ui.prf_request.InputPRFCandidateActivity" />
         <activity android:name=".ui.prf_request.EditPRFRequestActivity" />
         <activity android:name=".ui.prf_request.InputPRFRequestActivity" />
+        <activity android:name=".ui.employee_training.EmployeeTrainingFormActivity"></activity>
         <activity android:name=".ui.leave_request.LeaveRequestDetailActivity"/>
         <activity android:name=".ui.leave_request.LeaveRequestAddActivity" />
         <activity android:name=".ui.project.ProjectFormActivity" />

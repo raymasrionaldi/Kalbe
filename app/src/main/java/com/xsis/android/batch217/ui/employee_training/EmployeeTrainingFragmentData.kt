@@ -1,6 +1,7 @@
 package com.xsis.android.batch217.ui.employee_training
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import androidx.appcompat.widget.SearchView
@@ -17,6 +18,7 @@ import com.xsis.android.batch217.adapters.fragments.EmployeeTrainingFragmentAdap
 import com.xsis.android.batch217.databases.DatabaseHelper
 import com.xsis.android.batch217.databases.EmployeeTrainingQueryHelper
 import com.xsis.android.batch217.models.EmployeeTraining
+import com.xsis.android.batch217.ui.keluarga.KeluargaFormActivity
 
 class EmployeeTrainingFragmentData(context: Context, val fm: FragmentManager) : Fragment() {
     var recyclerView: RecyclerView? = null
@@ -42,11 +44,11 @@ class EmployeeTrainingFragmentData(context: Context, val fm: FragmentManager) : 
         val dividerItemDecoration = DividerItemDecoration(context, layoutManager.orientation)
         recyclerView!!.addItemDecoration(dividerItemDecoration)
 
-        val buttonAdd =
-            customView.findViewById(R.id.buttonAddEmployeeTraining) as FloatingActionButton
+        val buttonAdd =customView.findViewById(R.id.buttonAddEmployeeTraining) as FloatingActionButton
         buttonAdd.setOnClickListener {
             addData()
         }
+
 
         val databaseHelper = DatabaseHelper(context!!)
         databaseQueryHelper = EmployeeTrainingQueryHelper(databaseHelper)
@@ -57,12 +59,8 @@ class EmployeeTrainingFragmentData(context: Context, val fm: FragmentManager) : 
     }
 
     fun addData() {
-        val viewPager = view!!.parent as ViewPager
-        val adapter = viewPager.adapter!! as EmployeeTrainingFragmentAdapter
-        val fragment = fm.fragments[1] as EmployeeTrainingFragmentForm
-        fragment.modeAdd()
-        adapter.notifyDataSetChanged()
-        viewPager.setCurrentItem(1, true)
+        val intent = Intent(context, EmployeeTrainingFormActivity::class.java)
+        startActivity(intent)
     }
 
     fun getSemuaEmployeeTraining(

@@ -5,7 +5,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import com.xsis.android.batch217.ui.employee_training.EmployeeTrainingFragmentData
-import com.xsis.android.batch217.ui.employee_training.EmployeeTrainingFragmentForm
+import com.xsis.android.batch217.ui.employee_training.EmployeeTrainingFragmentDetail
 
 class EmployeeTrainingFragmentAdapter(val context: Context, val fm: FragmentManager) :
     FragmentPagerAdapter(fm) {
@@ -13,7 +13,7 @@ class EmployeeTrainingFragmentAdapter(val context: Context, val fm: FragmentMana
         if (position == 0) {
             return EmployeeTrainingFragmentData(context, fm)
         } else if (position == 1) {
-            return EmployeeTrainingFragmentForm(context, fm)
+            return EmployeeTrainingFragmentDetail(context, fm)
         } else
             return Fragment()
     }
