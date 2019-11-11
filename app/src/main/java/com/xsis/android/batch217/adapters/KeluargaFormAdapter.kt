@@ -40,6 +40,7 @@ class KeluargaFormAdapter(val id:Int,val context: Context, val listAnggota:Array
 
         holder.confirm.setOnClickListener {
             holder.setModelKonfirm(listAnggota)
+            notifyDataSetChanged()
         }
 
 

@@ -88,7 +88,6 @@ class KeluargaFormActivity : AppCompatActivity() {
         linearLayout!!.setOnClickListener{ hideKeyboard() }
     }
 
-
     fun tambahAnggota(listAnggota:ArrayList<String>, anggotaRecycler:RecyclerView){
         tambah!!.setOnClickListener {
             if (!listAnggota[listAnggota.size-1].isEmpty()){

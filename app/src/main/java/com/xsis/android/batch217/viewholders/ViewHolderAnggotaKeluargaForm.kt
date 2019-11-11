@@ -41,22 +41,20 @@ class ViewHolderAnggotaKeluargaForm(itemView:View):RecyclerView.ViewHolder(itemV
     fun setModelKonfirm(listAnggota:ArrayList<String>){
         val anggotaBaru = teksEdit.text.toString().trim()
 
-        if (listAnggota.contains(anggotaBaru)){
-            if (anggotaBaru.isEmpty() && listAnggota.size==1){
-                Toast.makeText(itemView.context, "Minimal harus ada 1 hubungan keluarga !", Toast.LENGTH_SHORT).show()
+        if (listAnggota.contains(anggotaBaru) && anggotaBaru.isEmpty() && listAnggota.size==1){
+            Toast.makeText(itemView.context, "Minimal harus ada 1 hubungan keluarga !", Toast.LENGTH_SHORT).show()
 
-            } else if (anggotaBaru.isEmpty() && listAnggota.size != 1){
-                listAnggota.removeAt(listAnggota.size-1)
-            } else{
-                Toast.makeText(itemView.context, "Hubungan Keluarga ini sudah ada ! Mohon ganti hubungan keluarga.", Toast.LENGTH_SHORT).show()
-                println("konfirm (sudah ada !) : $listAnggota")
-            }
-        } else{
+        } else if (listAnggota.contains(anggotaBaru) && !anggotaBaru.isEmpty() && listAnggota.size != 1){
+            Toast.makeText(itemView.context, "Hubungan Keluarga ini sudah ada ! Mohon ganti hubungan keluarga.", Toast.LENGTH_SHORT).show()
+            println("konfirm (sudah ada !) : $listAnggota")
+
+        } else if (anggotaBaru.isEmpty() && listAnggota.size != 1){
+            listAnggota.removeAt(listAnggota.size-1)
+        } else {
             layoutEdit.isVisible = false
             layoutTidakEdit.isVisible = true
             teksTidakEdit.text = anggotaBaru
             listAnggota.set(listAnggota.size-1, anggotaBaru)
-            println("konfirm (aman) : $listAnggota")
         }
     }
 
