@@ -84,7 +84,8 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:hint="@string/man_jenjang_pendidikan"
-                android:text="" />
+                android:text=""
+                android:singleLine="true"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -104,7 +105,7 @@
         android:text="Error : Nama Pendidikan tidak boleh kosong"
         android:textColor="@android:color/holo_red_dark"
         android:visibility="invisible"
-        android:paddingLeft="10dp"/>
+        android:paddingLeft="10dp" />
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -120,7 +121,8 @@
                 android:layout_height="wrap_content"
                 android:text=""
                 android:layout_margin="5dp"
-                android:hint="Deskripsi" />
+                android:hint="Deskripsi"
+                android:singleLine="true"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
