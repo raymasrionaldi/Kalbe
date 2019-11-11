@@ -10,7 +10,6 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.AdapterView
 import android.widget.Toast
-import androidx.core.view.get
 import com.chivorn.smartmaterialspinner.SmartMaterialSpinner
 import com.xsis.android.batch217.R
 import com.xsis.android.batch217.databases.DatabaseHelper
@@ -162,7 +161,8 @@ class ProjectFormActivity : AppCompatActivity() {
     private fun loadDataProject(idProject: Int) {
         val data = databaseQueryHelper!!.cariProjectModelById(idProject)
 
-        val index = listCompany.indexOfFirst { company -> company.idCompany == data.kodeCompProject }
+        val index =
+            listCompany.indexOfFirst { company -> company.idCompany == data.kodeCompProject }
         println("Index $index")
         if (index != -1) {
             spinnerClientNameProject.setSelection(index)
@@ -259,10 +259,10 @@ class ProjectFormActivity : AppCompatActivity() {
         val inputTask = inputMainTaskProject.text.toString().trim()
 
 
-        var isValidate = true
+        var isValid = true
 
         if (index < 0) {
-            isValidate = false
+            isValid = false
             spinnerClientNameProject.errorText = "Required"
         } else {
             idCompany = listCompany[index].idCompany
@@ -270,92 +270,107 @@ class ProjectFormActivity : AppCompatActivity() {
         }
 
         if (inputProjectName.isEmpty()) {
-            isValidate = false
+            isValid = false
             inputProjectNameProject.setHintTextColor(Color.RED)
-            inputProjectNameProject.error = "Required"
+            layoutProjectNameProject.error = "Required"
         } else {
             inputProjectNameProject.setHintTextColor(defaultColor)
-            inputProjectNameProject.error = null
+            layoutProjectNameProject.error = null
         }
 
         if (inputStart.isEmpty()) {
-            isValidate = false
+            isValid = false
             inputStartProject.setHintTextColor(Color.RED)
-            inputStartProject.error = "Required"
+            layoutStartProject.error = "Required"
         } else {
             inputStartProject.setHintTextColor(defaultColor)
-            inputStartProject.error = null
+            layoutStartProject.error = null
         }
 
         if (inputEnd.isEmpty()) {
-            isValidate = false
+            isValid = false
             inputEndProject.setHintTextColor(Color.RED)
-            inputEndProject.error = "Required"
+            layoutEndProject.error = "Required"
         } else {
             inputEndProject.setHintTextColor(defaultColor)
-            inputEndProject.error = null
+            layoutEndProject.error = null
         }
 
         if (inputRole.isEmpty()) {
-            isValidate = false
+            isValid = false
             inputRoleProject.setHintTextColor(Color.RED)
-            inputRoleProject.error = "Required"
+            layoutRoleProject.error = "Required"
         } else {
             inputRoleProject.setHintTextColor(defaultColor)
-            inputRoleProject.error = null
+            layoutRoleProject.error = null
         }
 
         if (inputPhase.isEmpty()) {
-            isValidate = false
+            isValid = false
             inputProjectPhaseProject.setHintTextColor(Color.RED)
-            inputProjectPhaseProject.error = "Required"
+            layoutProjectPhaseProject.error = "Required"
         } else {
             inputProjectPhaseProject.setHintTextColor(defaultColor)
-            inputProjectPhaseProject.error = null
+            layoutProjectPhaseProject.error = null
         }
 
         if (inputDes.isEmpty()) {
-            isValidate = false
+            isValid = false
             inputProjectDesProject.setHintTextColor(Color.RED)
-            inputProjectDesProject.error = "Required"
+            layoutProjectDesProject.error = "Required"
         } else {
             inputProjectDesProject.setHintTextColor(defaultColor)
-            inputProjectDesProject.error = null
+            layoutProjectDesProject.error = null
         }
 
         if (inputTech.isEmpty()) {
-            isValidate = false
+            isValid = false
             inputProjectTechProject.setHintTextColor(Color.RED)
-            inputProjectTechProject.error = "Required"
+            layoutProjectTechProject.error = "Required"
         } else {
             inputProjectTechProject.setHintTextColor(defaultColor)
-            inputProjectTechProject.error = null
+            layoutProjectTechProject.error = null
         }
 
         if (inputTask.isEmpty()) {
-            isValidate = false
+            isValid = false
             inputMainTaskProject.setHintTextColor(Color.RED)
-            inputMainTaskProject.error = "Required"
+            layoutMainTaskProject.error = "Required"
         } else {
             inputMainTaskProject.setHintTextColor(defaultColor)
-            inputMainTaskProject.error = null
+            layoutMainTaskProject.error = null
         }
 
-        if (isValidate) {
+        // check valid duration
+        if (inputStart.isNotEmpty() && inputEnd.isNotEmpty()) {
+
+            val startDate = Calendar.getInstance()
+            val endDate = Calendar.getInstance()
+            val formatter = SimpleDateFormat(DATE_PATTERN)
+
+            startDate.time = formatter.parse(inputStart)
+            endDate.time = formatter.parse(inputEnd)
+            if(!startDate.before(endDate)){
+                Toast.makeText(context, "Input Start dan End salah", Toast.LENGTH_SHORT).show()
+                isValid = false
+            }
+        }
+
+        if (isValid) {
             val model = Project()
             model.idProject = idProject
-            model.kodeCompProject= idCompany
-            model.locationProject=inputLocation
-            model.departmentProject=inputDepartement
-            model.userProject=inputUserName
-            model.nameProject=inputProjectName
-            model.startProject=inputStart
-            model.endProject=inputEnd
-            model.roleProject=inputRole
-            model.phaseProject=inputPhase
-            model.desProject=inputDes
-            model.techProject=inputTech
-            model.taskProject=inputTask
+            model.kodeCompProject = idCompany
+            model.locationProject = inputLocation
+            model.departmentProject = inputDepartement
+            model.userProject = inputUserName
+            model.nameProject = inputProjectName
+            model.startProject = inputStart
+            model.endProject = inputEnd
+            model.roleProject = inputRole
+            model.phaseProject = inputPhase
+            model.desProject = inputDes
+            model.techProject = inputTech
+            model.taskProject = inputTask
 
             //add
             if (idProject == 0) {
@@ -365,7 +380,7 @@ class ProjectFormActivity : AppCompatActivity() {
                     Toast.makeText(context, SIMPAN_DATA_BERHASIL, Toast.LENGTH_SHORT)
                         .show()
                 }
-            //update
+                //update
             } else if (idProject != 0) {
                 if (databaseQueryHelper!!.editProject(model) == 0) {
                     Toast.makeText(context, EDIT_DATA_GAGAL, Toast.LENGTH_SHORT)

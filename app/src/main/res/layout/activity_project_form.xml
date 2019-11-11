@@ -31,8 +31,11 @@
                 style="@style/spinnerStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="4dp"
+                android:layout_marginRight="4dp"
                 app:smsp_enableFloatingLabel="false"
                 app:smsp_hint="Client Name *"
+                app:smsp_hintSize="18sp"
                 app:smsp_itemSize="18sp"
                 app:smsp_multilineError="false" />
 
@@ -62,6 +65,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:errorEnabled="true"
+                app:errorTextAppearance="@style/errorTextInputLayout"
                 app:hintEnabled="false">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -77,6 +81,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:errorEnabled="true"
+                app:errorTextAppearance="@style/errorTextInputLayout"
                 app:hintEnabled="false">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -93,6 +98,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:errorEnabled="true"
+                app:errorTextAppearance="@style/errorTextInputLayout"
                 app:hintEnabled="false">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -109,6 +115,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:errorEnabled="true"
+                app:errorTextAppearance="@style/errorTextInputLayout"
                 app:hintEnabled="false">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -124,6 +131,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:errorEnabled="true"
+                app:errorTextAppearance="@style/errorTextInputLayout"
                 app:hintEnabled="false">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -139,6 +147,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:errorEnabled="true"
+                app:errorTextAppearance="@style/errorTextInputLayout"
                 app:hintEnabled="false">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -154,6 +163,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:errorEnabled="true"
+                app:errorTextAppearance="@style/errorTextInputLayout"
                 app:hintEnabled="false">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -169,6 +179,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:errorEnabled="true"
+                app:errorTextAppearance="@style/errorTextInputLayout"
                 app:hintEnabled="false">
 
                 <com.google.android.material.textfield.TextInputEditText
