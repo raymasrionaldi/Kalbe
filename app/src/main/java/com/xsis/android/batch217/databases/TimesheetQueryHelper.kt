@@ -16,6 +16,7 @@ class TimesheetQueryHelper (val databaseHelper: DatabaseHelper) {
     }
 
     private fun konversiCursorKeListTimesheetModel(cursor: Cursor): ArrayList<Timesheet> {
+
         var listTimesheet = ArrayList<Timesheet>()
 
         for (c in 0 until cursor.count) {

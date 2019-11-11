@@ -35,11 +35,25 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"/>
+            <TextView
+                android:id="@+id/requiredStatusTimesheet"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Required"
+                android:textColor="@android:color/holo_red_dark"
+                android:visibility="gone" />
             <Spinner
                 android:id="@+id/inputClientTimesheet"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"/>
+            <TextView
+                android:id="@+id/requiredClientTimesheet"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Required"
+                android:textColor="@android:color/holo_red_dark"
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/inputReportDateEntryTimesheet"
@@ -49,6 +63,13 @@
                 android:drawableRight="@android:drawable/ic_menu_my_calendar"
                 android:hint="Report Date"
                 android:textColorHint="@color/warnaBlack" />
+            <TextView
+                android:id="@+id/requiredReportDateTimesheet"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Required"
+                android:textColor="@android:color/holo_red_dark"
+                android:visibility="gone" />
             <EditText
                 android:id="@+id/inputStarDatetEntryTimesheet"
                 android:layout_width="match_parent"
