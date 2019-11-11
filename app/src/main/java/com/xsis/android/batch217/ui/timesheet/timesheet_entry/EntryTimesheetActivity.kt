@@ -1,16 +1,12 @@
 package com.xsis.android.batch217.ui.timesheet.timesheet_entry
-
 import android.app.DatePickerDialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ArrayAdapter
 import androidx.core.view.isVisible
-
 import com.xsis.android.batch217.R
-
 import com.xsis.android.batch217.databases.DatabaseHelper
 import com.xsis.android.batch217.databases.TimesheetQueryHelper
-
 import com.xsis.android.batch217.models.Timesheet
 import com.xsis.android.batch217.ui.timesheet.ARRAY_CLIENT_TIMESHEET
 import com.xsis.android.batch217.ui.timesheet.ARRAY_OVERTIME_TIMESHEET
