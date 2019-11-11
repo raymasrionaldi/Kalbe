@@ -2,9 +2,7 @@ package com.xsis.android.batch217.databases
 
 import android.database.Cursor
 import com.xsis.android.batch217.models.PRFRequest
-import com.xsis.android.batch217.utils.IS_DELETED
-import com.xsis.android.batch217.utils.PLACEMENT
-import com.xsis.android.batch217.utils.TABEL_PRF_REQUEST
+import com.xsis.android.batch217.utils.*
 
 class PRFRequestQueryHelper (val databaseHelper: DatabaseHelper) {
 
@@ -68,6 +66,50 @@ class PRFRequestQueryHelper (val databaseHelper: DatabaseHelper) {
                 listPRFRequest = konversiCursorKeListPRFRequestModel(cursor)
             }
         }
+        return listPRFRequest
+    }
+
+    fun readPlacementPRF (placement: String): List<PRFRequest> {
+        var listPRFRequest = ArrayList<PRFRequest>()
+
+        val db = databaseHelper.readableDatabase
+        val queryCari = "SELECT * FROM $TABEL_PRF_REQUEST " +
+                "WHERE $PLACEMENT = '$placement' "
+        val cursor = db.rawQuery(queryCari, null)
+
+        if (cursor.count > 0) {
+            listPRFRequest = konversiCursorKeListPRFRequestModel(cursor)
+        }
+
+        return listPRFRequest
+    }
+
+    fun updatePRFRequest(type: String,
+                         placement: String,
+                         pid: String,
+                         location: String,
+                         period: String,
+                         userName: String,
+                         telpMobilePhone: String,
+                         email: String,
+                         notebook: String,
+                         overtime: String,
+                         bast: String,
+                         billing: String): List<PRFRequest> {
+        var listPRFRequest = ArrayList<PRFRequest>()
+
+        val db = databaseHelper.writableDatabase
+        val queryUpdate = "UPDATE $TABEL_PRF_REQUEST " +
+                "SET $TYPE = '$type', $PID = '$pid', $LOCATION = '$location', $PERIOD = '$location', " +
+                "$USER_NAME = '$userName', $TELP_NUMBER = '$telpMobilePhone', $EMAIL = '$email'," +
+                "$NOTEBOOK = '$notebook', $OVERTIME = '$overtime', $BAST = '$bast', $BILLING = '$billing'," +
+                "  $IS_DELETED = 'false' " +
+                "WHERE $PLACEMENT = '$placement' AND $IS_DELETED = 'true'"
+        val cursor = db.rawQuery(queryUpdate, null)
+        if (cursor.count > 0) {
+            listPRFRequest = konversiCursorKeListPRFRequestModel(cursor)
+        }
+        println(queryUpdate)
         return listPRFRequest
     }
 

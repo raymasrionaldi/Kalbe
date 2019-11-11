@@ -1,6 +1,7 @@
 package com.xsis.android.batch217.ui.prf_request
 
 import android.app.DatePickerDialog
+import android.content.ContentValues
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -9,8 +10,13 @@ import android.text.TextWatcher
 import android.view.Window
 import android.view.WindowManager
 import android.widget.ArrayAdapter
+import android.widget.Button
+import android.widget.EditText
+import android.widget.Toast
 import androidx.core.view.isVisible
 import com.xsis.android.batch217.R
+import com.xsis.android.batch217.databases.DatabaseHelper
+import com.xsis.android.batch217.databases.PRFRequestQueryHelper
 import com.xsis.android.batch217.utils.*
 import kotlinx.android.synthetic.main.activity_edit_prfrequest.*
 import kotlinx.android.synthetic.main.activity_input_prfrequest.*
@@ -19,6 +25,15 @@ import java.util.*
 
 class InputPRFRequestActivity : AppCompatActivity() {
     val context = this
+    var buttonReset: Button? = null
+    var placement: EditText? = null
+    var location: EditText? = null
+    var period: EditText? = null
+    var userName: EditText? = null
+    var telpMobilePhone: EditText? = null
+    var email: EditText? = null
+    var overtime: EditText? = null
+    var billing: EditText? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,6 +48,14 @@ class InputPRFRequestActivity : AppCompatActivity() {
             this.supportActionBar!!.hide()
         } catch (e: NullPointerException){
         }
+        placement = inputPlacementPRF
+        location = inputLocationPRF
+        period = inputPeriodPRF
+        userName = inputUserNamePRF
+        telpMobilePhone = inputTelpPRF
+        email = inputEmailPRF
+        overtime = inputOvertimePRF
+        billing = inputBillingPRF
 
         buttonBackInputPRFRequest.setOnClickListener{
             finish()
@@ -52,22 +75,30 @@ class InputPRFRequestActivity : AppCompatActivity() {
             validasiInput()
         }
 
+        placement!!.addTextChangedListener(textWatcher)
+        location!!.addTextChangedListener(textWatcher)
+        period!!.addTextChangedListener(textWatcher)
+        userName!!.addTextChangedListener(textWatcher)
+        telpMobilePhone!!.addTextChangedListener(textWatcher)
+        email!!.addTextChangedListener(textWatcher)
+        overtime!!.addTextChangedListener(textWatcher)
+        billing!!.addTextChangedListener(textWatcher)
+
     }
 
     fun validasiInput() {
-        val tanggal = inputTanggalPRF.text.toString().trim()
         val type = spinnerInputTypePRF.selectedItemPosition
-        val placement = inputPlacementPRF.text.toString().trim()
+        val placement = placement!!.text.toString().trim()
         val PID = spinnerInputPIDPRF.selectedItemPosition
-        val location = inputLocationPRF.text.toString().trim()
-        val period = inputPeriodPRF.text.toString().trim()
-        val userName = inputUserNamePRF.text.toString().trim()
-        val telpMobilePhone = inputTelpPRF.text.toString().trim()
-        val email = inputEmailPRF.text.toString().trim()
+        val location = location!!.text.toString().trim()
+        val period = period!!.text.toString().trim()
+        val userName = userName!!.text.toString().trim()
+        val telpMobilePhone = telpMobilePhone!!.text.toString().trim()
+        val email = email!!.text.toString().trim()
         val notebook = spinnerInputNotebookPRF.selectedItemPosition
-        val overtime = inputOvertimePRF.text.toString().trim()
+        val overtime = overtime!!.text.toString().trim()
         val BAST = spinnerInputBastPRF.selectedItemPosition
-        val billing = inputBillingPRF.text.toString().trim()
+        val billing = billing!!.text.toString().trim()
 
         if (type == 0) {
             inputTypePRF.setHintTextColor(Color.RED)
@@ -102,7 +133,18 @@ class InputPRFRequestActivity : AppCompatActivity() {
             requiredNotebookPRFRequest.isVisible = true
         }
         else {
-
+            insertKeDatabase(ARRAY_TYPE[type],
+                placement,
+                ARRAY_PID[PID],
+                location,
+                period,
+                userName,
+                telpMobilePhone,
+                email,
+                ARRAY_NOTEBOOK[notebook],
+                overtime,
+                ARRAY_BAST[BAST],
+                billing)
         }
 
     }
@@ -123,8 +165,52 @@ class InputPRFRequestActivity : AppCompatActivity() {
         inputBillingPRF.setText("")
     }
 
-    fun insertKeDatabase() {
-
+    fun insertKeDatabase(type: String,
+                         placement: String,
+                         pid: String,
+                         location: String,
+                         period: String,
+                         userName: String,
+                         telpMobilePhone: String,
+                         email: String,
+                         notebook: String,
+                         overtime: String,
+                         bast: String,
+                         billing: String) {
+        val databaseHelper = DatabaseHelper(context)
+        val db = databaseHelper.writableDatabase
+        val databaseQueryHelper = PRFRequestQueryHelper(databaseHelper)
+        val listPRFRequest = databaseQueryHelper.readPlacementPRF(placement)
+        if (!listPRFRequest.isEmpty()){
+            //cek id_deleted
+            if(listPRFRequest[0].is_Deleted == "true"){
+                //update tru jadi false
+                databaseQueryHelper.updatePRFRequest(type,placement,pid,location,period,userName,telpMobilePhone,email,notebook,overtime,bast,billing)
+                Toast.makeText(this, SIMPAN_DATA_BERHASIL, Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(this, DATA_SUDAH_ADA, Toast.LENGTH_SHORT).show()
+            }
+        } else {
+            //jika tidak maka insert
+            //cek nama
+            val content = ContentValues()
+            content.put(TYPE, type)
+            content.put(PLACEMENT, placement)
+            content.put(PID, pid)
+            content.put(LOCATION, location)
+            content.put(PERIOD, period)
+            content.put(USER_NAME, userName)
+            content.put(TELP_NUMBER, telpMobilePhone)
+            content.put(EMAIL, email)
+            content.put(NOTEBOOK, notebook)
+            content.put(OVERTIME, overtime)
+            content.put(BAST, bast)
+            content.put(BILLING, billing)
+            content.put(IS_DELETED, "false")
+            val db = DatabaseHelper(this).writableDatabase
+            db.insert(TABEL_PRF_REQUEST, null, content)
+            Toast.makeText(this, SIMPAN_DATA_BERHASIL, Toast.LENGTH_SHORT).show()
+        }
     }
 
     fun setReportDatePRFRequestPicker(){
@@ -190,40 +276,25 @@ class InputPRFRequestActivity : AppCompatActivity() {
     }
 
     private val textWatcher = object : TextWatcher {
-        override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
-
-        }
-
+        override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) { }
         override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-            val buttonReset = buttonResetPRFRequest
-            val tanggal = inputTanggalPRF.text.toString().trim()
-            val placement = inputPlacementPRF.text.toString().trim()
-            val location = inputLocationPRF.text.toString().trim()
-            val period = inputPeriodPRF.text.toString().trim()
-            val userName = inputUserNamePRF.text.toString().trim()
-            val telpMobilePhone = inputTelpPRF.text.toString().trim()
-            val email = inputEmailPRF.text.toString().trim()
-            val overtime = inputOvertimePRF.text.toString().trim()
-            val billing = inputBillingPRF.text.toString().trim()
-            val type = spinnerInputTypePRF.selectedItemPosition
-            val PID = spinnerInputPIDPRF.selectedItemPosition
-            val notebook = spinnerInputNotebookPRF.selectedItemPosition
-            val BAST = spinnerInputBastPRF.selectedItemPosition
+            buttonReset = buttonResetPRFRequest
+            val placementTeks = placement!!.text.toString().trim()
+            val locationTeks = location!!.text.toString().trim()
+            val periodTeks = period!!.text.toString().trim()
+            val userNameTeks = userName!!.text.toString().trim()
+            val telpMobilePhoneTeks = telpMobilePhone!!.text.toString().trim()
+            val emailTeks = email!!.text.toString().trim()
+            val overtimeTeks = overtime!!.text.toString().trim()
+            val billingTeks = billing!!.text.toString().trim()
 
+            val kondisi = !placementTeks.isEmpty() || !locationTeks.isEmpty() || !periodTeks.isEmpty()
+                            || !userNameTeks.isEmpty() || !telpMobilePhoneTeks.isEmpty() || !emailTeks.isEmpty()
+                            || !overtimeTeks.isEmpty() || !billingTeks.isEmpty()
 
-            val kondisi = !tanggal.isEmpty() || !placement.isEmpty()
-                                    || !location.isEmpty() || !period.isEmpty()
-                                    || !userName.isEmpty() || !telpMobilePhone.isEmpty()
-                                    || !email.isEmpty() || !overtime.isEmpty()
-                                    || !billing.isEmpty() || type != 0 || PID != 0
-                                    || notebook != 0 || BAST != 0
-
-            ubahResetButton(context, kondisi, buttonReset)
+            ubahResetButton(context, kondisi, buttonReset!!)
         }
-
-        override fun afterTextChanged(s: Editable) {
-
-        }
+        override fun afterTextChanged(s: Editable) { }
     }
 
 
