@@ -34,8 +34,8 @@ class EntryTimesheetActivity : AppCompatActivity() {
         setReportDateTimesheetPicker()
         setStartReportDateTimesheetPicker()
 //        setEndReportDateTimesheetPicker()
-//        isiSpinnerClientTimesheet()
-//        isiSpinnerOvertimeTimesheet()
+        isiSpinnerClientTimesheet()
+        isiSpinnerOvertimeTimesheet()
         buttonSaveEntryFormTimesheet.setOnClickListener {
             validasiInputFormEntry()
         }
@@ -104,15 +104,7 @@ class EntryTimesheetActivity : AppCompatActivity() {
         adapterStatusTimesheet.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         inputStatusTimesheet.adapter = adapterStatusTimesheet
 
-//        val adapterClientTimesheet = ArrayAdapter<String>(context,android.R.layout.simple_spinner_item,
-//            ARRAY_CLIENT_TIMESHEET)
-//        adapterClientTimesheet.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-//        inputStatusTimesheet.adapter = adapterClientTimesheet
-//
-//        val adapterOvertimeTimesheet = ArrayAdapter<String>(context,android.R.layout.simple_spinner_item,
-//            ARRAY_OVERTIME_TIMESHEET)
-//        adapterOvertimeTimesheet.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-//        inputStatusTimesheet.adapter = adapterOvertimeTimesheet
+
 
     }
     fun setReportDateTimesheetPicker(){
@@ -141,15 +133,17 @@ class EntryTimesheetActivity : AppCompatActivity() {
 
     }
     fun isiSpinnerClientTimesheet(){
-//        val adapterClientTimesheet = ArrayAdapter<String>(context,android.R.layout.simple_spinner_item,
-//            ARRAY_CLIENT_TIMESHEET)
-//        adapterClientTimesheet.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-//        inputStatusTimesheet.adapter = adapterClientTimesheet
+        val adapterClientTimesheet = ArrayAdapter<String>(context,android.R.layout.simple_spinner_item,
+            ARRAY_CLIENT_TIMESHEET)
+        adapterClientTimesheet.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        inputClientTimesheet.adapter = adapterClientTimesheet
     }
     fun isiSpinnerOvertimeTimesheet(){
-//        val adapterOvertimeTimesheet = ArrayAdapter<String>(context,android.R.layout.simple_spinner_item,
-//            ARRAY_OVERTIME_TIMESHEET)
-//        adapterOvertimeTimesheet.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-//        inputStatusTimesheet.adapter = adapterOvertimeTimesheet
+        val adapterOvertimeTimesheet = ArrayAdapter<String>(context,android.R.layout.simple_spinner_item,
+            ARRAY_OVERTIME_TIMESHEET)
+        adapterOvertimeTimesheet.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        inputOvertimeTimesheet.adapter = adapterOvertimeTimesheet
+
+
     }
 }
