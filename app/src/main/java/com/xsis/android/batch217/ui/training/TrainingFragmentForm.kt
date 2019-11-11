@@ -1,5 +1,6 @@
 package com.xsis.android.batch217.ui.training
 
+import android.app.Activity
 import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
@@ -8,6 +9,7 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
@@ -225,6 +227,7 @@ class TrainingFragmentForm(context: Context, val fm: FragmentManager) : Fragment
                 }
             }
 
+            hideKeyboard()
             val viewPager = view!!.parent as ViewPager
             val adapter = viewPager.adapter!! as TrainingFragmentAdapter
             val fragment = fm.fragments[0] as TrainingFragmentData
@@ -239,5 +242,18 @@ class TrainingFragmentForm(context: Context, val fm: FragmentManager) : Fragment
         nama!!.setHintTextColor(defaultColor)
         requiredCode!!.visibility = View.INVISIBLE
         requiredNama!!.visibility = View.INVISIBLE
+    }
+
+    fun Fragment.hideKeyboard() {
+        view?.let { activity?.hideKeyboard(it) }
+    }
+
+    fun Activity.hideKeyboard() {
+        hideKeyboard(currentFocus ?: View(this))
+    }
+
+    fun Context.hideKeyboard(view: View) {
+        val inputMethodManager = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
     }
 }

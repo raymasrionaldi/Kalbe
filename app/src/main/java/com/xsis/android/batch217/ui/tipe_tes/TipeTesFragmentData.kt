@@ -23,6 +23,7 @@ import kotlinx.android.synthetic.main.fragment_form_tipe_tes.*
 class TipeTesFragmentData(context: Context, val fm: FragmentManager) : Fragment() {
     var recyclerView: RecyclerView? = null
     var databaseQueryHelper: TipeTesQueryHelper? = null
+    var SEARCH_KEYWORD :String =""
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -106,6 +107,6 @@ class TipeTesFragmentData(context: Context, val fm: FragmentManager) : Fragment(
     }
 
     fun updateContent() {
-        getSemuaTipeTes(recyclerView!!, databaseQueryHelper!!)
+        search(SEARCH_KEYWORD,databaseQueryHelper!!)
     }
 }
