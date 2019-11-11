@@ -3,8 +3,11 @@ package com.xsis.android.batch217.databases
 import android.database.Cursor
 import com.xsis.android.batch217.models.LeaveRequest
 import com.xsis.android.batch217.utils.*
+import java.util.*
+import kotlin.collections.ArrayList
 
 class LeaveRequestQueryHelper(val databaseHelper: DatabaseHelper) {
+     val currentYear = Calendar.getInstance().get(Calendar.YEAR)
 
      fun getSemuaLeaveRequest(): Cursor {
         val db = databaseHelper.readableDatabase
@@ -71,9 +74,12 @@ class LeaveRequestQueryHelper(val databaseHelper: DatabaseHelper) {
                     "b.*," +
                     "c.* " +
                     "FROM $TABEL_LEAVE_REQUEST a " +
-                    "INNER JOIN  $TABEL_LEAVE_TYPE b ON a.$ID_LEAVE_TYPE=b.$ID_LEAVE_TYPE " +
-                    "LEFT JOIN $TABEL_CUTI_KHUSUS c ON a.$ID_CUTI_KHUSUS=c.$ID_CUTI_KHUSUS " +
-                    "WHERE a.$START LIKE '%$keyword%' AND a.$IS_DELETED ='false'"
+                        "INNER JOIN  $TABEL_LEAVE_TYPE b ON a.$ID_LEAVE_TYPE=b.$ID_LEAVE_TYPE " +
+                        "LEFT JOIN $TABEL_CUTI_KHUSUS c ON a.$ID_CUTI_KHUSUS=c.$ID_CUTI_KHUSUS " +
+                    "WHERE " +
+                        "a.$START LIKE '%$keyword%' " +
+                        "AND a.$START LIKE '%$currentYear' " +
+                        "AND a.$IS_DELETED ='false'"
 
             val cursor = db.rawQuery(queryCari, null)
             if (cursor.count > 0) {
@@ -100,5 +106,12 @@ class LeaveRequestQueryHelper(val databaseHelper: DatabaseHelper) {
             listLeaveRequest = konversiCursorKeListLeaveRequestModel(cursor)
         }
         return listLeaveRequest
+    }
+
+    fun getPrevYearLeave():Int{
+        var prevYearLeave=0
+
+        return prevYearLeave
+
     }
 }

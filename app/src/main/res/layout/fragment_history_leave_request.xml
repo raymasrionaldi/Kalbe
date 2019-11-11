@@ -25,7 +25,7 @@
             android:paddingBottom="40dp"/>
     </LinearLayout>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
+    <!--<com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/buttonAddLeaveRequest"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -33,5 +33,5 @@
         app:backgroundTint="@color/warnaBiru"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/ic_add_white" />
+        app:srcCompat="@drawable/ic_add_white" />-->
 </androidx.constraintlayout.widget.ConstraintLayout>

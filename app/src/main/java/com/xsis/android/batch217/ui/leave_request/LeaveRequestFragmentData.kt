@@ -29,12 +29,6 @@ class LeaveRequestFragmentData(context: Context, val fm: FragmentManager):Fragme
             false
         )
 
-        val buttonAdd =
-            customView.findViewById(R.id.buttonAddLeaveRequest) as FloatingActionButton
-        buttonAdd.setOnClickListener {
-            addData()
-        }
-
         val prevLeave: TextView = customView.findViewById(R.id.prevYearQuota) as TextView
             prevLeave.text="0"
         val regularLeave: TextView = customView.findViewById(R.id.regularQuota) as TextView
@@ -58,16 +52,5 @@ class LeaveRequestFragmentData(context: Context, val fm: FragmentManager):Fragme
         var sisaMenit=lamaMenitParkir%60
        */
         return customView
-    }
-
-    fun addData() {
-        val intent=Intent(context,LeaveRequestAddActivity::class.java)
-        startActivity(intent)
-//        val viewPager = view!!.parent as ViewPager
-//        val adapter = viewPager.adapter!! as LeaveRequestFragmentAdapter
-//        val fragment = fm.fragments[1] as LeaveRequestFragmentHistory
-//        fragment.modeAdd()
-//        adapter.notifyDataSetChanged()
-//        viewPager.setCurrentItem(1, true)
     }
 }
