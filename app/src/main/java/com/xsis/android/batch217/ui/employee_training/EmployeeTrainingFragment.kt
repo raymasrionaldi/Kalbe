@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
+import com.google.android.material.tabs.TabLayout
 import com.xsis.android.batch217.R
 import com.xsis.android.batch217.adapters.fragments.EmployeeTrainingFragmentAdapter
 import com.xsis.android.batch217.utils.CustomViewPager
@@ -32,6 +33,12 @@ class EmployeeTrainingFragment: Fragment(), OnBackPressedListener {
         viewPager.adapter = fragmentAdapter
 
         viewPager.setSwipePagingEnabled(false)
+
+        val slidingTabs = root.findViewById(R.id.slidingTabsEmployeeTraining) as TabLayout
+        slidingTabs.setupWithViewPager(viewPager)
+
+        //nonaktifkan klik tab
+        slidingTabs.touchables.forEach { view -> view.isEnabled = false }
 
         return root
     }

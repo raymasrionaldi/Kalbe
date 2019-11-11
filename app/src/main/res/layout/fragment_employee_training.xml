@@ -13,6 +13,15 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/slidingTabsEmployeeTraining"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:tabIndicatorColor="@color/warnaBiru"
+            app:tabSelectedTextColor="@color/warnaBiru"
+            app:tabTextColor="@color/warnaBiruUnselected"
+            app:tabMode="fixed" />
+
         <com.xsis.android.batch217.utils.CustomViewPager
             android:id="@+id/viewPagerEmployeeTraining"
             android:layout_width="match_parent"

@@ -6,21 +6,23 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
-import android.widget.*
+import android.widget.Button
+import android.widget.EditText
+import android.widget.TextView
+import android.widget.Toast
 import com.xsis.android.batch217.R
 import com.xsis.android.batch217.databases.DatabaseHelper
 import com.xsis.android.batch217.databases.EmployeeTrainingQueryHelper
 import com.xsis.android.batch217.models.EmployeeTraining
 import com.xsis.android.batch217.utils.*
-import kotlinx.android.synthetic.main.fragment_detail_employee_training.*
+import kotlinx.android.synthetic.main.activity_employee_training_edit.*
 
-class EmployeeTrainingFormActivity : AppCompatActivity() {
+class EmployeeTrainingEditActivity : AppCompatActivity() {
 
     val context = this
     var databaseQueryHelper: EmployeeTrainingQueryHelper? = null
-    var databaseHelper = DatabaseHelper(context)
-
-    var employeeNameTraineeText: EditText? = null
+    val databaseHelper = DatabaseHelper(context)
+    var employeeTraineeNameText: EditText? = null
     var employeeTrainingNameText: EditText? = null
     var employeeTrainingOrganizerText: EditText? = null
     var employeeTrainingDateText: EditText? = null
@@ -29,31 +31,29 @@ class EmployeeTrainingFormActivity : AppCompatActivity() {
     var buttonReset: Button? = null
     var buttonSimpan: Button? = null
     var defaultColor = 0
-    var idData = 0
+    var ID_EmployeeTraining = 0
     var data = EmployeeTraining()
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_employee_training_form)
-
-        val bundle: Bundle? = intent.extras
-        bundle?.let {
-            idData = bundle!!.getInt(ID_EMPLOYEE_TRAINING)
-            loadDataEmployeeTraining(idData)
-        }
+        setContentView(R.layout.activity_employee_training_edit)
 
         databaseQueryHelper = EmployeeTrainingQueryHelper(databaseHelper)
 
-        employeeNameTraineeText = findViewById(R.id.inputNamaTrainee)
-        employeeTrainingNameText = findViewById(R.id.inputNamaEmployeeTraining)
-        employeeTrainingOrganizerText = findViewById(R.id.inputEmployeeTrainingOrganizer)
-        employeeTrainingDateText = findViewById(R.id.inputEmployeeTrainingDate)
-        employeeTrainingTypeText= findViewById(R.id.inputEmployeeTrainingType)
-        employeeCertificationTypeText = findViewById(R.id.inputEmployeeCertificationType)
+        employeeTraineeNameText = findViewById(R.id.editNamaEmployeeTrainee)
+        employeeTrainingNameText = findViewById(R.id.editNamaEmployeeTraining)
+        employeeTrainingOrganizerText = findViewById(R.id.editEmployeeTrainingOrganizer)
+        employeeTrainingDateText = findViewById(R.id.editEmployeeTrainingDate)
+        employeeTrainingTypeText= findViewById(R.id.editEmployeeTrainingType)
+        employeeCertificationTypeText = findViewById(R.id.editEmployeeCertificationType)
+        buttonSimpan = findViewById(R.id.buttonSaveEmployeeTrainingEdit)
+        buttonReset = findViewById(R.id.buttonResetEmployeeTrainingEdit)
 
-        buttonSimpan = findViewById(R.id.buttonSaveEmployeeTraining)
-        buttonReset = findViewById(R.id.buttonResetEmployeeTraining)
+        val bundle: Bundle? = intent.extras
+        bundle?.let {
+            ID_EmployeeTraining = bundle!!.getInt(ID_EMPLOYEE_TRAINING)
+            loadDataEmployeeTraining(ID_EmployeeTraining)
+        }
 
         buttonSimpan!!.setOnClickListener {
             simpanEmployeeTraining()
@@ -63,8 +63,7 @@ class EmployeeTrainingFormActivity : AppCompatActivity() {
             resetForm()
         }
 
-
-        employeeNameTraineeText!!.addTextChangedListener(textWatcher)
+        employeeTraineeNameText!!.addTextChangedListener(textWatcher)
         employeeTrainingNameText!!.addTextChangedListener(textWatcher)
         employeeTrainingOrganizerText!!.addTextChangedListener(textWatcher)
         employeeTrainingDateText!!.addTextChangedListener(textWatcher)
@@ -74,7 +73,7 @@ class EmployeeTrainingFormActivity : AppCompatActivity() {
     }
 
     fun resetForm() {
-        employeeNameTraineeText!!.setText("")
+        employeeTraineeNameText!!.setText("")
         employeeTrainingNameText!!.setText("")
         employeeTrainingOrganizerText!!.setText("")
         employeeTrainingDateText!!.setText("")
@@ -82,13 +81,14 @@ class EmployeeTrainingFormActivity : AppCompatActivity() {
         employeeCertificationTypeText!!.setText("")
     }
 
+
     private val textWatcher = object : TextWatcher {
         override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
 
         }
 
         override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-            val namaEmployeeTraineeTeks = employeeNameTraineeText!!.text.toString().trim()
+            val namaEmployeeTraineeTeks = employeeTraineeNameText!!.text.toString().trim()
             val namaEmployeeTrainingTeks = employeeTrainingNameText!!.text.toString().trim()
             val namaEmployeeTrainingOrganizerTeks = employeeTrainingOrganizerText!!.text.toString().trim()
             val dateEmployeeTrainingTeks = employeeTrainingDateText!!.text.toString().trim()
@@ -96,7 +96,7 @@ class EmployeeTrainingFormActivity : AppCompatActivity() {
             val certificationEmployeeTrainingTeks = employeeCertificationTypeText!!.text.toString().trim()
 
             val kondisi =
-                namaEmployeeTraineeTeks.isNotEmpty() || namaEmployeeTrainingTeks.isNotEmpty() || namaEmployeeTrainingOrganizerTeks.isNotEmpty() || dateEmployeeTrainingTeks.isNotEmpty()
+                namaEmployeeTrainingTeks.isNotEmpty() || namaEmployeeTrainingTeks.isNotEmpty() || namaEmployeeTrainingOrganizerTeks.isNotEmpty() || dateEmployeeTrainingTeks.isNotEmpty()
                         || typeEmployeeTrainingTeks.isNotEmpty() || certificationEmployeeTrainingTeks.isNotEmpty()
 
             ubahResetButton(context, kondisi, buttonReset!!)
@@ -113,7 +113,7 @@ class EmployeeTrainingFormActivity : AppCompatActivity() {
         val required2 = findViewById(R.id.requiredNamaEmployeeTrainingOrganizer) as TextView
         val required3 = findViewById(R.id.requiredEmployeeTrainingDate) as TextView
 
-        val namaEmployeeTrainee = employeeNameTraineeText!!.text.toString().trim()
+        val namaEmployeeTrainee = employeeTraineeNameText!!.text.toString().trim()
         val namaEmployeeTraining = employeeTrainingNameText!!.text.toString().trim()
         val namaEmployeeTrainingOrganizer = employeeTrainingOrganizerText!!.text.toString().trim()
         val employeeTrainingDate = employeeTrainingDateText!!.text.toString().trim()
@@ -157,14 +157,17 @@ class EmployeeTrainingFormActivity : AppCompatActivity() {
             val cekEmployeeTraining =
                 databaseQueryHelper!!.cekEmployeeTrainingSudahAda(model.namaEmployeeTraining!!)
 
-            if (cekEmployeeTraining > 0) {
+            if ((cekEmployeeTraining != 1 && model.namaEmployeeTraining == data.namaEmployeeTraining) ||
+                (cekEmployeeTraining != 0 && model.namaEmployeeTraining != data.namaEmployeeTraining)
+            ) {
                 Toast.makeText(context, DATA_SUDAH_ADA, Toast.LENGTH_SHORT).show()
                 return
             }
-            if (databaseQueryHelper!!.tambahEmployeeTraining(model) == -1L) {
-                Toast.makeText(context, SIMPAN_DATA_GAGAL, Toast.LENGTH_SHORT).show()
+            if (databaseQueryHelper!!.editEmployeeTraining(model) == 0) {
+                Toast.makeText(context, EDIT_DATA_GAGAL, Toast.LENGTH_SHORT)
+                    .show()
             } else {
-                Toast.makeText(context, SIMPAN_DATA_BERHASIL, Toast.LENGTH_SHORT)
+                Toast.makeText(context, EDIT_DATA_BERHASIL, Toast.LENGTH_SHORT)
                     .show()
             }
 
@@ -192,14 +195,13 @@ class EmployeeTrainingFormActivity : AppCompatActivity() {
             data.typeEmployeeTraining = cursor.getString(5)
             data.typeEmployeeCertification = cursor.getString(6)
             data.isDeleted = cursor.getString(7)
-
-            namaEmployeeTrainee.setText(data.namaTrainee)
-            namaEmployeeTraining.setText(data.namaEmployeeTraining)
-            EmployeeTrainingDate.setText(data.dateEmployeeTraining)
-            namaEmployeeTrainingOrganizer.setText(data.namaEmployeeTO)
-            EmployeeTrainingType.setText(data.typeEmployeeTraining)
-            EmployeeCertificationType.setText(data.typeEmployeeCertification)
+            editNamaEmployeeTrainee.setText(data.namaTrainee)
+            editNamaEmployeeTraining.setText(data.namaEmployeeTraining)
+            editEmployeeTrainingOrganizer.setText(data.namaEmployeeTO)
+            editEmployeeTrainingDate.setText(data.dateEmployeeTraining)
+            editEmployeeTrainingType.setText(data.typeEmployeeTraining)
+            editEmployeeCertificationType.setText(data.typeEmployeeCertification)
         }
-    }
 
+    }
 }

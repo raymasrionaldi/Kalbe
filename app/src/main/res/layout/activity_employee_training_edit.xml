@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.employee_training.EmployeeTrainingFormActivity">
+    tools:context=".ui.employee_training.EmployeeTrainingEditActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -20,19 +20,19 @@
             android:id="@+id/titleFormEmployeeTraining"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Employee Training Form"
+            android:text="Employee Training Edit Form"
             android:textSize="@dimen/title_form_text_size"
             android:textStyle="bold" />
 
         <EditText
-            android:id="@+id/inputNamaTrainee"
+            android:id="@+id/editNamaEmployeeTrainee"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Nama Trainee"
             android:inputType="text"/>
 
         <EditText
-            android:id="@+id/inputNamaEmployeeTraining"
+            android:id="@+id/editNamaEmployeeTraining"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Training *"
@@ -48,7 +48,7 @@
             android:visibility="invisible" />
 
         <EditText
-            android:id="@+id/inputEmployeeTrainingOrganizer"
+            android:id="@+id/editEmployeeTrainingOrganizer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Organizer *"/>
@@ -63,7 +63,7 @@
             android:visibility="invisible" />
 
         <EditText
-            android:id="@+id/inputEmployeeTrainingDate"
+            android:id="@+id/editEmployeeTrainingDate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Training Date *"/>
@@ -78,14 +78,14 @@
             android:visibility="invisible" />
 
         <EditText
-            android:id="@+id/inputEmployeeTrainingType"
+            android:id="@+id/editEmployeeTrainingType"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Training Type"/>
 
 
         <EditText
-            android:id="@+id/inputEmployeeCertificationType"
+            android:id="@+id/editEmployeeCertificationType"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Certification Type"/>
@@ -98,7 +98,7 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/buttonResetEmployeeTraining"
+                android:id="@+id/buttonResetEmployeeTrainingEdit"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -108,7 +108,7 @@
                 android:textColor="@color/warnaTeksResetOff" />
 
             <Button
-                android:id="@+id/buttonSaveEmployeeTraining"
+                android:id="@+id/buttonSaveEmployeeTrainingEdit"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -117,17 +117,6 @@
                 android:textColor="@color/colorWhite" />
         </LinearLayout>
     </LinearLayout>
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/buttonDeleteEmployeeTraining"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/fab_margin"
-        android:visibility="gone"
-        app:backgroundTint="@color/warnaMerah"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/ic_cancel_white" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

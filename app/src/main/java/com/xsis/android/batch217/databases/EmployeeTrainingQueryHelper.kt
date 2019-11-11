@@ -3,14 +3,15 @@ package com.xsis.android.batch217.databases
 import android.content.ContentValues
 import android.database.Cursor
 import com.xsis.android.batch217.models.EmployeeTraining
+import com.xsis.android.batch217.models.Keahlian
 import com.xsis.android.batch217.utils.*
 
 class EmployeeTrainingQueryHelper(val databaseHelper: DatabaseHelper) {
 
-    private fun getSemuaEmployeeTraining(): Cursor {
+    fun getSemuaEmployeeTraining(): Cursor {
         val db = databaseHelper.readableDatabase
 
-        val queryRead = "SELECT * $TABEL_EMPLOYEE_TRAINING WHERE $IS_DELETED = 'false'"
+        val queryRead = "SELECT * FROM $TABEL_EMPLOYEE_TRAINING WHERE $IS_DELETED = 'false'"
 
         return db.rawQuery(queryRead, null)
     }
@@ -23,12 +24,13 @@ class EmployeeTrainingQueryHelper(val databaseHelper: DatabaseHelper) {
 
             val employeeTraining = EmployeeTraining()
             employeeTraining.idEmployeeTraining = cursor.getInt(0)
-            employeeTraining.namaEmployeeTraining = cursor.getString(1)
-            employeeTraining.namaEmployeeTO = cursor.getString(2)
-            employeeTraining.dateEmployeeTraining = cursor.getString(3)
-            employeeTraining.typeEmployeeTraining = cursor.getString(4)
-            employeeTraining.typeEmployeeCerification = cursor.getString(5)
-            employeeTraining.isDeleted = cursor.getString(6)
+            employeeTraining.namaTrainee = cursor.getString(1)
+            employeeTraining.namaEmployeeTraining = cursor.getString(2)
+            employeeTraining.namaEmployeeTO = cursor.getString(3)
+            employeeTraining.dateEmployeeTraining = cursor.getString(4)
+            employeeTraining.typeEmployeeTraining = cursor.getString(5)
+            employeeTraining.typeEmployeeCertification = cursor.getString(6)
+            //employeeTraining.isDeleted = cursor.getString(7)
 
             listEmployeeTraining.add(employeeTraining)
         }
@@ -47,12 +49,73 @@ class EmployeeTrainingQueryHelper(val databaseHelper: DatabaseHelper) {
         return listEmployeeTraining
     }
 
+    fun readNamaEmployeeTraining(nama: String): List<EmployeeTraining> {
+        var listEmployeeTraining = ArrayList<EmployeeTraining>()
+
+        val db = databaseHelper.readableDatabase
+        val queryCari = "SELECT * FROM $TABEL_EMPLOYEE_TRAINING " +
+                "WHERE $NAMA_TRAINEE = '$nama' "
+        val cursor = db.rawQuery(queryCari, null)
+
+        if (cursor.count > 0) {
+            listEmployeeTraining = konversiCursorKeListEmployeeTrainingModel(cursor)
+        }
+
+        return listEmployeeTraining
+    }
+
+    fun updateEmployeeTraining(nama: String, des: String): List<EmployeeTraining> {
+        var listEmployeeTraining = ArrayList<EmployeeTraining>()
+
+        val db = databaseHelper.writableDatabase
+        val queryUpdate = "UPDATE $TABEL_EMPLOYEE_TRAINING " +
+                "SET $NAMA_EMPLOYEE_TRAINING = '$des', $IS_DELETED = 'false' " +
+                "WHERE $NAMA_TRAINEE = '$nama' AND $IS_DELETED = 'true'"
+        val cursor = db.rawQuery(queryUpdate, null)
+        if (cursor.count > 0) {
+            listEmployeeTraining = konversiCursorKeListEmployeeTrainingModel(cursor)
+        }
+        println(queryUpdate)
+        return listEmployeeTraining
+    }
+
+    fun readUpdate(id:Int, nama:String):List<EmployeeTraining>{
+        var listEmployeeTraining = ArrayList<EmployeeTraining>()
+
+        val db = databaseHelper.writableDatabase
+        val queryUpdate = "SELECT * FROM $TABEL_EMPLOYEE_TRAINING " +
+                "WHERE $NAMA_TRAINEE = '$nama' AND $ID_EMPLOYEE_TRAINING != '$id'"
+        val cursor = db.rawQuery(queryUpdate, null)
+        if (cursor.count > 0){
+            listEmployeeTraining = konversiCursorKeListEmployeeTrainingModel(cursor)
+        }
+
+        println(queryUpdate)
+        return listEmployeeTraining
+    }
+
+    fun updateDelete(id:Int, nama: String, des: String):List<EmployeeTraining>{
+        var listEmployeeTraining = ArrayList<EmployeeTraining>()
+
+        val db = databaseHelper.writableDatabase
+        val queryUpdate = "UPDATE $TABEL_EMPLOYEE_TRAINING " +
+                "SET $NAMA_EMPLOYEE_TRAINING = '$des', $NAMA_TRAINEE = '$nama' " +
+                "WHERE $ID_EMPLOYEE_TRAINING = '$id'"
+        val cursor = db.rawQuery(queryUpdate, null)
+        if (cursor.count > 0){
+            listEmployeeTraining = konversiCursorKeListEmployeeTrainingModel(cursor)
+        }
+        println(queryUpdate)
+        return listEmployeeTraining
+    }
+
+
     fun cariEmployeeTrainingModels(keyword: String): List<EmployeeTraining> {
         var listEmployeeTraining = ArrayList<EmployeeTraining>()
         if (keyword.isNotBlank()) {
             val db = databaseHelper.readableDatabase
             val queryCari =
-                "SELECT * FROM $TABEL_EMPLOYEE_TRAINING WHERE $NAMA_EMPLOYEE_TRAINING LIKE '%$keyword%' AND " +
+                "SELECT * FROM $TABEL_EMPLOYEE_TRAINING WHERE $NAMA_TRAINEE LIKE '%$keyword%' AND " +
                         "$IS_DELETED = 'false'"
 
             val cursor = db.rawQuery(queryCari, null)
@@ -63,37 +126,6 @@ class EmployeeTrainingQueryHelper(val databaseHelper: DatabaseHelper) {
         return listEmployeeTraining
     }
 
-    fun tambahEmployeeTraining(model: EmployeeTraining): Long {
-        val db = databaseHelper.writableDatabase
-
-        val values = ContentValues()
-        values.put(NAMA_EMPLOYEE_TRAINING, model.namaEmployeeTraining)
-        values.put(NAMA_EMPLOYEE_TRAINING_ORG, model.namaEmployeeTO)
-        values.put(DATE_EMPLOYEE_TRAINING, model.dateEmployeeTraining)
-        values.put(TYPE_EMPLOYEE_TRAINING, model.typeEmployeeTraining)
-        values.put(TYPE_EMPLOYEE_CERTIFICATION, model.typeEmployeeCerification)
-        values.put(IS_DELETED, "false")
-
-        return db.insert(TABEL_EMPLOYEE_TRAINING, null, values)
-    }
-
-    fun editEmployeeTraining(model: EmployeeTraining) : Int {
-        val db = databaseHelper.writableDatabase
-
-        val values = ContentValues()
-        values.put(NAMA_EMPLOYEE_TRAINING, model.namaEmployeeTraining)
-        values.put(NAMA_EMPLOYEE_TRAINING_ORG, model.namaEmployeeTO)
-        values.put(DATE_EMPLOYEE_TRAINING, model.dateEmployeeTraining)
-        values.put(TYPE_EMPLOYEE_TRAINING, model.typeEmployeeTraining)
-        values.put(TYPE_EMPLOYEE_CERTIFICATION, model.typeEmployeeCerification)
-
-        return db.update(
-            TABEL_EMPLOYEE_TRAINING,
-            values,
-            "$ID_EMPLOYEE_TRAINING = ?",
-            arrayOf(model.idEmployeeTraining.toString())
-        )
-    }
 
     fun hapusEmployeeTraining(id: Int): Int {
         val db = databaseHelper.writableDatabase
@@ -107,11 +139,46 @@ class EmployeeTrainingQueryHelper(val databaseHelper: DatabaseHelper) {
     fun cekEmployeeTrainingSudahAda(nama: String): Int {
         val db = databaseHelper.readableDatabase
         val queryCari =
-            "SELECT * FROM $TABEL_EMPLOYEE_TRAINING WHERE $NAMA_EMPLOYEE_TRAINING LIKE '$nama' AND " +
+            "SELECT * FROM $TABEL_EMPLOYEE_TRAINING WHERE $NAMA_TRAINEE LIKE '$nama' AND " +
                     "$IS_DELETED = 'false'"
 
         val cursor = db.rawQuery(queryCari, null)
 
         return cursor.count
     }
+
+    fun tambahEmployeeTraining(model: EmployeeTraining): Long {
+        val db = databaseHelper.writableDatabase
+
+        val values = ContentValues()
+        values.put(NAMA_TRAINEE, model.namaTrainee)
+        values.put(NAMA_EMPLOYEE_TRAINING, model.namaEmployeeTraining)
+        values.put(NAMA_EMPLOYEE_TRAINING_ORG, model.namaEmployeeTO)
+        values.put(DATE_EMPLOYEE_TRAINING, model.dateEmployeeTraining)
+        values.put(TYPE_EMPLOYEE_TRAINING, model.typeEmployeeTraining)
+        values.put(TYPE_EMPLOYEE_CERTIFICATION, model.typeEmployeeCertification)
+        values.put(IS_DELETED, "false")
+
+        return db.insert(TABEL_EMPLOYEE_TRAINING, null, values)
+    }
+
+    fun editEmployeeTraining(model: EmployeeTraining) : Int {
+        val db = databaseHelper.writableDatabase
+
+        val values = ContentValues()
+        values.put(NAMA_TRAINEE, model.namaTrainee)
+        values.put(NAMA_EMPLOYEE_TRAINING, model.namaEmployeeTraining)
+        values.put(NAMA_EMPLOYEE_TRAINING_ORG, model.namaEmployeeTO)
+        values.put(DATE_EMPLOYEE_TRAINING, model.dateEmployeeTraining)
+        values.put(TYPE_EMPLOYEE_TRAINING, model.typeEmployeeTraining)
+        values.put(TYPE_EMPLOYEE_CERTIFICATION, model.typeEmployeeCertification)
+
+        return db.update(
+            TABEL_EMPLOYEE_TRAINING,
+            values,
+            "$ID_EMPLOYEE_TRAINING = ?",
+            arrayOf(model.idEmployeeTraining.toString())
+        )
+    }
+
 }

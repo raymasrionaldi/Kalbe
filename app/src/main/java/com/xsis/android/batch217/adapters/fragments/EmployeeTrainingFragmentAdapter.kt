@@ -12,9 +12,12 @@ class EmployeeTrainingFragmentAdapter(val context: Context, val fm: FragmentMana
     override fun getItem(position: Int): Fragment {
         if (position == 0) {
             return EmployeeTrainingFragmentData(context, fm)
-        } else if (position == 1) {
+        }
+        else if (position == 1) {
             return EmployeeTrainingFragmentDetail(context, fm)
-        } else
+        }
+
+        else
             return Fragment()
     }
 
@@ -26,7 +29,7 @@ class EmployeeTrainingFragmentAdapter(val context: Context, val fm: FragmentMana
     override fun getPageTitle(position: Int): CharSequence? {
         return when (position) {
             0 -> "Data"
-            1 -> "Form"
+            1 -> "Detail"
             else -> ""
         }
     }

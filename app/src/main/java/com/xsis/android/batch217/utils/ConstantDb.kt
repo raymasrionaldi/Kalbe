@@ -112,6 +112,7 @@ val DES_TRAINING_ORG="des_to"
 
 val TABEL_EMPLOYEE_TRAINING ="employee_training"
 val ID_EMPLOYEE_TRAINING="id_employee_training"
+val NAMA_TRAINEE = "nama_trainee"
 val NAMA_EMPLOYEE_TRAINING="nama_employee_training"
 val NAMA_EMPLOYEE_TRAINING_ORG="nama_employee_to"
 val DATE_EMPLOYEE_TRAINING="date_employee_training"

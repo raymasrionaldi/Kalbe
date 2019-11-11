@@ -17,13 +17,13 @@ class ViewHolderListEmployeeTraining(itemView: View) : RecyclerView.ViewHolder(i
     var inisial = itemView.findViewById(R.id.gambarLingkaran) as NameInitialsCircleImageView
 
     fun setModel(model: EmployeeTraining) {
-        val namaTraining = model.namaEmployeeTraining
-        val namaTO = model.namaEmployeeTO
-        teksUtama.text = namaTraining
-        teksTambahan.text = namaTO
+        val namaTrainee = model.namaTrainee
+        val namaEmployeeTraining = model.namaEmployeeTraining
+        teksUtama.text = namaTrainee
+        teksTambahan.text = namaEmployeeTraining
 
         val image = NameInitialsCircleImageView.ImageInfo
-            .Builder(ambilDuaInisial(namaTraining!!))
+            .Builder(ambilDuaInisial(namaTrainee!!))
             .setTextColor(android.R.color.black)
             .setCircleBackgroundColorRes(R.color.warnaAbu)
             .build()
