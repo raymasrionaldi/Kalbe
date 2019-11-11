@@ -31,6 +31,7 @@ class ProjectFragmentData(context: Context, val fm: FragmentManager) : Fragment(
             container,
             false
         )
+
         setHasOptionsMenu(true)
 
         val layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)

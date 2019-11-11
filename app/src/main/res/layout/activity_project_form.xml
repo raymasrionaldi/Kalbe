@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
-        android:text="Title"
+        android:text="Project Entry Form"
         android:textSize="@dimen/title_form_text_size"
         android:textStyle="bold" />
 
@@ -26,10 +26,15 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <Spinner
+            <com.chivorn.smartmaterialspinner.SmartMaterialSpinner
                 android:id="@+id/spinnerClientNameProject"
+                style="@style/spinnerStyle"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                app:smsp_enableFloatingLabel="false"
+                app:smsp_hint="Client Name *"
+                app:smsp_itemSize="18sp"
+                app:smsp_multilineError="false" />
 
             <EditText
                 android:id="@+id/inputLocationProject"
@@ -56,6 +61,7 @@
                 android:id="@+id/layoutProjectNameProject"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:errorEnabled="true"
                 app:hintEnabled="false">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -70,34 +76,39 @@
                 android:id="@+id/layoutStartProject"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:errorEnabled="true"
                 app:hintEnabled="false">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/inputStartProject"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:focusable="false"
                     android:hint="Start *"
-                    android:inputType="none" />
+                    android:longClickable="false" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/layoutEndProject"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:errorEnabled="true"
                 app:hintEnabled="false">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/inputEndProject"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:focusable="false"
                     android:hint="End *"
-                    android:inputType="none" />
+                    android:longClickable="false" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/layoutRoleProject"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:errorEnabled="true"
                 app:hintEnabled="false">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -112,6 +123,7 @@
                 android:id="@+id/layoutProjectPhaseProject"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:errorEnabled="true"
                 app:hintEnabled="false">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -126,6 +138,7 @@
                 android:id="@+id/layoutProjectDesProject"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:errorEnabled="true"
                 app:hintEnabled="false">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -140,6 +153,7 @@
                 android:id="@+id/layoutProjectTechProject"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:errorEnabled="true"
                 app:hintEnabled="false">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -154,6 +168,7 @@
                 android:id="@+id/layoutMainTaskProject"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:errorEnabled="true"
                 app:hintEnabled="false">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -171,7 +186,7 @@
                 android:orientation="horizontal">
 
                 <Button
-                    android:id="@+id/buttonResetPositionLevel"
+                    android:id="@+id/buttonResetProject"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -181,12 +196,12 @@
                     android:textColor="@color/warnaTeksResetOff" />
 
                 <Button
-                    android:id="@+id/buttonSavePositionLevel"
+                    android:id="@+id/buttonSubmitProject"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="@drawable/button_save"
-                    android:text="@string/save"
+                    android:text="@string/submit"
                     android:textColor="@color/colorWhite" />
             </LinearLayout>
         </LinearLayout>

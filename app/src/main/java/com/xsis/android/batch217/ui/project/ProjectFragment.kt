@@ -20,7 +20,6 @@ class ProjectFragment : Fragment(), OnBackPressedListener {
     ): View? {
 
         val root = inflater.inflate(R.layout.fragment_project, container, false)
-
         activity!!.title = getString(R.string.menu_project)
 
         val fragmentAdapter = ProjectFragmentAdapter(context!!, childFragmentManager)
@@ -41,8 +40,17 @@ class ProjectFragment : Fragment(), OnBackPressedListener {
         val viewPager = view!!.findViewById(R.id.viewPagerProject) as CustomViewPager
         if (viewPager.currentItem != 0) {
             viewPager.setCurrentItem(0, true)
+            changeTitleByFragmentPos(0)
             return true
         }
         return false
+    }
+
+    fun changeTitleByFragmentPos(pos: Int) {
+        if (pos == 0) {
+            activity!!.title = getString(R.string.menu_project)
+        } else if (pos == 1) {
+            activity!!.title = getString(R.string.project_detail)
+        }
     }
 }
