@@ -24,7 +24,7 @@ import com.xsis.android.batch217.databases.EmployeeTrainingQueryHelper
 import com.xsis.android.batch217.models.EmployeeTraining
 import com.xsis.android.batch217.utils.*
 
-class EmployeeTrainingFragmentForm(context: Context, val fm: FragmentManager) : Fragment() {
+class EmployeeTrainingFragmentDetail(context: Context, val fm: FragmentManager) : Fragment() {
     var title: TextView? = null
     var buttonReset: Button? = null
     var buttonSimpan: Button? = null
@@ -185,7 +185,7 @@ class EmployeeTrainingFragmentForm(context: Context, val fm: FragmentManager) : 
 
             val cekEmployeeTraining = databaseQueryHelper!!.cekEmployeeTrainingSudahAda(model.namaEmployeeTraining!!)
 
-            if (modeForm == EmployeeTrainingFragmentForm.MODE_ADD) {
+            if (modeForm == EmployeeTrainingFragmentDetail.MODE_ADD) {
                 if (cekEmployeeTraining > 0) {
                     Toast.makeText(context, DATA_SUDAH_ADA, Toast.LENGTH_SHORT).show()
                     return
@@ -196,7 +196,7 @@ class EmployeeTrainingFragmentForm(context: Context, val fm: FragmentManager) : 
                     Toast.makeText(context, SIMPAN_DATA_BERHASIL, Toast.LENGTH_SHORT)
                         .show()
                 }
-            } else if (modeForm == EmployeeTrainingFragmentForm.MODE_EDIT) {
+            } else if (modeForm == EmployeeTrainingFragmentDetail.MODE_EDIT) {
                 if ((cekEmployeeTraining != 1 && model.namaEmployeeTraining == data.namaEmployeeTO) ||
                     (cekEmployeeTraining != 0 && model.namaEmployeeTraining != data.namaEmployeeTraining)
                 ) {
