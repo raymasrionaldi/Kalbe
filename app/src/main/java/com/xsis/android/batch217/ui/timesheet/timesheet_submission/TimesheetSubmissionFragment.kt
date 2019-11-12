@@ -48,13 +48,10 @@ class TimesheetSubmissionFragment : Fragment() {
         isiSpinnerTahun(customView)
         isiSpinnerBulan(customView)
 
-        //tampilin button Reset jika tahun diisi
         val spinTahun = customView.findViewById(R.id.spinnerPilihTahunSub) as Spinner
-
-
-        //tampilkan button reset jika bulan diisi
         val spinBulan = customView.findViewById(R.id.spinnerPilihBulanSub) as Spinner
 
+        //kondisi button reset dan search berdasarkan spinner tahun
         spinTahun.onItemSelectedListener = object :
             AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
@@ -78,6 +75,7 @@ class TimesheetSubmissionFragment : Fragment() {
             override fun onNothingSelected(arg0: AdapterView<*>) {}
         }
 
+        //kondisi button reset dan search berdasarkan spinner bulan
         spinBulan.onItemSelectedListener = object :
             AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
