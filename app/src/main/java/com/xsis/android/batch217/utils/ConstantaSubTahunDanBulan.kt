@@ -32,16 +32,16 @@ val ARRAY_TAHUN = arrayOf(
 
 val ARRAY_BULAN= arrayOf(
     "-- Choose Month --",
-    "JANUARY",
-    "FEBUARY",
-    "MARCH",
-    "APRIL",
-    "MAY",
-    "JUNE",
-    "JULY",
-    "AUGUST",
-    "SEPTEMBER",
-    "OCTOBER",
-    "NOVEMBER",
-    "DECEMBER"
+    "January",
+    "Febuary",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December"
 )

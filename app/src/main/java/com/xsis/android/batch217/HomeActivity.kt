@@ -37,6 +37,7 @@ import com.xsis.android.batch217.ui.project.ProjectFormActivity
 import com.xsis.android.batch217.ui.provider_tools.ProviderToolsFragment
 import com.xsis.android.batch217.ui.timesheet.timesheet_entry.EntryTimesheetActivity
 import com.xsis.android.batch217.ui.timesheet.timesheet_history.TimesheetHistoryFragment
+import com.xsis.android.batch217.ui.timesheet.timesheet_submission.TimesheetSubmissionFragment
 import com.xsis.android.batch217.ui.tipe_tes.TipeTesFragment
 import com.xsis.android.batch217.ui.training.TrainingFragment
 import com.xsis.android.batch217.ui.tipe_identitas.TipeIdentitasFragment
@@ -263,6 +264,7 @@ class HomeActivity : AppCompatActivity() {
         val heading17 = ArrayList<String>()
         heading17.add(getString(R.string.timesheet_entry))
         heading17.add(getString(R.string.timesheet_history))
+        heading17.add(getString(R.string.menu_timesheet_submission))
 // Header, Child data
         listDataChild[listDataHeader[17]] = heading17
 
@@ -343,6 +345,17 @@ class HomeActivity : AppCompatActivity() {
             }
             else if (groupIndex == 17 && childIndex == 1) {
                 val fragment = TimesheetHistoryFragment()
+                val fragmentTransaction = supportFragmentManager.beginTransaction()
+                fragmentTransaction.replace(
+                    R.id.nav_host_fragment,
+                    fragment,
+                    getString(R.string.timesheet_history)
+                )
+                fragmentTransaction.commit()
+                closeNavDrawer()
+            }
+            else if (groupIndex == 17 && childIndex == 2) {
+                val fragment = TimesheetSubmissionFragment()
                 val fragmentTransaction = supportFragmentManager.beginTransaction()
                 fragmentTransaction.replace(
                     R.id.nav_host_fragment,

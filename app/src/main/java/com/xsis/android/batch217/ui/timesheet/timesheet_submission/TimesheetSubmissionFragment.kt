@@ -1,4 +1,3 @@
-
 package com.xsis.android.batch217.ui.timesheet.timesheet_submission
 
 import android.app.Activity
@@ -21,12 +20,12 @@ import kotlinx.android.synthetic.main.activity_employee_training_form.*
 import kotlinx.android.synthetic.main.activity_input_prfrequest.*
 import kotlinx.android.synthetic.main.fragment_timesheet_submission.*
 
-class TimesheetSubmissionFragment : Fragment(){
+class TimesheetSubmissionFragment : Fragment() {
 
-    var buttonReset: Button?= null
-    var buttonSearch: Button?= null
-    var tahun: Spinner?= null
-    var bulan: Spinner?= null
+    var buttonReset: Button? = null
+    var buttonSearch: Button? = null
+    var tahun: Spinner? = null
+    var bulan: Spinner? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -51,6 +50,11 @@ class TimesheetSubmissionFragment : Fragment(){
 
         //tampilin button Reset jika tahun diisi
         val spinTahun = customView.findViewById(R.id.spinnerPilihTahunSub) as Spinner
+
+
+        //tampilkan button reset jika bulan diisi
+        val spinBulan = customView.findViewById(R.id.spinnerPilihBulanSub) as Spinner
+
         spinTahun.onItemSelectedListener = object :
             AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
@@ -59,20 +63,21 @@ class TimesheetSubmissionFragment : Fragment(){
                 position: Int,
                 id: Long
             ) {
-                if (position != 0) {
+                if (position != 0 && spinBulan.selectedItemPosition != 0) {
                     ubahResetButton(context!!, true, buttonReset!!)
-                    ubahSearchButton(context!!,true,buttonSearch!!)
+                    ubahSearchButton(context!!, true, buttonSearch!!)
+                }else if(position != 0 || spinBulan.selectedItemPosition != 0){
+                    ubahResetButton(context!!, true, buttonReset!!)
+                    ubahSearchButton(context!!, false, buttonSearch!!)
                 } else {
                     ubahResetButton(context!!, false, buttonReset!!)
-                    ubahSearchButton(context!!,false,buttonSearch!!)
+                    ubahSearchButton(context!!, false, buttonSearch!!)
                 }
             }
 
             override fun onNothingSelected(arg0: AdapterView<*>) {}
         }
 
-        //tampilkan button reset jika bulan diisi
-        val spinBulan = customView.findViewById(R.id.spinnerPilihBulanSub) as Spinner
         spinBulan.onItemSelectedListener = object :
             AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
@@ -81,12 +86,16 @@ class TimesheetSubmissionFragment : Fragment(){
                 position: Int,
                 id: Long
             ) {
-                if (position != 0) {
+                if (position != 0 && spinTahun.selectedItemPosition != 0) {
                     ubahResetButton(context!!, true, buttonReset!!)
-                    ubahSearchButton(context!!,true,buttonSearch!!)
-                } else {
+                    ubahSearchButton(context!!, true, buttonSearch!!)
+                }else if(position != 0 || spinTahun.selectedItemPosition != 0){
+                    ubahResetButton(context!!, true, buttonReset!!)
+                    ubahSearchButton(context!!, false, buttonSearch!!)
+                }
+                else {
                     ubahResetButton(context!!, false, buttonReset!!)
-                    ubahSearchButton(context!!,false,buttonSearch!!)
+                    ubahSearchButton(context!!, false, buttonSearch!!)
                 }
             }
 
@@ -110,10 +119,11 @@ class TimesheetSubmissionFragment : Fragment(){
         bulan!!.setSelection(0)
     }
 
-    fun searchData(){
-        if(spinnerPilihBulanSub.equals("-- Choose Year --") || spinnerPilihTahunSub.equals("-- Choose Year --") ){
-            Toast.makeText(context!!, "Data Belum Lengkap!", Toast.LENGTH_SHORT).show()
-        }
+    fun searchData() {
+//        if (spinnerPilihBulanSub.selectedItemPosition == 0 || spinnerPilihTahunSub.selectedItemPosition == 0) {
+//            Toast.makeText(context!!, "Data Belum Lengkap!", Toast.LENGTH_SHORT).show()
+//        }
+
     }
 
 //    override fun onBackPressed(): Boolean {
@@ -132,8 +142,9 @@ class TimesheetSubmissionFragment : Fragment(){
     }
 
     //isi data spinner tahun
-    fun isiSpinnerTahun(view: View){
-        val adapterTahun = ArrayAdapter<String>(context!!,
+    fun isiSpinnerTahun(view: View) {
+        val adapterTahun = ArrayAdapter<String>(
+            context!!,
             android.R.layout.simple_spinner_item,
             ARRAY_TAHUN
         )
@@ -145,8 +156,9 @@ class TimesheetSubmissionFragment : Fragment(){
 
 
     //isi data spinner bulan
-    fun isiSpinnerBulan(view: View){
-        val adapterBulan = ArrayAdapter<String>(context!!,
+    fun isiSpinnerBulan(view: View) {
+        val adapterBulan = ArrayAdapter<String>(
+            context!!,
             android.R.layout.simple_spinner_item,
             ARRAY_BULAN
         )
@@ -155,7 +167,6 @@ class TimesheetSubmissionFragment : Fragment(){
         spinnerBulan.adapter = adapterBulan
 
     }
-
 
 
 }
