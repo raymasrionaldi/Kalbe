@@ -175,11 +175,12 @@ class EmployeeTrainingFormActivity : AppCompatActivity() {
             model.typeEmployeeTraining = employeeTrainingTypeSpinner
             model.typeEmployeeCertification = employeeCertificationTypeSpinner
 
-            val cekEmployeeTraining =
-                databaseQueryHelper!!.cekEmployeeTrainingSudahAda(model.namaTrainee!!)
 
-            if (cekEmployeeTraining > 0) {
-                Toast.makeText(context, DATA_SUDAH_ADA, Toast.LENGTH_SHORT).show()
+            val cekEmployeeTrainee =
+                databaseQueryHelper!!.cekEmployeeTrainingSudahTraining(model.namaTrainee!!, model.dateEmployeeTraining!!)
+
+            if (cekEmployeeTrainee > 0) {
+                Toast.makeText(context, CEK_TRAINEE, Toast.LENGTH_SHORT).show()
                 return
             }
             if (databaseQueryHelper!!.tambahEmployeeTraining(model) == -1L) {

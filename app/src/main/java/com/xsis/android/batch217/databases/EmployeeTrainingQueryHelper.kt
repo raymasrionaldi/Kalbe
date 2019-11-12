@@ -146,6 +146,17 @@ class EmployeeTrainingQueryHelper(val databaseHelper: DatabaseHelper) {
         return cursor.count
     }
 
+    fun cekEmployeeTrainingSudahTraining(nama: String, tanggal: String): Int {
+        val db = databaseHelper.readableDatabase
+        val queryCari =
+            "SELECT * FROM $TABEL_EMPLOYEE_TRAINING WHERE $NAMA_TRAINEE LIKE '$nama' AND " +
+                    " $DATE_EMPLOYEE_TRAINING LIKE '$tanggal' AND $IS_DELETED = 'false'"
+
+        val cursor = db.rawQuery(queryCari, null)
+
+        return cursor.count
+    }
+
     fun tambahEmployeeTraining(model: EmployeeTraining): Long {
         val db = databaseHelper.writableDatabase
 
