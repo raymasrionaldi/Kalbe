@@ -119,6 +119,14 @@ val DATE_EMPLOYEE_TRAINING="date_employee_training"
 val TYPE_EMPLOYEE_TRAINING="type_employee_training"
 val TYPE_EMPLOYEE_CERTIFICATION="type_employee_certification"
 
+val TABEL_NAMA_TRAINING ="nama_training"
+val ID_NAMA_TRAINING ="id_nama_training"
+val NAMA_NYA_TRAINING ="nama_nya_training"
+
+val TABEL_NAMA_TRAINING_ORGANIZER ="nama_training_organizer"
+val ID_NAMA_TRAINING_ORGANIZER ="id_nama_training_organizer"
+val NAMA_NYA_TRAINING_ORGANIZER ="nama_nya_training_organizer"
+
 val TABEL_TRAINING_TYPE ="training_type"
 val ID_TRAINING_TYPE ="id_training_type"
 val NAMA_TRAINING_TYPE ="nama_training_type"
