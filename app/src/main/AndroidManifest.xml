@@ -9,16 +9,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.prf_request.EditPRFCandidateActivity"></activity>
+        <activity android:name="com.xsis.android.batch217.ui.timesheet.timesheet_submission.TimesheetSubmissionActivity"></activity>
+        <activity android:name=".ui.prf_request.EditPRFCandidateActivity" />
         <activity android:name=".ui.prf_request.InputPRFCandidateActivity" />
         <activity android:name=".ui.prf_request.EditPRFRequestActivity" />
         <activity android:name=".ui.prf_request.InputPRFRequestActivity" />
-        <activity android:name=".ui.employee_training.EmployeeTrainingFormActivity"></activity>
-        <activity android:name=".ui.employee_training.EmployeeTrainingEditActivity"></activity>
-        <activity android:name=".ui.leave_request.LeaveRequestDetailActivity"/>
+        <activity android:name=".ui.employee_training.EmployeeTrainingFormActivity" />
+        <activity android:name=".ui.employee_training.EmployeeTrainingEditActivity" />
+        <activity android:name=".ui.leave_request.LeaveRequestDetailActivity" />
         <activity android:name=".ui.leave_request.LeaveRequestAddActivity" />
         <activity android:name=".ui.project.ProjectFormActivity" />
-
         <activity
             android:name=".ui.tipe_identitas.TipeIdentitasTambahActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
