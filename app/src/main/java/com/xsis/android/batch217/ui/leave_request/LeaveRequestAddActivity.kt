@@ -55,7 +55,6 @@ class LeaveRequestAddActivity : AppCompatActivity() {
         buttonSubmitLeave.setOnClickListener {
             submitLeaveRequest()
         }
-
     }
 
     private fun setOnItemSelectedListener(vararg spinners: SmartMaterialSpinner<*>) {

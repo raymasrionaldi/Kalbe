@@ -13,6 +13,7 @@ import com.xsis.android.batch217.models.LeaveRequest
 import com.xsis.android.batch217.ui.leave_request.LeaveRequestDetailActivity
 import com.xsis.android.batch217.ui.leave_request.LeaveRequestFragmentDetail
 import com.xsis.android.batch217.ui.position_level.PositionLevelFragmentForm
+import com.xsis.android.batch217.utils.ID_LEAVE
 import com.xsis.android.batch217.viewholders.ViewHolderListLeaveRequest
 
 class ListLeaveRequestAdapter(val context: Context,
@@ -35,7 +36,7 @@ class ListLeaveRequestAdapter(val context: Context,
 
         holder.layoutList.setOnClickListener { view ->
             val intent= Intent(context, LeaveRequestDetailActivity::class.java)
-            intent.putExtra("idLeaveRequest", model.idLeaveRequest)
+            intent.putExtra(ID_LEAVE, model.idLeaveRequest)
             context.startActivity(intent)
 
             //            val fragment = fm.fragments[1] as LeaveRequestFragmentDetail

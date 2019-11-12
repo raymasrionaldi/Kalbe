@@ -164,7 +164,6 @@ class ProjectFormActivity : AppCompatActivity() {
 
         val index =
             listCompany.indexOfFirst { company -> company.idCompany == data.kodeCompProject }
-        println("Index $index")
         if (index != -1) {
             spinnerClientNameProject.setSelection(index)
         }
