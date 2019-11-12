@@ -139,18 +139,18 @@ class EntryTimesheetActivity : AppCompatActivity() {
 
     }
     fun validasiInputFormEntry(){
-        val statusTimesheet = inputStatusTimesheet.selectedItemPosition
-        val clientTimesheet = inputClientTimesheet.selectedItemPosition
+        val statusTimesheet = inputStatusTimesheet.selectedItem.toString()
+        val clientTimesheet = inputClientTimesheet.selectedItem.toString()
         val reportDateTimesheet = inputReportDateEntryTimesheet.text.toString()
         val startReportDateTimesheet = inputStarDatetEntryTimesheet.text.toString().trim()
         val endReportDateTimesheet = inputEndDateEntryTimesheet.text.toString().trim()
-        val overtimeTimesheet = inputOvertimeTimesheet.selectedItemPosition
+        val overtimeTimesheet = inputOvertimeTimesheet.selectedItem.toString()
         val startOvertimeTimesheet = inputStartOvertimeEntryTimesheet.text.toString().trim()
         val endOvertimeTimesheet = inputEndtOvertimeEntryTimesheet.text.toString().trim()
         val notesTimesheet = inputNotesEntryTimesheet.text.toString().trim()
 
 
-        if (statusTimesheet == 0){
+        if (statusTimesheet.equals("")){
             requiredStatusTimesheet.isVisible = true
         } else if(clientTimesheet.equals("")){
             requiredClientTimesheet.isVisible = true
@@ -173,6 +173,7 @@ class EntryTimesheetActivity : AppCompatActivity() {
             content.put(START_REPORT_OVERTIME, startOvertimeTimesheet)
             content.put(END_REPORT_OVERTIME, endOvertimeTimesheet)
             content.put(NOTES_TIMESHEET, notesTimesheet)
+            content.put(IS_DELETED, "false")
             val db = DatabaseHelper(context!!).writableDatabase
             db.insert(TABEL_TIMESHEET, null, content)
             Toast.makeText(context, SIMPAN_DATA_BERHASIL, Toast.LENGTH_SHORT).show()
@@ -210,7 +211,7 @@ class EntryTimesheetActivity : AppCompatActivity() {
                 selectedDate.set(year, month, dayOfMonth)
 
                 //konversi ke string
-                val formatDate = SimpleDateFormat("MMMM/dd/yyyy")
+                val formatDate = SimpleDateFormat("MMMM dd, yyyy")
                 val tanggal = formatDate.format(selectedDate.time)
 
                 //set tampilan

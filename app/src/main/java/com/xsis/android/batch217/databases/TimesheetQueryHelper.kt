@@ -1,5 +1,6 @@
 package com.xsis.android.batch217.databases
 
+import android.content.ContentValues
 import android.database.Cursor
 import com.xsis.android.batch217.models.Company
 import com.xsis.android.batch217.models.StatusTimesheet
@@ -66,6 +67,14 @@ class TimesheetQueryHelper (val databaseHelper: DatabaseHelper) {
             }
         }
         return listTimesheet
+    }
+    fun hapusTimesheet(id: Int): Int {
+        val db = databaseHelper.writableDatabase
+
+        val values = ContentValues()
+        values.put(IS_DELETED, "true")
+
+        return db.update(TABEL_TIMESHEET, values, "$ID_TIMESHEET = ?", arrayOf(id.toString()))
     }
     fun tampilkanStatusTimesheet(): List<StatusTimesheet> {
         val db = databaseHelper.readableDatabase
