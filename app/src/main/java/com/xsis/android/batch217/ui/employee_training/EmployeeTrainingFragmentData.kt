@@ -10,18 +10,12 @@ import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.viewpager.widget.ViewPager
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.xsis.android.batch217.R
 import com.xsis.android.batch217.adapters.ListEmployeeTrainingAdapter
-import com.xsis.android.batch217.adapters.fragments.EmployeeStatusFragmentAdapter
-import com.xsis.android.batch217.adapters.fragments.EmployeeTrainingFragmentAdapter
 import com.xsis.android.batch217.databases.DatabaseHelper
 import com.xsis.android.batch217.databases.EmployeeTrainingQueryHelper
 import com.xsis.android.batch217.models.EmployeeTraining
-import com.xsis.android.batch217.ui.employee_status.EmployeeStatusFragmentForm
-import com.xsis.android.batch217.ui.keluarga.KeluargaFormActivity
-
 
 class EmployeeTrainingFragmentData(context: Context, val fm: FragmentManager) : Fragment() {
     var recyclerView: RecyclerView? = null

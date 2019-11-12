@@ -1,187 +1,179 @@
 package com.xsis.android.batch217.ui.employee_training
 
+import android.app.DatePickerDialog
 import android.graphics.Color
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
+import android.view.Window
+import android.view.WindowManager
 import android.widget.*
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import com.xsis.android.batch217.R
 import com.xsis.android.batch217.databases.DatabaseHelper
 import com.xsis.android.batch217.databases.EmployeeTrainingQueryHelper
 import com.xsis.android.batch217.models.EmployeeTraining
 import com.xsis.android.batch217.utils.*
 import kotlinx.android.synthetic.main.activity_employee_training_form.*
-import kotlinx.android.synthetic.main.fragment_detail_employee_training.*
-import android.widget.AdapterView
-import android.widget.Toast
-import android.widget.AdapterView.OnItemSelectedListener
-import androidx.core.app.ComponentActivity.ExtraData
-import androidx.core.content.ContextCompat.getSystemService
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
-
+import java.text.SimpleDateFormat
+import java.util.*
 
 class EmployeeTrainingFormActivity : AppCompatActivity() {
-
     val context = this
     var databaseHelper = DatabaseHelper(context)
     var databaseQueryHelper = EmployeeTrainingQueryHelper(databaseHelper)
 
-    var employeeNameTraineeText: EditText? = null
-    var employeeTrainingNameText: EditText? = null
-    var employeeTrainingOrganizerText: EditText? = null
-    var employeeTrainingDateText: EditText? = null
-    var employeeTrainingTypeText: Spinner? = null
-    var employeeCertificationTypeText: Spinner? = null
     var buttonReset: Button? = null
-    var buttonSimpan: Button? = null
-    var defaultColor = 0
-    var idData = 0
+    var employeeNameTraineeText: EditText? = null
+    var employeeTrainingNameSpinner: Spinner? = null
+    var employeeTrainingOrganizerSpinner: Spinner? = null
+    var employeeTrainingTypeSpinner: Spinner? = null
+    var employeeCertificationTypeSpinner: Spinner? = null
     var data = EmployeeTraining()
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        requestWindowFeature(Window.FEATURE_NO_TITLE)
+        supportActionBar!!.hide()
+        window.setFlags(
+            WindowManager.LayoutParams.FLAG_FULLSCREEN,
+            WindowManager.LayoutParams.FLAG_FULLSCREEN
+        )
         setContentView(R.layout.activity_employee_training_form)
+        isiSpinnerNamaTraining()
+        isiSpinnerTrainingOrganizer()
         isiSpinnerTrainingType()
+        isiSpinnerCertificationType()
 
-        val bundle: Bundle? = intent.extras
-        bundle?.let {
-            idData = bundle!!.getInt(ID_EMPLOYEE_TRAINING)
-            loadDataEmployeeTraining(idData)
-        }
 
         databaseQueryHelper = EmployeeTrainingQueryHelper(databaseHelper)
 
-        employeeNameTraineeText = findViewById(R.id.inputNamaTrainee)
-        employeeTrainingNameText = findViewById(R.id.inputNamaEmployeeTraining)
-        employeeTrainingOrganizerText = findViewById(R.id.inputEmployeeTrainingOrganizer)
-        employeeTrainingDateText = findViewById(R.id.inputEmployeeTrainingDate)
-        employeeTrainingTypeText = findViewById(R.id.inputEmployeeTrainingType)
-        employeeCertificationTypeText = findViewById(R.id.inputEmployeeCertificationType)
-
-        buttonSimpan = findViewById(R.id.buttonSaveEmployeeTraining)
-        buttonReset = findViewById(R.id.buttonResetEmployeeTraining)
-
-        buttonSimpan!!.setOnClickListener {
-            simpanEmployeeTraining()
+        try {
+            this.supportActionBar!!.hide()
+        } catch (e: NullPointerException){
         }
 
-        buttonReset!!.setOnClickListener {
+        employeeNameTraineeText = inputNamaTrainee
+        employeeTrainingNameSpinner = spinnerInputNamaEmployeeTraining
+        employeeTrainingOrganizerSpinner = spinnerInputNamaEmployeeTrainingOrganizer
+        employeeTrainingTypeSpinner = spinnerInputTypeEmployeeTraining
+        employeeCertificationTypeSpinner = spinnerInputCertificationEmployeeTraining
+
+
+        ubahButtonResetSpinner()
+
+        buttonBackInputEmployeeTraining.setOnClickListener{
+            finish()
+        }
+
+        setReportDateEmployeeTrainingPicker()
+
+        buttonResetEmployeeTraining.setOnClickListener{
             resetForm()
-
         }
 
+        buttonSubmitEmployeeTraining.setOnClickListener {
+            validasiInput()
+        }
 
         employeeNameTraineeText!!.addTextChangedListener(textWatcher)
-        employeeTrainingNameText!!.addTextChangedListener(textWatcher)
-        employeeTrainingOrganizerText!!.addTextChangedListener(textWatcher)
-        employeeTrainingDateText!!.addTextChangedListener(textWatcher)
-        employeeTrainingTypeText!!.dropDownHorizontalOffset
-        employeeCertificationTypeText!!.dropDownHorizontalOffset
 
-        inputEmployeeTrainingType.onItemSelectedListener = object : OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
+
+    }
+
+    fun ubahButtonResetSpinner() {
+        buttonReset = buttonResetEmployeeTraining
+        employeeTrainingNameSpinner!!.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                buttonReset = buttonResetEmployeeTraining
                 if (position != 0) {
+                    buttonResetEmployeeTraining.isEnabled = true
                     ubahResetButton(context, true, buttonReset!!)
                 } else {
                     ubahResetButton(context, false, buttonReset!!)
                 }
             }
-
             override fun onNothingSelected(arg0: AdapterView<*>) {}
         }
-
-
+        employeeTrainingOrganizerSpinner!!.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                buttonReset = buttonResetEmployeeTraining
+                if (position != 0) {
+                    buttonResetEmployeeTraining.isEnabled = true
+                    ubahResetButton(context, true, buttonReset!!)
+                } else {
+                    ubahResetButton(context, false, buttonReset!!)
+                }
+            }
+            override fun onNothingSelected(arg0: AdapterView<*>) {}
+        }
+        employeeTrainingTypeSpinner!!.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                buttonReset = buttonResetEmployeeTraining
+                if (position != 0) {
+                    buttonResetEmployeeTraining.isEnabled = true
+                    ubahResetButton(context, true, buttonReset!!)
+                } else {
+                    ubahResetButton(context, false, buttonReset!!)
+                }
+            }
+            override fun onNothingSelected(arg0: AdapterView<*>) {}
+        }
+        employeeCertificationTypeSpinner!!.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                buttonReset = buttonResetEmployeeTraining
+                if (position != 0) {
+                    buttonResetEmployeeTraining.isEnabled = true
+                    ubahResetButton(context, true, buttonReset!!)
+                } else {
+                    ubahResetButton(context, false, buttonReset!!)
+                }
+            }
+            override fun onNothingSelected(arg0: AdapterView<*>) {}
+        }
     }
 
-    fun resetForm() {
-        employeeNameTraineeText!!.setText("")
-        employeeTrainingNameText!!.setText("")
-        employeeTrainingOrganizerText!!.setText("")
-        employeeTrainingDateText!!.setText("")
-        employeeTrainingTypeText!!.setSelection(0)
-        employeeCertificationTypeText!!.setSelection(0)
-    }
-
-    private val textWatcher = object : TextWatcher {
-        override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
-
-        }
-
-        override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-            val namaEmployeeTraineeTeks = employeeNameTraineeText!!.text.toString().trim()
-            val namaEmployeeTrainingTeks = employeeTrainingNameText!!.text.toString().trim()
-            val namaEmployeeTrainingOrganizerTeks = employeeTrainingOrganizerText!!.text.toString().trim()
-            val dateEmployeeTrainingTeks = employeeTrainingDateText!!.text.toString().trim()
-
-
-            val kondisi =
-                namaEmployeeTraineeTeks.isNotEmpty() || namaEmployeeTrainingTeks.isNotEmpty() || namaEmployeeTrainingOrganizerTeks.isNotEmpty() || dateEmployeeTrainingTeks.isNotEmpty()
-
-            ubahResetButton(context, kondisi, buttonReset!!)
-
-        }
-
-        override fun afterTextChanged(s: Editable) {
-
-        }
-    }
-
-    fun simpanEmployeeTraining() {
-        val required1 = findViewById(R.id.requiredNamaEmployeeTraining) as TextView
-        val required2 = findViewById(R.id.requiredNamaEmployeeTrainingOrganizer) as TextView
-        val required3 = findViewById(R.id.requiredEmployeeTrainingDate) as TextView
-
-        val namaEmployeeTrainee = employeeNameTraineeText!!.text.toString().trim()
-        val namaEmployeeTraining = employeeTrainingNameText!!.text.toString().trim()
-        val namaEmployeeTrainingOrganizer = employeeTrainingOrganizerText!!.text.toString().trim()
-        val employeeTrainingDate = employeeTrainingDateText!!.text.toString().trim()
-        val typeEmployeeTraining = employeeTrainingTypeText!!.selectedItem.toString()
-
-
-        employeeTrainingNameText!!.setHintTextColor(defaultColor)
-        required1.visibility = View.INVISIBLE
-
-        employeeTrainingOrganizerText!!.setHintTextColor(defaultColor)
-        required2.visibility = View.INVISIBLE
-
-        employeeTrainingDateText!!.setHintTextColor(defaultColor)
-        required3.visibility = View.INVISIBLE
+    fun validasiInput() {
+        val employeeTrainingDate = inputTanggalEmployeeTraining.text.toString().trim()
+        val employeeNameTraineeText = inputNamaTrainee!!.text.toString().trim()
+        val employeeTrainingNameSpinner = spinnerInputNamaEmployeeTraining.selectedItem.toString()
+        val positionEmployeeTrainingSpinner = spinnerInputNamaEmployeeTraining.selectedItemPosition
+        val employeeTrainingOrganizerSpinner = spinnerInputNamaEmployeeTrainingOrganizer.selectedItem.toString()
+        val positionEmployeeTrainingOrganizerSpinner = spinnerInputNamaEmployeeTrainingOrganizer.selectedItemPosition
+        val employeeTrainingTypeSpinner = spinnerInputTypeEmployeeTraining.selectedItem.toString()
+        val employeeCertificationTypeSpinner = spinnerInputCertificationEmployeeTraining.selectedItem.toString()
 
         var isValid = true
-        if (namaEmployeeTraining.isEmpty()) {
-            employeeTrainingNameText!!.setHintTextColor(Color.RED)
-            required1.visibility = View.VISIBLE
+
+        if (positionEmployeeTrainingSpinner == 0) {
+            inputNamaEmployeeTraining.setHintTextColor(Color.RED)
+            requiredNamaEmployeeTraining.isVisible = true
             isValid = false
         }
 
-        if (namaEmployeeTrainingOrganizer.isEmpty()) {
-            employeeTrainingOrganizerText!!.setHintTextColor(Color.RED)
-            required2.visibility = View.VISIBLE
+        if (positionEmployeeTrainingOrganizerSpinner == 0) {
+            inputNamaEmployeeTrainingOrganizer.setHintTextColor(Color.RED)
+            requiredNamaEmployeeTrainingOrganizer.isVisible = true
             isValid = false
         }
 
         if (employeeTrainingDate.isEmpty()) {
-            employeeTrainingDateText!!.setHintTextColor(Color.RED)
-            required3.visibility = View.VISIBLE
+            inputTanggalEmployeeTraining.setHintTextColor(Color.RED)
+            requiredTanggalEmployeeTraining.isVisible = true
             isValid = false
         }
 
         if (isValid) {
             val model = EmployeeTraining()
             model.idEmployeeTraining = data.idEmployeeTraining
-            model.namaTrainee = namaEmployeeTrainee
-            model.namaEmployeeTraining = namaEmployeeTraining
-            model.namaEmployeeTO = namaEmployeeTrainingOrganizer
+            model.namaTrainee = employeeNameTraineeText
+            model.namaEmployeeTraining = employeeTrainingNameSpinner
+            model.namaEmployeeTO = employeeTrainingOrganizerSpinner
             model.dateEmployeeTraining = employeeTrainingDate
-            model.typeEmployeeTraining = typeEmployeeTraining
+            model.typeEmployeeTraining = employeeTrainingTypeSpinner
+            model.typeEmployeeCertification = employeeCertificationTypeSpinner
 
             val cekEmployeeTraining =
                 databaseQueryHelper!!.cekEmployeeTrainingSudahAda(model.namaTrainee!!)
@@ -201,51 +193,84 @@ class EmployeeTrainingFormActivity : AppCompatActivity() {
         }
     }
 
-    fun loadDataEmployeeTraining(id: Int) {
-        val db = databaseHelper.readableDatabase
 
-        val projection = arrayOf<String>(
-            ID_EMPLOYEE_TRAINING,
-            NAMA_TRAINEE,
-            NAMA_EMPLOYEE_TRAINING,
-            NAMA_EMPLOYEE_TRAINING_ORG,
-            DATE_EMPLOYEE_TRAINING,
-            TYPE_EMPLOYEE_TRAINING,
-            TYPE_EMPLOYEE_CERTIFICATION,
-            IS_DELETED
-        )
-        val selection = ID_EMPLOYEE_TRAINING + "=?"
-        val selectionArgs = arrayOf(id.toString())
-        val cursor =
-            db.query(
-                TABEL_EMPLOYEE_TRAINING,
-                projection,
-                selection,
-                selectionArgs,
-                null,
-                null,
-                null
-            )
-
-        if (cursor.count == 1) {
-            cursor.moveToFirst()
-            data.idEmployeeTraining = cursor.getInt(0)
-            data.namaTrainee = cursor.getString(1)
-            data.namaEmployeeTraining = cursor.getString(2)
-            data.namaEmployeeTO = cursor.getString(3)
-            data.dateEmployeeTraining = cursor.getString(4)
-            data.typeEmployeeTraining = cursor.getString(5)
-            data.typeEmployeeCertification = cursor.getString(6)
-            data.isDeleted = cursor.getString(7)
-
-            namaEmployeeTrainee.setText(data.namaTrainee)
-            namaEmployeeTraining.setText(data.namaEmployeeTraining)
-            EmployeeTrainingDate.setText(data.dateEmployeeTraining)
-            namaEmployeeTrainingOrganizer.setText(data.namaEmployeeTO)
-            EmployeeTrainingType.setText(data.typeEmployeeTraining)
-        }
+    fun resetForm(){
+        inputTanggalEmployeeTraining.setText("")
+        inputNamaTrainee.setText("")
+        spinnerInputNamaEmployeeTraining.setSelection(0)
+        spinnerInputNamaEmployeeTrainingOrganizer.setSelection(0)
+        spinnerInputTypeEmployeeTraining.setSelection(0)
+        spinnerInputCertificationEmployeeTraining.setSelection(0)
     }
 
+
+    fun setReportDateEmployeeTrainingPicker(){
+        val today = Calendar.getInstance()
+        val yearNow = today.get(Calendar.YEAR)
+        val monthNow = today.get(Calendar.MONTH)
+        val dayNow = today.get(Calendar.DATE)
+
+        iconInputTanggalEmployeeTraining.setOnClickListener {
+            val datePickerDialog = DatePickerDialog(context, R.style.CustomDatePicker, DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
+                val selectedDate = Calendar.getInstance()
+                selectedDate.set(year, month, dayOfMonth)
+
+                //konversi ke string
+                val formatDate = SimpleDateFormat("MMMM dd, yyyy")
+                val tanggal = formatDate.format(selectedDate.time)
+
+                //set tampilan
+                inputTanggalEmployeeTraining.setText(tanggal)
+            }, yearNow,monthNow,dayNow )
+            datePickerDialog.show()
+            buttonResetEmployeeTraining.isEnabled = true
+            buttonResetEmployeeTraining.setBackgroundResource(R.drawable.button_reset_on)
+            buttonResetEmployeeTraining.setTextColor(Color.WHITE)
+        }
+
+    }
+
+
+    private val textWatcher = object : TextWatcher {
+        override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) { }
+        override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+            buttonReset = buttonResetEmployeeTraining
+
+            val employeeNameTraineeTeks = inputNamaTrainee!!.text.toString().trim()
+
+            val kondisi = !employeeNameTraineeTeks.isEmpty()
+
+            buttonResetEmployeeTraining.isEnabled = true
+            ubahResetButton(context, kondisi, buttonReset!!)
+        }
+        override fun afterTextChanged(s: Editable) { }
+    }
+
+    fun isiSpinnerNamaTraining() {
+        val namaTraining = databaseQueryHelper.tampilkanNamaTraining()
+        val isiData = namaTraining.map {
+            it.namaNyaTraining
+        }.toList()
+        val adapterNamaTraining = ArrayAdapter<String>(
+            context, android.R.layout.simple_spinner_item,
+            isiData
+        )
+        adapterNamaTraining.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinnerInputNamaEmployeeTraining.adapter = adapterNamaTraining
+    }
+
+    fun isiSpinnerTrainingOrganizer() {
+        val trainingOrganizer = databaseQueryHelper.tampilkanNamaTrainingOrganizer()
+        val isiData = trainingOrganizer.map {
+            it.namaNyaTrainingOrganizer
+        }.toList()
+        val adapterNamaTrainingOrganizer = ArrayAdapter<String>(
+            context, android.R.layout.simple_spinner_item,
+            isiData
+        )
+        adapterNamaTrainingOrganizer.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinnerInputNamaEmployeeTrainingOrganizer.adapter = adapterNamaTrainingOrganizer
+    }
 
     fun isiSpinnerTrainingType() {
         val trainingType = databaseQueryHelper.tampilkanTrainingType()
@@ -257,7 +282,20 @@ class EmployeeTrainingFormActivity : AppCompatActivity() {
             isiData
         )
         adapterTypeTraining.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        inputEmployeeTrainingType.adapter = adapterTypeTraining
+        spinnerInputTypeEmployeeTraining.adapter = adapterTypeTraining
+    }
+
+    fun isiSpinnerCertificationType() {
+        val certificationType = databaseQueryHelper.tampilkanCertificationType()
+        val isiData = certificationType.map {
+            it.namaTypeCertification
+        }.toList()
+        val adapterCertificationType = ArrayAdapter<String>(
+            context, android.R.layout.simple_spinner_item,
+            isiData
+        )
+        adapterCertificationType.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinnerInputCertificationEmployeeTraining.adapter = adapterCertificationType
     }
 
 }

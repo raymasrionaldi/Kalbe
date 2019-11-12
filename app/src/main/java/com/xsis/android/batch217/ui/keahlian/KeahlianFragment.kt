@@ -35,6 +35,7 @@ class KeahlianFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        activity!!.title = getString(R.string.menu_Keahlian)
 
         //ambil KeahlianViewModel untuk fragment_keahlian
         keahlianViewModel = ViewModelProviders.of(this).get(KeahlianViewModel::class.java)
