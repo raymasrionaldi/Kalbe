@@ -11,5 +11,6 @@ class Timesheet {
     var starOvertime_timesheet: String? = null
     var endOvertime_timesheet: String? = null
     var notes_timesheet: String? = null
+    var progress_timesheet: String? = null
     var is_Deleted:String?=null
 }

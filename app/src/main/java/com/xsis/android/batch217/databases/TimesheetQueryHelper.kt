@@ -34,7 +34,8 @@ class TimesheetQueryHelper (val databaseHelper: DatabaseHelper) {
             timesheet.starOvertime_timesheet = cursor.getString(7)
             timesheet.endOvertime_timesheet = cursor.getString(8)
             timesheet.notes_timesheet = cursor.getString(9)
-            timesheet.is_Deleted = cursor.getString(10)
+            timesheet.progress_timesheet = cursor.getString(10)
+            timesheet.is_Deleted = cursor.getString(11)
 
             listTimesheet.add(timesheet)
         }
@@ -42,7 +43,7 @@ class TimesheetQueryHelper (val databaseHelper: DatabaseHelper) {
         return listTimesheet
     }
 
-    fun readSemuaEmployeeStatusModels(): List<Timesheet> {
+    fun readSemuaTimesheetModels(): List<Timesheet> {
         var listTimesheet = ArrayList<Timesheet>()
 
         val cursor = getSemuaTimesheet()

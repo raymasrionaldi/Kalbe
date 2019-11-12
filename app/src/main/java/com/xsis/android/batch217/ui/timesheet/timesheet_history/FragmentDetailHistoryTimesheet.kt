@@ -85,6 +85,7 @@ class FragmentDetailHistoryTimesheet (context: Context, val fm: FragmentManager)
         tanggalDanJamReportDate!!.setText("${timesheet.reportDate_timesheet} ${timesheet.startReportDate_timesheet} - ${timesheet.endReportDate_timesheet}")
         overtimeDetailTimesheet!!.setText(timesheet.overtime_timesheet)
         tanggalDanJamOvertime!!.setText("${timesheet.starOvertime_timesheet} - ${timesheet.endOvertime_timesheet}")
+        notesDetailTimesheet!!.setText(timesheet.notes_timesheet)
 
         data = timesheet
     }
