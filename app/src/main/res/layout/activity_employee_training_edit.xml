@@ -1,120 +1,254 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.employee_training.EmployeeTrainingEditActivity">
+    android:orientation="vertical">
+
 
     <LinearLayout
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/warnaBiru"
+        android:gravity="center_horizontal|center_vertical"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/buttonBackEditEmployeeTraining"
+                android:layout_width="23dp"
+                android:layout_height="23dp"
+                android:layout_margin="5dp"
+                android:src="@drawable/ic_arrow_back_white" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="9"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="25dp"
+                android:text="@string/menu_employee_training"
+                android:textColor="@color/colorWhite"
+                android:textSize="15sp"
+                android:textStyle="bold"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_margin="5dp"
+                android:src="@drawable/ic_three_dots_option_white" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="5dp"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <TextView
-            android:id="@+id/titleFormEmployeeTraining"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Employee Training Edit Form"
-            android:textSize="@dimen/title_form_text_size"
-            android:textStyle="bold" />
-
-        <EditText
-            android:id="@+id/editNamaEmployeeTrainee"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Nama Trainee"
-            android:inputType="text"/>
-
-        <EditText
-            android:id="@+id/editNamaEmployeeTraining"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Training *"
-            android:inputType="text"/>
-
-        <TextView
-            android:id="@+id/requiredNamaEmployeeTraining"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Required"
-            android:textSize="11sp"
-            android:textColor="@color/warnaMerah"
-            android:visibility="invisible" />
-
-        <EditText
-            android:id="@+id/editEmployeeTrainingOrganizer"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Organizer *"/>
-
-        <TextView
-            android:id="@+id/requiredNamaEmployeeTrainingOrganizer"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Required"
-            android:textSize="11sp"
-            android:textColor="@color/warnaMerah"
-            android:visibility="invisible" />
-
-        <EditText
-            android:id="@+id/editEmployeeTrainingDate"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Training Date *"/>
-
-        <TextView
-            android:id="@+id/requiredEmployeeTrainingDate"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Required"
-            android:textSize="11sp"
-            android:textColor="@color/warnaMerah"
-            android:visibility="invisible" />
-
-        <Spinner
-            android:id="@+id/editEmployeeTrainingType"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"/>
-
-        <Spinner
-            android:id="@+id/editEmployeeCertificationType"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"/>
+        android:verticalScrollbarPosition="defaultPosition">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
-            <Button
-                android:id="@+id/buttonResetEmployeeTrainingEdit"
-                android:layout_width="0dp"
+            <TextView
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@drawable/button_reset_off"
-                android:clickable="false"
-                android:text="@string/reset"
-                android:textColor="@color/warnaTeksResetOff" />
+                android:layout_margin="5dp"
+                android:text="Employee Training Edit Form"
+                android:textColor="@android:color/black"
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
-            <Button
-                android:id="@+id/buttonSaveEmployeeTrainingEdit"
-                android:layout_width="0dp"
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/editNamaTrainee"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:hint="Nama Trainee"
+                    android:textSize="16sp"/>
+
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/editNamaEmployeeTraining"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp" />
+
+                <Spinner
+                    android:id="@+id/spinnerEditNamaEmployeeTraining"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_margin="5dp"></Spinner>
+            </FrameLayout>
+
+            <TextView
+                android:id="@+id/requiredNamaEmployeeTraining"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@drawable/button_save"
-                android:text="SUBMIT"
-                android:textColor="@color/colorWhite" />
+                android:text="Required"
+                android:layout_marginLeft="10dp"
+                android:textColor="@color/warnaMerah"
+                android:textSize="@dimen/text_size_small"
+                android:visibility="invisible" />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/editNamaEmployeeTrainingOrganizer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp" />
+
+                <Spinner
+                    android:id="@+id/spinnerEditNamaEmployeeTrainingOrganizer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_margin="5dp"></Spinner>
+            </FrameLayout>
+
+            <TextView
+                android:id="@+id/requiredNamaEmployeeTrainingOrganizer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Required"
+                android:layout_marginLeft="10dp"
+                android:textColor="@color/warnaMerah"
+                android:textSize="@dimen/text_size_small"
+                android:visibility="invisible" />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/editTanggalEmployeeTraining"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:hint="Training Date *"
+                    android:focusable="false"
+                    android:longClickable="false"
+                    android:textSize="16sp"
+                    />
+
+                <ImageView
+                    android:id="@+id/iconEditTanggalEmployeeTraining"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_margin="15dp"
+                    android:layout_gravity="right|center_vertical"
+                    android:src="@android:drawable/ic_menu_my_calendar" />
+            </FrameLayout>
+
+            <TextView
+                android:id="@+id/requiredTanggalEmployeeTraining"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Required"
+                android:layout_marginLeft="10dp"
+                android:textColor="@color/warnaMerah"
+                android:textSize="@dimen/text_size_small"
+                android:visibility="invisible" />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/editTypeEmployeeTraining"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp" />
+
+                <Spinner
+                    android:id="@+id/spinnerEditTypeEmployeeTraining"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_margin="5dp"></Spinner>
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/editCertificationEmployeeTraining"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp" />
+
+                <Spinner
+                    android:id="@+id/spinnerEditCertificationEmployeeTraining"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_margin="5dp"></Spinner>
+            </FrameLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="20dp"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/buttonResetEmployeeTraining"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_reset_off"
+                    android:enabled="false"
+                    android:clickable="false"
+                    android:text="@string/reset"
+                    android:textColor="@color/warnaTeksResetOff" />
+
+                <Button
+                    android:id="@+id/buttonSubmitEmployeeTraining"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_save"
+                    android:text="@string/submit"
+                    android:textColor="@color/colorWhite" />
+            </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
+    </ScrollView>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
-
+</LinearLayout>

@@ -2,10 +2,7 @@ package com.xsis.android.batch217.databases
 
 import android.content.ContentValues
 import android.database.Cursor
-import com.xsis.android.batch217.models.EmployeeTraining
-import com.xsis.android.batch217.models.Keahlian
-import com.xsis.android.batch217.models.StatusTimesheet
-import com.xsis.android.batch217.models.TypeTraining
+import com.xsis.android.batch217.models.*
 import com.xsis.android.batch217.utils.*
 
 class EmployeeTrainingQueryHelper(val databaseHelper: DatabaseHelper) {
@@ -183,6 +180,48 @@ class EmployeeTrainingQueryHelper(val databaseHelper: DatabaseHelper) {
         )
     }
 
+    fun tampilkanNamaTraining(): List<NamaTraining> {
+        val db = databaseHelper.readableDatabase
+
+        val queryRead = "SELECT * FROM $TABEL_NAMA_TRAINING"
+        val cursor = db.rawQuery(queryRead, null)
+
+
+        var listNamaTraining = ArrayList<NamaTraining>()
+
+        for (c in 0 until cursor.count) {
+            cursor.moveToPosition(c)
+
+            val namaTraining = NamaTraining()
+            namaTraining.idNamaTraining = cursor.getInt(0)
+            namaTraining.namaNyaTraining = cursor.getString(1)
+
+            listNamaTraining.add(namaTraining)
+        }
+        return  listNamaTraining
+    }
+
+    fun tampilkanNamaTrainingOrganizer(): List<NamaTrainingOrganizer> {
+        val db = databaseHelper.readableDatabase
+
+        val queryRead = "SELECT * FROM $TABEL_NAMA_TRAINING_ORGANIZER"
+        val cursor = db.rawQuery(queryRead, null)
+
+
+        var listNamaTrainingOrganizer = ArrayList<NamaTrainingOrganizer>()
+
+        for (c in 0 until cursor.count) {
+            cursor.moveToPosition(c)
+
+            val namaTrainingOrganizer = NamaTrainingOrganizer()
+            namaTrainingOrganizer.idNamaTrainingOrganizer = cursor.getInt(0)
+            namaTrainingOrganizer.namaNyaTrainingOrganizer = cursor.getString(1)
+
+            listNamaTrainingOrganizer.add(namaTrainingOrganizer)
+        }
+        return  listNamaTrainingOrganizer
+    }
+
     fun tampilkanTrainingType(): List<TypeTraining> {
         val db = databaseHelper.readableDatabase
 
@@ -202,6 +241,27 @@ class EmployeeTrainingQueryHelper(val databaseHelper: DatabaseHelper) {
             listTrainingType.add(trainingType)
         }
         return  listTrainingType
+    }
+
+    fun tampilkanCertificationType(): List<CertificationType> {
+        val db = databaseHelper.readableDatabase
+
+        val queryRead = "SELECT * FROM $TABEL_CERTIFICATION_TYPE"
+        val cursor = db.rawQuery(queryRead, null)
+
+
+        var listCertificationType = ArrayList<CertificationType>()
+
+        for (c in 0 until cursor.count) {
+            cursor.moveToPosition(c)
+
+            val certificationType = CertificationType()
+            certificationType.idTypeCertification = cursor.getInt(0)
+            certificationType.namaTypeCertification = cursor.getString(1)
+
+            listCertificationType.add(certificationType)
+        }
+        return  listCertificationType
     }
 
 }
