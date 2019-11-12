@@ -6,16 +6,14 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import com.xsis.android.batch217.R
 import com.xsis.android.batch217.databases.DatabaseHelper
 import com.xsis.android.batch217.databases.EmployeeTrainingQueryHelper
 import com.xsis.android.batch217.models.EmployeeTraining
 import com.xsis.android.batch217.utils.*
 import kotlinx.android.synthetic.main.activity_employee_training_edit.*
+import kotlinx.android.synthetic.main.activity_employee_training_form.*
 
 class EmployeeTrainingEditActivity : AppCompatActivity() {
 
@@ -26,8 +24,8 @@ class EmployeeTrainingEditActivity : AppCompatActivity() {
     var employeeTrainingNameText: EditText? = null
     var employeeTrainingOrganizerText: EditText? = null
     var employeeTrainingDateText: EditText? = null
-    var employeeTrainingTypeText: EditText? = null
-    var employeeCertificationTypeText: EditText? = null
+    var employeeTrainingTypeText: Spinner? = null
+    var employeeCertificationTypeText: Spinner? = null
     var buttonReset: Button? = null
     var buttonSimpan: Button? = null
     var defaultColor = 0
@@ -67,8 +65,8 @@ class EmployeeTrainingEditActivity : AppCompatActivity() {
         employeeTrainingNameText!!.addTextChangedListener(textWatcher)
         employeeTrainingOrganizerText!!.addTextChangedListener(textWatcher)
         employeeTrainingDateText!!.addTextChangedListener(textWatcher)
-        employeeTrainingTypeText!!.addTextChangedListener(textWatcher)
-        employeeCertificationTypeText!!.addTextChangedListener(textWatcher)
+        employeeTrainingTypeText!!.dropDownHorizontalOffset
+        employeeCertificationTypeText!!.dropDownHorizontalOffset
 
     }
 
@@ -77,8 +75,8 @@ class EmployeeTrainingEditActivity : AppCompatActivity() {
         employeeTrainingNameText!!.setText("")
         employeeTrainingOrganizerText!!.setText("")
         employeeTrainingDateText!!.setText("")
-        employeeTrainingTypeText!!.setText("")
-        employeeCertificationTypeText!!.setText("")
+        employeeTrainingTypeText!!.setSelection(0)
+        employeeCertificationTypeText!!.setSelection(0)
     }
 
 
@@ -92,12 +90,12 @@ class EmployeeTrainingEditActivity : AppCompatActivity() {
             val namaEmployeeTrainingTeks = employeeTrainingNameText!!.text.toString().trim()
             val namaEmployeeTrainingOrganizerTeks = employeeTrainingOrganizerText!!.text.toString().trim()
             val dateEmployeeTrainingTeks = employeeTrainingDateText!!.text.toString().trim()
-            val typeEmployeeTrainingTeks = employeeTrainingTypeText!!.text.toString().trim()
-            val certificationEmployeeTrainingTeks = employeeCertificationTypeText!!.text.toString().trim()
+            val typeEmployeeTrainingTeks  = editEmployeeTrainingType.selectedItemPosition
+            val certificationEmployeeTrainingTeks = editEmployeeCertificationType.selectedItemPosition
 
             val kondisi =
-                namaEmployeeTrainingTeks.isNotEmpty() || namaEmployeeTrainingTeks.isNotEmpty() || namaEmployeeTrainingOrganizerTeks.isNotEmpty() || dateEmployeeTrainingTeks.isNotEmpty()
-                        || typeEmployeeTrainingTeks.isNotEmpty() || certificationEmployeeTrainingTeks.isNotEmpty()
+                namaEmployeeTraineeTeks.isNotEmpty() || namaEmployeeTrainingTeks.isNotEmpty() || namaEmployeeTrainingOrganizerTeks.isNotEmpty() || dateEmployeeTrainingTeks.isNotEmpty()
+                        || typeEmployeeTrainingTeks > 0 || certificationEmployeeTrainingTeks >0
 
             ubahResetButton(context, kondisi, buttonReset!!)
 
@@ -117,8 +115,8 @@ class EmployeeTrainingEditActivity : AppCompatActivity() {
         val namaEmployeeTraining = employeeTrainingNameText!!.text.toString().trim()
         val namaEmployeeTrainingOrganizer = employeeTrainingOrganizerText!!.text.toString().trim()
         val employeeTrainingDate = employeeTrainingDateText!!.text.toString().trim()
-        val typeEmployeeTraining = employeeTrainingTypeText!!.text.toString().trim()
-        val certificationEmployeeTraining = employeeCertificationTypeText!!.text.toString().trim()
+        val typeEmployeeTraining = employeeTrainingTypeText!!.selectedItemPosition
+        val certificationEmployeeTraining = employeeCertificationTypeText!!.selectedItemPosition
 
         employeeTrainingNameText!!.setHintTextColor(defaultColor)
         required1.visibility = View.INVISIBLE
@@ -151,8 +149,8 @@ class EmployeeTrainingEditActivity : AppCompatActivity() {
             model.namaEmployeeTraining = namaEmployeeTraining
             model.namaEmployeeTO = namaEmployeeTrainingOrganizer
             model.dateEmployeeTraining = employeeTrainingDate
-            model.typeEmployeeTraining = typeEmployeeTraining
-            model.typeEmployeeCertification = certificationEmployeeTraining
+            model.typeEmployeeTraining = data.typeEmployeeTraining
+            model.typeEmployeeCertification = data.typeEmployeeCertification
 
             val cekEmployeeTraining =
                 databaseQueryHelper!!.cekEmployeeTrainingSudahAda(model.namaTrainee!!)
@@ -198,13 +196,13 @@ class EmployeeTrainingEditActivity : AppCompatActivity() {
             data.typeEmployeeTraining = cursor.getString(5)
             data.typeEmployeeCertification = cursor.getString(6)
             data.isDeleted = cursor.getString(7)
+
             editNamaEmployeeTrainee.setText(data.namaTrainee)
             editNamaEmployeeTraining.setText(data.namaEmployeeTraining)
             editEmployeeTrainingOrganizer.setText(data.namaEmployeeTO)
             editEmployeeTrainingDate.setText(data.dateEmployeeTraining)
-            editEmployeeTrainingType.setText(data.typeEmployeeTraining)
-            editEmployeeCertificationType.setText(data.typeEmployeeCertification)
-        }
 
+
+        }
     }
 }

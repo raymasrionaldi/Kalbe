@@ -4,6 +4,8 @@ import android.content.ContentValues
 import android.database.Cursor
 import com.xsis.android.batch217.models.EmployeeTraining
 import com.xsis.android.batch217.models.Keahlian
+import com.xsis.android.batch217.models.StatusTimesheet
+import com.xsis.android.batch217.models.TypeTraining
 import com.xsis.android.batch217.utils.*
 
 class EmployeeTrainingQueryHelper(val databaseHelper: DatabaseHelper) {
@@ -179,6 +181,27 @@ class EmployeeTrainingQueryHelper(val databaseHelper: DatabaseHelper) {
             "$ID_EMPLOYEE_TRAINING = ?",
             arrayOf(model.idEmployeeTraining.toString())
         )
+    }
+
+    fun tampilkanTrainingType(): List<TypeTraining> {
+        val db = databaseHelper.readableDatabase
+
+        val queryRead = "SELECT * FROM $TABEL_TRAINING_TYPE"
+        val cursor = db.rawQuery(queryRead, null)
+
+
+        var listTrainingType = ArrayList<TypeTraining>()
+
+        for (c in 0 until cursor.count) {
+            cursor.moveToPosition(c)
+
+            val trainingType = TypeTraining()
+            trainingType.idTypeTraining = cursor.getInt(0)
+            trainingType.namaTypeTraining = cursor.getString(1)
+
+            listTrainingType.add(trainingType)
+        }
+        return  listTrainingType
     }
 
 }

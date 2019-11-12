@@ -77,19 +77,16 @@
             android:textColor="@color/warnaMerah"
             android:visibility="invisible" />
 
-        <EditText
+        <Spinner
             android:id="@+id/inputEmployeeTrainingType"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Training Type"/>
-
-
-        <EditText
+            android:layout_margin="10dp"/>
+        <Spinner
             android:id="@+id/inputEmployeeCertificationType"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Certification Type"/>
-
+            android:layout_margin="10dp"/>
 
         <LinearLayout
             android:layout_width="match_parent"
