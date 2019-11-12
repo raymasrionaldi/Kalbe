@@ -74,11 +74,12 @@
                 android:id="@+id/inputStarDatetEntryTimesheet"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:focusable="false"
+                android:longClickable="false"
                 android:hint="Start *"
                 android:layout_margin="10dp"
                 android:textColor="@color/colorPrimaryDark"
                 android:inputType="text" />
-
             <TextView
                 android:id="@+id/requiredStartEntryTimesheet"
                 android:layout_width="match_parent"
@@ -90,6 +91,8 @@
                 android:id="@+id/inputEndDateEntryTimesheet"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:focusable="false"
+                android:longClickable="false"
                 android:hint="End *"
                 android:layout_margin="10dp"
                 android:textColor="@color/colorPrimaryDark"
@@ -112,6 +115,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Start"
+                android:focusable="false"
+                android:longClickable="false"
                 android:layout_margin="10dp"
                 android:textColor="@color/colorPrimaryDark"
                 android:inputType="text" />
@@ -120,6 +125,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="End"
+                android:focusable="false"
+                android:longClickable="false"
                 android:layout_margin="10dp"
                 android:textColor="@color/colorPrimaryDark"
                 android:inputType="text" />

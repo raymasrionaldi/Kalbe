@@ -1,12 +1,13 @@
 package com.xsis.android.batch217.ui.timesheet.timesheet_entry
 import android.app.DatePickerDialog
+import android.app.TimePickerDialog
 import android.content.ContentValues
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.widget.ArrayAdapter
-import android.widget.Toast
+import android.view.View
+import android.widget.*
 import androidx.core.view.isVisible
 import com.xsis.android.batch217.R
 import com.xsis.android.batch217.databases.DatabaseHelper
@@ -14,6 +15,7 @@ import com.xsis.android.batch217.databases.TimesheetQueryHelper
 import com.xsis.android.batch217.models.Timesheet
 import com.xsis.android.batch217.ui.timesheet.ARRAY_OVERTIME_TIMESHEET
 import com.xsis.android.batch217.ui.timesheet.ARRAY_STATUS_TIMESHEET
+import com.xsis.android.batch217.ui.timesheet.HOUR_PATTERN
 import com.xsis.android.batch217.utils.*
 import kotlinx.android.synthetic.main.activity_entry_timesheet.*
 import java.text.SimpleDateFormat
@@ -23,7 +25,7 @@ class EntryTimesheetActivity : AppCompatActivity() {
     val context  = this
 //    var required: TextView? = null
     var data = Timesheet()
-
+    var buttonReset: Button? = null
     val databaseHelper = DatabaseHelper(this)
     val databaseQueryHelper = TimesheetQueryHelper(databaseHelper)
 
@@ -33,24 +35,101 @@ class EntryTimesheetActivity : AppCompatActivity() {
         setContentView(R.layout.activity_entry_timesheet)
         this.title = "add entry"
 //        required = findViewById(R.id.requiredStatusTimesheet) as TextView
+        buttonReset = findViewById(R.id.buttonResetEntryFormTimesheet)
 
         isiSpinnerStatusTimesheet()
         setReportDateTimesheetPicker()
         setStartReportDateTimesheetPicker()
-//        setEndReportDateTimesheetPicker()
+        setEndReportDateTimesheetPicker()
         isiSpinnerClientTimesheet()
         isiSpinnerOvertimeTimesheet()
-//        inputStatusTimesheet.addTextChangedListener(textWatcher)
-//        inputDepartmentProject.addTextChangedListener(textWatcher)
-//        inputUserNameProject.addTextChangedListener(textWatcher)
-//        inputProjectNameProject.addTextChangedListener(textWatcher)
-//        inputStartProject.addTextChangedListener(textWatcher)
-//        inputEndProject.addTextChangedListener(textWatcher)
-//        inputRoleProject.addTextChangedListener(textWatcher)
-//        inputProjectPhaseProject.addTextChangedListener(textWatcher)
-//        inputProjectDesProject.addTextChangedListener(textWatcher)
-//        inputProjectTechProject.addTextChangedListener(textWatcher)
-//        inputMainTaskProject.addTextChangedListener(textWatcher)
+        setStartOvertimeTimesheetPicker()
+        setEndOvertimeTimesheetPicker()
+        inputReportDateEntryTimesheet.addTextChangedListener(textWatcher)
+        inputStarDatetEntryTimesheet.addTextChangedListener(textWatcher)
+        inputEndDateEntryTimesheet.addTextChangedListener(textWatcher)
+        inputStartOvertimeEntryTimesheet.addTextChangedListener(textWatcher)
+        inputEndtOvertimeEntryTimesheet.addTextChangedListener(textWatcher)
+        inputNotesEntryTimesheet.addTextChangedListener(textWatcher)
+
+        inputStatusTimesheet.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                if (position != 0) {
+                    ubahResetButton(context, true, buttonReset!!)
+                    if (position >1){
+                       // hide form dan set value ke default
+                        inputStarDatetEntryTimesheet!!.visibility = View.GONE
+                        inputEndDateEntryTimesheet!!.visibility = View.GONE
+                        inputOvertimeTimesheet!!.visibility = View.GONE
+                        inputStartOvertimeEntryTimesheet!!.visibility = View.GONE
+                        inputEndtOvertimeEntryTimesheet!!.visibility = View.GONE
+                        inputNotesEntryTimesheet!!.visibility = View.GONE
+
+                        inputStarDatetEntryTimesheet!!.setText("")
+                        inputEndDateEntryTimesheet!!.setText("")
+                        inputOvertimeTimesheet.setSelection(0)
+                        inputStartOvertimeEntryTimesheet!!.setText("")
+                        inputEndtOvertimeEntryTimesheet!!.setText("")
+                        inputNotesEntryTimesheet!!.setText("")
+
+                    }
+                    else{
+                        //show form
+                        inputStarDatetEntryTimesheet!!.visibility = View.VISIBLE
+                        inputEndDateEntryTimesheet!!.visibility = View.VISIBLE
+                        inputOvertimeTimesheet!!.visibility = View.VISIBLE
+                        inputStartOvertimeEntryTimesheet!!.visibility = View.VISIBLE
+                        inputEndtOvertimeEntryTimesheet!!.visibility = View.VISIBLE
+                        inputNotesEntryTimesheet!!.visibility = View.VISIBLE
+                    }
+                } else {
+                    ubahResetButton(context, false, buttonReset!!)
+                }
+            }
+
+            override fun onNothingSelected(arg0: AdapterView<*>) {}
+
+        }
+        inputClientTimesheet.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                if (position != 0) {
+                    ubahResetButton(context, true, buttonReset!!)
+                } else {
+                    ubahResetButton(context, false, buttonReset!!)
+                }
+            }
+
+            override fun onNothingSelected(arg0: AdapterView<*>) {}
+
+        }
+        inputOvertimeTimesheet.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                if (position != 0) {
+                    ubahResetButton(context, true, buttonReset!!)
+                } else {
+                    ubahResetButton(context, false, buttonReset!!)
+                }
+            }
+
+            override fun onNothingSelected(arg0: AdapterView<*>) {}
+
+        }
+
         buttonSaveEntryFormTimesheet.setOnClickListener {
             validasiInputFormEntry()
         }
@@ -100,6 +179,7 @@ class EntryTimesheetActivity : AppCompatActivity() {
             finish()
         }
     }
+
     fun resetTimesheet(){
         inputStatusTimesheet.setSelection(0)
         inputClientTimesheet.setSelection(0)
@@ -110,25 +190,6 @@ class EntryTimesheetActivity : AppCompatActivity() {
         inputStartOvertimeEntryTimesheet!!.setText("")
         inputEndtOvertimeEntryTimesheet!!.setText("")
         inputNotesEntryTimesheet!!.setText("")
-//        val statusTimesheet = inputStatusTimesheet.selectedItemPosition
-//        val clientTimesheet = inputClientTimesheet.selectedItemPosition
-//        val reportDateTimesheet = inputReportDateEntryTimesheet.text.toString()
-//        val startReportDateTimesheet = inputStarDatetEntryTimesheet.text.toString().trim()
-//        val endReportDateTimesheet = inputEndDateEntryTimesheet.text.toString().trim()
-//        val overtimeTimesheet = inputOvertimeTimesheet.selectedItemPosition
-//        val startOvertimeTimesheet = inputStartOvertimeEntryTimesheet.text.toString().trim()
-//        val endOvertimeTimesheet = inputEndtOvertimeEntryTimesheet.text.toString().trim()
-//        val notesTimesheet = inputNotesEntryTimesheet.text.toString().trim()
-
-//        if (statusTimesheet == 0 || clientTimesheet == 0|| reportDateTimesheet.equals("")||startReportDateTimesheet.equals("")||
-//                endReportDateTimesheet.equals("")|| overtimeTimesheet==0
-//                || startOvertimeTimesheet.equals("")||endOvertimeTimesheet.equals("")||notesTimesheet.equals("")){
-//            buttonResetEntryFormTimesheet.isClickable =false
-//        } else{
-////            buttonResetEntryFormTimesheet.isClickable= true
-
-
-//        }
     }
     fun isiSpinnerStatusTimesheet(){
         val adapterStatusTimesheet = ArrayAdapter<String>(context,android.R.layout.simple_spinner_item,
@@ -161,8 +222,98 @@ class EntryTimesheetActivity : AppCompatActivity() {
     fun setStartReportDateTimesheetPicker(){
 //        val formatter = SimpleDateFormat("HH:mm")
 //        val jam = formatter.parse()
+        val formatter = SimpleDateFormat(HOUR_PATTERN)
+        val c = Calendar.getInstance()
+        val hour = c.get(Calendar.HOUR_OF_DAY)
+        val minute = c.get(Calendar.MINUTE)
+        inputStarDatetEntryTimesheet.setOnClickListener {
+            val tpd = TimePickerDialog(this,TimePickerDialog.OnTimeSetListener{ view, h, m ->
 
+                Toast.makeText(this, "$h.$m" , Toast.LENGTH_LONG).show()
+                val selectedDate = Calendar.getInstance()
+                selectedDate.set(Calendar.HOUR_OF_DAY, h)
+                selectedDate.set(Calendar.MINUTE, m)
+
+                val jam = formatter.format(selectedDate.time)
+                Toast.makeText(this,"$jam", Toast.LENGTH_SHORT).show()
+                //set tampilan
+                inputStarDatetEntryTimesheet.setText(jam)
+
+            },hour,minute,true)
+
+            tpd.show()
+        }
     }
+    fun setEndReportDateTimesheetPicker(){
+        val formatter = SimpleDateFormat(HOUR_PATTERN)
+        val c = Calendar.getInstance()
+        val hour = c.get(Calendar.HOUR_OF_DAY)
+        val minute = c.get(Calendar.MINUTE)
+        inputEndDateEntryTimesheet.setOnClickListener {
+            val tpd = TimePickerDialog(this,TimePickerDialog.OnTimeSetListener{ view, h, m ->
+
+                Toast.makeText(this, "$h.$m" , Toast.LENGTH_LONG).show()
+                val selectedDate = Calendar.getInstance()
+                selectedDate.set(Calendar.HOUR_OF_DAY, h)
+                selectedDate.set(Calendar.MINUTE, m)
+
+                val jam = formatter.format(selectedDate.time)
+                Toast.makeText(this,"$jam", Toast.LENGTH_SHORT).show()
+                //set tampilan
+                inputEndDateEntryTimesheet.setText(jam)
+
+            },hour,minute,true)
+
+            tpd.show()
+        }
+    }
+    fun setStartOvertimeTimesheetPicker(){
+        val formatter = SimpleDateFormat(HOUR_PATTERN)
+        val c = Calendar.getInstance()
+        val hour = c.get(Calendar.HOUR_OF_DAY)
+        val minute = c.get(Calendar.MINUTE)
+        inputStartOvertimeEntryTimesheet.setOnClickListener {
+            val tpd = TimePickerDialog(this,TimePickerDialog.OnTimeSetListener{ view, h, m ->
+
+                Toast.makeText(this, "$h.$m" , Toast.LENGTH_LONG).show()
+                val selectedDate = Calendar.getInstance()
+                selectedDate.set(Calendar.HOUR_OF_DAY, h)
+                selectedDate.set(Calendar.MINUTE, m)
+
+                val jam = formatter.format(selectedDate.time)
+                Toast.makeText(this,"$jam", Toast.LENGTH_SHORT).show()
+                //set tampilan
+                inputStartOvertimeEntryTimesheet.setText(jam)
+
+            },hour,minute,true)
+
+            tpd.show()
+        }
+    }
+    fun setEndOvertimeTimesheetPicker(){
+        val formatter = SimpleDateFormat(HOUR_PATTERN)
+        val c = Calendar.getInstance()
+        val hour = c.get(Calendar.HOUR_OF_DAY)
+        val minute = c.get(Calendar.MINUTE)
+        inputEndtOvertimeEntryTimesheet.setOnClickListener {
+            val tpd = TimePickerDialog(this,TimePickerDialog.OnTimeSetListener{ view, h, m ->
+
+                Toast.makeText(this, "$h.$m" , Toast.LENGTH_LONG).show()
+                val selectedDate = Calendar.getInstance()
+                selectedDate.set(Calendar.HOUR_OF_DAY, h)
+                selectedDate.set(Calendar.MINUTE, m)
+
+                val jam = formatter.format(selectedDate.time)
+                Toast.makeText(this,"$jam", Toast.LENGTH_SHORT).show()
+                //set tampilan
+                inputEndtOvertimeEntryTimesheet.setText(jam)
+
+            },hour,minute,true)
+
+            tpd.show()
+        }
+    }
+
     fun isiSpinnerClientTimesheet(){
         val clientTimesheet = databaseQueryHelper.tampilkanClientTimesheet()
 
@@ -188,24 +339,20 @@ class EntryTimesheetActivity : AppCompatActivity() {
         }
 
         override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-//            val namaTeks = nama!!.text.toString().trim()
-//            val notesTeks = notes!!.text.toString().trim()
-            val statusTimesheet = inputStatusTimesheet!!.selectedItemPosition
-            val clientTimesheet = inputClientTimesheet!!.selectedItemPosition
             val reportDateTimesheet = inputReportDateEntryTimesheet!!.text.toString()
             val startReportDateTimesheet = inputStarDatetEntryTimesheet!!.text.toString().trim()
             val endReportDateTimesheet = inputEndDateEntryTimesheet!!.text.toString().trim()
-            val overtimeTimesheet = inputOvertimeTimesheet!!.selectedItemPosition
             val startOvertimeTimesheet = inputStartOvertimeEntryTimesheet!!.text.toString().trim()
             val endOvertimeTimesheet = inputEndtOvertimeEntryTimesheet!!.text.toString().trim()
             val notesTimesheet = inputNotesEntryTimesheet!!.text.toString().trim()
+            buttonReset = buttonResetEntryFormTimesheet
 
 //            val kondisi = !namaTeks.isEmpty() || !notesTeks.isEmpty()
-            val kondisi = statusTimesheet != 0 || clientTimesheet != 0|| !reportDateTimesheet.isEmpty()||!startReportDateTimesheet.isEmpty()||
-                    !endReportDateTimesheet.isEmpty()|| overtimeTimesheet!=0
+            val kondisi = !reportDateTimesheet.isEmpty()||!startReportDateTimesheet.isEmpty()||
+                    !endReportDateTimesheet.isEmpty()
                     || !startOvertimeTimesheet.isEmpty()||!endOvertimeTimesheet.isEmpty()||!notesTimesheet.isEmpty()
 
-            ubahResetButton(context!!, kondisi, buttonResetEntryFormTimesheet!!)
+            ubahResetButton(context!!, kondisi, buttonReset!!)
         }
 
         override fun afterTextChanged(s: Editable) {
