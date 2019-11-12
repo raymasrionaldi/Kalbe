@@ -42,6 +42,7 @@ import com.xsis.android.batch217.ui.training.TrainingFragment
 import com.xsis.android.batch217.ui.tipe_identitas.TipeIdentitasFragment
 import com.xsis.android.batch217.ui.training_organizer.TrainingOrganizerFragment
 import com.xsis.android.batch217.utils.OnBackPressedListener
+import com.xsis.android.batch217.utils.REQUEST_CODE_LEAVE_REQUEST
 import com.xsis.android.batch217.utils.REQUEST_CODE_PROJECT
 
 class HomeActivity : AppCompatActivity() {
@@ -658,6 +659,17 @@ class HomeActivity : AppCompatActivity() {
                     R.id.nav_host_fragment,
                     fragment,
                     getString(R.string.menu_project_history)
+                )
+                fragmentTransaction.commit()
+            }
+        }else if(requestCode == REQUEST_CODE_LEAVE_REQUEST){
+            if(resultCode == Activity.RESULT_OK){
+                val fragment = LeaveRequestFragment()
+                val fragmentTransaction = supportFragmentManager.beginTransaction()
+                fragmentTransaction.replace(
+                    R.id.nav_host_fragment,
+                    fragment,
+                    getString(R.string.menu_ce_leave)
                 )
                 fragmentTransaction.commit()
             }
