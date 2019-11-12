@@ -167,6 +167,7 @@ val OVERTIME_TIMESHEET ="overtime_timesheet"
 val START_REPORT_OVERTIME = "start_overtime_timesheet"
 val END_REPORT_OVERTIME ="end_overtime_timesheet"
 val NOTES_TIMESHEET ="notes_timesheet"
+val PROGRESS_TIMESHEET ="progress_timesheet"
 
 val TABEL_STATUS_TIMESHEET = "status_timesheet"
 val ID_STSTIMESHEET = "id_ststimesheet"
