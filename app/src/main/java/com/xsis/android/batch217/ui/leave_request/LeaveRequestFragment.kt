@@ -1,36 +1,42 @@
 package com.xsis.android.batch217.ui.leave_request
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.FragmentManager
+import androidx.viewpager.widget.ViewPager
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.tabs.TabLayout
 
 import com.xsis.android.batch217.R
+import com.xsis.android.batch217.adapters.fragments.AgamaFragmentAdapter
 import com.xsis.android.batch217.adapters.fragments.LeaveRequestFragmentAdapter
-import com.xsis.android.batch217.utils.CustomViewPager
-import com.xsis.android.batch217.utils.OnBackPressedListener
+import com.xsis.android.batch217.ui.agama.AgamaFragmentData
+import com.xsis.android.batch217.ui.project.ProjectFormActivity
+import com.xsis.android.batch217.utils.*
 
 class LeaveRequestFragment() : Fragment(), OnBackPressedListener {
+
+    var viewPager:CustomViewPager? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-//        leaveRequstViewModel =
-//            ViewModelProviders.of(this).get(LeaveRequestViewModel::class.java)
+        //leaveRequstViewModel = ViewModelProviders.of(this).get(LeaveRequestViewModel::class.java)
 
         val root = inflater.inflate(R.layout.fragment_leave_request, container, false)
 
         activity!!.title = getString(R.string.menu_leave_request)
         val fragmentAdapter = LeaveRequestFragmentAdapter(context!!, childFragmentManager)
-        val viewPager = root.findViewById(R.id.viewPagerLeaveRequest) as CustomViewPager
-        viewPager.adapter = fragmentAdapter
-        viewPager.setSwipePagingEnabled(true)
+        viewPager = root.findViewById(R.id.viewPagerLeaveRequest) as CustomViewPager
+        viewPager!!.adapter = fragmentAdapter
+        viewPager!!.setSwipePagingEnabled(true)
 
         val slidingTabs = root.findViewById(R.id.slidingTabsLeaveRequest) as TabLayout
         slidingTabs.setupWithViewPager(viewPager)
@@ -56,14 +62,14 @@ class LeaveRequestFragment() : Fragment(), OnBackPressedListener {
     }
 
     fun addData() {
-        val intent= Intent(context,LeaveRequestAddActivity::class.java)
-        startActivity(intent)
-//        val viewPager = view!!.parent as ViewPager
-//        val adapter = viewPager.adapter!! as LeaveRequestFragmentAdapter
-//        val fragment = fm.fragments[1] as LeaveRequestFragmentHistory
-//        fragment.modeAdd()
-//        adapter.notifyDataSetChanged()
-//        viewPager.setCurrentItem(1, true)
+        val intent = Intent(context, LeaveRequestAddActivity::class.java)
+        activity!!.startActivityForResult(intent, REQUEST_CODE_LEAVE_REQUEST)
     }
+
+    /*override fun onResume() {
+        super.onResume()
+        viewPager!!.setCurrentItem(0, true)
+        println("BULAN# LeaveRequestFragment")
+    }*/
 
 }

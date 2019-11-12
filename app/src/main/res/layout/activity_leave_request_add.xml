@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="10dp"
-    tools:context=".ui.leave_request.LeaveRequestAddActivity">
+    tools:context=".ui.leave_request.LeaveRequestAddActivity"
+    android:orientation="vertical">
+
     <TextView
         android:id="@+id/titleAddLeaveRequest"
         android:layout_width="match_parent"
@@ -13,15 +15,157 @@
         android:text="Leave Request"
         android:textSize="20sp"
         android:textStyle="bold"/>
-
-    <com.chivorn.smartmaterialspinner.SmartMaterialSpinner
-        android:id="@+id/spinnerLeaveType"
-        android:layout_below="@+id/titleAddLeaveRequest"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        style="@style/spinnerStyle"
-        app:smsp_errorText="Required"
-        app:smsp_hint="Leave Type"
-        app:smsp_multilineError="false" />
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <com.chivorn.smartmaterialspinner.SmartMaterialSpinner
+                android:id="@+id/spinnerLeaveType"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/spinnerStyle"
+                app:smsp_hint="Leave Type"
+                app:smsp_multilineError="false" />
 
-</RelativeLayout>
+            <com.chivorn.smartmaterialspinner.SmartMaterialSpinner
+                android:id="@+id/spinnerLeaveName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/spinnerStyle"
+                app:smsp_hint="Leave Name"
+                app:smsp_multilineError="false"
+                android:visibility="gone"/>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layoutStartLeave"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:errorEnabled="true"
+                app:errorTextAppearance="@style/errorTextInputLayout"
+                app:hintEnabled="false">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/inputStartLeave"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:focusable="false"
+                    android:hint="Start *"
+                    android:longClickable="false" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layoutEndLeave"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:errorEnabled="true"
+                app:errorTextAppearance="@style/errorTextInputLayout"
+                app:hintEnabled="false">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/inputEndLeave"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:focusable="false"
+                    android:hint="End *"
+                    android:longClickable="false" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layoutAddressLeave"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:errorEnabled="true"
+                app:errorTextAppearance="@style/errorTextInputLayout"
+                app:hintEnabled="false">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/inputAddressLeave"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Address *"
+                    android:inputType="text" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!--<EditText
+                android:id="@+id/inputAddressLeave"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Address *"
+                android:inputType="text" />-->
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layoutContactLeave"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:errorEnabled="true"
+                app:errorTextAppearance="@style/errorTextInputLayout"
+                app:hintEnabled="false">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/inputContactLeave"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Contact Number *"
+                    android:inputType="number" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!--<EditText
+                android:id="@+id/inputContactLeave"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Contact Number *"
+                android:inputType="number" />-->
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layoutReasonLeave"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:errorEnabled="true"
+                app:errorTextAppearance="@style/errorTextInputLayout"
+                app:hintEnabled="false">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/inputReasonLeave"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Reason*"
+                    android:inputType="text" />
+            </com.google.android.material.textfield.TextInputLayout>
+            <!--<EditText
+                android:id="@+id/inputReasonLeave"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Reason *"
+                android:inputType="text" />-->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/buttonResetLeave"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_reset_off"
+                    android:clickable="false"
+                    android:text="@string/reset"
+                    android:textColor="@color/warnaTeksResetOff" />
+
+                <Button
+                    android:id="@+id/buttonSubmitLeave"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_save"
+                    android:text="@string/submit"
+                    android:textColor="@color/colorWhite" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

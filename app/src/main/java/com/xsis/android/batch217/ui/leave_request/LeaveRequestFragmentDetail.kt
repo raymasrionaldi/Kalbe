@@ -61,5 +61,4 @@ class LeaveRequestFragmentDetail(context: Context, val fm: FragmentManager,val i
         contactNumber!!.text=model.contact
         reason!!.text=model.reason
     }
-
 }
