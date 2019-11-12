@@ -19,8 +19,11 @@ fun showPopupMenuUbahHapus(context: Context, view: View): ListPopupWindow {
     window.width = WindowManager.LayoutParams.WRAP_CONTENT
     window.isModal = false
     window.anchorView = view/*it will be the overflow view of yours*/
-    window.horizontalOffset = -150
-    window.setContentWidth(200)
+    val displayMetrics = context.resources.displayMetrics
+    val offsetPixel = -100 * displayMetrics.density
+    val contentWidthPixel = 100 * displayMetrics.density
+    window.horizontalOffset = offsetPixel.toInt()
+    window.setContentWidth(contentWidthPixel.toInt())
     window.isModal = true
 
     return window
@@ -37,8 +40,11 @@ fun showPopupMenuEditDelete(context: Context, view: View): ListPopupWindow {
     window.width = WindowManager.LayoutParams.WRAP_CONTENT
     window.isModal = false
     window.anchorView = view/*it will be the overflow view of yours*/
-    window.horizontalOffset = -150
-    window.setContentWidth(200)
+    val displayMetrics = context.resources.displayMetrics
+    val offsetPixel = -100 * displayMetrics.density
+    val contentWidthPixel = 100 * displayMetrics.density
+    window.horizontalOffset = offsetPixel.toInt()
+    window.setContentWidth(contentWidthPixel.toInt())
     window.isModal = true
 
     return window
@@ -55,8 +61,11 @@ fun showPopupMenuHapus(context: Context, view: View): ListPopupWindow {
     window.width = WindowManager.LayoutParams.WRAP_CONTENT
     window.isModal = false
     window.anchorView = view/*it will be the overflow view of yours*/
-    window.horizontalOffset = -150
-    window.setContentWidth(200)
+    val displayMetrics = context.resources.displayMetrics
+    val offsetPixel = -100 * displayMetrics.density
+    val contentWidthPixel = 100 * displayMetrics.density
+    window.horizontalOffset = offsetPixel.toInt()
+    window.setContentWidth(contentWidthPixel.toInt())
     window.isModal = true
 
     return window

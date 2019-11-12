@@ -403,7 +403,7 @@ class HomeActivity : AppCompatActivity() {
                 fragmentTransaction.replace(
                     R.id.nav_host_fragment,
                     fragment,
-                    getString(R.string.menu_ce_leave)
+                    getString(R.string.menu_project_history)
                 )
                 fragmentTransaction.commit()
                 closeNavDrawer()
@@ -657,7 +657,7 @@ class HomeActivity : AppCompatActivity() {
                 fragmentTransaction.replace(
                     R.id.nav_host_fragment,
                     fragment,
-                    getString(R.string.menu_ce_leave)
+                    getString(R.string.menu_project_history)
                 )
                 fragmentTransaction.commit()
             }
