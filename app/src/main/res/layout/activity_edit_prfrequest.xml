@@ -108,8 +108,7 @@
                     android:id="@+id/inputTypePRFEdit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:hint="Type *" />
+                    android:layout_margin="5dp" />
 
                 <Spinner
                     android:id="@+id/spinnerInputTypePRFEdit"
@@ -153,8 +152,7 @@
                     android:id="@+id/inputPIDPRFEdit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:hint="PID *" />
+                    android:layout_margin="5dp" />
 
                 <Spinner
                     android:id="@+id/spinnerInputPIDPRFEdit"
@@ -258,8 +256,7 @@
                     android:id="@+id/inputNotebookPRFEdit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:hint="Notebook *" />
+                    android:layout_margin="5dp" />
 
                 <Spinner
                     android:id="@+id/spinnerInputNotebookPRFEdit"
@@ -294,8 +291,7 @@
                     android:id="@+id/inputBastPRFEdit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:hint="BAST" />
+                    android:layout_margin="5dp"/>
 
                 <Spinner
                     android:id="@+id/spinnerInputBastPRFEdit"
@@ -328,6 +324,7 @@
                     android:layout_weight="1"
                     android:background="@drawable/button_reset_off"
                     android:clickable="false"
+                    android:enabled="false"
                     android:text="@string/reset"
                     android:textColor="@color/warnaTeksResetOff" />
 

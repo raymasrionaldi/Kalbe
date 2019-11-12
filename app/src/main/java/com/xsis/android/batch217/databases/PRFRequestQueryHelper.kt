@@ -30,11 +30,12 @@ class PRFRequestQueryHelper (val databaseHelper: DatabaseHelper) {
             prfRequest.period = cursor.getString(6)
             prfRequest.user_name = cursor.getString(7)
             prfRequest.telp_number = cursor.getString(8)
-            prfRequest.notebook = cursor.getString(9)
-            prfRequest.overtime = cursor.getString(10)
-            prfRequest.bast = cursor.getString(11)
-            prfRequest.billing = cursor.getString(12)
-            prfRequest.is_Deleted = cursor.getString(13)
+            prfRequest.email = cursor.getString(9)
+            prfRequest.notebook = cursor.getString(10)
+            prfRequest.overtime = cursor.getString(11)
+            prfRequest.bast = cursor.getString(12)
+            prfRequest.billing = cursor.getString(13)
+            prfRequest.is_Deleted = cursor.getString(14)
 
             listPRFRequest.add(prfRequest)
         }
@@ -100,13 +101,58 @@ class PRFRequestQueryHelper (val databaseHelper: DatabaseHelper) {
 
         val db = databaseHelper.writableDatabase
         val queryUpdate = "UPDATE $TABEL_PRF_REQUEST " +
-                "SET $TYPE = '$type', $PID = '$pid', $LOCATION = '$location', $PERIOD = '$location', " +
+                "SET $TYPE = '$type', $PID = '$pid', $LOCATION = '$location', $PERIOD = '$period', " +
                 "$USER_NAME = '$userName', $TELP_NUMBER = '$telpMobilePhone', $EMAIL = '$email'," +
                 "$NOTEBOOK = '$notebook', $OVERTIME = '$overtime', $BAST = '$bast', $BILLING = '$billing'," +
                 "  $IS_DELETED = 'false' " +
                 "WHERE $PLACEMENT = '$placement' AND $IS_DELETED = 'true'"
         val cursor = db.rawQuery(queryUpdate, null)
         if (cursor.count > 0) {
+            listPRFRequest = konversiCursorKeListPRFRequestModel(cursor)
+        }
+        println(queryUpdate)
+        return listPRFRequest
+    }
+
+    fun readUpdate(id:Int, placement:String):List<PRFRequest>{
+        var listPRFRequest = ArrayList<PRFRequest>()
+
+        val db = databaseHelper.writableDatabase
+        val queryUpdate = "SELECT * FROM $TABEL_PRF_REQUEST " +
+                "WHERE $PLACEMENT = '$placement' AND $ID_PRF_REQUEST != '$id'"
+        val cursor = db.rawQuery(queryUpdate, null)
+        if (cursor.count > 0){
+            listPRFRequest = konversiCursorKeListPRFRequestModel(cursor)
+        }
+
+        println(queryUpdate)
+        return listPRFRequest
+    }
+
+    fun updateDelete(id: Int,
+                     type: String,
+                     placement: String,
+                     pid: String,
+                     location: String,
+                     period: String,
+                     userName: String,
+                     telpMobilePhone: String,
+                     email: String,
+                     notebook: String,
+                     overtime: String,
+                     bast: String,
+                     billing: String):List<PRFRequest>{
+        var listPRFRequest = ArrayList<PRFRequest>()
+
+        val db = databaseHelper.writableDatabase
+        val queryUpdate = "UPDATE $TABEL_PRF_REQUEST " +
+                "SET $PLACEMENT = $placement $TYPE = '$type', $PID = '$pid', $LOCATION = '$location', $PERIOD = '$period', " +
+                "$USER_NAME = '$userName', $TELP_NUMBER = '$telpMobilePhone', $EMAIL = '$email'," +
+                "$NOTEBOOK = '$notebook', $OVERTIME = '$overtime', $BAST = '$bast', $BILLING = '$billing'," +
+                "  $IS_DELETED = 'false' " +
+                "WHERE $ID_PRF_REQUEST = $id"
+        val cursor = db.rawQuery(queryUpdate, null)
+        if (cursor.count > 0){
             listPRFRequest = konversiCursorKeListPRFRequestModel(cursor)
         }
         println(queryUpdate)

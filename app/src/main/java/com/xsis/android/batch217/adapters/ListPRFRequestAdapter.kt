@@ -66,7 +66,8 @@ class ListPRFRequestAdapter(
                 when (position){
                     0 -> {
                         val intentEdit = Intent(context, EditPRFRequestActivity::class.java)
-                        intentEdit.putExtra(ID_PRF_REQUEST, model.id_prf_request )
+                        intentEdit.putExtra(ID_PRF_REQUEST, ID )
+                        println("------------------------- $ID")
                         context.startActivity(intentEdit)
                         window.dismiss()
                     }

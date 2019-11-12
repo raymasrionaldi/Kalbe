@@ -79,8 +79,8 @@ class KeahlianQueryHelper(val databaseHelper: DatabaseHelper) {
         var listKeahlian = ArrayList<Keahlian>()
 
         val db = databaseHelper.writableDatabase
-        val queryUpdate = "SELECT * FROM $TABEL_PENDIDIKAN " +
-                "WHERE $NAMA_PENDIDIKAN = '$nama' AND $ID_PENDIDIKAN != '$id'"
+        val queryUpdate = "SELECT * FROM $TABEL_KEAHLIAN " +
+                "WHERE $NAMA_KEAHLIAN = '$nama' AND $ID_KEAHLIAN != '$id'"
         val cursor = db.rawQuery(queryUpdate, null)
         if (cursor.count > 0){
             listKeahlian = konversiCursorKeListKeahlianModel(cursor)

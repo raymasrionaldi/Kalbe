@@ -7,12 +7,10 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.View
 import android.view.Window
 import android.view.WindowManager
-import android.widget.ArrayAdapter
-import android.widget.Button
-import android.widget.EditText
-import android.widget.Toast
+import android.widget.*
 import androidx.core.view.isVisible
 import com.xsis.android.batch217.R
 import com.xsis.android.batch217.databases.DatabaseHelper
@@ -26,13 +24,17 @@ import java.util.*
 class InputPRFRequestActivity : AppCompatActivity() {
     val context = this
     var buttonReset: Button? = null
+    var type: Spinner? = null
     var placement: EditText? = null
+    var pid: Spinner? = null
     var location: EditText? = null
     var period: EditText? = null
     var userName: EditText? = null
     var telpMobilePhone: EditText? = null
     var email: EditText? = null
+    var notebook: Spinner? = null
     var overtime: EditText? = null
+    var bast: Spinner? = null
     var billing: EditText? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,14 +50,21 @@ class InputPRFRequestActivity : AppCompatActivity() {
             this.supportActionBar!!.hide()
         } catch (e: NullPointerException){
         }
+
+        type = spinnerInputTypePRF
         placement = inputPlacementPRF
+        pid = spinnerInputPIDPRF
         location = inputLocationPRF
         period = inputPeriodPRF
         userName = inputUserNamePRF
         telpMobilePhone = inputTelpPRF
         email = inputEmailPRF
+        notebook = spinnerInputNotebookPRF
         overtime = inputOvertimePRF
+        bast = spinnerInputBastPRF
         billing = inputBillingPRF
+
+        ubahButtonResetSpinner()
 
         buttonBackInputPRFRequest.setOnClickListener{
             finish()
@@ -84,6 +93,58 @@ class InputPRFRequestActivity : AppCompatActivity() {
         overtime!!.addTextChangedListener(textWatcher)
         billing!!.addTextChangedListener(textWatcher)
 
+    }
+
+    fun ubahButtonResetSpinner() {
+        buttonReset = buttonResetPRFRequest
+        type!!.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                buttonReset = buttonResetPRFRequest
+                if (position != 0) {
+                    buttonResetPRFRequest.isEnabled = true
+                    ubahResetButton(context, true, buttonReset!!)
+                } else {
+                    ubahResetButton(context, false, buttonReset!!)
+                }
+            }
+            override fun onNothingSelected(arg0: AdapterView<*>) {}
+        }
+        pid!!.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                buttonReset = buttonResetPRFRequest
+                if (position != 0) {
+                    buttonResetPRFRequest.isEnabled = true
+                    ubahResetButton(context, true, buttonReset!!)
+                } else {
+                    ubahResetButton(context, false, buttonReset!!)
+                }
+            }
+            override fun onNothingSelected(arg0: AdapterView<*>) {}
+        }
+        notebook!!.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                buttonReset = buttonResetPRFRequest
+                if (position != 0) {
+                    buttonResetPRFRequest.isEnabled = true
+                    ubahResetButton(context, true, buttonReset!!)
+                } else {
+                    ubahResetButton(context, false, buttonReset!!)
+                }
+            }
+            override fun onNothingSelected(arg0: AdapterView<*>) {}
+        }
+        bast!!.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                buttonReset = buttonResetPRFRequest
+                if (position != 0) {
+                    buttonResetPRFRequest.isEnabled = true
+                    ubahResetButton(context, true, buttonReset!!)
+                } else {
+                    ubahResetButton(context, false, buttonReset!!)
+                }
+            }
+            override fun onNothingSelected(arg0: AdapterView<*>) {}
+        }
     }
 
     fun validasiInput() {
@@ -291,11 +352,10 @@ class InputPRFRequestActivity : AppCompatActivity() {
             val kondisi = !placementTeks.isEmpty() || !locationTeks.isEmpty() || !periodTeks.isEmpty()
                             || !userNameTeks.isEmpty() || !telpMobilePhoneTeks.isEmpty() || !emailTeks.isEmpty()
                             || !overtimeTeks.isEmpty() || !billingTeks.isEmpty()
-
+            buttonResetPRFRequest.isEnabled = true
             ubahResetButton(context, kondisi, buttonReset!!)
         }
         override fun afterTextChanged(s: Editable) { }
     }
-
 
 }

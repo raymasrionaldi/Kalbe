@@ -10,6 +10,7 @@ class PRFRequest {
     var period: String? = null
     var user_name: String? = null
     var telp_number: String? = null
+    var email: String? = null
     var notebook: String? = null
     var overtime: String? = null
     var bast: String? = null
