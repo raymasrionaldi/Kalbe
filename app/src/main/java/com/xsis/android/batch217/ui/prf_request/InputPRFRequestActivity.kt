@@ -148,6 +148,8 @@ class InputPRFRequestActivity : AppCompatActivity() {
     }
 
     fun validasiInput() {
+        val tanggal = inputTanggalPRF.text.toString().trim()
+        println("tanggal = $tanggal")
         val type = spinnerInputTypePRF.selectedItemPosition
         val placement = placement!!.text.toString().trim()
         val PID = spinnerInputPIDPRF.selectedItemPosition
@@ -194,7 +196,8 @@ class InputPRFRequestActivity : AppCompatActivity() {
             requiredNotebookPRFRequest.isVisible = true
         }
         else {
-            insertKeDatabase(ARRAY_TYPE[type],
+            insertKeDatabase(tanggal,
+                ARRAY_TYPE[type],
                 placement,
                 ARRAY_PID[PID],
                 location,
@@ -226,7 +229,8 @@ class InputPRFRequestActivity : AppCompatActivity() {
         inputBillingPRF.setText("")
     }
 
-    fun insertKeDatabase(type: String,
+    fun insertKeDatabase(tanggal: String,
+                         type: String,
                          placement: String,
                          pid: String,
                          location: String,
@@ -246,7 +250,7 @@ class InputPRFRequestActivity : AppCompatActivity() {
             //cek id_deleted
             if(listPRFRequest[0].is_Deleted == "true"){
                 //update tru jadi false
-                databaseQueryHelper.updatePRFRequest(type,placement,pid,location,period,userName,telpMobilePhone,email,notebook,overtime,bast,billing)
+                databaseQueryHelper.updatePRFRequest(tanggal, type,placement,pid,location,period,userName,telpMobilePhone,email,notebook,overtime,bast,billing)
                 Toast.makeText(this, SIMPAN_DATA_BERHASIL, Toast.LENGTH_SHORT).show()
             } else {
                 Toast.makeText(this, DATA_SUDAH_ADA, Toast.LENGTH_SHORT).show()
@@ -256,6 +260,7 @@ class InputPRFRequestActivity : AppCompatActivity() {
             //cek nama
             val content = ContentValues()
             content.put(TYPE, type)
+            content.put(TANGGAL, tanggal)
             content.put(PLACEMENT, placement)
             content.put(PID, pid)
             content.put(LOCATION, location)

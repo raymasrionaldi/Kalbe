@@ -87,17 +87,17 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
-                    android:hint="January 2, 2019"
+                    android:clickable="false"
                     android:focusable="false"
-                    android:longClickable="false"
-                    />
+                    android:hint="January 2, 2019"
+                    android:longClickable="false" />
 
                 <ImageView
                     android:id="@+id/iconInputTanggalPRF"
                     android:layout_width="25dp"
                     android:layout_height="25dp"
-                    android:layout_margin="15dp"
                     android:layout_gravity="right|center_vertical"
+                    android:layout_margin="15dp"
                     android:src="@android:drawable/ic_menu_my_calendar" />
             </FrameLayout>
 
@@ -123,8 +123,8 @@
                 android:id="@+id/requiredTypePRFRequest"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Required"
                 android:layout_marginLeft="10dp"
+                android:text="Required"
                 android:textColor="@color/warnaMerah"
                 android:textSize="@dimen/text_size_small"
                 android:visibility="invisible" />
@@ -134,17 +134,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:hint="Placement In *" />
+                android:hint="Placement In *"
+                android:maxLines="1" />
 
             <TextView
                 android:id="@+id/requiredPlacementPRFRequest"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
                 android:text="Required"
                 android:textColor="@color/warnaMerah"
                 android:textSize="@dimen/text_size_small"
-                android:visibility="invisible"
-                android:layout_marginLeft="10dp"/>
+                android:visibility="invisible" />
 
             <FrameLayout
                 android:layout_width="match_parent"
@@ -172,21 +173,23 @@
                 android:text="Required"
                 android:textColor="@color/warnaMerah"
                 android:textSize="@dimen/text_size_small"
-                android:visibility="invisible"/>
+                android:visibility="invisible" />
 
             <EditText
                 android:id="@+id/inputLocationPRF"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:hint="Location" />
+                android:hint="Location"
+                android:maxLines="1" />
 
             <EditText
                 android:id="@+id/inputPeriodPRF"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:hint="Period *" />
+                android:hint="Period *"
+                android:maxLines="1" />
 
             <TextView
                 android:id="@+id/requiredPeriodPRFRequest"
@@ -196,14 +199,15 @@
                 android:text="Required"
                 android:textColor="@color/warnaMerah"
                 android:textSize="@dimen/text_size_small"
-                android:visibility="invisible"/>
+                android:visibility="invisible" />
 
             <EditText
                 android:id="@+id/inputUserNamePRF"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:hint="User Name *" />
+                android:hint="User Name *"
+                android:maxLines="1" />
 
             <TextView
                 android:id="@+id/requiredUsernamePRFRequest"
@@ -213,15 +217,16 @@
                 android:text="Required"
                 android:textColor="@color/warnaMerah"
                 android:textSize="@dimen/text_size_small"
-                android:visibility="invisible"/>
+                android:visibility="invisible" />
 
             <EditText
                 android:id="@+id/inputTelpPRF"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
+                android:hint="Telp/Mobile Phone *"
                 android:inputType="number"
-                android:hint="Telp/Mobile Phone *" />
+                android:maxLines="1" />
 
             <TextView
                 android:id="@+id/requiredTelpPRFRequest"
@@ -231,14 +236,15 @@
                 android:text="Required"
                 android:textColor="@color/warnaMerah"
                 android:textSize="@dimen/text_size_small"
-                android:visibility="invisible"/>
+                android:visibility="invisible" />
 
             <EditText
                 android:id="@+id/inputEmailPRF"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:hint="Email *" />
+                android:hint="Email *"
+                android:maxLines="1" />
 
             <TextView
                 android:id="@+id/requiredEmailPRFRequest"
@@ -248,7 +254,7 @@
                 android:text="Required"
                 android:textColor="@color/warnaMerah"
                 android:textSize="@dimen/text_size_small"
-                android:visibility="invisible"/>
+                android:visibility="invisible" />
 
             <FrameLayout
                 android:layout_width="match_parent"
@@ -276,14 +282,15 @@
                 android:text="Required"
                 android:textColor="@color/warnaMerah"
                 android:textSize="@dimen/text_size_small"
-                android:visibility="invisible"/>
+                android:visibility="invisible" />
 
             <EditText
                 android:id="@+id/inputOvertimePRF"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:hint="Overtime" />
+                android:hint="Overtime"
+                android:maxLines="1" />
 
             <FrameLayout
                 android:layout_width="match_parent"
@@ -293,7 +300,7 @@
                     android:id="@+id/inputBastPRF"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="5dp"/>
+                    android:layout_margin="5dp" />
 
                 <Spinner
                     android:id="@+id/spinnerInputBastPRF"
@@ -308,16 +315,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:hint="Billing" />
+                android:hint="Billing"
+                android:maxLines="1" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="20dp"
+                android:orientation="horizontal"
                 android:paddingLeft="5dp"
-                android:paddingRight="5dp"
-                android:orientation="horizontal">
+                android:paddingRight="5dp">
 
                 <Button
                     android:id="@+id/buttonResetPRFRequest"
@@ -325,8 +333,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="@drawable/button_reset_off"
-                    android:enabled="false"
                     android:clickable="false"
+                    android:enabled="false"
                     android:text="@string/reset"
                     android:textColor="@color/warnaTeksResetOff" />
 

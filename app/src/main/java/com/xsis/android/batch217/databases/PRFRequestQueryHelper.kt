@@ -85,7 +85,8 @@ class PRFRequestQueryHelper (val databaseHelper: DatabaseHelper) {
         return listPRFRequest
     }
 
-    fun updatePRFRequest(type: String,
+    fun updatePRFRequest(tanggal: String,
+                         type: String,
                          placement: String,
                          pid: String,
                          location: String,
@@ -101,7 +102,7 @@ class PRFRequestQueryHelper (val databaseHelper: DatabaseHelper) {
 
         val db = databaseHelper.writableDatabase
         val queryUpdate = "UPDATE $TABEL_PRF_REQUEST " +
-                "SET $TYPE = '$type', $PID = '$pid', $LOCATION = '$location', $PERIOD = '$period', " +
+                "SET $TANGGAL = $tanggal $TYPE = '$type', $PID = '$pid', $LOCATION = '$location', $PERIOD = '$period', " +
                 "$USER_NAME = '$userName', $TELP_NUMBER = '$telpMobilePhone', $EMAIL = '$email'," +
                 "$NOTEBOOK = '$notebook', $OVERTIME = '$overtime', $BAST = '$bast', $BILLING = '$billing'," +
                 "  $IS_DELETED = 'false' " +
@@ -130,6 +131,7 @@ class PRFRequestQueryHelper (val databaseHelper: DatabaseHelper) {
     }
 
     fun updateDelete(id: Int,
+                     tanggal: String,
                      type: String,
                      placement: String,
                      pid: String,
@@ -146,7 +148,7 @@ class PRFRequestQueryHelper (val databaseHelper: DatabaseHelper) {
 
         val db = databaseHelper.writableDatabase
         val queryUpdate = "UPDATE $TABEL_PRF_REQUEST " +
-                "SET $PLACEMENT = $placement $TYPE = '$type', $PID = '$pid', $LOCATION = '$location', $PERIOD = '$period', " +
+                "SET $TANGGAL = $tanggal, $PLACEMENT = $placement $TYPE = '$type', $PID = '$pid', $LOCATION = '$location', $PERIOD = '$period', " +
                 "$USER_NAME = '$userName', $TELP_NUMBER = '$telpMobilePhone', $EMAIL = '$email'," +
                 "$NOTEBOOK = '$notebook', $OVERTIME = '$overtime', $BAST = '$bast', $BILLING = '$billing'," +
                 "  $IS_DELETED = 'false' " +

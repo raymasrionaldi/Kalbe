@@ -135,6 +135,7 @@ class EditPRFRequestActivity : AppCompatActivity() {
     }
 
     fun validasiInput(id: Int) {
+        val tanggal = inputTanggalPRFEdit.text.toString().trim()
         val type = spinnerInputTypePRFEdit.selectedItemPosition
         val placement = placement!!.text.toString().trim()
         val PID = spinnerInputPIDPRFEdit.selectedItemPosition
@@ -181,7 +182,8 @@ class EditPRFRequestActivity : AppCompatActivity() {
             requiredNotebookPRFRequestEdit.isVisible = true
         }
         else {
-            insertKeDatabase(id, ARRAY_TYPE[type],
+            insertKeDatabase(id, tanggal,
+                ARRAY_TYPE[type],
                 placement,
                 ARRAY_PID[PID],
                 location,
@@ -214,6 +216,7 @@ class EditPRFRequestActivity : AppCompatActivity() {
     }
 
     fun insertKeDatabase(id: Int,
+                         tanggal: String,
                          type: String,
                          placement: String,
                          pid: String,
@@ -231,7 +234,7 @@ class EditPRFRequestActivity : AppCompatActivity() {
         val databaseQueryHelper = PRFRequestQueryHelper(databaseHelper)
         val listPRFRequest = databaseQueryHelper.readUpdate(id, placement)
         if(listPRFRequest.isEmpty()){
-            databaseQueryHelper.updateDelete(id, type, placement, pid, location, period, userName, telpMobilePhone, email, notebook,overtime, bast, billing)
+            databaseQueryHelper.updateDelete(id,tanggal, type, placement, pid, location, period, userName, telpMobilePhone, email, notebook,overtime, bast, billing)
             Toast.makeText(context, EDIT_DATA_BERHASIL, Toast.LENGTH_SHORT).show()
         } else {
             Toast.makeText(context, DATA_SUDAH_ADA, Toast.LENGTH_SHORT).show()
@@ -239,10 +242,15 @@ class EditPRFRequestActivity : AppCompatActivity() {
     }
 
     fun setReportDatePRFRequestPicker(){
-        val today = Calendar.getInstance()
-        val yearNow = today.get(Calendar.YEAR)
-        val monthNow = today.get(Calendar.MONTH)
-        val dayNow = today.get(Calendar.DATE)
+
+        val autoDate = inputTanggalPRFEdit.text.toString()
+
+        val calendar = Calendar.getInstance()
+        val formatter = SimpleDateFormat(DATE_PATTERN)
+        calendar.time = formatter.parse(autoDate)
+        val yearNow = calendar.get(Calendar.YEAR)
+        val monthNow = calendar.get(Calendar.MONTH)
+        val dayNow = calendar.get(Calendar.DATE)
 
         iconInputTanggalPRFEdit.setOnClickListener {
             val datePickerDialog = DatePickerDialog(context, R.style.CustomDatePicker, DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
@@ -250,7 +258,7 @@ class EditPRFRequestActivity : AppCompatActivity() {
                 selectedDate.set(year, month, dayOfMonth)
 
                 //konversi ke string
-                val formatDate = SimpleDateFormat("MMMM dd, yyyy")
+                val formatDate = SimpleDateFormat(DATE_PATTERN)
                 val tanggal = formatDate.format(selectedDate.time)
 
                 //set tampilan
@@ -343,6 +351,8 @@ class EditPRFRequestActivity : AppCompatActivity() {
             cursor.moveToFirst()
             data.id_prf_request = cursor.getInt(0)
             data.tanggal = cursor.getString(1)
+            inputTanggalPRFEdit.setText(data.tanggal)
+            println("-------------------------------------${data.tanggal}")
 
             val dataType = cursor.getString(2)
             val indexType = ARRAY_TYPE.indexOf(dataType)
