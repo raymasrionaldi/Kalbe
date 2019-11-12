@@ -82,6 +82,7 @@ class InputPRFRequestActivity : AppCompatActivity() {
 
         buttonSubmitPRFRequest.setOnClickListener {
             validasiInput()
+            finish()
         }
 
         placement!!.addTextChangedListener(textWatcher)

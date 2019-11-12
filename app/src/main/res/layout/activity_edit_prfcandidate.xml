@@ -74,7 +74,10 @@
                     android:id="@+id/inputNamaPRFCandidateEdit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="5dp" />
+                    android:layout_margin="5dp"
+                    android:clickable="false"
+                    android:focusable="false"
+                    android:longClickable="false"/>
 
                 <Spinner
                     android:id="@+id/spinnerInputNamaPRFCandidateEdit"
@@ -99,7 +102,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:hint="Batch Bootcamp" />
+                android:hint="Batch Bootcamp"
+                android:inputType="number"/>
 
             <FrameLayout
                 android:layout_width="match_parent"
@@ -109,7 +113,10 @@
                     android:id="@+id/inputPositionPRFCandidateEdit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="5dp" />
+                    android:layout_margin="5dp"
+                    android:clickable="false"
+                    android:focusable="false"
+                    android:longClickable="false"/>
 
                 <Spinner
                     android:id="@+id/spinnerInputPositionPRFCandidateEdit"
@@ -166,7 +173,10 @@
                     android:id="@+id/inputSRFNumberPRFCandidateEdit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="5dp"/>
+                    android:layout_margin="5dp"
+                    android:clickable="false"
+                    android:focusable="false"
+                    android:longClickable="false"/>
 
                 <Spinner
                     android:id="@+id/spinnerSRFNumberPRFCandidateEdit"
@@ -201,7 +211,10 @@
                     android:id="@+id/inputCandidateStatusPRFCandidateEdit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="5dp"/>
+                    android:layout_margin="5dp"
+                    android:clickable="false"
+                    android:focusable="false"
+                    android:longClickable="false"/>
 
                 <Spinner
                     android:id="@+id/spinnerInputCandidateStatusPRFCandidateEdit"

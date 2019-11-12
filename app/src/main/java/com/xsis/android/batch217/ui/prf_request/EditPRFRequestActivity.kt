@@ -406,6 +406,7 @@ class EditPRFRequestActivity : AppCompatActivity() {
         }
         buttonSubmitPRFRequestEdit.setOnClickListener {
             validasiInput(id)
+            finish()
         }
     }
 }

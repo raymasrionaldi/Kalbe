@@ -77,6 +77,7 @@ class InputPRFCandidateActivity : AppCompatActivity() {
 
         buttonSubmitPRFCandidate.setOnClickListener {
             validasiInput()
+            finish()
         }
         buttonResetPRFCandidate.setOnClickListener {
             resetForm()

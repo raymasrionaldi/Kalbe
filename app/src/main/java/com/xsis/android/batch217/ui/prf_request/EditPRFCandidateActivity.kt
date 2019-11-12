@@ -326,16 +326,6 @@ class EditPRFCandidateActivity : AppCompatActivity() {
 
             data.sign_contract_date = cursor.getString(9)
             inputSignContractDatePRFCandidateEdit.setText(data.sign_contract_date)
-            println("1 = ${cursor.getString(0)}")
-            println("2 = ${cursor.getString(1)}")
-            println("3 = ${cursor.getString(2)}")
-            println("4 = ${cursor.getString(3)}")
-            println("5 = ${cursor.getString(4)}")
-            println("6 = ${cursor.getString(5)}")
-            println("7 = ${cursor.getString(6)}")
-            println("8 = ${cursor.getString(7)}")
-            println("9 = ${cursor.getString(8)}")
-            println("10 = ${cursor.getString(9)}")
 
             data.notes = cursor.getString(10)
             inputNotesPRFCandidateEdit.setText(data.notes)
@@ -350,6 +340,7 @@ class EditPRFCandidateActivity : AppCompatActivity() {
 
         buttonSubmitPRFCandidateEdit.setOnClickListener {
             validasiInput(id)
+            finish()
         }
         buttonResetPRFCandidateEdit.setOnClickListener {
             resetForm()

@@ -108,7 +108,10 @@
                     android:id="@+id/inputTypePRFEdit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="5dp" />
+                    android:layout_margin="5dp"
+                    android:clickable="false"
+                    android:focusable="false"
+                    android:longClickable="false"/>
 
                 <Spinner
                     android:id="@+id/spinnerInputTypePRFEdit"
@@ -153,7 +156,10 @@
                     android:id="@+id/inputPIDPRFEdit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="5dp" />
+                    android:layout_margin="5dp"
+                    android:clickable="false"
+                    android:focusable="false"
+                    android:longClickable="false"/>
 
                 <Spinner
                     android:id="@+id/spinnerInputPIDPRFEdit"
@@ -262,7 +268,10 @@
                     android:id="@+id/inputNotebookPRFEdit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="5dp" />
+                    android:layout_margin="5dp"
+                    android:clickable="false"
+                    android:focusable="false"
+                    android:longClickable="false"/>
 
                 <Spinner
                     android:id="@+id/spinnerInputNotebookPRFEdit"
@@ -298,7 +307,10 @@
                     android:id="@+id/inputBastPRFEdit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="5dp"/>
+                    android:layout_margin="5dp"
+                    android:clickable="false"
+                    android:focusable="false"
+                    android:longClickable="false"/>
 
                 <Spinner
                     android:id="@+id/spinnerInputBastPRFEdit"

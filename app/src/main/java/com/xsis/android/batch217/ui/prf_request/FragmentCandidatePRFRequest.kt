@@ -60,7 +60,6 @@ class FragmentCandidatePRFRequest(context: Context, val fm: FragmentManager) : F
         val databaseHelper = DatabaseHelper(context!!)
         databaseQueryHelper = PRFCandidateQueryHelper(databaseHelper)
 
-        //getSemuaEmployeeStatus(recyclerView!!, databaseQueryHelper!!)
 
         return customView
     }
@@ -83,10 +82,6 @@ class FragmentCandidatePRFRequest(context: Context, val fm: FragmentManager) : F
         adapterEmployeeStatus.notifyDataSetChanged()
     }
 
-    fun updateContent() {
-        //getSemuaEmployeeStatus(recyclerView!!, databaseQueryHelper!!)
-    }
-
 
     fun bawaID(id:Int){
         ID = id
@@ -102,7 +97,7 @@ class FragmentCandidatePRFRequest(context: Context, val fm: FragmentManager) : F
     }
 
     fun refreshList() {
-        getActivity()!!.invalidateOptionsMenu()
+        getSemuaPRFCandidate(ID, recyclerView!!, databaseQueryHelper!!)
     }
 
 }
