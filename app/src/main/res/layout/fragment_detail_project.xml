@@ -14,11 +14,11 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ExpandableListView
-            android:id="@+id/ProjectInformation"
+            android:id="@+id/listProjectInformation"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:choiceMode="singleChoice"
-            android:listSelector="@drawable/selector_expandable_item" />
+            android:groupIndicator="@null" />
     </LinearLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton

@@ -1,5 +1,6 @@
 package com.xsis.android.batch217.ui.project
 
+import android.app.Activity
 import android.app.DatePickerDialog
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
@@ -350,7 +351,7 @@ class ProjectFormActivity : AppCompatActivity() {
 
             startDate.time = formatter.parse(inputStart)
             endDate.time = formatter.parse(inputEnd)
-            if(!startDate.before(endDate)){
+            if (!startDate.before(endDate)) {
                 Toast.makeText(context, "Input Start dan End salah", Toast.LENGTH_SHORT).show()
                 isValid = false
             }
@@ -391,12 +392,8 @@ class ProjectFormActivity : AppCompatActivity() {
                 }
             }
 
-//            val viewPager = view!!.parent as ViewPager
-//            val adapter = viewPager.adapter!! as PositionLevelFragmentAdapter
-//            val fragment = fm.fragments[0] as PositionLevelFragmentData
-//            fragment.updateContent()
-//            adapter.notifyDataSetChanged()
-//            viewPager.setCurrentItem(0, true)
+            setResult(Activity.RESULT_OK, intent)
+            finish()
         }
     }
 }

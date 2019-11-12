@@ -1,5 +1,6 @@
 package com.xsis.android.batch217
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
@@ -41,6 +42,7 @@ import com.xsis.android.batch217.ui.training.TrainingFragment
 import com.xsis.android.batch217.ui.tipe_identitas.TipeIdentitasFragment
 import com.xsis.android.batch217.ui.training_organizer.TrainingOrganizerFragment
 import com.xsis.android.batch217.utils.OnBackPressedListener
+import com.xsis.android.batch217.utils.REQUEST_CODE_PROJECT
 
 class HomeActivity : AppCompatActivity() {
     val context = this
@@ -391,7 +393,7 @@ class HomeActivity : AppCompatActivity() {
 
             else if (groupIndex == 21 && childIndex == 0) {
                 val intent = Intent(context, ProjectFormActivity::class.java)
-                startActivity(intent)
+                startActivityForResult(intent, REQUEST_CODE_PROJECT)
                 closeNavDrawer()
             }
 
@@ -642,6 +644,22 @@ class HomeActivity : AppCompatActivity() {
                 } else {
                     super.onBackPressed()
                 }
+            }
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if(requestCode == REQUEST_CODE_PROJECT){
+            if(resultCode == Activity.RESULT_OK){
+                val fragment = ProjectFragment()
+                val fragmentTransaction = supportFragmentManager.beginTransaction()
+                fragmentTransaction.replace(
+                    R.id.nav_host_fragment,
+                    fragment,
+                    getString(R.string.menu_ce_leave)
+                )
+                fragmentTransaction.commit()
             }
         }
     }

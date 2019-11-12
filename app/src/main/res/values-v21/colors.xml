@@ -19,5 +19,6 @@
     <color name="warnaButtonSave">#00BCDA</color>
     <color name="warnaBlack">#000000</color>
     <color name="warnaTransparent">#00000000</color>
-
+    <color name="warnaDetailBackground">#D7D7D7</color>
+    <color name="warnaDetailText">#B2B2B2</color>
 </resources>
