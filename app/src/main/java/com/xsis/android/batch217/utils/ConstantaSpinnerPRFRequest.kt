@@ -34,8 +34,9 @@ val ARRAY_BAST = arrayOf(
     "No"
 )
 
-val ARRAY_NAME = arrayOf(
+val ARRAY_NAME = mutableListOf<String>(
     "Name",
+    "Carol",
     "Carol Danvers",
     "Peter Parker"
 )

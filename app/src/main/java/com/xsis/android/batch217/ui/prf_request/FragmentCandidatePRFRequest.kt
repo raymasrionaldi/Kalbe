@@ -19,6 +19,9 @@ import com.xsis.android.batch217.databases.PRFCandidateQueryHelper
 import com.xsis.android.batch217.databases.PRFRequestQueryHelper
 import com.xsis.android.batch217.models.PRFCandidate
 import com.xsis.android.batch217.models.PRFRequest
+import com.xsis.android.batch217.utils.ID_FROM_PRF
+import com.xsis.android.batch217.utils.ID_PRF_CANDIDATE
+import com.xsis.android.batch217.utils.ID_PRF_REQUEST
 
 class FragmentCandidatePRFRequest(context: Context, val fm: FragmentManager) : Fragment() {
     var recyclerView: RecyclerView? = null
@@ -50,6 +53,7 @@ class FragmentCandidatePRFRequest(context: Context, val fm: FragmentManager) : F
             customView.findViewById(R.id.buttonAddPRFCandidate) as FloatingActionButton
         buttonAdd.setOnClickListener {
             val intent = Intent(context, InputPRFCandidateActivity::class.java)
+            intent.putExtra(ID_FROM_PRF, ID)
             startActivity(intent)
         }
 
