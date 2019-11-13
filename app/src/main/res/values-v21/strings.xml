@@ -62,5 +62,8 @@
 
     <string name="hint_agama">Agama *</string>
     <string name="hint_deskripsi">Deskripsi</string>
+    <string name="create_erf">Create ERF</string>
+    <string name="client_erf">Nama Client</string>
+    <string name="nama_resource">Nama Resource</string>
 
 </resources>

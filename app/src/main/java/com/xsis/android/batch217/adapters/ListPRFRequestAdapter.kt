@@ -16,6 +16,7 @@ import com.xsis.android.batch217.adapters.fragments.RequestHistoryFragmentAdapte
 import com.xsis.android.batch217.databases.DatabaseHelper
 import com.xsis.android.batch217.databases.PRFRequestQueryHelper
 import com.xsis.android.batch217.models.PRFRequest
+import com.xsis.android.batch217.ui.prf_request.CreateERFActivity
 import com.xsis.android.batch217.ui.prf_request.EditPRFRequestActivity
 import com.xsis.android.batch217.ui.prf_request.FragmentCandidatePRFRequest
 import com.xsis.android.batch217.ui.prf_request.FragmentDataRequestHistory
@@ -57,7 +58,7 @@ class ListPRFRequestAdapter(
         }
 
         holder.bukaMenu.setOnClickListener {view ->
-            val window = showPopupMenuEditDelete(
+            val window = showPopupMenuEditDeleteCreate(
                 context!!, view
             )
             window.setOnItemClickListener { parent, view, position, id ->
@@ -86,6 +87,14 @@ class ListPRFRequestAdapter(
                             .setCancelable(true)
 
                         konfirmasiDelete.create().show()
+                        window.dismiss()
+                    }
+                    2 -> {
+                        window.dismiss()
+                        //pindah ke create ERF
+                        val intentEdit = Intent(context, CreateERFActivity::class.java)
+                        intentEdit.putExtra(ID_PRF_REQUEST, ID )
+                        context.startActivity(intentEdit)
                         window.dismiss()
                     }
                 }
