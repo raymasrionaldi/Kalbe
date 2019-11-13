@@ -1,6 +1,132 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+    <EditText
+        android:id="@+id/PIDProjectCreate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="PID*"/>
+
+    <EditText
+        android:id="@+id/noPOSPKKontrakProjectCreate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="No. PO SPK Kontrak*"/>
+
+    <EditText
+        android:id="@+id/clientProjectCreate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Client*"/>
+
+    <EditText
+        android:id="@+id/startDateProjectCreate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Start Date* (dd/MM/yyyy)"/>
+
+    <EditText
+        android:id="@+id/endDateProjectCreate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="End Date* (dd/MM/yyyy)"/>
+
+    <EditText
+        android:id="@+id/posisiDiClientProjectCreate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Posisi di Client*"/>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <androidx.appcompat.widget.AppCompatCheckBox
+            android:id="@+id/cekJenisOvertimeProjectCreate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <EditText
+            android:id="@+id/jenisOvertimeProjectCreate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Jenis Overtime"
+            android:enabled="false"/>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <androidx.appcompat.widget.AppCompatCheckBox
+            android:id="@+id/cekCatatanFixRateProjectCreate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <EditText
+            android:id="@+id/catatanFixRateProjectCreate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Catatan Fix Rate"
+            android:enabled="false"/>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <androidx.appcompat.widget.AppCompatCheckBox
+            android:id="@+id/cekTanggalBASTProjectCreate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <EditText
+            android:id="@+id/tanggalBASTProjectCreate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Tanggal BAST"
+            android:enabled="false"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/resetProjectCreate"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="RESET"
+            android:enabled="false"/>
+        <Button
+            android:id="@+id/saveProjectCreate"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="SAVE"
+            android:enabled="false"/>
+
+    </LinearLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/deleteProjectCreate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/fab_margin"
+        android:visibility="gone"
+        app:backgroundTint="@color/warnaMerah"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/ic_cancel_white" />
 
 </LinearLayout>
