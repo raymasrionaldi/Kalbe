@@ -217,28 +217,28 @@ class EntryTimesheetActivity : AppCompatActivity() {
         var isValid = true
         if (positionStatusTimesheet <= 1) {
             val sdf = SimpleDateFormat(HOUR_PATTERN)
-            if (!startReportDateTimesheet.equals("") ||!endReportDateTimesheet.equals("")||!startOvertimeTimesheet.equals("")||!endOvertimeTimesheet.equals("") ){
+            val sdf2 = SimpleDateFormat(HOUR_PATTERN)
+            if (!startReportDateTimesheet.equals("") ||!endReportDateTimesheet.equals("") ){
                 val startTime = sdf.parse(startReportDateTimesheet)
                 val endTime = sdf.parse(endReportDateTimesheet)
-                val sdf2 = SimpleDateFormat(HOUR_PATTERN)
-                val startOvTime = sdf2.parse(startOvertimeTimesheet)
-                val endOvTime = sdf2.parse(endOvertimeTimesheet)
-                val jam1 = startTime<endTime
-                val jam2 = startOvTime<endOvTime
-                if(startTime > endTime){
+
+                if(startTime >= endTime){
                     isValid = false
                     Toast.makeText(context, "Save Invalid, End time Report Date must be greater then Start time Report Date", Toast.LENGTH_SHORT).show()
                 }
-                if (startOvTime > endOvTime){
+            }
+            if (!startOvertimeTimesheet.equals("")||!endOvertimeTimesheet.equals("")){
+                val startOvTime = sdf2.parse(startOvertimeTimesheet)
+                val endOvTime = sdf2.parse(endOvertimeTimesheet)
+                if (startOvTime >= endOvTime){
                     isValid = false
-                    Toast.makeText(context, "Save Invalid, End time Overtime be greater then Start time Overtime Date", Toast.LENGTH_SHORT).show()
-                }
-                if (jam2 <= jam1){
-                    isValid = false
-                    Toast.makeText(context, "Save Invalid, Overtime time be greater then Report Date time", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "Save Invalid, End time Overtime must be greater then Start time Overtime Date", Toast.LENGTH_SHORT).show()
                 }
             }
-
+            if (startOvertimeTimesheet <= endOvertimeTimesheet){
+                isValid = false
+                Toast.makeText(context, "Save Invalid, Start time Overtime must be greater then End Time Report date", Toast.LENGTH_SHORT).show()
+            }
             if (positionStatusTimesheet == 0) {
                 requiredStatusTimesheet.isVisible = true
                 isValid = false
