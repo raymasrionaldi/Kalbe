@@ -54,6 +54,7 @@
 
         <TextView
             android:id="@+id/requiredNamaJenisCatatan"
+            android:layout_marginLeft="3dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Error: Jenis Catatan Tidak Boleh Kosong"
@@ -102,6 +103,7 @@
                 android:background="@drawable/button_reset_on"
                 android:clickable="false"
                 android:text="@string/batal"
+                android:layout_marginTop="10dp"
                 android:textColor="@color/colorWhite" />
 
             <Button
@@ -111,6 +113,7 @@
                 android:layout_weight="1"
                 android:background="@drawable/button_simpan_off"
                 android:text="@string/simpan"
+                android:layout_marginTop="10dp"
                 android:textColor="@color/warnaTeksSimpanOff" />
         </LinearLayout>
     </LinearLayout>

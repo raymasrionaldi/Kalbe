@@ -36,6 +36,7 @@
             android:layout_height="wrap_content"
             android:text="Required"
             android:textSize="11sp"
+            android:layout_marginLeft="3dp"
             android:textColor="@color/warnaMerah"
             android:visibility="invisible" />
 

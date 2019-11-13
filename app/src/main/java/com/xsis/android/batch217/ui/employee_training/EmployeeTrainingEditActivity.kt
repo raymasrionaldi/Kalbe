@@ -41,8 +41,8 @@ class EmployeeTrainingEditActivity : AppCompatActivity() {
     var employeeCertificationTypeSpinner: Spinner? = null
     var data = EmployeeTraining()
     var ID_EmployeeTraining = 0
-    lateinit var listNamaTraining: List<NamaTraining>
-    lateinit var listNamaTrainingOrganizer: List<NamaTrainingOrganizer>
+    lateinit var listNamaTraining: List<Training>
+    lateinit var listNamaTrainingOrganizer: List<TrainingOrganizer>
     lateinit var listTypeTraining: List<TypeTraining>
     lateinit var listCertificationType: List<CertificationType>
 
@@ -268,8 +268,9 @@ class EmployeeTrainingEditActivity : AppCompatActivity() {
     fun isiSpinnerNamaTraining(): List<String?> {
         listNamaTraining = databaseQueryHelper.tampilkanNamaTraining()
         val isiDataTraining = listNamaTraining.map {
-            it.namaNyaTraining
-        }.toList()
+            it.namaTraining
+        }.toMutableList()
+        isiDataTraining.add(0, "Training *")
         val adapterNamaTraining = ArrayAdapter<String>(
             context, android.R.layout.simple_spinner_item,
             isiDataTraining
@@ -282,8 +283,9 @@ class EmployeeTrainingEditActivity : AppCompatActivity() {
     fun isiSpinnerTrainingOrganizer(): List<String?> {
         listNamaTrainingOrganizer = databaseQueryHelper.tampilkanNamaTrainingOrganizer()
         val isiDataTrainingOrganizer = listNamaTrainingOrganizer.map {
-            it.namaNyaTrainingOrganizer
-        }.toList()
+            it.namaTrainingOrganizer
+        }.toMutableList()
+        isiDataTrainingOrganizer.add(0, "Organizer *")
         val adapterNamaTrainingOrganizer = ArrayAdapter<String>(
             context, android.R.layout.simple_spinner_item,
             isiDataTrainingOrganizer
@@ -297,7 +299,8 @@ class EmployeeTrainingEditActivity : AppCompatActivity() {
         listTypeTraining = databaseQueryHelper.tampilkanTrainingType()
         val isiDataTypeTraining = listTypeTraining.map {
             it.namaTypeTraining
-        }.toList()
+        }.toMutableList()
+        isiDataTypeTraining.add(0, "Training Type")
         val adapterTypeTraining = ArrayAdapter<String>(
             context, android.R.layout.simple_spinner_item,
             isiDataTypeTraining
@@ -311,7 +314,8 @@ class EmployeeTrainingEditActivity : AppCompatActivity() {
         listCertificationType = databaseQueryHelper.tampilkanCertificationType()
         val isiDataCertificationType = listCertificationType.map {
             it.namaTypeCertification
-        }.toList()
+        }.toMutableList()
+        isiDataCertificationType.add(0, "Certification Type")
         val adapterCertificationType = ArrayAdapter<String>(
             context, android.R.layout.simple_spinner_item,
             isiDataCertificationType
