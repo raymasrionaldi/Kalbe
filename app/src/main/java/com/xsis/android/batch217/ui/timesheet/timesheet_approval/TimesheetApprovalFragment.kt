@@ -1,11 +1,14 @@
 package com.xsis.android.batch217.ui.timesheet.timesheet_approval
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import android.widget.AdapterView
 import androidx.fragment.app.Fragment
 import com.chivorn.smartmaterialspinner.SmartMaterialSpinner
 import com.xsis.android.batch217.R
+import com.xsis.android.batch217.databases.DatabaseHelper
+import com.xsis.android.batch217.databases.TimesheetQueryHelper
 import com.xsis.android.batch217.utils.*
 import kotlinx.android.synthetic.main.fragment_timesheet_approval.*
 
@@ -93,10 +96,13 @@ class TimesheetApprovalFragment : Fragment() {
     }
 
     fun searchData() {
-//        if (spinnerPilihBulanSub.selectedItemPosition == 0 || spinnerPilihTahunSub.selectedItemPosition == 0) {
-//            Toast.makeText(context!!, "Data Belum Lengkap!", Toast.LENGTH_SHORT).show()
-//        }
-
+        val year = spinnerYearTimesheetApproval.selectedItem.toString()
+        val month = spinnerMonthTimesheetApproval.selectedItem.toString()
+        val intent = Intent(context, TimesheetApprovalProcessActivity::class.java)
+        intent.putExtra(YEAR_TIMESHEET, year)
+        intent.putExtra(MONTH_TIMESHEET, month)
+        resetForm()
+        startActivity(intent)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
