@@ -32,7 +32,6 @@ class InputPRFCandidateActivity : AppCompatActivity() {
     var srfNumber: Spinner? = null
     var customAllowence: EditText? = null
     var candidateStatus: Spinner? = null
-    var signContractDate: EditText? = null
     var notes: EditText? = null
     var id_from_request = 0
     var listPosition: List<String>? = null
@@ -63,7 +62,6 @@ class InputPRFCandidateActivity : AppCompatActivity() {
         srfNumber = spinnerSRFNumberPRFCandidate
         customAllowence = inputCustomeAllowencePRFCandidate
         candidateStatus = spinnerInputCandidateStatusPRFCandidate
-        signContractDate = inputSignContractDatePRFCandidate
         notes = inputNotesPRFCandidate
 
         ubahButtonResetSpinner()
@@ -87,7 +85,6 @@ class InputPRFCandidateActivity : AppCompatActivity() {
         name!!.addTextChangedListener(textWatcher)
         batch!!.addTextChangedListener(textWatcher)
         customAllowence!!.addTextChangedListener(textWatcher)
-        signContractDate!!.addTextChangedListener(textWatcher)
         notes!!.addTextChangedListener(textWatcher)
     }
 
@@ -139,7 +136,7 @@ class InputPRFCandidateActivity : AppCompatActivity() {
         val srfNumber = spinnerSRFNumberPRFCandidate.selectedItemPosition
         val customAllowence = customAllowence!!.text.toString()
         val candidateStatus = spinnerInputCandidateStatusPRFCandidate.selectedItemPosition
-        val signContractDate = signContractDate!!.text.toString().trim()
+        val signContractDate = inputSignContractDate.text.toString().trim()
         val notes = notes!!.text.toString().trim()
 
         if (name.isEmpty()) {
@@ -238,7 +235,7 @@ class InputPRFCandidateActivity : AppCompatActivity() {
         spinnerSRFNumberPRFCandidate.setSelection(0)
         inputCustomeAllowencePRFCandidate.setText("")
         spinnerInputCandidateStatusPRFCandidate.setSelection(0)
-        inputSignContractDatePRFCandidate.setText("")
+        inputSignContractDate.setText("")
         inputNotesPRFCandidate.setText("")
         requiredOff()
     }
@@ -260,6 +257,23 @@ class InputPRFCandidateActivity : AppCompatActivity() {
 
                 //set tampilan
                 inputPlacementDatePRFCandidate.setText(tanggal)
+            }, yearNow,monthNow,dayNow )
+            datePickerDialog.show()
+            buttonResetPRFCandidate.isEnabled = true
+            buttonResetPRFCandidate.setBackgroundResource(R.drawable.button_reset_on)
+            buttonResetPRFCandidate.setTextColor(Color.WHITE)
+        }
+        iconInputSignContract.setOnClickListener {
+            val datePickerDialog = DatePickerDialog(context, R.style.CustomDatePicker, DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
+                val selectedDate = Calendar.getInstance()
+                selectedDate.set(year, month, dayOfMonth)
+
+                //konversi ke string
+                val formatDate = SimpleDateFormat("MMMM dd, yyyy")
+                val tanggal = formatDate.format(selectedDate.time)
+
+                //set tampilan
+                inputSignContractDate.setText(tanggal)
             }, yearNow,monthNow,dayNow )
             datePickerDialog.show()
             buttonResetPRFCandidate.isEnabled = true
@@ -306,11 +320,9 @@ class InputPRFCandidateActivity : AppCompatActivity() {
             buttonReset = buttonResetPRFCandidate
             val batchTeks = batch!!.text.toString().trim()
             val customAllowenceTeks = customAllowence!!.text.toString().trim()
-            val signContractDate = signContractDate!!.text.toString().trim()
             val notesTeks = notes!!.text.toString().trim()
 
-            val kondisi = !batchTeks.isEmpty() || !customAllowenceTeks.isEmpty()
-                    || !signContractDate.isEmpty() || !notesTeks.isEmpty()
+            val kondisi = !batchTeks.isEmpty() || !customAllowenceTeks.isEmpty() || !notesTeks.isEmpty()
             buttonResetPRFCandidate.isEnabled = true
             ubahResetButton(context, kondisi, buttonReset!!)
         }

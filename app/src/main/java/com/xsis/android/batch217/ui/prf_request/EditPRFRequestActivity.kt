@@ -155,6 +155,8 @@ class EditPRFRequestActivity : AppCompatActivity() {
         val BAST = spinnerInputBastPRFEdit.selectedItemPosition
         val billing = billing!!.text.toString().trim()
 
+        val emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z.]+"
+
         if (type == 0) {
             inputTypePRFEdit.setHintTextColor(Color.RED)
             requiredTypePRFRequestEdit.isVisible = true
@@ -179,9 +181,9 @@ class EditPRFRequestActivity : AppCompatActivity() {
             inputTelpPRFEdit.setHintTextColor(Color.RED)
             requiredTelpPRFRequestEdit.isVisible = true
         }
-        else if (email.isEmpty()) {
-            inputTelpPRFEdit.setHintTextColor(Color.RED)
-            requiredTelpPRFRequestEdit.isVisible = true
+        else if (email.isEmpty() or !email.matches(emailPattern.toRegex())) {
+            inputEmailPRFEdit.setHintTextColor(Color.RED)
+            requiredEmailPRFRequestEdit.isVisible = true
         }
         else if (notebook == 0){
             inputNotebookPRFEdit.setHintTextColor(Color.RED)
@@ -219,7 +221,7 @@ class EditPRFRequestActivity : AppCompatActivity() {
         inputOvertimePRFEdit.setText("")
         spinnerInputBastPRFEdit.setSelection(0)
         inputBillingPRFEdit.setText("")
-        finish()
+        requiredOff()
     }
 
     fun insertKeDatabase(id: Int,
@@ -362,7 +364,9 @@ class EditPRFRequestActivity : AppCompatActivity() {
 
             val dataType = cursor.getString(2)
             val indexType = listTypePRF!!.indexOf(dataType)
+            println("index type = $indexType")
             spinnerInputTypePRFEdit.setSelection(indexType)
+            println("data type = $dataType")
 
             data.placement = cursor.getString(3)
             inputPlacementPRFEdit.setText(data.placement)

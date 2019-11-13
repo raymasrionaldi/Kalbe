@@ -131,7 +131,10 @@
                     android:id="@+id/inputPlacementDatePRFCandidateEdit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="5dp" />
+                    android:layout_margin="5dp"
+                    android:clickable="false"
+                    android:focusable="false"
+                    android:longClickable="false"/>
 
                 <ImageView
                     android:id="@+id/iconInputTanggalPRFCandidateEdit"
@@ -221,12 +224,29 @@
                 android:textSize="@dimen/text_size_small"
                 android:visibility="invisible" />
 
-            <EditText
-                android:id="@+id/inputSignContractDatePRFCandidateEdit"
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:hint="Sign Contract Date" />
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/inputSignContractDateEdit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:hint="Sign Contract Date"
+                    android:clickable="false"
+                    android:focusable="false"
+                    android:longClickable="false"/>
+
+                <ImageView
+                    android:id="@+id/iconInputSignContractEdit"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_gravity="right|center_vertical"
+                    android:layout_margin="15dp"
+                    android:src="@android:drawable/ic_menu_my_calendar" />
+            </FrameLayout>
+
 
             <EditText
                 android:id="@+id/inputNotesPRFCandidateEdit"
