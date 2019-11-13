@@ -130,4 +130,18 @@ class TimesheetQueryHelper (val databaseHelper: DatabaseHelper) {
     fun getSemuaCompany(): List<Company> {
         return companyQueryHelper.readSemuaCompanyModels()
     }
+
+    fun getTimesheetBerdasarkanWaktuDanProgress(bulan: String, tahun: String, progress: String): List<Timesheet>{
+        var listTimesheet = ArrayList<Timesheet>()
+            val db = databaseHelper.readableDatabase
+            val queryCari =
+                "SELECT * FROM $TABEL_TIMESHEET WHERE $REPORT_DATE_TIMESHEET LIKE '$bulan%$tahun' AND " +
+                        "$PROGRESS_TIMESHEET = '$progress' AND $IS_DELETED = 'false'"
+
+            val cursor = db.rawQuery(queryCari, null)
+            if (cursor.count > 0) {
+                listTimesheet = konversiCursorKeListTimesheetModel(cursor)
+            }
+        return listTimesheet
+    }
 }
