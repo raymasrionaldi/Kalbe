@@ -1,13 +1,13 @@
-package com.xsis.android.batch217.ui.timesheet.timesheet_collection
+package com.xsis.android.batch217.ui.timesheet.timesheet_submission
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class TimesheetSubmissionViewModel  : ViewModel() {
+class TimesheetCollectionViewModel  : ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
-        value = "Timesheet Submission Fragment"
+        value = "Timesheet Collection Fragment"
     }
     val text: LiveData<String> = _text
 }

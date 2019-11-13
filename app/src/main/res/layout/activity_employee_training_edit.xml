@@ -73,8 +73,8 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:text="Employee Training Edit Form"
+                android:layout_margin="10dp"
+                android:text="Employee Training Form"
                 android:textColor="@android:color/black"
                 android:textSize="20sp"
                 android:textStyle="bold" />
@@ -87,8 +87,9 @@
                     android:id="@+id/editNamaTrainee"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:hint="Nama Trainee"
+                    android:hint="Nama Pegawai"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
                     android:textSize="16sp"/>
 
             </FrameLayout>
@@ -101,14 +102,20 @@
                     android:id="@+id/editNamaEmployeeTraining"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="5dp" />
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginTop="13dp"
+                    android:clickable="false"
+                    android:focusable="false"
+                    android:longClickable="false"/>
 
                 <Spinner
                     android:id="@+id/spinnerEditNamaEmployeeTraining"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:layout_margin="5dp"></Spinner>
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"></Spinner>
             </FrameLayout>
 
             <TextView
@@ -116,7 +123,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Required"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="20dp"
                 android:textColor="@color/warnaMerah"
                 android:textSize="@dimen/text_size_small"
                 android:visibility="invisible" />
@@ -129,14 +136,19 @@
                     android:id="@+id/editNamaEmployeeTrainingOrganizer"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="5dp" />
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:clickable="false"
+                    android:focusable="false"
+                    android:longClickable="false"/>
 
                 <Spinner
                     android:id="@+id/spinnerEditNamaEmployeeTrainingOrganizer"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:layout_margin="5dp"></Spinner>
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"></Spinner>
             </FrameLayout>
 
             <TextView
@@ -144,7 +156,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Required"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="20dp"
                 android:textColor="@color/warnaMerah"
                 android:textSize="@dimen/text_size_small"
                 android:visibility="invisible" />
@@ -157,9 +169,11 @@
                     android:id="@+id/editTanggalEmployeeTraining"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
                     android:textColor="@android:color/black"
                     android:hint="Training Date *"
+                    android:clickable="false"
                     android:focusable="false"
                     android:longClickable="false"
                     android:textSize="16sp"
@@ -169,8 +183,8 @@
                     android:id="@+id/iconEditTanggalEmployeeTraining"
                     android:layout_width="25dp"
                     android:layout_height="25dp"
-                    android:layout_margin="15dp"
                     android:layout_gravity="right|center_vertical"
+                    android:layout_marginRight="21dp"
                     android:src="@android:drawable/ic_menu_my_calendar" />
             </FrameLayout>
 
@@ -179,7 +193,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Required"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="20dp"
                 android:textColor="@color/warnaMerah"
                 android:textSize="@dimen/text_size_small"
                 android:visibility="invisible" />
@@ -192,14 +206,19 @@
                     android:id="@+id/editTypeEmployeeTraining"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="5dp" />
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:clickable="false"
+                    android:focusable="false"
+                    android:longClickable="false"/>
 
                 <Spinner
                     android:id="@+id/spinnerEditTypeEmployeeTraining"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:layout_margin="5dp"></Spinner>
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"></Spinner>
             </FrameLayout>
 
             <FrameLayout
@@ -210,14 +229,20 @@
                     android:id="@+id/editCertificationEmployeeTraining"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="5dp" />
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginTop="13dp"
+                    android:clickable="false"
+                    android:focusable="false"
+                    android:longClickable="false"/>
 
                 <Spinner
                     android:id="@+id/spinnerEditCertificationEmployeeTraining"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:layout_margin="5dp"></Spinner>
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"></Spinner>
             </FrameLayout>
 
             <LinearLayout
@@ -238,6 +263,8 @@
                     android:enabled="false"
                     android:clickable="false"
                     android:text="@string/reset"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="13dp"
                     android:textColor="@color/warnaTeksResetOff" />
 
                 <Button
@@ -245,6 +272,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginTop="13dp"
                     android:background="@drawable/button_save"
                     android:text="@string/submit"
                     android:textColor="@color/colorWhite" />

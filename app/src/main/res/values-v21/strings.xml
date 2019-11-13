@@ -43,6 +43,9 @@
     <string name="timesheet_history">Timesheet History</string>
     <string name="menu_PRF">PRF</string>
     <string name="menu_timesheet_submission">Submission</string>
+    <string name="menu_timesheet_approval">Approval</string>
+    <string name="menu_timesheet_send">Send</string>
+    <string name="menu_timesheet_collection">Collection</string>
     <string name="request">Request</string>
     <string name="request_history">Request History</string>
     <string name="candidate">Candidate</string>

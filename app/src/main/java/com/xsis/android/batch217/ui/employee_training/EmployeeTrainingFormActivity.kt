@@ -41,7 +41,9 @@ class EmployeeTrainingFormActivity : AppCompatActivity() {
             WindowManager.LayoutParams.FLAG_FULLSCREEN,
             WindowManager.LayoutParams.FLAG_FULLSCREEN
         )
+
         setContentView(R.layout.activity_employee_training_form)
+
         isiSpinnerNamaTraining()
         isiSpinnerTrainingOrganizer()
         isiSpinnerTrainingType()
@@ -79,7 +81,6 @@ class EmployeeTrainingFormActivity : AppCompatActivity() {
         }
 
         employeeNameTraineeText!!.addTextChangedListener(textWatcher)
-
 
     }
 

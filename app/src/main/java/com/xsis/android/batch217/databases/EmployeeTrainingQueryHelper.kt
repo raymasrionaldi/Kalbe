@@ -275,4 +275,5 @@ class EmployeeTrainingQueryHelper(val databaseHelper: DatabaseHelper) {
         return  listCertificationType
     }
 
+
 }

@@ -35,6 +35,7 @@ import com.xsis.android.batch217.ui.project.ProjectFragment
 import com.xsis.android.batch217.ui.prf_request.RequestHistoryFragment
 import com.xsis.android.batch217.ui.project.ProjectFormActivity
 import com.xsis.android.batch217.ui.provider_tools.ProviderToolsFragment
+import com.xsis.android.batch217.ui.timesheet.timesheet_collection.TimesheetCollectionFragment
 import com.xsis.android.batch217.ui.timesheet.timesheet_entry.EntryTimesheetActivity
 import com.xsis.android.batch217.ui.timesheet.timesheet_history.TimesheetHistoryFragment
 import com.xsis.android.batch217.ui.timesheet.timesheet_submission.TimesheetSubmissionFragment
@@ -265,6 +266,9 @@ class HomeActivity : AppCompatActivity() {
         heading17.add(getString(R.string.timesheet_entry))
         heading17.add(getString(R.string.timesheet_history))
         heading17.add(getString(R.string.menu_timesheet_submission))
+        heading17.add(getString(R.string.menu_timesheet_approval))
+        heading17.add(getString(R.string.menu_timesheet_send))
+        heading17.add(getString(R.string.menu_timesheet_collection))
 // Header, Child data
         listDataChild[listDataHeader[17]] = heading17
 
@@ -360,7 +364,42 @@ class HomeActivity : AppCompatActivity() {
                 fragmentTransaction.replace(
                     R.id.nav_host_fragment,
                     fragment,
-                    getString(R.string.timesheet_history)
+                    getString(R.string.menu_timesheet_submission)
+                )
+                fragmentTransaction.commit()
+                closeNavDrawer()
+            }
+
+            else if (groupIndex == 17 && childIndex == 3) {
+                val fragment = TimesheetSubmissionFragment()
+                val fragmentTransaction = supportFragmentManager.beginTransaction()
+                fragmentTransaction.replace(
+                    R.id.nav_host_fragment,
+                    fragment,
+                    getString(R.string.menu_timesheet_approval)
+                )
+                fragmentTransaction.commit()
+                closeNavDrawer()
+            }
+            else if (groupIndex == 17 && childIndex == 4) {
+                val fragment = TimesheetSubmissionFragment()
+                val fragmentTransaction = supportFragmentManager.beginTransaction()
+                fragmentTransaction.replace(
+                    R.id.nav_host_fragment,
+                    fragment,
+                    getString(R.string.menu_timesheet_send)
+                )
+                fragmentTransaction.commit()
+                closeNavDrawer()
+            }
+
+            else if (groupIndex == 17 && childIndex == 5) {
+                val fragment = TimesheetCollectionFragment()
+                val fragmentTransaction = supportFragmentManager.beginTransaction()
+                fragmentTransaction.replace(
+                    R.id.nav_host_fragment,
+                    fragment,
+                    getString(R.string.menu_timesheet_collection)
                 )
                 fragmentTransaction.commit()
                 closeNavDrawer()

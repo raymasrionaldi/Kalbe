@@ -2,7 +2,6 @@ package com.xsis.android.batch217.ui.employee_training
 
 import android.app.DatePickerDialog
 import android.graphics.Color
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -10,20 +9,24 @@ import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import android.widget.*
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.get
 import androidx.core.view.isVisible
 import com.xsis.android.batch217.R
 import com.xsis.android.batch217.databases.DatabaseHelper
 import com.xsis.android.batch217.databases.EmployeeTrainingQueryHelper
-import com.xsis.android.batch217.models.EmployeeTraining
+import com.xsis.android.batch217.models.*
 import com.xsis.android.batch217.utils.*
+import kotlinx.android.synthetic.main.activity_edit_prfrequest.*
 import kotlinx.android.synthetic.main.activity_employee_training_edit.*
 import kotlinx.android.synthetic.main.activity_employee_training_form.buttonResetEmployeeTraining
 import kotlinx.android.synthetic.main.activity_employee_training_form.buttonSubmitEmployeeTraining
 import kotlinx.android.synthetic.main.activity_employee_training_form.requiredNamaEmployeeTraining
 import kotlinx.android.synthetic.main.activity_employee_training_form.requiredNamaEmployeeTrainingOrganizer
+import kotlinx.android.synthetic.main.activity_employee_training_form.requiredTanggalEmployeeTraining
+import kotlinx.android.synthetic.main.activity_project_form.*
 import java.text.SimpleDateFormat
 import java.util.*
-
 
 class EmployeeTrainingEditActivity : AppCompatActivity() {
     val context = this
@@ -38,6 +41,10 @@ class EmployeeTrainingEditActivity : AppCompatActivity() {
     var employeeCertificationTypeSpinner: Spinner? = null
     var data = EmployeeTraining()
     var ID_EmployeeTraining = 0
+    lateinit var listNamaTraining: List<NamaTraining>
+    lateinit var listNamaTrainingOrganizer: List<NamaTrainingOrganizer>
+    lateinit var listTypeTraining: List<TypeTraining>
+    lateinit var listCertificationType: List<CertificationType>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,26 +55,24 @@ class EmployeeTrainingEditActivity : AppCompatActivity() {
             WindowManager.LayoutParams.FLAG_FULLSCREEN
         )
 
-        val bundle: Bundle? = intent.extras
-        bundle?.let {
-            ID_EmployeeTraining = bundle!!.getInt(ID_EMPLOYEE_TRAINING)
-            loadDataEmployeeTraining(ID_EmployeeTraining)
-        }
-
         setContentView(R.layout.activity_employee_training_edit)
 
+        isiSpinnerNamaTraining()
+        isiSpinnerTrainingOrganizer()
+        isiSpinnerTrainingType()
+        isiSpinnerCertificationType()
 
-        databaseQueryHelper = EmployeeTrainingQueryHelper(databaseHelper)
 
         try {
             this.supportActionBar!!.hide()
         } catch (e: NullPointerException){
         }
-        employeeNameTraineeText = editNamaTrainee
-        employeeTrainingNameSpinner = spinnerEditNamaEmployeeTraining
-        employeeTrainingOrganizerSpinner = spinnerEditNamaEmployeeTrainingOrganizer
-        employeeTrainingTypeSpinner = spinnerEditTypeEmployeeTraining
-        employeeCertificationTypeSpinner = spinnerEditCertificationEmployeeTraining
+
+        employeeNameTraineeText = findViewById(R.id.editNamaTrainee)
+        employeeTrainingNameSpinner = findViewById(R.id.spinnerEditNamaEmployeeTraining)
+        employeeTrainingOrganizerSpinner = findViewById(R.id.spinnerEditNamaEmployeeTrainingOrganizer)
+        employeeTrainingTypeSpinner = findViewById(R.id.spinnerEditTypeEmployeeTraining)
+        employeeCertificationTypeSpinner = findViewById(R.id.spinnerEditCertificationEmployeeTraining)
 
 
         ubahButtonResetSpinner()
@@ -88,6 +93,11 @@ class EmployeeTrainingEditActivity : AppCompatActivity() {
 
         employeeNameTraineeText!!.addTextChangedListener(textWatcher)
 
+        val bundle: Bundle? = intent.extras
+        bundle?.let {
+            ID_EmployeeTraining = bundle!!.getInt(ID_EMPLOYEE_TRAINING)
+            loadDataEmployeeTraining(ID_EmployeeTraining)
+        }
 
     }
 
@@ -143,26 +153,33 @@ class EmployeeTrainingEditActivity : AppCompatActivity() {
         }
     }
 
-
     fun validasiEdit() {
         val employeeTrainingDate = editTanggalEmployeeTraining.text.toString().trim()
         val employeeNameTraineeText = editNamaTrainee!!.text.toString().trim()
         val employeeTrainingNameSpinner = spinnerEditNamaEmployeeTraining.selectedItem.toString()
+        val positionEmployeeTrainingSpinner = spinnerEditNamaEmployeeTraining.selectedItemPosition
         val employeeTrainingOrganizerSpinner = spinnerEditNamaEmployeeTrainingOrganizer.selectedItem.toString()
+        val positionEmployeeTrainingOrganizerSpinner = spinnerEditNamaEmployeeTrainingOrganizer.selectedItemPosition
         val employeeTrainingTypeSpinner = spinnerEditTypeEmployeeTraining.selectedItem.toString()
         val employeeCertificationTypeSpinner = spinnerEditCertificationEmployeeTraining.selectedItem.toString()
 
         var isValid = true
 
-        if (employeeTrainingNameSpinner.isEmpty()) {
+        if (positionEmployeeTrainingSpinner == 0) {
             editNamaEmployeeTraining.setHintTextColor(Color.RED)
             requiredNamaEmployeeTraining.isVisible = true
             isValid = false
         }
 
-        if (employeeTrainingOrganizerSpinner.isEmpty()) {
+        if (positionEmployeeTrainingOrganizerSpinner == 0) {
             editNamaEmployeeTrainingOrganizer.setHintTextColor(Color.RED)
             requiredNamaEmployeeTrainingOrganizer.isVisible = true
+            isValid = false
+        }
+
+        if (employeeTrainingDate.isEmpty()) {
+            editTanggalEmployeeTraining.setHintTextColor(Color.RED)
+            requiredTanggalEmployeeTraining.isVisible = true
             isValid = false
         }
 
@@ -176,11 +193,12 @@ class EmployeeTrainingEditActivity : AppCompatActivity() {
             model.typeEmployeeTraining = employeeTrainingTypeSpinner
             model.typeEmployeeCertification = employeeCertificationTypeSpinner
 
-            val cekEmployeeTraining =
-                databaseQueryHelper!!.cekEmployeeTrainingSudahAda(model.namaTrainee!!)
 
-            if (cekEmployeeTraining > 0) {
-                Toast.makeText(context, DATA_SUDAH_ADA, Toast.LENGTH_SHORT).show()
+            val cekEmployeeTrainee =
+                databaseQueryHelper!!.cekEmployeeTrainingSudahTraining(model.namaTrainee!!, model.dateEmployeeTraining!!)
+
+            if (cekEmployeeTrainee > 0) {
+                Toast.makeText(context, CEK_TRAINEE, Toast.LENGTH_SHORT).show()
                 return
             }
             if (databaseQueryHelper!!.tambahEmployeeTraining(model) == -1L) {
@@ -247,31 +265,104 @@ class EmployeeTrainingEditActivity : AppCompatActivity() {
         override fun afterTextChanged(s: Editable) { }
     }
 
-    fun loadDataEmployeeTraining(id: Int) {
+    fun isiSpinnerNamaTraining(): List<String?> {
+        listNamaTraining = databaseQueryHelper.tampilkanNamaTraining()
+        val isiDataTraining = listNamaTraining.map {
+            it.namaNyaTraining
+        }.toList()
+        val adapterNamaTraining = ArrayAdapter<String>(
+            context, android.R.layout.simple_spinner_item,
+            isiDataTraining
+        )
+        adapterNamaTraining.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinnerEditNamaEmployeeTraining.adapter = adapterNamaTraining
+        return isiDataTraining
+    }
+
+    fun isiSpinnerTrainingOrganizer(): List<String?> {
+        listNamaTrainingOrganizer = databaseQueryHelper.tampilkanNamaTrainingOrganizer()
+        val isiDataTrainingOrganizer = listNamaTrainingOrganizer.map {
+            it.namaNyaTrainingOrganizer
+        }.toList()
+        val adapterNamaTrainingOrganizer = ArrayAdapter<String>(
+            context, android.R.layout.simple_spinner_item,
+            isiDataTrainingOrganizer
+        )
+        adapterNamaTrainingOrganizer.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinnerEditNamaEmployeeTrainingOrganizer.adapter = adapterNamaTrainingOrganizer
+        return isiDataTrainingOrganizer
+    }
+
+    fun isiSpinnerTrainingType(): List<String?> {
+        listTypeTraining = databaseQueryHelper.tampilkanTrainingType()
+        val isiDataTypeTraining = listTypeTraining.map {
+            it.namaTypeTraining
+        }.toList()
+        val adapterTypeTraining = ArrayAdapter<String>(
+            context, android.R.layout.simple_spinner_item,
+            isiDataTypeTraining
+        )
+        adapterTypeTraining.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinnerEditTypeEmployeeTraining.adapter = adapterTypeTraining
+        return isiDataTypeTraining
+    }
+
+    fun isiSpinnerCertificationType(): List<String?> {
+        listCertificationType = databaseQueryHelper.tampilkanCertificationType()
+        val isiDataCertificationType = listCertificationType.map {
+            it.namaTypeCertification
+        }.toList()
+        val adapterCertificationType = ArrayAdapter<String>(
+            context, android.R.layout.simple_spinner_item,
+            isiDataCertificationType
+        )
+        adapterCertificationType.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinnerEditCertificationEmployeeTraining.adapter = adapterCertificationType
+        return isiDataCertificationType
+    }
+
+    fun loadDataEmployeeTraining(ID_EmployeeTraining: Int) {
         val db = databaseHelper.readableDatabase
+        val namaTraining = databaseQueryHelper.tampilkanNamaTraining()
 
         val projection = arrayOf<String>(
             ID_EMPLOYEE_TRAINING, NAMA_TRAINEE, NAMA_EMPLOYEE_TRAINING, NAMA_EMPLOYEE_TRAINING_ORG, DATE_EMPLOYEE_TRAINING, TYPE_EMPLOYEE_TRAINING, TYPE_EMPLOYEE_CERTIFICATION, IS_DELETED
         )
         val selection = ID_EMPLOYEE_TRAINING + "=?"
-        val selectionArgs = arrayOf(id.toString())
+        val selectionArgs = arrayOf(ID_EmployeeTraining.toString())
         val cursor =
             db.query(TABEL_EMPLOYEE_TRAINING, projection, selection, selectionArgs, null, null, null)
 
         if (cursor.count == 1) {
             cursor.moveToFirst()
             data.idEmployeeTraining = cursor.getInt(0)
-            data.namaTrainee = cursor.getString(1)
-            data.namaEmployeeTraining = cursor.getString(2)
-            data.namaEmployeeTO = cursor.getString(3)
-            data.dateEmployeeTraining = cursor.getString(4)
-            data.typeEmployeeTraining = cursor.getString(5)
-            data.typeEmployeeCertification = cursor.getString(6)
-            data.isDeleted = cursor.getString(7)
 
+            data.namaTrainee = cursor.getString(1)
             editNamaTrainee.setText(data.namaTrainee)
+
+            val dataNamaEmployeeTraining = cursor.getString(2)
+            val indexNamaEmployeeTraining = isiSpinnerNamaTraining().indexOf(dataNamaEmployeeTraining)
+            spinnerEditNamaEmployeeTraining.setSelection(indexNamaEmployeeTraining)
+
+            val dataNamaEmployeeTrainingOrganizer = cursor.getString(3)
+            val indexNamaEmployeeTrainingOrganizer = isiSpinnerTrainingOrganizer().indexOf(dataNamaEmployeeTrainingOrganizer)
+            spinnerEditNamaEmployeeTrainingOrganizer.setSelection(indexNamaEmployeeTrainingOrganizer)
+
+            data.dateEmployeeTraining = cursor.getString(4)
+            editTanggalEmployeeTraining.setText(data.dateEmployeeTraining)
+
+            val dataTypeEmployeeTraining = cursor.getString(5)
+            val indexTypeEmployeeTraining = isiSpinnerTrainingType().indexOf(dataTypeEmployeeTraining)
+            spinnerEditTypeEmployeeTraining.setSelection(indexTypeEmployeeTraining)
+
+            val dataCertificationType = cursor.getString(6)
+            val indexCertificationType = isiSpinnerCertificationType().indexOf(dataCertificationType)
+            spinnerEditCertificationEmployeeTraining.setSelection(indexCertificationType)
+
+            data.isDeleted = cursor.getString(7)
 
         }
     }
+
 
 }
