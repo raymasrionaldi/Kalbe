@@ -12,11 +12,17 @@ import android.widget.*
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.RecyclerView
 import com.xsis.android.batch217.R
+import com.xsis.android.batch217.adapters.ListTimSubAdapter
 import com.xsis.android.batch217.adapters.fragments.AgamaFragmentAdapter
 import com.xsis.android.batch217.adapters.fragments.TimesheetHistoryAdapter
+import com.xsis.android.batch217.databases.DatabaseHelper
+import com.xsis.android.batch217.databases.TimesheetQueryHelper
+import com.xsis.android.batch217.models.Timesheet
 import com.xsis.android.batch217.ui.timesheet.timesheet_history.TimesheetHistoryViewModel
 import com.xsis.android.batch217.utils.*
+import kotlinx.android.synthetic.main.activity_data_submit.*
 import kotlinx.android.synthetic.main.activity_employee_training_form.*
 import kotlinx.android.synthetic.main.activity_input_prfrequest.*
 import kotlinx.android.synthetic.main.fragment_timesheet_submission.*
@@ -110,6 +116,7 @@ class TimesheetSubmissionFragment : Fragment() {
         buttonSearch!!.setOnClickListener {
             searchData()
         }
+
         return customView
     }
 
@@ -121,6 +128,7 @@ class TimesheetSubmissionFragment : Fragment() {
     fun searchData() {
         val intent = Intent(context!!,DataSubmitActivity::class.java)
         startActivity(intent)
+
     }
 
 //    override fun onBackPressed(): Boolean {
@@ -172,6 +180,5 @@ class TimesheetSubmissionFragment : Fragment() {
         spinnerBulan.adapter = adapterBulan
 
     }
-
 
 }
