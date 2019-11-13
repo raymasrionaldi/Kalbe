@@ -23,6 +23,8 @@ import java.util.*
 
 class InputPRFRequestActivity : AppCompatActivity() {
     val context = this
+    var databaseHelper = DatabaseHelper(context)
+    var databaseQueryHelper = PRFRequestQueryHelper(databaseHelper)
     var buttonReset: Button? = null
     var type: Spinner? = null
     var placement: EditText? = null
@@ -36,7 +38,7 @@ class InputPRFRequestActivity : AppCompatActivity() {
     var overtime: EditText? = null
     var bast: Spinner? = null
     var billing: EditText? = null
-    var listPID: List<String>? = null
+    var listTypePRF: List<String>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -200,7 +202,7 @@ class InputPRFRequestActivity : AppCompatActivity() {
             insertKeDatabase(tanggal,
                 ARRAY_TYPE[type],
                 placement,
-                listPID!![PID],
+                ARRAY_PID[PID],
                 location,
                 period,
                 userName,
@@ -244,9 +246,6 @@ class InputPRFRequestActivity : AppCompatActivity() {
                          overtime: String,
                          bast: String,
                          billing: String) {
-        val databaseHelper = DatabaseHelper(context)
-        val db = databaseHelper.writableDatabase
-        val databaseQueryHelper = PRFRequestQueryHelper(databaseHelper)
         val listPRFRequest = databaseQueryHelper.readPlacementPRF(placement)
         if (!listPRFRequest.isEmpty()){
             //cek id_deleted
@@ -310,21 +309,19 @@ class InputPRFRequestActivity : AppCompatActivity() {
     }
 
     fun isiSpinnerType(){
+        listTypePRF = databaseQueryHelper.readTypePRF()
         val adapterType = ArrayAdapter<String>(context,
             android.R.layout.simple_spinner_item,
-            ARRAY_TYPE
+            listTypePRF!!
         )
         adapterType.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinnerInputTypePRF.adapter = adapterType
     }
 
     fun isiSpinnerPID(){
-        val databaseHelper = DatabaseHelper(context)
-        val databaseQueryHelper = PRFRequestQueryHelper(databaseHelper)
-        listPID = databaseQueryHelper.readPID()
         val adapterPID = ArrayAdapter<String>(context,
             android.R.layout.simple_spinner_item,
-            listPID!!
+            ARRAY_PID
         )
         adapterPID.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinnerInputPIDPRF.adapter = adapterPID

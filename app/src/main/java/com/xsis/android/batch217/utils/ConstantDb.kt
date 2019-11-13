@@ -217,9 +217,14 @@ val TABEL_CUTI_KHUSUS="cuti_khusus"
 val ID_CUTI_KHUSUS= "id_cuti_khusus"
 val LEAVE_NAME= "leave_name"
 
-val TABEL_PID_PRF = "pid_prf_request"
-val ID_PID_PRF = "id_pid_prf"
-val NAMA_PID = "nama_pid"
+val TABEL_TYPE_PRF = "type_prf"
+val ID_TYPE_PRF = "id_type_prf"
+val NAMA_TYPE_PRF = "nama_type_prf"
+val DESKRIPSI_TYPE_PRF = "deskripsi_type_prf"
+
+val TABEL_EMPLOYEE_POSITION = "employee_position"
+val ID_EMPLOYEE_POSITION = "id_employee_position"
+val DESKRIPSI_POSITION = "deskripsi_position"
 
 
 //nama field sama

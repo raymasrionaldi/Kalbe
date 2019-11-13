@@ -66,26 +66,13 @@
                 android:textSize="30sp"
                 android:textStyle="bold" />
 
-            <FrameLayout
+            <EditText
+                android:id="@+id/inputNamaPRFCandidateEdit"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <EditText
-                    android:id="@+id/inputNamaPRFCandidateEdit"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:clickable="false"
-                    android:focusable="false"
-                    android:longClickable="false"/>
-
-                <Spinner
-                    android:id="@+id/spinnerInputNamaPRFCandidateEdit"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_margin="5dp"></Spinner>
-            </FrameLayout>
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:inputType="text"
+                android:hint="Name *"/>
 
             <TextView
                 android:id="@+id/requiredNamePRFCandidateEdit"
@@ -95,7 +82,7 @@
                 android:text="Required"
                 android:textColor="@color/warnaMerah"
                 android:textSize="@dimen/text_size_small"
-                android:visibility="invisible"/>
+                android:visibility="invisible" />
 
             <EditText
                 android:id="@+id/inputBatchBootcampPRFCandidateEdit"
@@ -103,7 +90,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:hint="Batch Bootcamp"
-                android:inputType="number"/>
+                android:inputType="number" />
 
             <FrameLayout
                 android:layout_width="match_parent"
@@ -116,7 +103,7 @@
                     android:layout_margin="5dp"
                     android:clickable="false"
                     android:focusable="false"
-                    android:longClickable="false"/>
+                    android:longClickable="false" />
 
                 <Spinner
                     android:id="@+id/spinnerInputPositionPRFCandidateEdit"
@@ -134,7 +121,7 @@
                 android:text="Required"
                 android:textColor="@color/warnaMerah"
                 android:textSize="@dimen/text_size_small"
-                android:visibility="invisible"/>
+                android:visibility="invisible" />
 
             <FrameLayout
                 android:layout_width="match_parent"
@@ -144,14 +131,14 @@
                     android:id="@+id/inputPlacementDatePRFCandidateEdit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="5dp"/>
+                    android:layout_margin="5dp" />
 
                 <ImageView
                     android:id="@+id/iconInputTanggalPRFCandidateEdit"
                     android:layout_width="25dp"
                     android:layout_height="25dp"
-                    android:layout_margin="15dp"
                     android:layout_gravity="right|center_vertical"
+                    android:layout_margin="15dp"
                     android:src="@android:drawable/ic_menu_my_calendar" />
             </FrameLayout>
 
@@ -163,7 +150,7 @@
                 android:text="Required"
                 android:textColor="@color/warnaMerah"
                 android:textSize="@dimen/text_size_small"
-                android:visibility="invisible"/>
+                android:visibility="invisible" />
 
             <FrameLayout
                 android:layout_width="match_parent"
@@ -176,7 +163,7 @@
                     android:layout_margin="5dp"
                     android:clickable="false"
                     android:focusable="false"
-                    android:longClickable="false"/>
+                    android:longClickable="false" />
 
                 <Spinner
                     android:id="@+id/spinnerSRFNumberPRFCandidateEdit"
@@ -194,7 +181,7 @@
                 android:text="Required"
                 android:textColor="@color/warnaMerah"
                 android:textSize="@dimen/text_size_small"
-                android:visibility="invisible"/>
+                android:visibility="invisible" />
 
             <EditText
                 android:id="@+id/inputCustomeAllowencePRFCandidateEdit"
@@ -214,7 +201,7 @@
                     android:layout_margin="5dp"
                     android:clickable="false"
                     android:focusable="false"
-                    android:longClickable="false"/>
+                    android:longClickable="false" />
 
                 <Spinner
                     android:id="@+id/spinnerInputCandidateStatusPRFCandidateEdit"
@@ -232,7 +219,7 @@
                 android:text="Required"
                 android:textColor="@color/warnaMerah"
                 android:textSize="@dimen/text_size_small"
-                android:visibility="invisible"/>
+                android:visibility="invisible" />
 
             <EditText
                 android:id="@+id/inputSignContractDatePRFCandidateEdit"
@@ -240,6 +227,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:hint="Sign Contract Date" />
+
             <EditText
                 android:id="@+id/inputNotesPRFCandidateEdit"
                 android:layout_width="match_parent"
@@ -252,9 +240,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="20dp"
+                android:orientation="horizontal"
                 android:paddingLeft="5dp"
-                android:paddingRight="5dp"
-                android:orientation="horizontal">
+                android:paddingRight="5dp">
 
                 <Button
                     android:id="@+id/buttonResetPRFCandidateEdit"

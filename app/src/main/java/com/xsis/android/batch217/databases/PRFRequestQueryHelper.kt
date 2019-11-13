@@ -161,7 +161,7 @@ class PRFRequestQueryHelper (val databaseHelper: DatabaseHelper) {
         return listPRFRequest
     }
 
-    fun readPID () : List<String> {
+/*    fun readPID () : List<String> {
         val listPID = ArrayList<String>()
         val db = databaseHelper.readableDatabase
         val queryReadPID = "SELECT $NAMA_PID FROM $TABEL_PID_PRF"
@@ -173,6 +173,20 @@ class PRFRequestQueryHelper (val databaseHelper: DatabaseHelper) {
             }
         }
         return  listPID
+    }*/
+
+    fun readTypePRF(): List<String> {
+        val listTypePRF = ArrayList<String>()
+        val db = databaseHelper.readableDatabase
+        val queryReadType = "SELECT $NAMA_TYPE_PRF FROM $TABEL_TYPE_PRF WHERE $IS_DELETED = 'false'"
+        val cursor = db.rawQuery(queryReadType, null)
+        if (cursor.count > 0) {
+            for (i in 0 until cursor.count) {
+                cursor.moveToPosition(i)
+                listTypePRF.add(cursor.getString(0))
+            }
+        }
+        return listTypePRF
     }
 
 }

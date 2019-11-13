@@ -23,10 +23,11 @@ import java.util.*
 
 class EditPRFCandidateActivity : AppCompatActivity() {
     val context = this
-    var databaseHelper = DatabaseHelper(this)
+    var databaseHelper = DatabaseHelper(context)
+    var databaseQueryHelper = PRFCandidateQueryHelper(databaseHelper)
     var data = PRFCandidate()
     var buttonReset: Button? = null
-    var name: Spinner? = null
+    var name: EditText? = null
     var batch: EditText? = null
     var position: Spinner? = null
     var srfNumber: Spinner? = null
@@ -35,6 +36,7 @@ class EditPRFCandidateActivity : AppCompatActivity() {
     var signContractDate: EditText? = null
     var notes: EditText? = null
     var ID_prf_candidate = 0
+    var listPosition: List<String>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,7 +52,7 @@ class EditPRFCandidateActivity : AppCompatActivity() {
         } catch (e: NullPointerException){
         }
 
-        name = spinnerInputNamaPRFCandidateEdit
+        name = inputNamaPRFCandidateEdit
         batch = inputBatchBootcampPRFCandidateEdit
         position = spinnerInputPositionPRFCandidateEdit
         srfNumber = spinnerSRFNumberPRFCandidateEdit
@@ -59,7 +61,17 @@ class EditPRFCandidateActivity : AppCompatActivity() {
         signContractDate = inputSignContractDatePRFCandidateEdit
         notes = inputNotesPRFCandidateEdit
 
+        name!!.addTextChangedListener(textWatcher)
+        batch!!.addTextChangedListener(textWatcher)
+        customAllowence!!.addTextChangedListener(textWatcher)
+        signContractDate!!.addTextChangedListener(textWatcher)
+        notes!!.addTextChangedListener(textWatcher)
+
         ubahButtonResetSpinner()
+
+        isiSpinnerPosition()
+        isiSpinnerSRFNumber()
+        isiSpinnerCandidateStatus()
 
         val bundle: Bundle? = intent.extras
         bundle?.let {
@@ -70,18 +82,6 @@ class EditPRFCandidateActivity : AppCompatActivity() {
 
     fun ubahButtonResetSpinner() {
         buttonReset = buttonResetPRFCandidateEdit
-        name!!.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                buttonReset = buttonResetPRFCandidateEdit
-                if (position != 0) {
-                    buttonResetPRFCandidateEdit.isEnabled = true
-                    ubahResetButton(context, true, buttonReset!!)
-                } else {
-                    ubahResetButton(context, false, buttonReset!!)
-                }
-            }
-            override fun onNothingSelected(arg0: AdapterView<*>) {}
-        }
         position!!.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 buttonReset = buttonResetPRFCandidateEdit
@@ -121,7 +121,7 @@ class EditPRFCandidateActivity : AppCompatActivity() {
     }
 
     fun validasiInput(id: Int) {
-        val name = spinnerInputNamaPRFCandidateEdit.selectedItemPosition
+        val name = inputNamaPRFCandidateEdit.text.toString().trim()
         val batch = inputBatchBootcampPRFCandidateEdit.text.toString().trim()
         val position = spinnerInputPositionPRFCandidateEdit.selectedItemPosition
         val placementDate = inputPlacementDatePRFCandidateEdit.text.toString()
@@ -131,7 +131,8 @@ class EditPRFCandidateActivity : AppCompatActivity() {
         val signContractDate = inputSignContractDatePRFCandidateEdit.text.toString().trim()
         val notes = inputNotesPRFCandidateEdit.text.toString().trim()
 
-        if (name == 0) {
+        if (name.isEmpty()) {
+            inputNamaPRFCandidateEdit.setHintTextColor(Color.RED)
             requiredNamePRFCandidateEdit.isVisible = true
         }
         else if (position == 0) {
@@ -148,9 +149,9 @@ class EditPRFCandidateActivity : AppCompatActivity() {
             requiredCandidateStatusPRFCandidateEdit.isVisible = true
         }
         else {
-            insertKeDatabase(id, ARRAY_NAME[name],
+            insertKeDatabase(id, name,
                 batch,
-                ARRAY_POSITION[position],
+                listPosition!![position],
                 placementDate,
                 ARRAY_SRF_NUMBER[srfNumber],
                 customAllowence,
@@ -187,7 +188,7 @@ class EditPRFCandidateActivity : AppCompatActivity() {
     }
 
     fun resetForm() {
-        spinnerInputNamaPRFCandidateEdit.setSelection(0)
+        inputNamaPRFCandidateEdit.setText("")
         inputBatchBootcampPRFCandidateEdit.setText("")
         spinnerInputPositionPRFCandidateEdit.setSelection(0)
         inputPlacementDatePRFCandidateEdit.setText("")
@@ -226,19 +227,11 @@ class EditPRFCandidateActivity : AppCompatActivity() {
         }
     }
 
-    fun isiSpinnerName(){
-        val adapterName = ArrayAdapter<String>(context,
-            android.R.layout.simple_spinner_item,
-            ARRAY_NAME
-        )
-        adapterName.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        spinnerInputNamaPRFCandidateEdit.adapter = adapterName
-    }
-
     fun isiSpinnerPosition(){
+        listPosition = databaseQueryHelper.readEmployeePosition()
         val adapterPosition = ArrayAdapter<String>(context,
             android.R.layout.simple_spinner_item,
-            ARRAY_POSITION
+            listPosition!!
         )
         adapterPosition.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinnerInputPositionPRFCandidateEdit.adapter = adapterPosition
@@ -269,12 +262,13 @@ class EditPRFCandidateActivity : AppCompatActivity() {
 
         override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
             buttonReset = buttonResetPRFCandidateEdit
+            val namaTeks = name!!.text.toString().trim()
             val batchTeks = batch!!.text.toString().trim()
             val customAllowenceTeks = customAllowence!!.text.toString().trim()
             val signContractDate = signContractDate!!.text.toString().trim()
             val notesTeks = notes!!.text.toString().trim()
 
-            val kondisi = !batchTeks.isEmpty() || !customAllowenceTeks.isEmpty()
+            val kondisi = !namaTeks.isEmpty() || !batchTeks.isEmpty() || !customAllowenceTeks.isEmpty()
                     || !signContractDate.isEmpty() || !notesTeks.isEmpty()
             buttonResetPRFCandidateEdit.isEnabled = true
             ubahResetButton(context, kondisi, buttonReset!!)
@@ -301,22 +295,21 @@ class EditPRFCandidateActivity : AppCompatActivity() {
         if (cursor.count == 1) {
             cursor.moveToFirst()
             data.id_prf_candidate = cursor.getInt(1)
-            val dataName = cursor.getString(2)
-            val indexName = ARRAY_NAME.indexOf(dataName)
-            spinnerInputNamaPRFCandidateEdit.setSelection(indexName)
+            data.nama_prf_candidate = cursor.getString(2)
+            inputNamaPRFCandidateEdit.setText(data.nama_prf_candidate)
 
             data.batch = cursor.getString(3)
             inputBatchBootcampPRFCandidateEdit.setText(data.batch)
 
             val dataPosition = cursor.getString(4)
-            val indexPosition = ARRAY_POSITION.indexOf(dataPosition)
+            val indexPosition = listPosition!!.indexOf(dataPosition)
             spinnerInputPositionPRFCandidateEdit.setSelection(indexPosition)
 
             data.placement_date = cursor.getString(5)
             inputPlacementDatePRFCandidateEdit.setText(data.placement_date)
 
             val dataSrfNumber = cursor.getString(6)
-            val indexSrfNumber = ARRAY_NAME.indexOf(dataSrfNumber)
+            val indexSrfNumber = ARRAY_SRF_NUMBER.indexOf(dataSrfNumber)
             spinnerSRFNumberPRFCandidateEdit.setSelection(indexSrfNumber)
 
             data.allowence_candidate = cursor.getString(7)
@@ -335,10 +328,6 @@ class EditPRFCandidateActivity : AppCompatActivity() {
             data.is_Deleted = cursor.getString(11)
         }
         setReportDatePRFCandidatePicker()
-        isiSpinnerName()
-        isiSpinnerPosition()
-        isiSpinnerSRFNumber()
-        isiSpinnerCandidateStatus()
 
         buttonSubmitPRFCandidateEdit.setOnClickListener {
             validasiInput(id)

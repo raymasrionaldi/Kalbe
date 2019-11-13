@@ -23,8 +23,10 @@ import kotlin.collections.ArrayList
 
 class InputPRFCandidateActivity : AppCompatActivity() {
     val context = this
+    var databaseHelper = DatabaseHelper(context)
+    var databaseQueryHelper = PRFCandidateQueryHelper(databaseHelper)
     var buttonReset: Button? = null
-    var name: Spinner? = null
+    var name: EditText? = null
     var batch: EditText? = null
     var position: Spinner? = null
     var srfNumber: Spinner? = null
@@ -33,6 +35,7 @@ class InputPRFCandidateActivity : AppCompatActivity() {
     var signContractDate: EditText? = null
     var notes: EditText? = null
     var id_from_request = 0
+    var listPosition: List<String>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,7 +57,7 @@ class InputPRFCandidateActivity : AppCompatActivity() {
         }
         println("ID = $id_from_request")
 
-        name = spinnerInputNamaPRFCandidate
+        name = inputNamaPRFCandidate
         batch = inputBatchBootcampPRFCandidate
         position = spinnerInputPositionPRFCandidate
         srfNumber = spinnerSRFNumberPRFCandidate
@@ -70,19 +73,18 @@ class InputPRFCandidateActivity : AppCompatActivity() {
         }
 
         setReportDatePRFCandidatePicker()
-        isiSpinnerName()
         isiSpinnerPosition()
         isiSpinnerSRFNumber()
         isiSpinnerCandidateStatus()
 
         buttonSubmitPRFCandidate.setOnClickListener {
             validasiInput()
-            finish()
         }
         buttonResetPRFCandidate.setOnClickListener {
             resetForm()
         }
 
+        name!!.addTextChangedListener(textWatcher)
         batch!!.addTextChangedListener(textWatcher)
         customAllowence!!.addTextChangedListener(textWatcher)
         signContractDate!!.addTextChangedListener(textWatcher)
@@ -91,18 +93,6 @@ class InputPRFCandidateActivity : AppCompatActivity() {
 
     fun ubahButtonResetSpinner() {
         buttonReset = buttonResetPRFCandidate
-        name!!.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                buttonReset = buttonResetPRFCandidate
-                if (position != 0) {
-                    buttonResetPRFCandidate.isEnabled = true
-                    ubahResetButton(context, true, buttonReset!!)
-                } else {
-                    ubahResetButton(context, false, buttonReset!!)
-                }
-            }
-            override fun onNothingSelected(arg0: AdapterView<*>) {}
-        }
         position!!.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 buttonReset = buttonResetPRFCandidate
@@ -142,7 +132,7 @@ class InputPRFCandidateActivity : AppCompatActivity() {
     }
 
     fun validasiInput() {
-        val name = spinnerInputNamaPRFCandidate.selectedItemPosition
+        val name = name!!.text.toString().trim()
         val batch = batch!!.text.toString().trim()
         val position = spinnerInputPositionPRFCandidate.selectedItemPosition
         val placementDate = inputPlacementDatePRFCandidate.text.toString()
@@ -152,7 +142,8 @@ class InputPRFCandidateActivity : AppCompatActivity() {
         val signContractDate = signContractDate!!.text.toString().trim()
         val notes = notes!!.text.toString().trim()
 
-        if (name == 0) {
+        if (name.isEmpty()) {
+            inputNamaPRFCandidate.setHintTextColor(Color.RED)
             requiredNamePRFCandidate.isVisible = true
         }
         else if (position == 0) {
@@ -169,9 +160,9 @@ class InputPRFCandidateActivity : AppCompatActivity() {
             requiredCandidateStatusPRFCandidate.isVisible = true
         }
         else {
-            insertKeDatabase(ARRAY_NAME[name],
+            insertKeDatabase(name,
                                 batch,
-                                ARRAY_POSITION[position],
+                                listPosition!![position],
                                 placementDate,
                                 ARRAY_SRF_NUMBER[srfNumber],
                                 customAllowence,
@@ -240,7 +231,7 @@ class InputPRFCandidateActivity : AppCompatActivity() {
     }
 
     fun resetForm() {
-        spinnerInputNamaPRFCandidate.setSelection(0)
+        inputNotesPRFCandidate.setSelection(0)
         inputBatchBootcampPRFCandidate.setText("")
         spinnerInputPositionPRFCandidate.setSelection(0)
         inputPlacementDatePRFCandidate.setText("")
@@ -278,19 +269,11 @@ class InputPRFCandidateActivity : AppCompatActivity() {
 
     }
 
-    fun isiSpinnerName(){
-        val adapterName = ArrayAdapter<String>(context,
-            android.R.layout.simple_spinner_item,
-            ARRAY_NAME
-        )
-        adapterName.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        spinnerInputNamaPRFCandidate.adapter = adapterName
-    }
-
     fun isiSpinnerPosition(){
+        listPosition = databaseQueryHelper.readEmployeePosition()
         val adapterPosition = ArrayAdapter<String>(context,
             android.R.layout.simple_spinner_item,
-            ARRAY_POSITION
+            listPosition!!
         )
         adapterPosition.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinnerInputPositionPRFCandidate.adapter = adapterPosition

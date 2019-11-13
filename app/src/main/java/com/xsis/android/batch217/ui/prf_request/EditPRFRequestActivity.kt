@@ -24,7 +24,8 @@ import java.util.*
 
 class EditPRFRequestActivity : AppCompatActivity() {
     val context = this
-    var databaseHelper = DatabaseHelper(this)
+    var databaseHelper = DatabaseHelper(context)
+    var databaseQueryHelper = PRFRequestQueryHelper(databaseHelper)
     var data = PRFRequest()
     var buttonReset: Button? = null
     var type: Spinner? = null
@@ -40,7 +41,7 @@ class EditPRFRequestActivity : AppCompatActivity() {
     var bast: Spinner? = null
     var billing: EditText? = null
     var ID_prf_request = 0
-    var listPID: List<String>? = null
+    var listTypePRF: List<String>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -70,6 +71,10 @@ class EditPRFRequestActivity : AppCompatActivity() {
         billing = inputBillingPRFEdit
 
         ubahButtonResetSpinner()
+        isiSpinnerType()
+        isiSpinnerPID()
+        isiSpinnerNotebook()
+        isiSpinnerBAST()
 
         val bundle: Bundle? = intent.extras
         bundle?.let {
@@ -184,9 +189,9 @@ class EditPRFRequestActivity : AppCompatActivity() {
         }
         else {
             insertKeDatabase(id, tanggal,
-                ARRAY_TYPE[type],
+                listTypePRF!![type],
                 placement,
-                listPID!![PID],
+                ARRAY_PID[PID],
                 location,
                 period,
                 userName,
@@ -231,9 +236,6 @@ class EditPRFRequestActivity : AppCompatActivity() {
                          overtime: String,
                          bast: String,
                          billing: String) {
-        val databaseHelper = DatabaseHelper(context)
-        val db = databaseHelper.writableDatabase
-        val databaseQueryHelper = PRFRequestQueryHelper(databaseHelper)
         val listPRFRequest = databaseQueryHelper.readUpdate(id, placement)
         if(listPRFRequest.isEmpty()){
             databaseQueryHelper.updateDelete(id,tanggal, type, placement, pid, location, period, userName, telpMobilePhone, email, notebook,overtime, bast, billing)
@@ -275,21 +277,19 @@ class EditPRFRequestActivity : AppCompatActivity() {
     }
 
     fun isiSpinnerType(){
+        listTypePRF = databaseQueryHelper.readTypePRF()
         val adapterType = ArrayAdapter<String>(context,
             android.R.layout.simple_spinner_item,
-            ARRAY_TYPE
+            listTypePRF!!
         )
         adapterType.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinnerInputTypePRFEdit.adapter = adapterType
     }
 
     fun isiSpinnerPID(){
-        val databaseHelper = DatabaseHelper(context)
-        val databaseQueryHelper = PRFRequestQueryHelper(databaseHelper)
-        listPID = databaseQueryHelper.readPID()
         val adapterPID = ArrayAdapter<String>(context,
             android.R.layout.simple_spinner_item,
-            listPID!!
+            ARRAY_PID
         )
         adapterPID.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinnerInputPIDPRFEdit.adapter = adapterPID
@@ -361,14 +361,14 @@ class EditPRFRequestActivity : AppCompatActivity() {
             println("-------------------------------------${data.tanggal}")
 
             val dataType = cursor.getString(2)
-            val indexType = ARRAY_TYPE.indexOf(dataType)
+            val indexType = listTypePRF!!.indexOf(dataType)
             spinnerInputTypePRFEdit.setSelection(indexType)
 
             data.placement = cursor.getString(3)
             inputPlacementPRFEdit.setText(data.placement)
 
             val dataPID = cursor.getString(4)
-            val indexPID = listPID!!.indexOf(dataPID)
+            val indexPID = ARRAY_PID.indexOf(dataPID)
             spinnerInputPIDPRFEdit.setSelection(indexPID)
 
             data.location = cursor.getString(5)
@@ -403,10 +403,7 @@ class EditPRFRequestActivity : AppCompatActivity() {
             data.is_Deleted = cursor.getString(14)
         }
         setReportDatePRFRequestPicker()
-        isiSpinnerType()
-        isiSpinnerPID()
-        isiSpinnerNotebook()
-        isiSpinnerBAST()
+
         buttonResetPRFRequestEdit.setOnClickListener{
             resetForm()
         }
