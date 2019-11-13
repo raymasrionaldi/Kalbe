@@ -191,42 +191,42 @@ class EmployeeTrainingQueryHelper(val databaseHelper: DatabaseHelper) {
         )
     }
 
-    fun tampilkanNamaTraining(): List<NamaTraining> {
+    fun tampilkanNamaTraining(): List<Training> {
         val db = databaseHelper.readableDatabase
 
-        val queryRead = "SELECT * FROM $TABEL_NAMA_TRAINING"
+        val queryRead = "SELECT * FROM $TABEL_TRAINING"
         val cursor = db.rawQuery(queryRead, null)
 
 
-        var listNamaTraining = ArrayList<NamaTraining>()
+        var listNamaTraining = ArrayList<Training>()
 
         for (c in 0 until cursor.count) {
             cursor.moveToPosition(c)
 
-            val namaTraining = NamaTraining()
-            namaTraining.idNamaTraining = cursor.getInt(0)
-            namaTraining.namaNyaTraining = cursor.getString(1)
+            val namaTraining = Training()
+            namaTraining.idTraining = cursor.getInt(0)
+            namaTraining.namaTraining = cursor.getString(2)
 
             listNamaTraining.add(namaTraining)
         }
         return  listNamaTraining
     }
 
-    fun tampilkanNamaTrainingOrganizer(): List<NamaTrainingOrganizer> {
+    fun tampilkanNamaTrainingOrganizer(): List<TrainingOrganizer> {
         val db = databaseHelper.readableDatabase
 
-        val queryRead = "SELECT * FROM $TABEL_NAMA_TRAINING_ORGANIZER"
+        val queryRead = "SELECT * FROM $TABEL_TRAINING_ORG"
         val cursor = db.rawQuery(queryRead, null)
 
 
-        var listNamaTrainingOrganizer = ArrayList<NamaTrainingOrganizer>()
+        var listNamaTrainingOrganizer = ArrayList<TrainingOrganizer>()
 
         for (c in 0 until cursor.count) {
             cursor.moveToPosition(c)
 
-            val namaTrainingOrganizer = NamaTrainingOrganizer()
-            namaTrainingOrganizer.idNamaTrainingOrganizer = cursor.getInt(0)
-            namaTrainingOrganizer.namaNyaTrainingOrganizer = cursor.getString(1)
+            val namaTrainingOrganizer = TrainingOrganizer()
+            namaTrainingOrganizer.idTrainingOrganizer = cursor.getInt(0)
+            namaTrainingOrganizer.namaTrainingOrganizer = cursor.getString(1)
 
             listNamaTrainingOrganizer.add(namaTrainingOrganizer)
         }

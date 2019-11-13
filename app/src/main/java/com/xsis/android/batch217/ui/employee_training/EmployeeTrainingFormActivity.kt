@@ -14,7 +14,7 @@ import androidx.core.view.isVisible
 import com.xsis.android.batch217.R
 import com.xsis.android.batch217.databases.DatabaseHelper
 import com.xsis.android.batch217.databases.EmployeeTrainingQueryHelper
-import com.xsis.android.batch217.models.EmployeeTraining
+import com.xsis.android.batch217.models.*
 import com.xsis.android.batch217.utils.*
 import kotlinx.android.synthetic.main.activity_employee_training_form.*
 import java.text.SimpleDateFormat
@@ -32,6 +32,12 @@ class EmployeeTrainingFormActivity : AppCompatActivity() {
     var employeeTrainingTypeSpinner: Spinner? = null
     var employeeCertificationTypeSpinner: Spinner? = null
     var data = EmployeeTraining()
+
+    lateinit var listNamaTraining: List<Training>
+    lateinit var listNamaTrainingOrganizer: List<TrainingOrganizer>
+    lateinit var listTypeTraining: List<TypeTraining>
+    lateinit var listCertificationType: List<CertificationType>
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -148,6 +154,12 @@ class EmployeeTrainingFormActivity : AppCompatActivity() {
 
         var isValid = true
 
+        if (employeeNameTraineeText.isEmpty()) {
+            inputNamaTrainee.setHintTextColor(Color.RED)
+            requiredNamaTrainee.visibility = View.VISIBLE
+            isValid = false
+        }
+
         if (positionEmployeeTrainingSpinner == 0) {
             inputNamaEmployeeTraining.setHintTextColor(Color.RED)
             requiredNamaEmployeeTraining.isVisible = true
@@ -249,52 +261,56 @@ class EmployeeTrainingFormActivity : AppCompatActivity() {
     }
 
     fun isiSpinnerNamaTraining() {
-        val namaTraining = databaseQueryHelper.tampilkanNamaTraining()
-        val isiData = namaTraining.map {
-            it.namaNyaTraining
-        }.toList()
+        listNamaTraining = databaseQueryHelper.tampilkanNamaTraining()
+        val isiDataNamaTraining = listNamaTraining.map {
+            it.namaTraining
+        }.toMutableList()
+        isiDataNamaTraining.add(0, "Training *")
         val adapterNamaTraining = ArrayAdapter<String>(
             context, android.R.layout.simple_spinner_item,
-            isiData
+            isiDataNamaTraining
         )
         adapterNamaTraining.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinnerInputNamaEmployeeTraining.adapter = adapterNamaTraining
     }
 
     fun isiSpinnerTrainingOrganizer() {
-        val trainingOrganizer = databaseQueryHelper.tampilkanNamaTrainingOrganizer()
-        val isiData = trainingOrganizer.map {
-            it.namaNyaTrainingOrganizer
-        }.toList()
+        listNamaTrainingOrganizer = databaseQueryHelper.tampilkanNamaTrainingOrganizer()
+        val isiDataNamaTrainingOrganizer = listNamaTrainingOrganizer.map {
+            it.namaTrainingOrganizer
+        }.toMutableList()
+        isiDataNamaTrainingOrganizer.add(0, "Organizer *")
         val adapterNamaTrainingOrganizer = ArrayAdapter<String>(
             context, android.R.layout.simple_spinner_item,
-            isiData
+            isiDataNamaTrainingOrganizer
         )
         adapterNamaTrainingOrganizer.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinnerInputNamaEmployeeTrainingOrganizer.adapter = adapterNamaTrainingOrganizer
     }
 
     fun isiSpinnerTrainingType() {
-        val trainingType = databaseQueryHelper.tampilkanTrainingType()
-        val isiData = trainingType.map {
+        listTypeTraining = databaseQueryHelper.tampilkanTrainingType()
+        val isiDataTrainingType = listTypeTraining.map {
             it.namaTypeTraining
-        }.toList()
+        }.toMutableList()
+        isiDataTrainingType.add(0, "Training Type")
         val adapterTypeTraining = ArrayAdapter<String>(
             context, android.R.layout.simple_spinner_item,
-            isiData
+            isiDataTrainingType
         )
         adapterTypeTraining.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinnerInputTypeEmployeeTraining.adapter = adapterTypeTraining
     }
 
     fun isiSpinnerCertificationType() {
-        val certificationType = databaseQueryHelper.tampilkanCertificationType()
-        val isiData = certificationType.map {
+        listCertificationType = databaseQueryHelper.tampilkanCertificationType()
+        val isiDataCertificationType = listCertificationType.map {
             it.namaTypeCertification
-        }.toList()
+        }.toMutableList()
+        isiDataCertificationType.add(0, "Certification Type")
         val adapterCertificationType = ArrayAdapter<String>(
             context, android.R.layout.simple_spinner_item,
-            isiData
+            isiDataCertificationType
         )
         adapterCertificationType.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinnerInputCertificationEmployeeTraining.adapter = adapterCertificationType

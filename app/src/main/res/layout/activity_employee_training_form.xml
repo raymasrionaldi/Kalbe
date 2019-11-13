@@ -87,12 +87,22 @@
                     android:id="@+id/inputNamaTrainee"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Nama Pegawai"
+                    android:hint="Employee Name *"
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
                     android:textSize="16sp"/>
 
             </FrameLayout>
+
+            <TextView
+                android:id="@+id/requiredNamaTrainee"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Required"
+                android:layout_marginLeft="20dp"
+                android:textColor="@color/warnaMerah"
+                android:textSize="@dimen/text_size_small"
+                android:visibility="invisible" />
 
             <FrameLayout
                 android:layout_width="match_parent"
