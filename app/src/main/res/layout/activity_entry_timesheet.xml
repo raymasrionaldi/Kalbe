@@ -110,6 +110,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"/>
+            <TextView
+                android:id="@+id/requiredOvertimeEntryTimesheet"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Required"
+                android:textColor="@android:color/holo_red_dark"
+                android:visibility="gone" />
             <EditText
                 android:id="@+id/inputStartOvertimeEntryTimesheet"
                 android:layout_width="match_parent"
@@ -120,6 +127,13 @@
                 android:layout_margin="10dp"
                 android:textColor="@color/colorPrimaryDark"
                 android:inputType="text" />
+            <TextView
+                android:id="@+id/requiredStartOvertimeEntryTimesheet"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Required"
+                android:textColor="@android:color/holo_red_dark"
+                android:visibility="gone" />
             <EditText
                 android:id="@+id/inputEndtOvertimeEntryTimesheet"
                 android:layout_width="match_parent"
@@ -130,6 +144,13 @@
                 android:layout_margin="10dp"
                 android:textColor="@color/colorPrimaryDark"
                 android:inputType="text" />
+            <TextView
+                android:id="@+id/requiredEndOvertimeEntryTimesheet"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Required"
+                android:textColor="@android:color/holo_red_dark"
+                android:visibility="gone" />
             <EditText
                 android:id="@+id/inputNotesEntryTimesheet"
                 android:layout_width="match_parent"

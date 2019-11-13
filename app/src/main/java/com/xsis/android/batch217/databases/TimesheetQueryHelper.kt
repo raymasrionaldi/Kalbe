@@ -8,6 +8,7 @@ import com.xsis.android.batch217.models.Timesheet
 import com.xsis.android.batch217.utils.*
 
 class TimesheetQueryHelper (val databaseHelper: DatabaseHelper) {
+    private val companyQueryHelper = CompanyQueryHelper(databaseHelper)
     private fun getSemuaTimesheet(): Cursor {
         val db = databaseHelper.readableDatabase
 
@@ -125,5 +126,8 @@ class TimesheetQueryHelper (val databaseHelper: DatabaseHelper) {
             listCompany.add(company)
         }
         return  listCompany
+    }
+    fun getSemuaCompany(): List<Company> {
+        return companyQueryHelper.readSemuaCompanyModels()
     }
 }

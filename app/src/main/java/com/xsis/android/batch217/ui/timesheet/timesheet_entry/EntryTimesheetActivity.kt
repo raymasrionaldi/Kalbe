@@ -3,6 +3,7 @@ package com.xsis.android.batch217.ui.timesheet.timesheet_entry
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.ContentValues
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
@@ -13,6 +14,7 @@ import androidx.core.view.isVisible
 import com.xsis.android.batch217.R
 import com.xsis.android.batch217.databases.DatabaseHelper
 import com.xsis.android.batch217.databases.TimesheetQueryHelper
+import com.xsis.android.batch217.models.Company
 import com.xsis.android.batch217.models.Timesheet
 import com.xsis.android.batch217.utils.ARRAY_OVERTIME_TIMESHEET
 import com.xsis.android.batch217.utils.ARRAY_STATUS_TIMESHEET
@@ -26,6 +28,8 @@ class EntryTimesheetActivity : AppCompatActivity() {
     val context = this
     //    var required: TextView? = null
     var data = Timesheet()
+    var idTimesheet = 0
+    lateinit var listCompany: List<Company>
     var buttonReset: Button? = null
     val databaseHelper = DatabaseHelper(this)
     val databaseQueryHelper = TimesheetQueryHelper(databaseHelper)
@@ -34,7 +38,26 @@ class EntryTimesheetActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_entry_timesheet)
-        this.title = "add entry"
+        context.title = "add entry"
+        supportActionBar?.let {
+            //menampilkan icon di toolbar
+            supportActionBar!!.setHomeButtonEnabled(true)
+            supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+            //ganti icon. Kalau mau default yang "<-", hapus line di bawah
+            supportActionBar!!.setHomeAsUpIndicator(R.drawable.ic_close_white)
+        }
+//        val databaseHelper = DatabaseHelper(context)
+//        databaseQueryHelper = TimesheetQueryHelper(databaseHelper)
+//
+//        listCompany = databaseQueryHelper!!.getSemuaCompany()
+//        val listNamaCompany = listCompany.map { company -> company.namaCompany }.toList()
+//        inputClientTimesheet.item = listNamaCompany
+//
+//        val bundle: Bundle? = intent.extras
+//        bundle?.let {
+//            idTimesheet = bundle.getInt(ID_TIMESHEET, 0)
+//            loadDataProject(idTimesheet)
+//        }
 //        required = findViewById(R.id.requiredStatusTimesheet) as TextView
         buttonReset = findViewById(R.id.buttonResetEntryFormTimesheet)
 
@@ -180,18 +203,39 @@ class EntryTimesheetActivity : AppCompatActivity() {
                 isValid = false
             }
             if (reportDateTimesheet.equals("")) {
+                inputReportDateEntryTimesheet.setHintTextColor(Color.RED)
                 requiredReportDateTimesheet.isVisible = true
                 isValid = false
+            } else{
+                inputReportDateEntryTimesheet.setHintTextColor(Color.BLACK)
+                requiredReportDateTimesheet.isVisible = false
+
             }
             if (startReportDateTimesheet.equals("")) {
+                inputStarDatetEntryTimesheet.setHintTextColor(Color.RED)
                 requiredStartEntryTimesheet.isVisible = true
                 isValid = false
             }
+            else{
+                inputStarDatetEntryTimesheet.setHintTextColor(Color.BLACK)
+                requiredStartEntryTimesheet.isVisible = false
+
+            }
             if (endReportDateTimesheet.equals("")) {
+                inputEndDateEntryTimesheet.setHintTextColor(Color.RED)
                 requiredEndEntryTimesheet.isVisible = true
                 isValid = false
-            } // tambah required utk overtime
+            } else{
+                inputEndDateEntryTimesheet.setHintTextColor(Color.BLACK)
+                requiredEndEntryTimesheet.isVisible = false
+
+            }// tambah required utk overtime
+            if (positionOvertimeTimesheet == 0){
+                requiredOvertimeEntryTimesheet.isVisible = true
+                isValid = false
+            }
             if (notesTimesheet.equals("")) {
+                inputNotesEntryTimesheet.setHintTextColor(Color.RED)
                 requiredNotesEntryTimesheet.isVisible = true
                 isValid = false
             }
@@ -204,6 +248,7 @@ class EntryTimesheetActivity : AppCompatActivity() {
                 requiredReportDateTimesheet.isVisible = true
                 isValid = false
             }
+
         }
         if (isValid){
             val content = ContentValues()
@@ -430,4 +475,26 @@ class EntryTimesheetActivity : AppCompatActivity() {
 
         }
     }
+//    private fun loadDataProject(idProject: Int) {
+//        val data = databaseQueryHelper!!.cariTimesheetModels(idProject)
+//
+//        val index =
+//            listCompany.indexOfFirst { company -> company.idCompany == data.id_timesheet }
+//        if (index != -1) {
+//            inputClientTimesheet.setSelection(index)
+//        }
+
+//        inputLocationProject.setText(data.locationProject)
+//        inputDepartmentProject.setText(data.departmentProject)
+//        inputUserNameProject.setText(data.userProject)
+//        inputProjectNameProject.setText(data.nameProject)
+//        inputStartProject.setText(data.startProject)
+//        inputEndProject.setText(data.endProject)
+//        inputRoleProject.setText(data.roleProject)
+//        inputProjectPhaseProject.setText(data.phaseProject)
+//        inputProjectDesProject.setText(data.desProject)
+//        inputProjectTechProject.setText(data.techProject)
+//        inputMainTaskProject.setText(data.taskProject)
+//    }
+
 }
