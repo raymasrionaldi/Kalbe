@@ -51,7 +51,8 @@ val ARRAY_SRF_NUMBER = arrayOf(
 val ARRAY_CANDIDATE_STATUS = arrayOf(
     "Candidate Status *",
     "Idle",
-    "Project"
+    "Bootcamp",
+    "Consultant"
 )
 
 
