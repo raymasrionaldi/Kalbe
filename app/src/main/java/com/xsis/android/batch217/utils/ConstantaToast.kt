@@ -12,7 +12,7 @@ val HAPUS_DATA_GAGAL = "Data Gagal Dihapus"
 val EDIT_DATA_BERHASIL = "Data Berhasil Diperbaharui"
 val EDIT_DATA_GAGAL = "Data Gagal Diperbaharui"
 
-val CEK_TRAINEE = "Pegawai Sudah Melakukan Training di Hari ini"
+val CEK_TRAINEE = "1 Pegawai Tidak Boleh Melakukan Training Lebih Dari 1 di Hari Yang Sama"
 
 
 
