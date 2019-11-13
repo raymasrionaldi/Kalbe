@@ -1,5 +1,6 @@
 package com.xsis.android.batch217.ui.employee_training
 
+import android.app.Activity
 import android.app.DatePickerDialog
 import android.graphics.Color
 import android.os.Bundle
@@ -197,14 +198,11 @@ class EmployeeTrainingEditActivity : AppCompatActivity() {
             val cekEmployeeTrainee =
                 databaseQueryHelper!!.cekEmployeeTrainingSudahTraining(model.namaTrainee!!, model.dateEmployeeTraining!!)
 
-            if (cekEmployeeTrainee > 0) {
-                Toast.makeText(context, CEK_TRAINEE, Toast.LENGTH_SHORT).show()
-                return
-            }
-            if (databaseQueryHelper!!.tambahEmployeeTraining(model) == -1L) {
-                Toast.makeText(context, SIMPAN_DATA_GAGAL, Toast.LENGTH_SHORT).show()
+            if (databaseQueryHelper!!.editEmployeeTraining(model) == 0) {
+                Toast.makeText(context, EDIT_DATA_GAGAL, Toast.LENGTH_SHORT)
+                    .show()
             } else {
-                Toast.makeText(context, SIMPAN_DATA_BERHASIL, Toast.LENGTH_SHORT)
+                Toast.makeText(context, EDIT_DATA_BERHASIL, Toast.LENGTH_SHORT)
                     .show()
             }
 

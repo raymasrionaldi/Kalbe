@@ -14,10 +14,12 @@ import androidx.fragment.app.FragmentManager
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.xsis.android.batch217.R
+import com.xsis.android.batch217.adapters.fragments.EmployeeStatusFragmentAdapter
 import com.xsis.android.batch217.adapters.fragments.EmployeeTrainingFragmentAdapter
 import com.xsis.android.batch217.databases.DatabaseHelper
 import com.xsis.android.batch217.databases.EmployeeTrainingQueryHelper
 import com.xsis.android.batch217.models.EmployeeTraining
+import com.xsis.android.batch217.ui.employee_status.EmployeeStatusFragmentData
 import com.xsis.android.batch217.ui.keluarga.KeluargaFormActivity
 import com.xsis.android.batch217.utils.*
 
@@ -65,6 +67,14 @@ class EmployeeTrainingFragmentDetail(context: Context, val fm: FragmentManager) 
             val intentEdit = Intent(context, EmployeeTrainingEditActivity::class.java)
             intentEdit.putExtra(ID_EMPLOYEE_TRAINING, idData)
             context!!.startActivity(intentEdit)
+
+            val viewPager = view!!.parent as ViewPager
+            val adapter = viewPager.adapter!! as EmployeeTrainingFragmentAdapter
+            val fragment = fm.fragments[0] as EmployeeTrainingFragmentData
+            fragment.updateContent()
+            adapter.notifyDataSetChanged()
+            viewPager.setCurrentItem(0, true)
+
         }
 
         return customView

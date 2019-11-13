@@ -110,8 +110,6 @@ class TimesheetSubmissionFragment : Fragment() {
         buttonSearch!!.setOnClickListener {
             searchData()
         }
-
-
         return customView
     }
 
