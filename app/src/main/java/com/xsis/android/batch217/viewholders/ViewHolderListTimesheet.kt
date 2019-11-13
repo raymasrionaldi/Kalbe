@@ -25,7 +25,7 @@ class ViewHolderListTimesheet(itemView: View) : RecyclerView.ViewHolder(itemView
         teksTambahan.setTextSize(TypedValue.COMPLEX_UNIT_SP,12f )
 
         val image = NameInitialsCircleImageView.ImageInfo
-            .Builder(ambilDuaInisial(tanggal!!))
+            .Builder(model.id_timesheet.toString())
             .setTextColor(android.R.color.black)
             .setCircleBackgroundColorRes(R.color.warnaAbu)
             .build()

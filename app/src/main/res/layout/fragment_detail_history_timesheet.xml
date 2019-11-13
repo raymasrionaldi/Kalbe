@@ -59,8 +59,10 @@
             android:layout_height="wrap_content"/>
 
         <TextView
+            android:id="@+id/ketOvertime"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:visibility="gone"
             android:text="Overtime :"
             android:textSize="10sp"
             android:textColor="@color/warnaAbu"/>
@@ -69,22 +71,15 @@
             android:id="@+id/overtimeDetailTimesheet"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Reported On :"
-            android:visibility="gone"
-            android:textSize="10sp"
-            android:textColor="@color/warnaAbu"/>
         <TextView
             android:id="@+id/tanggalDanJamOvertime"
             android:layout_width="match_parent"
-            android:visibility="gone"
             android:layout_height="wrap_content"/>
         <TextView
+            android:id="@+id/ketNotes"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:visibility="gone"
             android:text="Notes :"
             android:textSize="10sp"
             android:textColor="@color/warnaAbu"/>

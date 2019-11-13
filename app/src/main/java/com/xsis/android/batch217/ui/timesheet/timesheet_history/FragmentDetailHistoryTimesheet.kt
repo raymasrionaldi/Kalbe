@@ -33,8 +33,10 @@ class FragmentDetailHistoryTimesheet (context: Context, val fm: FragmentManager)
     var statusDetailTimesheet: TextView? = null
     var clientDetailTimesheet: TextView? = null
     var tanggalDanJamReportDate: TextView? = null
+    var ketOvertime: TextView? = null
     var overtimeDetailTimesheet: TextView? = null
     var tanggalDanJamOvertime: TextView? = null
+    var ketNotes: TextView? = null
     var notesDetailTimesheet: TextView? = null
     var buttonDelete: FloatingActionButton? = null
     var idData: Int = 0
@@ -56,6 +58,8 @@ class FragmentDetailHistoryTimesheet (context: Context, val fm: FragmentManager)
         statusDetailTimesheet = customView.findViewById(R.id.statusDetailTimesheet) as TextView
         clientDetailTimesheet = customView.findViewById(R.id.clientDetailTimesheet) as TextView
         tanggalDanJamReportDate = customView.findViewById(R.id.tanggalDanJamReportDate) as TextView
+        ketOvertime = customView.findViewById(R.id.ketOvertime) as TextView
+        ketNotes = customView.findViewById(R.id.ketNotes) as TextView
         overtimeDetailTimesheet = customView.findViewById(R.id.overtimeDetailTimesheet) as TextView
         tanggalDanJamOvertime = customView.findViewById(R.id.tanggalDanJamOvertime) as TextView
         notesDetailTimesheet = customView.findViewById(R.id.notesDetailTimesheet) as TextView
@@ -82,13 +86,31 @@ class FragmentDetailHistoryTimesheet (context: Context, val fm: FragmentManager)
         idData = timesheet.id_timesheet
         reportDateDetailTimesheet!!.setText(timesheet.reportDate_timesheet)
         statusDetailTimesheet!!.setText(timesheet.status_timesheet)
-        clientDetailTimesheet!!.setText(timesheet.client_timesheet)
-        tanggalDanJamReportDate!!.setText("${timesheet.reportDate_timesheet} ${timesheet.startReportDate_timesheet} - ${timesheet.endReportDate_timesheet}")
-        overtimeDetailTimesheet!!.setText(timesheet.overtime_timesheet)
-        tanggalDanJamOvertime!!.setText("${timesheet.starOvertime_timesheet} - ${timesheet.endOvertime_timesheet}")
-        notesDetailTimesheet!!.setText(timesheet.notes_timesheet)
+        if (timesheet.status_timesheet =="Masuk"){
+            ketOvertime!!.visibility = View.VISIBLE
+            ketNotes!!.visibility = View.VISIBLE
+            clientDetailTimesheet!!.setText(timesheet.client_timesheet)
+            tanggalDanJamReportDate!!.setText("${timesheet.reportDate_timesheet} ${timesheet.startReportDate_timesheet} - ${timesheet.endReportDate_timesheet}")
+            var textOvertime = timesheet.overtime_timesheet
+            if (textOvertime == "YES"){
+                overtimeDetailTimesheet!!.setText("${timesheet.overtime_timesheet} ${timesheet.starOvertime_timesheet} - ${timesheet.endOvertime_timesheet}")
+//            overtimeDetailTimesheet!!.setText(" ${timesheet.starOvertime_timesheet} ")
+            } else if (textOvertime == "NO"){
+                overtimeDetailTimesheet!!.setText(timesheet.overtime_timesheet)
+            }
+            notesDetailTimesheet!!.setText(timesheet.notes_timesheet)
 
-        data = timesheet
+            data = timesheet
+        }else {
+            clientDetailTimesheet!!.setText(timesheet.client_timesheet)
+            tanggalDanJamReportDate!!.setText("${timesheet.reportDate_timesheet} ")
+            ketOvertime!!.visibility = View.GONE
+            ketNotes!!.visibility = View.GONE
+
+
+            data = timesheet
+        }
+
     }
 
     fun showDeleteDialog() {

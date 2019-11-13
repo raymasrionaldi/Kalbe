@@ -204,7 +204,7 @@ class TimesheetQueryHelper(val databaseHelper: DatabaseHelper) {
         return db.update(
             TABEL_TIMESHEET,
             values,
-            "$ID_PROJECT = ?",
+            "$ID_TIMESHEET = ?",
             arrayOf(model.id_timesheet.toString())
         )
     }
@@ -219,8 +219,8 @@ class TimesheetQueryHelper(val databaseHelper: DatabaseHelper) {
         values.put(START_REPORT_DATE_TIMESHEET, model.startReportDate_timesheet)
         values.put(END_REPORT_DATE_TIMESHEET, model.endReportDate_timesheet)
         values.put(OVERTIME_TIMESHEET, model.overtime_timesheet)
-        values.put(START_REPORT_DATE_TIMESHEET, model.startReportDate_timesheet)
-        values.put(END_REPORT_DATE_TIMESHEET, model.endReportDate_timesheet)
+        values.put(START_REPORT_OVERTIME, model.starOvertime_timesheet)
+        values.put(END_REPORT_OVERTIME, model.endOvertime_timesheet)
         values.put(NOTES_TIMESHEET, model.notes_timesheet)
         values.put(PROGRESS_TIMESHEET, model.progress_timesheet)
         values.put(IS_DELETED, "false")
