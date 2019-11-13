@@ -10,10 +10,11 @@ import com.google.android.material.tabs.TabLayout
 import com.xsis.android.batch217.R
 import com.xsis.android.batch217.adapters.fragments.ProjectCreateFragmentAdapter
 import com.xsis.android.batch217.utils.CustomViewPager
+import com.xsis.android.batch217.utils.OnBackPressedListener
 
-class ProjectFragmentCreate:Fragment() {
+class ProjectFragmentCreate:Fragment(), OnBackPressedListener {
     var modeTab = 0
-    var viewPager: ViewPager? = null
+    var viewPager0: ViewPager? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -24,6 +25,10 @@ class ProjectFragmentCreate:Fragment() {
         activity!!.title = getString(R.string.menu_project)
 
         val fragmentAdapter = ProjectCreateFragmentAdapter(context!!, childFragmentManager)
+
+        viewPager0 = root.findViewById(R.id.viewPagerProjectCreate) as CustomViewPager
+        viewPager0!!.adapter = fragmentAdapter
+
         val viewPager = root.findViewById(R.id.viewPagerProjectCreate) as CustomViewPager
         viewPager.adapter = fragmentAdapter
 
@@ -43,5 +48,17 @@ class ProjectFragmentCreate:Fragment() {
         //Dipanggil di HomeActivity
         //Untuk pindah tab. Nilainya hanya 0 (tab DATA) atau 1 (tab FORM).
         modeTab = tabIndex
+//        viewPager0!!.setCurrentItem(modeTab)
+    }
+
+
+
+
+    override fun onBackPressed(): Boolean {
+        if (viewPager0!!.currentItem !=0) {
+            viewPager0!!.setCurrentItem(0, true)
+            return true
+        }
+        return false
     }
 }

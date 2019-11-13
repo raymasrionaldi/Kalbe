@@ -26,6 +26,7 @@
             android:id="@+id/viewPagerProjectCreate"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#05C2B1AF" />
+            android:background="#05C2B1AF"
+            />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
