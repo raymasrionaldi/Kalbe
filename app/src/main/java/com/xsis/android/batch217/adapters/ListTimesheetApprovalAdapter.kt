@@ -15,7 +15,6 @@ import com.xsis.android.batch217.databases.DatabaseHelper
 import com.xsis.android.batch217.databases.TimesheetQueryHelper
 import com.xsis.android.batch217.models.Timesheet
 import com.xsis.android.batch217.ui.timesheet.timesheet_approval.TimesheetApprovalDetailActivity
-import com.xsis.android.batch217.ui.timesheet.timesheet_approval.TimesheetApprovalProcessActivity
 import com.xsis.android.batch217.utils.APPROVED
 import com.xsis.android.batch217.utils.ID_TIMESHEET
 import com.xsis.android.batch217.utils.REJECTED
@@ -121,7 +120,7 @@ class ListTimesheetApprovalAdapter(
     }
 
     private fun changeProgress(progress: String) {
-        var ids = ArrayList<Int>()
+        val ids = ArrayList<Int>()
         selectedTimesheets.forEach { index -> ids.add(listTimesheet[index].id_timesheet) }
 
         val isSucceed = databaseQueryHelper!!.changeProgress(ids, progress)
@@ -129,14 +128,14 @@ class ListTimesheetApprovalAdapter(
         val message = if (isSucceed) {
             "DATA HAS BEEN ${progress.toUpperCase()}"
         } else {
-            "DATA CANNOT BE PROCESSED"
+            "AN ERROR OCCURRED"
         }
 
         AlertDialog.Builder(context)
             .setCancelable(false)
             .setTitle(message)
             .setPositiveButton("CLOSE") { dialog, which ->
-                (context as TimesheetApprovalProcessActivity).finish()
+                (context as AppCompatActivity).finish()
             }
             .create().show()
     }
