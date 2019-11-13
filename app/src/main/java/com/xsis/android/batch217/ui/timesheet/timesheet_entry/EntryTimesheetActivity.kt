@@ -25,13 +25,14 @@ import com.xsis.android.batch217.utils.*
 import kotlinx.android.synthetic.main.activity_entry_timesheet.*
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 class EntryTimesheetActivity : AppCompatActivity() {
     val context = this
     //    var required: TextView? = null
     var data = Timesheet()
     var idTimesheet = 0
-    lateinit var listCompany: List<Company>
+    var listCompany = ArrayList<String>()
     var buttonReset: Button? = null
     val databaseHelper = DatabaseHelper(this)
     val databaseQueryHelper = TimesheetQueryHelper(databaseHelper)
@@ -40,35 +41,31 @@ class EntryTimesheetActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_entry_timesheet)
-        context.title = "add entry"
+        context.title = "Timesheet"
         supportActionBar?.let {
             //menampilkan icon di toolbar
             supportActionBar!!.setHomeButtonEnabled(true)
             supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 //            //ganti icon. Kalau mau default yang "<-", hapus line di bawah
 //            supportActionBar!!.setHomeAsUpIndicator(R.drawable.ic_close_white)
+
         }
-//        val databaseHelper = DatabaseHelper(context)
-//        databaseQueryHelper = TimesheetQueryHelper(databaseHelper)
-//
-//        listCompany = databaseQueryHelper!!.getSemuaCompany()
-//        val listNamaCompany = listCompany.map { company -> company.namaCompany }.toList()
-//        inputClientTimesheet.item = listNamaCompany
-//
-//        val bundle: Bundle? = intent.extras
-//        bundle?.let {
-//            idTimesheet = bundle.getInt(ID_TIMESHEET, 0)
-//            loadDataProject(idTimesheet)
-//        }
-//        required = findViewById(R.id.requiredStatusTimesheet) as TextView
+        isiSpinnerStatusTimesheet()
+        isiSpinnerClientTimesheet()
+        isiSpinnerOvertimeTimesheet()
+
+        val bundle: Bundle? = intent.extras
+        bundle?.let {
+            idTimesheet = bundle!!.getInt(ID_TIMESHEET, 0)
+            loadDataTimesheet(idTimesheet)
+        }
+
         buttonReset = findViewById(R.id.buttonResetEntryFormTimesheet)
 
-        isiSpinnerStatusTimesheet()
+
         setReportDateTimesheetPicker()
         setStartReportDateTimesheetPicker()
         setEndReportDateTimesheetPicker()
-        isiSpinnerClientTimesheet()
-        isiSpinnerOvertimeTimesheet()
         setStartOvertimeTimesheetPicker()
         setEndOvertimeTimesheetPicker()
         inputReportDateEntryTimesheet.addTextChangedListener(textWatcher)
@@ -208,7 +205,7 @@ class EntryTimesheetActivity : AppCompatActivity() {
                 inputReportDateEntryTimesheet.setHintTextColor(Color.RED)
                 requiredReportDateTimesheet.isVisible = true
                 isValid = false
-            } else{
+            } else {
                 inputReportDateEntryTimesheet.setHintTextColor(Color.BLACK)
                 requiredReportDateTimesheet.isVisible = false
 
@@ -217,8 +214,7 @@ class EntryTimesheetActivity : AppCompatActivity() {
                 inputStarDatetEntryTimesheet.setHintTextColor(Color.RED)
                 requiredStartEntryTimesheet.isVisible = true
                 isValid = false
-            }
-            else{
+            } else {
                 inputStarDatetEntryTimesheet.setHintTextColor(Color.BLACK)
                 requiredStartEntryTimesheet.isVisible = false
 
@@ -227,12 +223,12 @@ class EntryTimesheetActivity : AppCompatActivity() {
                 inputEndDateEntryTimesheet.setHintTextColor(Color.RED)
                 requiredEndEntryTimesheet.isVisible = true
                 isValid = false
-            } else{
+            } else {
                 inputEndDateEntryTimesheet.setHintTextColor(Color.BLACK)
                 requiredEndEntryTimesheet.isVisible = false
 
             }// tambah required utk overtime
-            if (positionOvertimeTimesheet == 0){
+            if (positionOvertimeTimesheet == 0) {
                 requiredOvertimeEntryTimesheet.isVisible = true
                 isValid = false
             }
@@ -252,25 +248,42 @@ class EntryTimesheetActivity : AppCompatActivity() {
             }
 
         }
-        if (isValid){
-            val content = ContentValues()
-            content.put(STATUS_TIMESHEET, statusTimesheet)
-            content.put(CLIENT_DATABASE, clientTimesheet)
-            content.put(REPORT_DATE_TIMESHEET, reportDateTimesheet)
-            content.put(START_REPORT_DATE_TIMESHEET, startReportDateTimesheet)
-            content.put(END_REPORT_DATE_TIMESHEET, endReportDateTimesheet)
-            if (positionOvertimeTimesheet == 0){
+        if (isValid) {
+            val model = Timesheet()
+            model.id_timesheet = idTimesheet
+            model.status_timesheet = statusTimesheet
+            model.client_timesheet = clientTimesheet
+            model.reportDate_timesheet = reportDateTimesheet
+            model.startReportDate_timesheet = startReportDateTimesheet
+            model.endReportDate_timesheet = endReportDateTimesheet
+            if (positionOvertimeTimesheet == 0) {
                 overtimeTimesheet = "NO"
             }
-            content.put(OVERTIME_TIMESHEET, overtimeTimesheet)
-            content.put(START_REPORT_OVERTIME, startOvertimeTimesheet)
-            content.put(END_REPORT_OVERTIME, endOvertimeTimesheet)
-            content.put(NOTES_TIMESHEET, notesTimesheet)
-            content.put(PROGRESS_TIMESHEET, CREATED)
-            content.put(IS_DELETED, "false")
-            val db = DatabaseHelper(context!!).writableDatabase
-            db.insert(TABEL_TIMESHEET, null, content)
-            Toast.makeText(context, SIMPAN_DATA_BERHASIL, Toast.LENGTH_SHORT).show()
+            model.overtime_timesheet = overtimeTimesheet
+            model.starOvertime_timesheet = startOvertimeTimesheet
+            model.endOvertime_timesheet = endOvertimeTimesheet
+            model.notes_timesheet = notesTimesheet
+            model.progress_timesheet = CREATED
+            model.is_Deleted = "false"
+
+            //add
+            if (idTimesheet == 0) {
+                if (databaseQueryHelper!!.tambahTimesheet(model) == -1L) {
+                    Toast.makeText(context, SIMPAN_DATA_GAGAL, Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(context, SIMPAN_DATA_BERHASIL, Toast.LENGTH_SHORT)
+                        .show()
+                }
+                //update
+            } else if (idTimesheet != 0) {
+                if (databaseQueryHelper!!.editTimesheet(model) == 0) {
+                    Toast.makeText(context, EDIT_DATA_GAGAL, Toast.LENGTH_SHORT)
+                        .show()
+                } else {
+                    Toast.makeText(context, EDIT_DATA_BERHASIL, Toast.LENGTH_SHORT)
+                        .show()
+                }
+            }
             setResult(Activity.RESULT_OK, intent)
             finish()
 
@@ -298,6 +311,30 @@ class EntryTimesheetActivity : AppCompatActivity() {
         adapterStatusTimesheet.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         inputStatusTimesheet.adapter = adapterStatusTimesheet
 
+    }
+    fun isiSpinnerClientTimesheet(){
+        val clientTimesheet = databaseQueryHelper.tampilkanClientTimesheet()
+
+        listCompany.add("client*")
+        clientTimesheet.forEach {
+            listCompany.add(it.namaCompany!!)
+        }
+
+        val adapterClientTimesheet = ArrayAdapter<String>(
+            context, android.R.layout.simple_spinner_item,
+            listCompany
+        )
+        adapterClientTimesheet.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        inputClientTimesheet.adapter = adapterClientTimesheet
+    }
+
+    fun isiSpinnerOvertimeTimesheet() {
+        val adapterOvertimeTimesheet = ArrayAdapter<String>(
+            context, android.R.layout.simple_spinner_item,
+            ARRAY_OVERTIME_TIMESHEET
+        )
+        adapterOvertimeTimesheet.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        inputOvertimeTimesheet.adapter = adapterOvertimeTimesheet
 
     }
 
@@ -427,30 +464,7 @@ class EntryTimesheetActivity : AppCompatActivity() {
         }
     }
 
-    fun isiSpinnerClientTimesheet() {
-        val clientTimesheet = databaseQueryHelper.tampilkanClientTimesheet()
 
-        val isiData = clientTimesheet.map {
-            it.namaCompany
-        }.toMutableList()
-        isiData.add(0, "client*")
-        val adapterClientTimesheet = ArrayAdapter<String>(
-            context, android.R.layout.simple_spinner_item,
-            isiData
-        )
-        adapterClientTimesheet.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        inputClientTimesheet.adapter = adapterClientTimesheet
-    }
-
-    fun isiSpinnerOvertimeTimesheet() {
-        val adapterOvertimeTimesheet = ArrayAdapter<String>(
-            context, android.R.layout.simple_spinner_item,
-            ARRAY_OVERTIME_TIMESHEET
-        )
-        adapterOvertimeTimesheet.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        inputOvertimeTimesheet.adapter = adapterOvertimeTimesheet
-
-    }
 
     private val textWatcher = object : TextWatcher {
         override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
@@ -478,27 +492,6 @@ class EntryTimesheetActivity : AppCompatActivity() {
 
         }
     }
-//    private fun loadDataProject(idProject: Int) {
-//        val data = databaseQueryHelper!!.cariTimesheetModels(idProject)
-//
-//        val index =
-//            listCompany.indexOfFirst { company -> company.idCompany == data.id_timesheet }
-//        if (index != -1) {
-//            inputClientTimesheet.setSelection(index)
-//        }
-
-//        inputLocationProject.setText(data.locationProject)
-//        inputDepartmentProject.setText(data.departmentProject)
-//        inputUserNameProject.setText(data.userProject)
-//        inputProjectNameProject.setText(data.nameProject)
-//        inputStartProject.setText(data.startProject)
-//        inputEndProject.setText(data.endProject)
-//        inputRoleProject.setText(data.roleProject)
-//        inputProjectPhaseProject.setText(data.phaseProject)
-//        inputProjectDesProject.setText(data.desProject)
-//        inputProjectTechProject.setText(data.techProject)
-//        inputMainTaskProject.setText(data.taskProject)
-//    }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         //untuk kembali ke home activity
@@ -509,4 +502,58 @@ class EntryTimesheetActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
+    private fun loadDataTimesheet(ID_Timesheet: Int) {
+        val db = databaseHelper.readableDatabase
+
+        val projection = arrayOf<String>(
+            ID_TIMESHEET, STATUS_TIMESHEET, CLIENT_DATABASE, REPORT_DATE_TIMESHEET,
+            START_REPORT_DATE_TIMESHEET, END_REPORT_DATE_TIMESHEET, OVERTIME_TIMESHEET,
+            START_REPORT_DATE_TIMESHEET, END_REPORT_DATE_TIMESHEET, NOTES_TIMESHEET,
+            PROGRESS_TIMESHEET, IS_DELETED
+        )
+        val selection = ID_TIMESHEET + "=?"
+        val selectionArgs = arrayOf(ID_Timesheet.toString())
+        val cursor =
+            db.query(TABEL_TIMESHEET, projection, selection, selectionArgs, null, null, null)
+
+        if (cursor.count == 1) {
+            cursor.moveToFirst()
+            data.id_timesheet = cursor.getInt(0)
+
+            val statusTimesheet = cursor.getString(1)
+            val indexStatusTimesheet = ARRAY_STATUS_TIMESHEET.indexOf(statusTimesheet)
+            inputStatusTimesheet.setSelection(indexStatusTimesheet)
+
+            val clientTimesheet = cursor.getString(2)
+            val indexClientTimesheet = listCompany.indexOf(clientTimesheet)
+            inputClientTimesheet.setSelection(indexClientTimesheet)
+
+            data.reportDate_timesheet = cursor.getString(3)
+            inputReportDateEntryTimesheet.setText(data.reportDate_timesheet)
+
+            data.startReportDate_timesheet = cursor.getString(4)
+            inputStarDatetEntryTimesheet.setText(data.startReportDate_timesheet)
+
+            data.endReportDate_timesheet = cursor.getString(5)
+            inputEndDateEntryTimesheet.setText(data.endReportDate_timesheet)
+
+            val overtimeTimesheet = cursor.getString(6)
+            val indexOvertimeTimesheet = ARRAY_OVERTIME_TIMESHEET.indexOf(overtimeTimesheet)
+            inputOvertimeTimesheet.setSelection(indexOvertimeTimesheet)
+
+            data.starOvertime_timesheet = cursor.getString(7)
+            inputStartOvertimeEntryTimesheet.setText(data.starOvertime_timesheet)
+
+            data.endOvertime_timesheet = cursor.getString(8)
+            inputEndtOvertimeEntryTimesheet.setText(data.endOvertime_timesheet)
+
+            data.notes_timesheet = cursor.getString(9)
+            inputNotesEntryTimesheet.setText(data.notes_timesheet)
+
+            data.progress_timesheet = cursor.getString(10)
+
+            data.is_Deleted = cursor.getString(11)
+
+        }
+    }
 }

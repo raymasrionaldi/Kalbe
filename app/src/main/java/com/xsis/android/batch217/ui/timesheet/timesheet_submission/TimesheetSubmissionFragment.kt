@@ -2,6 +2,7 @@ package com.xsis.android.batch217.ui.timesheet.timesheet_submission
 
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -120,10 +121,8 @@ class TimesheetSubmissionFragment : Fragment() {
     }
 
     fun searchData() {
-//        if (spinnerPilihBulanSub.selectedItemPosition == 0 || spinnerPilihTahunSub.selectedItemPosition == 0) {
-//            Toast.makeText(context!!, "Data Belum Lengkap!", Toast.LENGTH_SHORT).show()
-//        }
-
+        val intent = Intent(context!!,DataSubmitActivity::class.java)
+        startActivity(intent)
     }
 
 //    override fun onBackPressed(): Boolean {

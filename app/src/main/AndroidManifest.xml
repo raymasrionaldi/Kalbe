@@ -9,7 +9,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.xsis.android.batch217.ui.timesheet.timesheet_submission.TimesheetSubmissionActivity"></activity>
         <activity android:name=".ui.prf_request.EditPRFCandidateActivity" />
         <activity android:name=".ui.prf_request.InputPRFCandidateActivity" />
         <activity android:name=".ui.prf_request.EditPRFRequestActivity" />
@@ -30,6 +29,7 @@
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".ui.timesheet.timesheet_entry.EntryTimesheetActivity"/>
+        <activity android:name=".ui.timesheet.timesheet_submission.DataSubmitActivity"/>
         <activity
             android:name=".ui.jenjang_pendidikan.UbahPendidikanActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
