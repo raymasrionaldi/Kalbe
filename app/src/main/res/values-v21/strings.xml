@@ -52,7 +52,8 @@
     <string name="menu_employee_training">Employee Training</string>
     <string name="menu_set_training">Set Training</string>
     <string name="menu_leave_request">Leave</string>
-    <string name="menu_ce_leave">Create / Edit Leave</string>
+    <string name="menu_leave_ce">Create / Edit Leave</string>
+    <string name="menu_leave_detail">Leave Detail</string>
     <string name="menu_project">Project</string>
     <string name="menu_project_entry">Project Entry</string>
     <string name="menu_project_history">Project History</string>

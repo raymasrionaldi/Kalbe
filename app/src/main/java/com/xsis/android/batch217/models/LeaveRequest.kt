@@ -11,9 +11,11 @@ class LeaveRequest {
     var approval1:String?=null
     var approval2:String?=null
     var approval3:String?=null
+
     var idLeaveType:Int=0
     var leaveType:String?=null
     var quota:Int=0
+
     var idCutiKhusus:Int=0
     var leaveName:String?=null
     var isDeleted: String? = null

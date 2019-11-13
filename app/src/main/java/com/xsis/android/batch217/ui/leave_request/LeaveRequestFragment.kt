@@ -69,7 +69,6 @@ class LeaveRequestFragment() : Fragment(), OnBackPressedListener {
     /*override fun onResume() {
         super.onResume()
         viewPager!!.setCurrentItem(0, true)
-        println("BULAN# LeaveRequestFragment")
     }*/
 
 }

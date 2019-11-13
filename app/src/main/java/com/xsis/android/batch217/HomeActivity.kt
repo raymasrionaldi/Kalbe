@@ -309,7 +309,7 @@ class HomeActivity : AppCompatActivity() {
         listDataHeader.add(item20)
 // Adding child data
         val heading20 = ArrayList<String>()
-        heading20.add(getString(R.string.menu_ce_leave))
+        heading20.add(getString(R.string.menu_leave_ce))
 // Header, Child data
         listDataChild[listDataHeader[20]] = heading20
 
@@ -437,7 +437,7 @@ class HomeActivity : AppCompatActivity() {
                 fragmentTransaction.replace(
                     R.id.nav_host_fragment,
                     fragment,
-                    getString(R.string.menu_ce_leave)
+                    getString(R.string.menu_leave_ce)
                 )
                 fragmentTransaction.commit()
                 closeNavDrawer()
@@ -738,7 +738,7 @@ class HomeActivity : AppCompatActivity() {
                 fragmentTransaction.replace(
                     R.id.nav_host_fragment,
                     fragment,
-                    getString(R.string.menu_ce_leave)
+                    getString(R.string.menu_leave_ce)
                 )
                 fragmentTransaction.commit()
             }

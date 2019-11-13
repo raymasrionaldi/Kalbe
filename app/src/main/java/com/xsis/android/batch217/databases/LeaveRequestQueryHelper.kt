@@ -183,6 +183,35 @@ class LeaveRequestQueryHelper(val databaseHelper: DatabaseHelper) {
         return db.insert(TABEL_LEAVE_REQUEST, null, values)
     }
 
+    fun updateLeaveRequest(model: LeaveRequest): Int {
+        val db = databaseHelper.writableDatabase
+
+        val values = ContentValues()
+        values.put(ID_LEAVE_TYPE,model.idLeaveType)
+        values.put(ID_CUTI_KHUSUS,model.idCutiKhusus)
+        values.put(START,model.start)
+        values.put(END,model.end)
+        values.put(ADDRESS,model.address)
+        values.put(CONTACT,model.contact)
+        values.put(REASON,model.reason)
+
+        return db.update(
+            TABEL_LEAVE_REQUEST,
+            values,
+            "$ID_LEAVE = ?",
+            arrayOf(model.idLeaveRequest.toString())
+        )
+    }
+
+    fun hapusLeaveRequest(id: Int): Int {
+        val db = databaseHelper.writableDatabase
+
+        val values = ContentValues()
+        values.put(IS_DELETED, "true")
+
+        return db.update(TABEL_LEAVE_REQUEST, values, "$ID_LEAVE = ?", arrayOf(id.toString()))
+    }
+
 
 
     /*GET PREV YEAR LEAVE QUOTA*/
