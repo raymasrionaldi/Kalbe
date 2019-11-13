@@ -22,7 +22,7 @@
             android:orientation="vertical">
 
             <ImageView
-                android:id="@+id/buttonBackInputPRFRequestEdit"
+                android:id="@+id/buttonBackTimeSub"
                 android:layout_width="23dp"
                 android:layout_height="23dp"
                 android:layout_margin="5dp"
@@ -41,11 +41,13 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_marginRight="30dp">
 
             <ImageView
-                android:layout_width="25dp"
-                android:layout_height="25dp"
+                android:id="@+id/buttonNextSub"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
                 android:layout_margin="5dp"
                 android:src="@drawable/button_next" />
         </LinearLayout>
@@ -71,7 +73,7 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/text_agama"
+            android:id="@+id/text_submitted"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:textAlignment="center"
