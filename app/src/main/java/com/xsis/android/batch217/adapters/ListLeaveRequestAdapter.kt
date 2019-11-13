@@ -38,14 +38,6 @@ class ListLeaveRequestAdapter(val context: Context,
             val intent= Intent(context, LeaveRequestDetailActivity::class.java)
             intent.putExtra(ID_LEAVE, model.idLeaveRequest)
             context.startActivity(intent)
-
-            //            val fragment = fm.fragments[1] as LeaveRequestFragmentDetail
-            //            val viewPager = fragment.view!!.parent as ViewPager
-            //            val adapter = viewPager.adapter!! as LeaveRequestDetailFragmentAdapter
-            //
-            //            fragment.setDetail(model)
-            //            adapter.notifyDataSetChanged()
-            //            viewPager.setCurrentItem(1, true)
         }
     }
 

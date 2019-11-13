@@ -51,8 +51,9 @@ class LeaveRequestFragmentDetail(context: Context, val fm: FragmentManager,val i
     }
 
     fun tampilkanDetail(id_detail: Int){
-        val listLeaveRequest = databaseQueryHelper!!.getDetailById(id_detail)
-        val model = listLeaveRequest[0]
+        val model = databaseQueryHelper!!.getLeaveRequestDetailById(id_detail)
+//        println("BULAN# $id_detail")
+//        val model = listLeaveRequest[0]
         leaveType!!.text=model.leaveType
         leaveName!!.text=model.leaveName
         startOn!!.text=model.start

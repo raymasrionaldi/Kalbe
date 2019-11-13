@@ -43,8 +43,8 @@ class LeaveRequestAddActivity : AppCompatActivity() {
         spinnerLeaveName.item = listCutiKhusus
         setOnItemSelectedListener(spinnerLeaveType)
 
-        initTimePickerStartLeave()
-        initTimePickerEndLeave()
+        initDatePickerStartLeave()
+        initDatePickerEndLeave()
 
         defaultColor = inputAddressLeave.currentHintTextColor
 
@@ -82,7 +82,7 @@ class LeaveRequestAddActivity : AppCompatActivity() {
         }
     }
 
-    private fun initTimePickerEndLeave() {
+    private fun initDatePickerEndLeave() {
         inputEndLeave.setOnClickListener {
 
             val endLeave = inputEndLeave.text.toString()
@@ -113,7 +113,7 @@ class LeaveRequestAddActivity : AppCompatActivity() {
         }
     }
 
-    private fun initTimePickerStartLeave() {
+    private fun initDatePickerStartLeave() {
         inputStartLeave.setOnClickListener {
             val startLeave = inputStartLeave.text.toString()
             val calendar = Calendar.getInstance()

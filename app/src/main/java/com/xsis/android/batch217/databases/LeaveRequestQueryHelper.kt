@@ -119,8 +119,8 @@ class LeaveRequestQueryHelper(val databaseHelper: DatabaseHelper) {
         return listLeaveRequest
     }
 
-    fun getDetailById(id:Int): List<LeaveRequest>{
-        var listLeaveRequest = ArrayList<LeaveRequest>()
+    fun getLeaveRequestDetailById(id:Int): LeaveRequest{
+        var listLeaveRequest = LeaveRequest()
         val db = databaseHelper.readableDatabase
         val queryCari = "SELECT " +
                 "a.*," +
@@ -133,7 +133,9 @@ class LeaveRequestQueryHelper(val databaseHelper: DatabaseHelper) {
 
         val cursor = db.rawQuery(queryCari, null)
         if (cursor.count > 0) {
-            listLeaveRequest = konversiCursorKeListLeaveRequestModel(cursor)
+            listLeaveRequest = konversiCursorKeListLeaveRequestModel(cursor)[0]
+        }else{
+            return LeaveRequest()
         }
         return listLeaveRequest
     }
@@ -180,6 +182,8 @@ class LeaveRequestQueryHelper(val databaseHelper: DatabaseHelper) {
 
         return db.insert(TABEL_LEAVE_REQUEST, null, values)
     }
+
+
 
     /*GET PREV YEAR LEAVE QUOTA*/
 

@@ -14,20 +14,21 @@ import kotlinx.android.synthetic.main.activity_leave_request_detail.*
 
 class LeaveRequestDetailActivity : AppCompatActivity() {
     val context = this
-    var ID_DETAIL: Int? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_leave_request_detail)
+
+        //get id detail
         var bundle: Bundle? = intent.extras
-        //if bundle not null
+        var idDetail:Int = 0
         bundle?.let {
-            ID_DETAIL = bundle!!.getInt("idLeaveRequest")
-//            println("BULAN_ACTIVITY# ${ID_DETAIL.toString()}")
+            idDetail = bundle!!.getInt(ID_LEAVE)
+//          println("BULAN_ACTIVITY# ${idDetail.toString()}")
         }
 
         val fragmentAdapter =
-            LeaveRequestDetailFragmentAdapter(context, supportFragmentManager, ID_DETAIL!!)
+            LeaveRequestDetailFragmentAdapter(context, supportFragmentManager, idDetail)
 
         val viewPager = findViewById(R.id.viewPagerDetailLeaveRequest) as CustomViewPager
         viewPager.adapter = fragmentAdapter
@@ -39,7 +40,7 @@ class LeaveRequestDetailActivity : AppCompatActivity() {
 
         buttonEditLeaveRequest.setOnClickListener {
             val intent = Intent(context, LeaveRequestEditActivity::class.java)
-            intent.putExtra(ID_LEAVE, ID_DETAIL!!)
+            intent.putExtra(ID_LEAVE, idDetail)
             startActivityForResult(intent, REQUEST_CODE_LEAVE_REQUEST)
         }
 
