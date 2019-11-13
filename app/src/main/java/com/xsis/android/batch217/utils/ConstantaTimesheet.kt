@@ -11,3 +11,6 @@ val APPROVED = "Approved"
 val REJECTED = "Rejected"
 val SENT = "Sent"
 val COLLECTED = "Collected"
+
+val MONTH_TIMESHEET = "Month"
+val YEAR_TIMESHEET = "Year"
