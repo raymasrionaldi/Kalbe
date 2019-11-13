@@ -8,6 +8,7 @@
     <string name="action_settings">Settings</string>
     <string name="action_search">Search</string>
     <string name="action_t_sub">Submission</string>
+    <string name="action_approve">Approve</string>
 
     <string name="menu_home">Home</string>
     <string name="menu_tipe_identitas">Tipe Identitas</string>

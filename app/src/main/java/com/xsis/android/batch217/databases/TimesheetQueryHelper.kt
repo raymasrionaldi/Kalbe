@@ -239,4 +239,17 @@ class TimesheetQueryHelper(val databaseHelper: DatabaseHelper) {
         }
         return Timesheet()
     }
+
+    fun changeProgress(ids: ArrayList<Int>, progress: String): Boolean {
+        val db = databaseHelper.writableDatabase
+
+        val values = ContentValues()
+        values.put(PROGRESS_TIMESHEET, progress)
+        var count = 0
+        for (id in ids) {
+            count += db.update(TABEL_TIMESHEET, values, "$ID_TIMESHEET = ?", arrayOf(id.toString()))
+        }
+        return count == ids.size
+    }
+
 }

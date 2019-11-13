@@ -24,7 +24,6 @@ class TimesheetApprovalFragment : Fragment() {
 
         activity!!.title = getString(R.string.timesheet)
 
-
         setHasOptionsMenu(true)
 
         return root

@@ -2,6 +2,7 @@ package com.xsis.android.batch217.ui.timesheet.timesheet_approval
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.MenuItem
 import com.xsis.android.batch217.R
 import com.xsis.android.batch217.databases.DatabaseHelper
 import com.xsis.android.batch217.databases.TimesheetQueryHelper
@@ -15,6 +16,11 @@ class TimesheetApprovalDetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_timesheet_approval_detail)
         title = ""
+
+        supportActionBar?.let {
+            supportActionBar!!.setHomeButtonEnabled(true)
+            supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        }
 
         var idTimesheet = 0
 
@@ -43,5 +49,13 @@ class TimesheetApprovalDetailActivity : AppCompatActivity() {
             }
             notesDetailTimesheetApproval.text = timesheet.notes_timesheet
         }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == android.R.id.home) {
+            super.onBackPressed()
+            return true
+        }
+        return super.onOptionsItemSelected(item)
     }
 }

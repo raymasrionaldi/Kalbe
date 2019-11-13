@@ -2,10 +2,10 @@ package com.xsis.android.batch217.ui.timesheet.timesheet_approval
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.MenuItem
 import android.view.View
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.xsis.android.batch217.R
 import com.xsis.android.batch217.adapters.ListTimesheetApprovalAdapter
 import com.xsis.android.batch217.databases.DatabaseHelper
@@ -21,6 +21,12 @@ class TimesheetApprovalProcessActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_timesheet_approval_process)
+        title = ""
+
+        supportActionBar?.let {
+            supportActionBar!!.setHomeButtonEnabled(true)
+            supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        }
 
         var year = ""
         var month = ""
@@ -53,5 +59,13 @@ class TimesheetApprovalProcessActivity : AppCompatActivity() {
             listTimesheetApprovalRecycler.adapter = adapterTimesheetApproval
             adapterTimesheetApproval.notifyDataSetChanged()
         }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == android.R.id.home) {
+            super.onBackPressed()
+            return true
+        }
+        return super.onOptionsItemSelected(item)
     }
 }
