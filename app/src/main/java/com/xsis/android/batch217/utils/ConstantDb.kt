@@ -239,6 +239,15 @@ val TABEL_EMPLOYEE_POSITION = "employee_position"
 val ID_EMPLOYEE_POSITION = "id_employee_position"
 val DESKRIPSI_POSITION = "deskripsi_position"
 
+val TABEL_SRF = "srf"
+val ID_SRF = "id_srf"
+val JENIS_SRF = "jenis srf"
+val JUM_KEBUTUHAN = "jumlah_kebutuhan"
+val NAMA_USER = "nama_user"
+val EMAIL_USER = "email_user"
+val SALES_PRICE = "sales_price"
+val LOKASI = "lokasi"
+val CATATAN = "catatan"
 
 //nama field sama
 val IS_DELETED= "is_deleted"

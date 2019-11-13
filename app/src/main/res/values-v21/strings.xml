@@ -68,5 +68,7 @@
     <string name="create_erf">Create ERF</string>
     <string name="client_erf">Nama Client</string>
     <string name="nama_resource">Nama Resource</string>
+    <string name="menu_srf">SRF</string>
+    <string name="plotting">Plotting</string>
 
 </resources>
