@@ -19,6 +19,8 @@ import com.xsis.android.batch217.utils.*
 import kotlinx.android.synthetic.main.activity_employee_training_form.*
 import kotlinx.android.synthetic.main.activity_input_prfrequest.*
 import kotlinx.android.synthetic.main.fragment_timesheet_submission.*
+import java.util.*
+import kotlin.collections.ArrayList
 
 class TimesheetSubmissionFragment : Fragment() {
 
@@ -141,14 +143,22 @@ class TimesheetSubmissionFragment : Fragment() {
 
     //isi data spinner tahun
     fun isiSpinnerTahun(view: View) {
+        val years = ArrayList<String>()
+        years.add("-- Choose Year --")
+        val thisYear = Calendar.getInstance().get(Calendar.YEAR)
+        for (i in 1990..thisYear) {
+            years.add(Integer.toString(i))
+        }
+
         val adapterTahun = ArrayAdapter<String>(
             context!!,
             android.R.layout.simple_spinner_item,
-            ARRAY_TAHUN
+            years
         )
         adapterTahun.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         val spinnerTahun = view.findViewById(R.id.spinnerPilihTahunSub) as Spinner
         spinnerTahun.adapter = adapterTahun
+
 
     }
 
