@@ -197,6 +197,18 @@ val DES_PROJECT ="des_project"
 val TECH_PROJECT ="tech_project"
 val TASK_PROJECT ="task_project"
 
+val TABEL_PROJECT_CREATE = "project_create"
+val ID_PROJECT_CREATE = "id_project_create"
+val PID_CREATE = "pid"
+val NO_PO_SPK_KONTRAK = "no_po_spk_kontrak"
+val START_DATE_PROJECT_CREATE = "start_date"
+val END_DATE_PROJECT_CREATE = "end_date"
+val POSISI_DI_CLIENT = "posisi_di_client"
+val JENIS_OVERTIME = "jenis_overtime"
+val CATATAN_FIX_RATE = "catatan_fix_rate"
+val tanggal_BAST = "tanggal_bast"
+
+
 val TABEL_LEAVE_REQUEST = "leave_request"
 val ID_LEAVE= "id_leave_request"
 val START = "start"
