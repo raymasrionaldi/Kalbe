@@ -180,6 +180,7 @@ class EditPRFCandidateActivity : AppCompatActivity() {
         if(listPRFCandidate.isEmpty()){
             databaseQueryHelper.updateDelete(id, name, batch, position, placementDate, srfNumber, customAllowence, candidateStatus, signContractDate, notes)
             Toast.makeText(context, EDIT_DATA_BERHASIL, Toast.LENGTH_SHORT).show()
+            finish()
         } else {
             Toast.makeText(context, DATA_SUDAH_ADA, Toast.LENGTH_SHORT).show()
         }
@@ -195,6 +196,7 @@ class EditPRFCandidateActivity : AppCompatActivity() {
         spinnerInputCandidateStatusPRFCandidateEdit.setSelection(0)
         inputSignContractDatePRFCandidateEdit.setText("")
         inputNotesPRFCandidateEdit.setText("")
+        requiredOff()
     }
 
     fun setReportDatePRFCandidatePicker(){
@@ -340,10 +342,16 @@ class EditPRFCandidateActivity : AppCompatActivity() {
 
         buttonSubmitPRFCandidateEdit.setOnClickListener {
             validasiInput(id)
-            finish()
         }
         buttonResetPRFCandidateEdit.setOnClickListener {
             resetForm()
         }
+    }
+
+    fun requiredOff() {
+        requiredNamePRFCandidateEdit.isVisible = false
+        requiredPositionPRFCandidateEdit.isVisible = false
+        requiredSRFNumberPRFCandidateEdit.isVisible = false
+        requiredCandidateStatusPRFCandidateEdit.isVisible = false
     }
 }

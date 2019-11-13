@@ -212,6 +212,7 @@ class InputPRFCandidateActivity : AppCompatActivity() {
                 //update tru jadi false
                 databaseQueryHelper.updatePRFCandidate(name, batch, position, placementDate, srfNumber, customAllowence, candidateStatus, signContractDate, notes)
                 Toast.makeText(this, SIMPAN_DATA_BERHASIL, Toast.LENGTH_SHORT).show()
+                finish()
             } else {
                 Toast.makeText(this, DATA_SUDAH_ADA, Toast.LENGTH_SHORT).show()
             }
@@ -234,6 +235,7 @@ class InputPRFCandidateActivity : AppCompatActivity() {
             val db = DatabaseHelper(this).writableDatabase
             db.insert(TABEL_PRF_CANDIDATE, null, content)
             Toast.makeText(this, SIMPAN_DATA_BERHASIL, Toast.LENGTH_SHORT).show()
+            finish()
         }
     }
 
@@ -247,6 +249,7 @@ class InputPRFCandidateActivity : AppCompatActivity() {
         spinnerInputCandidateStatusPRFCandidate.setSelection(0)
         inputSignContractDatePRFCandidate.setText("")
         inputNotesPRFCandidate.setText("")
+        requiredOff()
     }
 
     fun setReportDatePRFCandidatePicker(){
@@ -332,5 +335,12 @@ class InputPRFCandidateActivity : AppCompatActivity() {
         override fun afterTextChanged(s: Editable) {
 
         }
+    }
+
+    fun requiredOff() {
+        requiredNamePRFCandidate.isVisible = false
+        requiredPositionPRFCandidate.isVisible = false
+        requiredSRFNumberPRFCandidate.isVisible = false
+        requiredCandidateStatusPRFCandidate.isVisible = false
     }
 }

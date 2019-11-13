@@ -36,6 +36,7 @@ class InputPRFRequestActivity : AppCompatActivity() {
     var overtime: EditText? = null
     var bast: Spinner? = null
     var billing: EditText? = null
+    var listPID: List<String>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -82,7 +83,6 @@ class InputPRFRequestActivity : AppCompatActivity() {
 
         buttonSubmitPRFRequest.setOnClickListener {
             validasiInput()
-            finish()
         }
 
         placement!!.addTextChangedListener(textWatcher)
@@ -200,7 +200,7 @@ class InputPRFRequestActivity : AppCompatActivity() {
             insertKeDatabase(tanggal,
                 ARRAY_TYPE[type],
                 placement,
-                ARRAY_PID[PID],
+                listPID!![PID],
                 location,
                 period,
                 userName,
@@ -228,6 +228,7 @@ class InputPRFRequestActivity : AppCompatActivity() {
         inputOvertimePRF.setText("")
         spinnerInputBastPRF.setSelection(0)
         inputBillingPRF.setText("")
+        requiredOff()
     }
 
     fun insertKeDatabase(tanggal: String,
@@ -253,6 +254,7 @@ class InputPRFRequestActivity : AppCompatActivity() {
                 //update tru jadi false
                 databaseQueryHelper.updatePRFRequest(tanggal, type,placement,pid,location,period,userName,telpMobilePhone,email,notebook,overtime,bast,billing)
                 Toast.makeText(this, SIMPAN_DATA_BERHASIL, Toast.LENGTH_SHORT).show()
+                finish()
             } else {
                 Toast.makeText(this, DATA_SUDAH_ADA, Toast.LENGTH_SHORT).show()
             }
@@ -277,6 +279,7 @@ class InputPRFRequestActivity : AppCompatActivity() {
             val db = DatabaseHelper(this).writableDatabase
             db.insert(TABEL_PRF_REQUEST, null, content)
             Toast.makeText(this, SIMPAN_DATA_BERHASIL, Toast.LENGTH_SHORT).show()
+            finish()
         }
     }
 
@@ -316,9 +319,12 @@ class InputPRFRequestActivity : AppCompatActivity() {
     }
 
     fun isiSpinnerPID(){
+        val databaseHelper = DatabaseHelper(context)
+        val databaseQueryHelper = PRFRequestQueryHelper(databaseHelper)
+        listPID = databaseQueryHelper.readPID()
         val adapterPID = ArrayAdapter<String>(context,
             android.R.layout.simple_spinner_item,
-            ARRAY_PID
+            listPID!!
         )
         adapterPID.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinnerInputPIDPRF.adapter = adapterPID
@@ -364,4 +370,14 @@ class InputPRFRequestActivity : AppCompatActivity() {
         override fun afterTextChanged(s: Editable) { }
     }
 
+    fun requiredOff() {
+        requiredTypePRFRequest.isVisible = false
+        requiredPlacementPRFRequest.isVisible = false
+        requiredPIDPRFRequest.isVisible = false
+        requiredEmailPRFRequest.isVisible = false
+        requiredPeriodPRFRequest.isVisible = false
+        requiredUsernamePRFRequest.isVisible = false
+        requiredTelpPRFRequest.isVisible = false
+        requiredNotebookPRFRequest.isVisible = false
+    }
 }

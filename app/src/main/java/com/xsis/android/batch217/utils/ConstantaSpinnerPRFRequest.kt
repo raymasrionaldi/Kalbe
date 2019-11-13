@@ -13,13 +13,6 @@ val ARRAY_TYPE = arrayOf(
     "Edit"
 )
 
-val ARRAY_PID = arrayOf(
-    "PID *",
-    "XMU.NP1901.0001",
-    "XMU.NP1901.0002",
-    "XMU.NP1901.0003",
-    "XMU.NP1901.0004"
-)
 
 val ARRAY_NOTEBOOK = arrayOf(
     "Notebook *",

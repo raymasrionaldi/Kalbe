@@ -161,4 +161,18 @@ class PRFRequestQueryHelper (val databaseHelper: DatabaseHelper) {
         return listPRFRequest
     }
 
+    fun readPID () : List<String> {
+        val listPID = ArrayList<String>()
+        val db = databaseHelper.readableDatabase
+        val queryReadPID = "SELECT $NAMA_PID FROM $TABEL_PID_PRF"
+        val cursor = db.rawQuery(queryReadPID, null)
+        if (cursor.count > 0) {
+            for (i in 1 until cursor.count) {
+                cursor.moveToPosition(i)
+                listPID.add(cursor.getString(0))
+            }
+        }
+        return  listPID
+    }
+
 }

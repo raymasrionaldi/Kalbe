@@ -40,6 +40,7 @@ class EditPRFRequestActivity : AppCompatActivity() {
     var bast: Spinner? = null
     var billing: EditText? = null
     var ID_prf_request = 0
+    var listPID: List<String>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -185,7 +186,7 @@ class EditPRFRequestActivity : AppCompatActivity() {
             insertKeDatabase(id, tanggal,
                 ARRAY_TYPE[type],
                 placement,
-                ARRAY_PID[PID],
+                listPID!![PID],
                 location,
                 period,
                 userName,
@@ -213,6 +214,7 @@ class EditPRFRequestActivity : AppCompatActivity() {
         inputOvertimePRFEdit.setText("")
         spinnerInputBastPRFEdit.setSelection(0)
         inputBillingPRFEdit.setText("")
+        finish()
     }
 
     fun insertKeDatabase(id: Int,
@@ -236,6 +238,7 @@ class EditPRFRequestActivity : AppCompatActivity() {
         if(listPRFRequest.isEmpty()){
             databaseQueryHelper.updateDelete(id,tanggal, type, placement, pid, location, period, userName, telpMobilePhone, email, notebook,overtime, bast, billing)
             Toast.makeText(context, EDIT_DATA_BERHASIL, Toast.LENGTH_SHORT).show()
+            finish()
         } else {
             Toast.makeText(context, DATA_SUDAH_ADA, Toast.LENGTH_SHORT).show()
         }
@@ -281,9 +284,12 @@ class EditPRFRequestActivity : AppCompatActivity() {
     }
 
     fun isiSpinnerPID(){
+        val databaseHelper = DatabaseHelper(context)
+        val databaseQueryHelper = PRFRequestQueryHelper(databaseHelper)
+        listPID = databaseQueryHelper.readPID()
         val adapterPID = ArrayAdapter<String>(context,
             android.R.layout.simple_spinner_item,
-            ARRAY_PID
+            listPID!!
         )
         adapterPID.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinnerInputPIDPRFEdit.adapter = adapterPID
@@ -362,7 +368,7 @@ class EditPRFRequestActivity : AppCompatActivity() {
             inputPlacementPRFEdit.setText(data.placement)
 
             val dataPID = cursor.getString(4)
-            val indexPID = ARRAY_PID.indexOf(dataPID)
+            val indexPID = listPID!!.indexOf(dataPID)
             spinnerInputPIDPRFEdit.setSelection(indexPID)
 
             data.location = cursor.getString(5)
@@ -406,7 +412,17 @@ class EditPRFRequestActivity : AppCompatActivity() {
         }
         buttonSubmitPRFRequestEdit.setOnClickListener {
             validasiInput(id)
-            finish()
         }
+    }
+
+    fun requiredOff() {
+        requiredTypePRFRequestEdit.isVisible = false
+        requiredPlacementPRFRequestEdit.isVisible = false
+        requiredPIDPRFRequestEdit.isVisible = false
+        requiredEmailPRFRequestEdit.isVisible = false
+        requiredPeriodPRFRequestEdit.isVisible = false
+        requiredUsernamePRFRequestEdit.isVisible = false
+        requiredTelpPRFRequestEdit.isVisible = false
+        requiredNotebookPRFRequestEdit.isVisible = false
     }
 }

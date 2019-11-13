@@ -217,6 +217,10 @@ val TABEL_CUTI_KHUSUS="cuti_khusus"
 val ID_CUTI_KHUSUS= "id_cuti_khusus"
 val LEAVE_NAME= "leave_name"
 
+val TABEL_PID_PRF = "pid_prf_request"
+val ID_PID_PRF = "id_pid_prf"
+val NAMA_PID = "nama_pid"
+
 
 //nama field sama
 val IS_DELETED= "is_deleted"
