@@ -7,8 +7,6 @@ import android.widget.AdapterView
 import androidx.fragment.app.Fragment
 import com.chivorn.smartmaterialspinner.SmartMaterialSpinner
 import com.xsis.android.batch217.R
-import com.xsis.android.batch217.databases.DatabaseHelper
-import com.xsis.android.batch217.databases.TimesheetQueryHelper
 import com.xsis.android.batch217.utils.*
 import kotlinx.android.synthetic.main.fragment_timesheet_approval.*
 

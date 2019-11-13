@@ -20,11 +20,13 @@ import com.xsis.android.batch217.adapters.fragments.TimesheetHistoryAdapter
 import com.xsis.android.batch217.databases.DatabaseHelper
 import com.xsis.android.batch217.databases.TimesheetQueryHelper
 import com.xsis.android.batch217.models.Timesheet
+import com.xsis.android.batch217.ui.timesheet.timesheet_approval.TimesheetApprovalProcessActivity
 import com.xsis.android.batch217.ui.timesheet.timesheet_history.TimesheetHistoryViewModel
 import com.xsis.android.batch217.utils.*
 import kotlinx.android.synthetic.main.activity_data_submit.*
 import kotlinx.android.synthetic.main.activity_employee_training_form.*
 import kotlinx.android.synthetic.main.activity_input_prfrequest.*
+import kotlinx.android.synthetic.main.fragment_timesheet_approval.*
 import kotlinx.android.synthetic.main.fragment_timesheet_submission.*
 import java.util.*
 import kotlin.collections.ArrayList
@@ -57,11 +59,8 @@ class TimesheetSubmissionFragment : Fragment() {
         isiSpinnerTahun(customView)
         isiSpinnerBulan(customView)
 
-        val spinTahun = customView.findViewById(R.id.spinnerPilihTahunSub) as Spinner
-        val spinBulan = customView.findViewById(R.id.spinnerPilihBulanSub) as Spinner
-
         //kondisi button reset dan search berdasarkan spinner tahun
-        spinTahun.onItemSelectedListener = object :
+        tahun!!.onItemSelectedListener = object :
             AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>?,
@@ -69,10 +68,10 @@ class TimesheetSubmissionFragment : Fragment() {
                 position: Int,
                 id: Long
             ) {
-                if (position != 0 && spinBulan.selectedItemPosition != 0) {
+                if (position != 0 && bulan!!.selectedItemPosition != 0) {
                     ubahResetButton(context!!, true, buttonReset!!)
                     ubahSearchButton(context!!, true, buttonSearch!!)
-                }else if(position != 0 || spinBulan.selectedItemPosition != 0){
+                }else if(position != 0 || bulan!!.selectedItemPosition != 0){
                     ubahResetButton(context!!, true, buttonReset!!)
                     ubahSearchButton(context!!, false, buttonSearch!!)
                 } else {
@@ -85,7 +84,7 @@ class TimesheetSubmissionFragment : Fragment() {
         }
 
         //kondisi button reset dan search berdasarkan spinner bulan
-        spinBulan.onItemSelectedListener = object :
+        bulan!!.onItemSelectedListener = object :
             AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>?,
@@ -93,10 +92,10 @@ class TimesheetSubmissionFragment : Fragment() {
                 position: Int,
                 id: Long
             ) {
-                if (position != 0 && spinTahun.selectedItemPosition != 0) {
+                if (position != 0 && tahun!!.selectedItemPosition != 0) {
                     ubahResetButton(context!!, true, buttonReset!!)
                     ubahSearchButton(context!!, true, buttonSearch!!)
-                }else if(position != 0 || spinTahun.selectedItemPosition != 0){
+                }else if(position != 0 || tahun!!.selectedItemPosition != 0){
                     ubahResetButton(context!!, true, buttonReset!!)
                     ubahSearchButton(context!!, false, buttonSearch!!)
                 }
@@ -126,9 +125,13 @@ class TimesheetSubmissionFragment : Fragment() {
     }
 
     fun searchData() {
-        val intent = Intent(context!!,DataSubmitActivity::class.java)
+        val year = spinnerPilihTahunSub.selectedItem.toString()
+        val month = spinnerPilihBulanSub.selectedItem.toString()
+        val intent = Intent(context, DataSubmitActivity::class.java)
+        intent.putExtra(YEAR_TIMESHEET, year)
+        intent.putExtra(MONTH_TIMESHEET, month)
+        resetForm()
         startActivity(intent)
-
     }
 
 //    override fun onBackPressed(): Boolean {
