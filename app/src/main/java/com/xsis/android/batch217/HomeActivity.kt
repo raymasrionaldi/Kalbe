@@ -464,7 +464,7 @@ class HomeActivity : AppCompatActivity() {
                     getString(R.string.menu_project_create)
                 )
                 fragmentTransaction.commit()
-                fragment.pindahTab(0)
+                fragment.pindahTab(1)
                 closeNavDrawer()
             } else if (groupIndex == 21 && childIndex == 3) {
                 val fragment = ProjectFragmentCreate()
@@ -475,7 +475,7 @@ class HomeActivity : AppCompatActivity() {
                     getString(R.string.menu_project_list)
                 )
                 fragmentTransaction.commit()
-                fragment.pindahTab(1)
+                fragment.pindahTab(0)
                 closeNavDrawer()
             }
 
