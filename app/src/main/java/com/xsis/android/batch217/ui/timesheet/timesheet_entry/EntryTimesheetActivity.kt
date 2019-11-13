@@ -3,7 +3,6 @@ package com.xsis.android.batch217.ui.timesheet.timesheet_entry
 import android.app.Activity
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
-import android.content.ContentValues
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -16,7 +15,6 @@ import androidx.core.view.isVisible
 import com.xsis.android.batch217.R
 import com.xsis.android.batch217.databases.DatabaseHelper
 import com.xsis.android.batch217.databases.TimesheetQueryHelper
-import com.xsis.android.batch217.models.Company
 import com.xsis.android.batch217.models.Timesheet
 import com.xsis.android.batch217.utils.ARRAY_OVERTIME_TIMESHEET
 import com.xsis.android.batch217.utils.ARRAY_STATUS_TIMESHEET
@@ -26,6 +24,11 @@ import kotlinx.android.synthetic.main.activity_entry_timesheet.*
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
+
+
+
+
+
 
 class EntryTimesheetActivity : AppCompatActivity() {
     val context = this
@@ -151,8 +154,24 @@ class EntryTimesheetActivity : AppCompatActivity() {
                 ) {
                     if (position != 0) {
                         ubahResetButton(context, true, buttonReset!!)
+                        if (position ==1){
+//                            inputStartOvertimeEntryTimesheet!!.visibility = View.VISIBLE
+//                            inputEndtOvertimeEntryTimesheet!!.visibility = View.VISIBLE
+                            inputStartOvertimeEntryTimesheet.isClickable = true
+                            inputEndtOvertimeEntryTimesheet.isClickable = true
+                        }else if (position ==2){
+//                            inputStartOvertimeEntryTimesheet!!.visibility = View.GONE
+//                            inputEndtOvertimeEntryTimesheet!!.visibility = View.GONE
+                            inputStartOvertimeEntryTimesheet.isClickable = false
+                            inputEndtOvertimeEntryTimesheet.isClickable = false
+                        }
+
                     } else {
                         ubahResetButton(context, false, buttonReset!!)
+//                        inputStartOvertimeEntryTimesheet!!.visibility = View.VISIBLE
+//                        inputEndtOvertimeEntryTimesheet!!.visibility = View.VISIBLE
+                        inputStartOvertimeEntryTimesheet.isClickable = false
+                        inputEndtOvertimeEntryTimesheet.isClickable = false
                     }
                 }
 
@@ -170,17 +189,18 @@ class EntryTimesheetActivity : AppCompatActivity() {
     }
 
     fun validasiInputFormEntry() {
+
         val positionStatusTimesheet = inputStatusTimesheet.selectedItemPosition
         val positionClientTimesheet = inputClientTimesheet.selectedItemPosition
         val positionOvertimeTimesheet = inputOvertimeTimesheet.selectedItemPosition
         val statusTimesheet = inputStatusTimesheet.selectedItem.toString()
         val clientTimesheet = inputClientTimesheet.selectedItem.toString()
         val reportDateTimesheet = inputReportDateEntryTimesheet.text.toString()
-        val startReportDateTimesheet = inputStarDatetEntryTimesheet.text.toString().trim()
-        val endReportDateTimesheet = inputEndDateEntryTimesheet.text.toString().trim()
+        var startReportDateTimesheet = inputStarDatetEntryTimesheet.text.toString().trim()
+        var endReportDateTimesheet = inputEndDateEntryTimesheet.text.toString().trim()
         var overtimeTimesheet = inputOvertimeTimesheet.selectedItem.toString()
-        val startOvertimeTimesheet = inputStartOvertimeEntryTimesheet.text.toString().trim()
-        val endOvertimeTimesheet = inputEndtOvertimeEntryTimesheet.text.toString().trim()
+        var startOvertimeTimesheet = inputStartOvertimeEntryTimesheet.text.toString().trim()
+        var endOvertimeTimesheet = inputEndtOvertimeEntryTimesheet.text.toString().trim()
         val notesTimesheet = inputNotesEntryTimesheet.text.toString().trim()
 
         requiredStatusTimesheet.visibility = View.GONE
@@ -190,8 +210,34 @@ class EntryTimesheetActivity : AppCompatActivity() {
         requiredEndEntryTimesheet.visibility = View.GONE
         requiredNotesEntryTimesheet.visibility = View.GONE
 
+
+
+
+
         var isValid = true
         if (positionStatusTimesheet <= 1) {
+            val sdf = SimpleDateFormat(HOUR_PATTERN)
+            if (!startReportDateTimesheet.equals("") ||!endReportDateTimesheet.equals("")||!startOvertimeTimesheet.equals("")||!endOvertimeTimesheet.equals("") ){
+                val startTime = sdf.parse(startReportDateTimesheet)
+                val endTime = sdf.parse(endReportDateTimesheet)
+                val sdf2 = SimpleDateFormat(HOUR_PATTERN)
+                val startOvTime = sdf2.parse(startOvertimeTimesheet)
+                val endOvTime = sdf2.parse(endOvertimeTimesheet)
+                val jam1 = startTime<endTime
+                val jam2 = startOvTime<endOvTime
+                if(startTime > endTime){
+                    isValid = false
+                    Toast.makeText(context, "Save Invalid, End time Report Date must be greater then Start time Report Date", Toast.LENGTH_SHORT).show()
+                }
+                if (startOvTime > endOvTime){
+                    isValid = false
+                    Toast.makeText(context, "Save Invalid, End time Overtime be greater then Start time Overtime Date", Toast.LENGTH_SHORT).show()
+                }
+                if (jam2 <= jam1){
+                    isValid = false
+                    Toast.makeText(context, "Save Invalid, Overtime time be greater then Report Date time", Toast.LENGTH_SHORT).show()
+                }
+            }
 
             if (positionStatusTimesheet == 0) {
                 requiredStatusTimesheet.isVisible = true
@@ -237,6 +283,7 @@ class EntryTimesheetActivity : AppCompatActivity() {
                 requiredNotesEntryTimesheet.isVisible = true
                 isValid = false
             }
+
         } else {
             if (positionClientTimesheet == 0) {
                 requiredClientTimesheet.isVisible = true
