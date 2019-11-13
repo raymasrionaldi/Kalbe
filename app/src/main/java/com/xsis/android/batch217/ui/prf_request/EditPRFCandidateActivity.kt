@@ -212,7 +212,7 @@ class EditPRFCandidateActivity : AppCompatActivity() {
         val monthNow2 = calendar2.get(Calendar.MONTH)
         val dayNow2 = calendar2.get(Calendar.DATE)
 
-        iconInputTanggalPRFCandidateEdit.setOnClickListener {
+        inputPlacementDatePRFCandidateEdit.setOnClickListener {
             val datePickerDialog = DatePickerDialog(context, R.style.CustomDatePicker, DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
                 val selectedDate = Calendar.getInstance()
                 selectedDate.set(year, month, dayOfMonth)
@@ -229,7 +229,7 @@ class EditPRFCandidateActivity : AppCompatActivity() {
             buttonResetPRFCandidateEdit.setBackgroundResource(R.drawable.button_reset_on)
             buttonResetPRFCandidateEdit.setTextColor(Color.WHITE)
         }
-        iconInputSignContractEdit.setOnClickListener {
+        inputSignContractDateEdit.setOnClickListener {
             val datePickerDialog = DatePickerDialog(context, R.style.CustomDatePicker, DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
                 val selectedDate = Calendar.getInstance()
                 selectedDate.set(year, month, dayOfMonth)

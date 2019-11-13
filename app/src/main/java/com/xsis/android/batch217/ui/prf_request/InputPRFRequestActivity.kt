@@ -290,7 +290,7 @@ class InputPRFRequestActivity : AppCompatActivity() {
         val monthNow = today.get(Calendar.MONTH)
         val dayNow = today.get(Calendar.DATE)
 
-        iconInputTanggalPRF.setOnClickListener {
+        inputTanggalPRF.setOnClickListener {
             val datePickerDialog = DatePickerDialog(context, R.style.CustomDatePicker, DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
                 val selectedDate = Calendar.getInstance()
                 selectedDate.set(year, month, dayOfMonth)
