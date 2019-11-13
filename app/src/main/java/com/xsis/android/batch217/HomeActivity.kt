@@ -37,6 +37,7 @@ import com.xsis.android.batch217.ui.project.ProjectFormActivity
 import com.xsis.android.batch217.ui.provider_tools.ProviderToolsFragment
 import com.xsis.android.batch217.ui.timesheet.timesheet_collection.TimesheetCollectionFragment
 import com.xsis.android.batch217.ui.timesheet.timesheet_entry.EntryTimesheetActivity
+import com.xsis.android.batch217.ui.timesheet.timesheet_history.FragmentDataHistoryTimesheet
 import com.xsis.android.batch217.ui.timesheet.timesheet_history.TimesheetHistoryFragment
 import com.xsis.android.batch217.ui.timesheet.timesheet_submission.TimesheetSubmissionFragment
 import com.xsis.android.batch217.ui.tipe_tes.TipeTesFragment
@@ -46,6 +47,7 @@ import com.xsis.android.batch217.ui.training_organizer.TrainingOrganizerFragment
 import com.xsis.android.batch217.utils.OnBackPressedListener
 import com.xsis.android.batch217.utils.REQUEST_CODE_LEAVE_REQUEST
 import com.xsis.android.batch217.utils.REQUEST_CODE_PROJECT
+import com.xsis.android.batch217.utils.REQUEST_CODE_TIMESHEET
 
 class HomeActivity : AppCompatActivity() {
     val context = this
@@ -338,16 +340,20 @@ class HomeActivity : AppCompatActivity() {
             childIndex: Int,
             l: Long
         ): Boolean {
-            val index= expandableListView.getFlatListPosition(ExpandableListView.getPackedPositionForChild(groupIndex,childIndex))
-            expandableListView.setItemChecked(index,true)
+            val index = expandableListView.getFlatListPosition(
+                ExpandableListView.getPackedPositionForChild(
+                    groupIndex,
+                    childIndex
+                )
+            )
+            expandableListView.setItemChecked(index, true)
 
             if (groupIndex == 17 && childIndex == 0) {
-                val intent = Intent(context,EntryTimesheetActivity::class.java)
-                startActivity(intent)
+                val intent = Intent(context, EntryTimesheetActivity::class.java)
+                startActivityForResult(intent, REQUEST_CODE_TIMESHEET)
                 closeNavDrawer()
 
-            }
-            else if (groupIndex == 17 && childIndex == 1) {
+            } else if (groupIndex == 17 && childIndex == 1) {
                 val fragment = TimesheetHistoryFragment()
                 val fragmentTransaction = supportFragmentManager.beginTransaction()
                 fragmentTransaction.replace(
@@ -357,8 +363,7 @@ class HomeActivity : AppCompatActivity() {
                 )
                 fragmentTransaction.commit()
                 closeNavDrawer()
-            }
-            else if (groupIndex == 17 && childIndex == 2) {
+            } else if (groupIndex == 17 && childIndex == 2) {
                 val fragment = TimesheetSubmissionFragment()
                 val fragmentTransaction = supportFragmentManager.beginTransaction()
                 fragmentTransaction.replace(
@@ -368,9 +373,7 @@ class HomeActivity : AppCompatActivity() {
                 )
                 fragmentTransaction.commit()
                 closeNavDrawer()
-            }
-
-            else if (groupIndex == 17 && childIndex == 3) {
+            } else if (groupIndex == 17 && childIndex == 3) {
                 val fragment = TimesheetSubmissionFragment()
                 val fragmentTransaction = supportFragmentManager.beginTransaction()
                 fragmentTransaction.replace(
@@ -380,8 +383,7 @@ class HomeActivity : AppCompatActivity() {
                 )
                 fragmentTransaction.commit()
                 closeNavDrawer()
-            }
-            else if (groupIndex == 17 && childIndex == 4) {
+            } else if (groupIndex == 17 && childIndex == 4) {
                 val fragment = TimesheetSubmissionFragment()
                 val fragmentTransaction = supportFragmentManager.beginTransaction()
                 fragmentTransaction.replace(
@@ -391,9 +393,7 @@ class HomeActivity : AppCompatActivity() {
                 )
                 fragmentTransaction.commit()
                 closeNavDrawer()
-            }
-
-            else if (groupIndex == 17 && childIndex == 5) {
+            } else if (groupIndex == 17 && childIndex == 5) {
                 val fragment = TimesheetCollectionFragment()
                 val fragmentTransaction = supportFragmentManager.beginTransaction()
                 fragmentTransaction.replace(
@@ -403,14 +403,11 @@ class HomeActivity : AppCompatActivity() {
                 )
                 fragmentTransaction.commit()
                 closeNavDrawer()
-            }
-
-            else if (groupIndex == 18 && childIndex == 0) {
+            } else if (groupIndex == 18 && childIndex == 0) {
                 val intent = Intent(context, InputPRFRequestActivity::class.java)
                 startActivity(intent)
                 closeNavDrawer()
-            }
-            else if (groupIndex == 18 && childIndex == 1) {
+            } else if (groupIndex == 18 && childIndex == 1) {
                 val fragment = RequestHistoryFragment()
                 val fragmentTransaction = supportFragmentManager.beginTransaction()
                 fragmentTransaction.replace(
@@ -420,8 +417,7 @@ class HomeActivity : AppCompatActivity() {
                 )
                 fragmentTransaction.commit()
                 closeNavDrawer()
-            }
-            else if (groupIndex == 19 && childIndex == 0) {
+            } else if (groupIndex == 19 && childIndex == 0) {
                 val fragment = EmployeeTrainingFragment()
                 val fragmentTransaction = supportFragmentManager.beginTransaction()
                 fragmentTransaction.replace(
@@ -431,8 +427,7 @@ class HomeActivity : AppCompatActivity() {
                 )
                 fragmentTransaction.commit()
                 closeNavDrawer()
-            }
-            else if (groupIndex == 20 && childIndex == 0) {
+            } else if (groupIndex == 20 && childIndex == 0) {
                 val fragment = LeaveRequestFragment()
                 val fragmentTransaction = supportFragmentManager.beginTransaction()
                 fragmentTransaction.replace(
@@ -442,15 +437,11 @@ class HomeActivity : AppCompatActivity() {
                 )
                 fragmentTransaction.commit()
                 closeNavDrawer()
-            }
-
-            else if (groupIndex == 21 && childIndex == 0) {
+            } else if (groupIndex == 21 && childIndex == 0) {
                 val intent = Intent(context, ProjectFormActivity::class.java)
                 startActivityForResult(intent, REQUEST_CODE_PROJECT)
                 closeNavDrawer()
-            }
-
-            else if (groupIndex == 21 && childIndex == 1) {
+            } else if (groupIndex == 21 && childIndex == 1) {
                 val fragment = ProjectFragment()
                 val fragmentTransaction = supportFragmentManager.beginTransaction()
                 fragmentTransaction.replace(
@@ -477,7 +468,7 @@ class HomeActivity : AppCompatActivity() {
         ): Boolean {
             println("heading clicked > $index")
 
-            expandableListView.setItemChecked(index,true)
+            expandableListView.setItemChecked(index, true)
             //action click group menu disini
             when (index) {
                 0 -> {
@@ -703,8 +694,8 @@ class HomeActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if(requestCode == REQUEST_CODE_PROJECT){
-            if(resultCode == Activity.RESULT_OK){
+        if (requestCode == REQUEST_CODE_PROJECT) {
+            if (resultCode == Activity.RESULT_OK) {
                 val fragment = ProjectFragment()
                 val fragmentTransaction = supportFragmentManager.beginTransaction()
                 fragmentTransaction.replace(
@@ -714,14 +705,25 @@ class HomeActivity : AppCompatActivity() {
                 )
                 fragmentTransaction.commit()
             }
-        }else if(requestCode == REQUEST_CODE_LEAVE_REQUEST){
-            if(resultCode == Activity.RESULT_OK){
+        } else if (requestCode == REQUEST_CODE_LEAVE_REQUEST) {
+            if (resultCode == Activity.RESULT_OK) {
                 val fragment = LeaveRequestFragment()
                 val fragmentTransaction = supportFragmentManager.beginTransaction()
                 fragmentTransaction.replace(
                     R.id.nav_host_fragment,
                     fragment,
                     getString(R.string.menu_ce_leave)
+                )
+                fragmentTransaction.commit()
+            }
+        } else if (requestCode == REQUEST_CODE_TIMESHEET) {
+            if (resultCode == Activity.RESULT_OK) {
+                val fragment = TimesheetHistoryFragment()
+                val fragmentTransaction = supportFragmentManager.beginTransaction()
+                fragmentTransaction.replace(
+                    R.id.nav_host_fragment,
+                    fragment,
+                    getString(R.string.timesheet_history)
                 )
                 fragmentTransaction.commit()
             }

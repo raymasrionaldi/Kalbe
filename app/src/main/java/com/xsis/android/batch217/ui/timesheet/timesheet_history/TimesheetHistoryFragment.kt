@@ -26,6 +26,7 @@ class TimesheetHistoryFragment: Fragment() {
 //        trainingViewModel.text.observe(this, Observer {
 //            textView.text = it
 //        })
+        activity!!.title = getString(R.string.timesheet)
         val tabTimesheetEntry = TimesheetHistoryAdapter(
             context!!,
             childFragmentManager

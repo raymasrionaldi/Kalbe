@@ -1,5 +1,6 @@
 package com.xsis.android.batch217.ui.timesheet.timesheet_entry
 
+import android.app.Activity
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.ContentValues
@@ -8,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.MenuItem
 import android.view.View
 import android.widget.*
 import androidx.core.view.isVisible
@@ -43,8 +45,8 @@ class EntryTimesheetActivity : AppCompatActivity() {
             //menampilkan icon di toolbar
             supportActionBar!!.setHomeButtonEnabled(true)
             supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-            //ganti icon. Kalau mau default yang "<-", hapus line di bawah
-            supportActionBar!!.setHomeAsUpIndicator(R.drawable.ic_close_white)
+//            //ganti icon. Kalau mau default yang "<-", hapus line di bawah
+//            supportActionBar!!.setHomeAsUpIndicator(R.drawable.ic_close_white)
         }
 //        val databaseHelper = DatabaseHelper(context)
 //        databaseQueryHelper = TimesheetQueryHelper(databaseHelper)
@@ -269,6 +271,7 @@ class EntryTimesheetActivity : AppCompatActivity() {
             val db = DatabaseHelper(context!!).writableDatabase
             db.insert(TABEL_TIMESHEET, null, content)
             Toast.makeText(context, SIMPAN_DATA_BERHASIL, Toast.LENGTH_SHORT).show()
+            setResult(Activity.RESULT_OK, intent)
             finish()
 
         }
@@ -496,5 +499,14 @@ class EntryTimesheetActivity : AppCompatActivity() {
 //        inputProjectTechProject.setText(data.techProject)
 //        inputMainTaskProject.setText(data.taskProject)
 //    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        //untuk kembali ke home activity
+        if (item.itemId == android.R.id.home) {
+            super.onBackPressed()
+            return true
+        }
+        return super.onOptionsItemSelected(item)
+    }
 
 }
