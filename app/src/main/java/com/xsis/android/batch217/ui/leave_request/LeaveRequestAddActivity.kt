@@ -5,6 +5,7 @@ import android.app.DatePickerDialog
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.MenuItem
 import android.view.View
 import android.widget.AdapterView
 import android.widget.Toast
@@ -29,6 +30,15 @@ class LeaveRequestAddActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_leave_request_add)
+        context.title=getString(R.string.menu_leave_request)
+
+        supportActionBar?.let {
+            //menampilkan icon di toolbar
+            supportActionBar!!.setHomeButtonEnabled(true)
+            supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+            //ganti icon. Kalau mau default yang "<-", hapus line di bawah
+            supportActionBar!!.setHomeAsUpIndicator(R.drawable.ic_close_white)
+        }
 
         val databaseHelper = DatabaseHelper(context)
         databaseQueryHelper = LeaveRequestQueryHelper(databaseHelper)
@@ -80,6 +90,15 @@ class LeaveRequestAddActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        //untuk kembali ke home activity
+        if (item.itemId == android.R.id.home) {
+            super.onBackPressed()
+            return true
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     private fun initDatePickerEndLeave() {

@@ -15,7 +15,7 @@ class LeaveRequestDetailFragmentAdapter(val context: Context, val fm: FragmentMa
         if (position == 0) {
             return LeaveRequestFragmentDetail(context, fm,id_detail)
         } else if (position == 1) {
-            return LeaveRequestFragmentApproval(context, fm)
+            return LeaveRequestFragmentApproval(context, fm,id_detail)
         } else
             return Fragment()
     }
