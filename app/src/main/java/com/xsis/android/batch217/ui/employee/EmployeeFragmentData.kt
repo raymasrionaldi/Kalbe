@@ -65,7 +65,7 @@ class EmployeeFragmentData (context: Context, val fm: FragmentManager) : Fragmen
         viewPager.setCurrentItem(1, true)
     }
 
-    fun getSemuaCompany(
+    fun getSemuaEmpType(
         recyclerView: RecyclerView,
         databaseQueryHelper: EmployeeTypeQueryHelper
     ) {
@@ -106,7 +106,7 @@ class EmployeeFragmentData (context: Context, val fm: FragmentManager) : Fragmen
     }
 
     fun search(keyword: String, databaseQueryHelper: EmployeeTypeQueryHelper) {
-        val listCompany = databaseQueryHelper.cariEmpTypeModels(keyword)
-        tampilkanListEmpType(listCompany, recyclerView!!)
+        val listEmpType = databaseQueryHelper.cariEmpTypeModels(keyword)
+        tampilkanListEmpType(listEmpType, recyclerView!!)
     }
 }
