@@ -56,6 +56,8 @@
     <string name="menu_project">Project</string>
     <string name="menu_project_entry">Project Entry</string>
     <string name="menu_project_history">Project History</string>
+    <string name="menu_project_create">Create</string>
+    <string name="menu_project_list">List</string>
     <string name="project_detail">Project Detail</string>
 
     <string name="ubah_agama">Ubah Agama</string>

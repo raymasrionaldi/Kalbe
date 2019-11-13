@@ -34,6 +34,7 @@ import com.xsis.android.batch217.ui.prf_request.InputPRFRequestActivity
 import com.xsis.android.batch217.ui.project.ProjectFragment
 import com.xsis.android.batch217.ui.prf_request.RequestHistoryFragment
 import com.xsis.android.batch217.ui.project.ProjectFormActivity
+import com.xsis.android.batch217.ui.project.ProjectFragmentCreate
 import com.xsis.android.batch217.ui.provider_tools.ProviderToolsFragment
 import com.xsis.android.batch217.ui.timesheet.timesheet_approval.TimesheetApprovalFragment
 import com.xsis.android.batch217.ui.timesheet.timesheet_collection.TimesheetCollectionFragment
@@ -322,6 +323,8 @@ class HomeActivity : AppCompatActivity() {
         val heading21 = ArrayList<String>()
         heading21.add(getString(R.string.menu_project_entry))
         heading21.add(getString(R.string.menu_project_history))
+        heading21.add(getString(R.string.menu_project_create))
+        heading21.add(getString(R.string.menu_project_list))
 // Header, Child data
         listDataChild[listDataHeader[21]] = heading21
 
@@ -451,6 +454,28 @@ class HomeActivity : AppCompatActivity() {
                     getString(R.string.menu_project_history)
                 )
                 fragmentTransaction.commit()
+                closeNavDrawer()
+            } else if (groupIndex == 21 && childIndex == 2) {
+                val fragment = ProjectFragmentCreate()
+                val fragmentTransaction = supportFragmentManager.beginTransaction()
+                fragmentTransaction.replace(
+                    R.id.nav_host_fragment,
+                    fragment,
+                    getString(R.string.menu_project_create)
+                )
+                fragmentTransaction.commit()
+                fragment.pindahTab(0)
+                closeNavDrawer()
+            } else if (groupIndex == 21 && childIndex == 3) {
+                val fragment = ProjectFragmentCreate()
+                val fragmentTransaction = supportFragmentManager.beginTransaction()
+                fragmentTransaction.replace(
+                    R.id.nav_host_fragment,
+                    fragment,
+                    getString(R.string.menu_project_list)
+                )
+                fragmentTransaction.commit()
+                fragment.pindahTab(1)
                 closeNavDrawer()
             }
 
