@@ -71,7 +71,7 @@ class SRFFragmentForm(context: Context, val fm: FragmentManager) : Fragment() {
 
         val buttonSave = customView.findViewById(R.id.buttonSimpanSRF) as Button
         buttonReset = customView.findViewById(R.id.buttonResetSRF) as Button
-        spinnerJenis = customView.findViewById(R.id.spinnerJenisSRF)
+        spinnerJenis = customView.findViewById(R.id.spinnerJenisSRF) as SmartMaterialSpinner<String>
         jumKebutuhan = customView.findViewById(R.id.inputJumlahKebutuhan) as TextInputEditText
         spinnerClient = customView.findViewById(R.id.spinnerClient) as SmartMaterialSpinner<String>
         spinnerGrade = customView.findViewById(R.id.spinnerGrade) as SmartMaterialSpinner<String>
