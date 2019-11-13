@@ -36,6 +36,7 @@ import com.xsis.android.batch217.ui.prf_request.RequestHistoryFragment
 import com.xsis.android.batch217.ui.project.ProjectFormActivity
 import com.xsis.android.batch217.ui.project.ProjectFragmentCreate
 import com.xsis.android.batch217.ui.provider_tools.ProviderToolsFragment
+import com.xsis.android.batch217.ui.srf.SRFFragment
 import com.xsis.android.batch217.ui.timesheet.timesheet_approval.TimesheetApprovalFragment
 import com.xsis.android.batch217.ui.timesheet.timesheet_collection.TimesheetCollectionFragment
 import com.xsis.android.batch217.ui.timesheet.timesheet_entry.EntryTimesheetActivity
@@ -328,6 +329,18 @@ class HomeActivity : AppCompatActivity() {
 // Header, Child data
         listDataChild[listDataHeader[21]] = heading21
 
+        //SRF
+        val item22 = ExpandedMenuModel()
+        item22.name = getString(R.string.menu_srf)
+        item22.icon = R.drawable.ic_folder_black
+        // Adding data header
+        listDataHeader.add(item22)
+        // Adding child data
+        val heading22 = ArrayList<String>()
+        heading22.add(getString(R.string.request))
+        heading22.add(getString(R.string.plotting))
+        // Header, Child data
+        listDataChild[listDataHeader[22]] = heading22
     }
 
     fun closeNavDrawer() {
@@ -477,7 +490,19 @@ class HomeActivity : AppCompatActivity() {
                 fragmentTransaction.commit()
                 fragment.pindahTab(0)
                 closeNavDrawer()
-            }
+            } else if (groupIndex == 22 && childIndex == 0){
+            val fragment = SRFFragment()
+            val fragmentTransaction = supportFragmentManager.beginTransaction()
+            fragmentTransaction.replace(
+                R.id.nav_host_fragment,
+                fragment,
+                getString(R.string.request)
+            )
+            fragmentTransaction.commit()
+            closeNavDrawer()
+        } else if (groupIndex == 22 && childIndex == 1){
+            //dipakai untuk plotting SRF
+        }
 
 
             return true
