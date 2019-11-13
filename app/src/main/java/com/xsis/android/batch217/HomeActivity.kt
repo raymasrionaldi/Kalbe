@@ -35,6 +35,7 @@ import com.xsis.android.batch217.ui.project.ProjectFragment
 import com.xsis.android.batch217.ui.prf_request.RequestHistoryFragment
 import com.xsis.android.batch217.ui.project.ProjectFormActivity
 import com.xsis.android.batch217.ui.provider_tools.ProviderToolsFragment
+import com.xsis.android.batch217.ui.timesheet.timesheet_approval.TimesheetApprovalFragment
 import com.xsis.android.batch217.ui.timesheet.timesheet_collection.TimesheetCollectionFragment
 import com.xsis.android.batch217.ui.timesheet.timesheet_entry.EntryTimesheetActivity
 import com.xsis.android.batch217.ui.timesheet.timesheet_history.FragmentDataHistoryTimesheet
@@ -374,7 +375,7 @@ class HomeActivity : AppCompatActivity() {
                 fragmentTransaction.commit()
                 closeNavDrawer()
             } else if (groupIndex == 17 && childIndex == 3) {
-                val fragment = TimesheetSubmissionFragment()
+                val fragment = TimesheetApprovalFragment()
                 val fragmentTransaction = supportFragmentManager.beginTransaction()
                 fragmentTransaction.replace(
                     R.id.nav_host_fragment,
