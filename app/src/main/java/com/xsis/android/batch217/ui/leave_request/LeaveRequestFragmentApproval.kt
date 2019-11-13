@@ -5,10 +5,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ExpandableListView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.xsis.android.batch217.R
 import com.xsis.android.batch217.adapters.expandablelist.LeaveRequestExpandableListAdapter
+import com.xsis.android.batch217.databases.DatabaseHelper
 import com.xsis.android.batch217.databases.LeaveRequestQueryHelper
 import com.xsis.android.batch217.models.LeaveRequest
 import kotlinx.android.synthetic.main.fragment_approval_leave_request.*
@@ -21,6 +23,8 @@ class LeaveRequestFragmentApproval(context: Context, val fm: FragmentManager, va
     internal lateinit var listDataGroup: MutableList<String>
     internal lateinit var listDataChild: HashMap<String, List<List<String>>>
     internal lateinit var databaseQueryHelper: LeaveRequestQueryHelper
+    var listLeaveRequestApproval: ExpandableListView? = null
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,12 +36,16 @@ class LeaveRequestFragmentApproval(context: Context, val fm: FragmentManager, va
             container,
             false
         )
-        return customView
 
-        println("BULAN# onCreateView LeaveRequestFragmentApproval")
+        val databaseHelper=DatabaseHelper(context!!)
+        databaseQueryHelper = LeaveRequestQueryHelper(databaseHelper)
+
+        listLeaveRequestApproval = customView.findViewById(R.id.listLeaveRequestApproval)
 
         getDetailApproval(id_detail)
 
+
+        return customView
     }
 
     fun getDetailApproval(idDetail: Int) {
@@ -48,12 +56,12 @@ class LeaveRequestFragmentApproval(context: Context, val fm: FragmentManager, va
 
     fun viewDetail(model: LeaveRequest) {
         println("BULAN# viewDetail")
-//        (parentFragment as LeaveRequestFragment).changeTitleByFragmentPos(1)
+        //        (parentFragment as LeaveRequestFragment).changeTitleByFragmentPos(1)
         data = model
 
         prepareData()
         menuAdapter = LeaveRequestExpandableListAdapter(context!!, listDataGroup, listDataChild)
-        listLeaveRequestApproval.setAdapter(menuAdapter)
+        listLeaveRequestApproval!!.setAdapter(menuAdapter)
     }
 
     private fun prepareData() {
@@ -77,12 +85,12 @@ class LeaveRequestFragmentApproval(context: Context, val fm: FragmentManager, va
         child1.add(info11)
         listDataChild[listDataGroup[1]] = child1
 
-        val group2 = "Approval 2"
-        listDataGroup.add(group1)
+        val group2 = "Approval 3"
+        listDataGroup.add(group2)
 
         val child2 = ArrayList<List<String>>()
         val info21 = arrayListOf("James Bond", data.approval3!!)
         child2.add(info21)
-        listDataChild[listDataGroup[1]] = child2
+        listDataChild[listDataGroup[2]] = child2
     }
 }

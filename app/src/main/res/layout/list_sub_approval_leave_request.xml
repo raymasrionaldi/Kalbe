@@ -12,6 +12,7 @@
         android:id="@+id/subApprovalName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:textAlignment="textStart"
         android:textColor="@color/warnaDetailText"
         android:layout_weight="1"/>
 
@@ -19,5 +20,6 @@
         android:id="@+id/subApprovalValue"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:textAlignment="textEnd"
         android:layout_weight="1"/>
 </LinearLayout>

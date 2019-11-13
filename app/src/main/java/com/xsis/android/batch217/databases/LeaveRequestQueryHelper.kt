@@ -159,7 +159,7 @@ class LeaveRequestQueryHelper(val databaseHelper: DatabaseHelper) {
         var leaveRequest= LeaveRequest()
         val db = databaseHelper.readableDatabase
         val queryCari = "SELECT " +
-                "a.approval1, a.approval2, a.approval3" +
+                "a.approval1, a.approval2, a.approval3 " +
                 "FROM $TABEL_LEAVE_REQUEST a " +
                 "WHERE a.$ID_LEAVE ='$id'"
 

@@ -16,6 +16,11 @@ import com.xsis.android.batch217.databases.LeaveRequestQueryHelper
 import com.xsis.android.batch217.models.LeaveRequest
 import com.xsis.android.batch217.utils.*
 import kotlinx.android.synthetic.main.activity_leave_request_detail.*
+import androidx.viewpager.widget.ViewPager.OnPageChangeListener
+import androidx.core.app.ComponentActivity.ExtraData
+import androidx.core.content.ContextCompat.getSystemService
+import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+
 
 class LeaveRequestDetailActivity : AppCompatActivity() {
     val data = LeaveRequest()
@@ -47,12 +52,33 @@ class LeaveRequestDetailActivity : AppCompatActivity() {
             //println("BULAN_ACTIVITY# ${idDetail.toString()}")
         }
 
-        val fragmentAdapter =
-            LeaveRequestDetailFragmentAdapter(context, supportFragmentManager, idDetail)
+        val fragmentAdapter = LeaveRequestDetailFragmentAdapter(context, supportFragmentManager, idDetail)
 
         viewPager = findViewById(R.id.viewPagerDetailLeaveRequest) as CustomViewPager
         viewPager!!.adapter = fragmentAdapter
         viewPager!!.setSwipePagingEnabled(true)
+
+        /*viewPager!!.addOnPageChangeListener(object : OnPageChangeListener {
+            override fun onPageScrollStateChanged(state: Int) {}
+            override fun onPageScrolled(
+                position: Int,
+                positionOffset: Float,
+                positionOffsetPixels: Int
+            ) {
+                if(position==1){
+                    println("BULAN# onPageScrolled")
+
+                }
+            }
+
+            override fun onPageSelected(position: Int) {
+                // Check if this is the page you want.
+                if(position==1){
+                    println("BULAN# onPageSelected")
+
+                }
+            }
+        })*/
 
         val slidingTabs = findViewById(R.id.slidingTabsDetailLeaveRequest) as TabLayout
         slidingTabs.setupWithViewPager(viewPager)
@@ -62,17 +88,13 @@ class LeaveRequestDetailActivity : AppCompatActivity() {
             val intent = Intent(context, LeaveRequestEditActivity::class.java)
             intent.putExtra(ID_LEAVE, idDetail)
             startActivityForResult(intent, REQUEST_CODE_LEAVE_REQUEST)
-//            finish()
         }
 
         buttonDeleteLeaveRequest.setOnClickListener {
             showDeleteDialog()
         }
 
-//        LeaveRequestFragmentApproval().getDetailApproval(idDetail)
     }
-
-
 
     fun showDeleteDialog() {
         AlertDialog.Builder(context!!, R.style.AlertDialogTheme)
