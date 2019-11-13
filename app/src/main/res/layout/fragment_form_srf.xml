@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="10dp"
+    android:id="@+id/fragmenFormSRF"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="10dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/titleFormSRF"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textSize="@dimen/title_form_text_size"
+            android:textStyle="bold" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/inputNumberSRF"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:focusable="false"
+                    android:hint="Nomor SRF*"
+                    android:longClickable="false"
+                    android:textSize="15dp"/>
+
+                <com.chivorn.smartmaterialspinner.SmartMaterialSpinner
+                    android:id="@+id/spinnerJenisSRF"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/spinnerStyle"
+                    app:smsp_hint="Jenis SRF*"
+                    app:smsp_multilineError="false"/>
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/inputJumlahKebutuhan"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:focusable="false"
+                    android:hint="Jumlah Kebutuhan*"
+                    android:longClickable="false"
+                    android:textSize="15dp"/>
+
+                <com.chivorn.smartmaterialspinner.SmartMaterialSpinner
+                    android:id="@+id/spinnerClient"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/spinnerStyle"
+                    app:smsp_hint="Client*"
+                    app:smsp_multilineError="false" />
+
+                <com.chivorn.smartmaterialspinner.SmartMaterialSpinner
+                    android:id="@+id/spinnerGrade"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/spinnerStyle"
+                    app:smsp_hint="Grade"
+                    app:smsp_multilineError="false" />
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/inputNamaUser"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:focusable="false"
+                    android:hint="Nama User*"
+                    android:longClickable="false"
+                    android:textSize="15dp"/>
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/inputEmailUser"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:focusable="false"
+                    android:hint="Email User*"
+                    android:longClickable="false"
+                    android:textSize="15dp"
+                    android:inputType="textEmailAddress"/>
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/inputSalesPrice"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:focusable="false"
+                    android:hint="Sales Price*"
+                    android:longClickable="false"
+                    android:textSize="15dp"/>
+
+                <EditText
+                    android:id="@+id/inputLokasi"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Lokasi"
+                    android:inputType="text"
+                    android:textSize="15dp"/>
+
+                <EditText
+                    android:id="@+id/inputCatatan"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Catatan"
+                    android:inputType="text"
+                    android:textSize="15dp"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/buttonResetSRF"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@drawable/button_reset_off"
+                        android:clickable="false"
+                        android:text="@string/reset"
+                        android:textColor="@color/warnaTeksResetOff" />
+
+                    <Button
+                        android:id="@+id/buttonSimpanSRF"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@drawable/button_save"
+                        android:text="@string/simpan"
+                        android:textColor="@color/colorWhite" />
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
+
+<!--    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/buttonDeleteSRF"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/fab_margin"
+        android:visibility="gone"
+        app:backgroundTint="@color/warnaMerah"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/ic_cancel_white" />-->
+    </LinearLayout>
+</LinearLayout>

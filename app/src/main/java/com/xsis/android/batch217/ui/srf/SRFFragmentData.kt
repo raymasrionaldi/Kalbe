@@ -1,4 +1,4 @@
-package com.xsis.android.batch217.ui.employee
+package com.xsis.android.batch217.ui.srf
 
 import android.content.Context
 import android.os.Bundle
@@ -12,15 +12,15 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.xsis.android.batch217.R
-import com.xsis.android.batch217.adapters.ListEmployeeTypeAdapter
-import com.xsis.android.batch217.adapters.fragments.EmployeeTypeFragmentAdapter
+import com.xsis.android.batch217.adapters.ListSRFAdapter
+import com.xsis.android.batch217.adapters.fragments.SRFFragmentAdapter
 import com.xsis.android.batch217.databases.DatabaseHelper
-import com.xsis.android.batch217.databases.EmployeeTypeQueryHelper
-import com.xsis.android.batch217.models.EmployeeType
+import com.xsis.android.batch217.databases.SRFQueryHelper
+import com.xsis.android.batch217.models.SRF
 
-class EmployeeFragmentData (context: Context, val fm: FragmentManager) : Fragment() {
+class SRFFragmentData (context: Context, val fm: FragmentManager) : Fragment() {
     var recyclerView: RecyclerView? = null
-    var databaseQueryHelper: EmployeeTypeQueryHelper? = null
+    var databaseQueryHelper: SRFQueryHelper? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -28,7 +28,7 @@ class EmployeeFragmentData (context: Context, val fm: FragmentManager) : Fragmen
         savedInstanceState: Bundle?
     ): View? {
         val customView = inflater.inflate(
-            R.layout.fragment_data_employee_type,
+            R.layout.fragment_data_srf,
             container,
             false
         )
@@ -36,20 +36,19 @@ class EmployeeFragmentData (context: Context, val fm: FragmentManager) : Fragmen
 
         val layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
 
-        recyclerView = customView.findViewById(R.id.listEmployeeTypeRecycler) as RecyclerView
+        recyclerView = customView.findViewById(R.id.listSRFRecycler) as RecyclerView
         recyclerView!!.layoutManager = layoutManager
 
         val dividerItemDecoration = DividerItemDecoration(context, layoutManager.orientation)
         recyclerView!!.addItemDecoration(dividerItemDecoration)
 
-        val buttonAdd =
-            customView.findViewById(R.id.buttonAddEmployeeType) as FloatingActionButton
+        val buttonAdd = customView.findViewById(R.id.buttonAddSRF) as FloatingActionButton
         buttonAdd.setOnClickListener {
             addData()
         }
 
         val databaseHelper = DatabaseHelper(context!!)
-        databaseQueryHelper = EmployeeTypeQueryHelper(databaseHelper)
+        databaseQueryHelper = SRFQueryHelper(databaseHelper)
 
 //        getSemuaCompany(recyclerView!!, databaseQueryHelper!!)
 
@@ -58,28 +57,28 @@ class EmployeeFragmentData (context: Context, val fm: FragmentManager) : Fragmen
 
     fun addData() {
         val viewPager = view!!.parent as ViewPager
-        val adapter = viewPager.adapter!! as EmployeeTypeFragmentAdapter
-        val fragment = fm.fragments[1] as EmployeeFragmentForm
+        val adapter = viewPager.adapter!! as SRFFragmentAdapter
+        val fragment = fm.fragments[1] as SRFFragmentForm
         fragment.modeAdd()
         adapter.notifyDataSetChanged()
         viewPager.setCurrentItem(1, true)
     }
 
-    fun getSemuaEmpType(
+    fun getSemuaSRF(
         recyclerView: RecyclerView,
-        databaseQueryHelper: EmployeeTypeQueryHelper
+        databaseQueryHelper: SRFQueryHelper
     ) {
-        val listCompany = databaseQueryHelper.readSemuaEmpTypeModels()
-        tampilkanListEmpType(listCompany, recyclerView)
+        val listSRF = databaseQueryHelper.readSemuaSRFModels()
+        tampilkanListSRF(listSRF, recyclerView)
     }
 
-    fun tampilkanListEmpType(
-        listCompany: List<EmployeeType>,
+    fun tampilkanListSRF(
+        listCompany: List<SRF>,
         recyclerView: RecyclerView
     ) {
-        val adapterEmpType = ListEmployeeTypeAdapter(context!!, listCompany, fm)
-        recyclerView.adapter = adapterEmpType
-        adapterEmpType.notifyDataSetChanged()
+        val adapterSRF = ListSRFAdapter(context!!, listCompany, fm)
+        recyclerView.adapter = adapterSRF
+        adapterSRF.notifyDataSetChanged()
     }
 
     fun updateContent() {
@@ -105,8 +104,8 @@ class EmployeeFragmentData (context: Context, val fm: FragmentManager) : Fragmen
         })
     }
 
-    fun search(keyword: String, databaseQueryHelper: EmployeeTypeQueryHelper) {
-        val listEmpType = databaseQueryHelper.cariEmpTypeModels(keyword)
-        tampilkanListEmpType(listEmpType, recyclerView!!)
+    fun search(keyword: String, databaseQueryHelper: SRFQueryHelper) {
+        val listSRF = databaseQueryHelper.cariSRFModels(keyword)
+        tampilkanListSRF(listSRF, recyclerView!!)
     }
 }

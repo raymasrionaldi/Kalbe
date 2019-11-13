@@ -33,7 +33,6 @@ class EditPRFCandidateActivity : AppCompatActivity() {
     var srfNumber: Spinner? = null
     var customAllowence: EditText? = null
     var candidateStatus: Spinner? = null
-    var signContractDate: EditText? = null
     var notes: EditText? = null
     var ID_prf_candidate = 0
     var listPosition: List<String>? = null
@@ -58,13 +57,11 @@ class EditPRFCandidateActivity : AppCompatActivity() {
         srfNumber = spinnerSRFNumberPRFCandidateEdit
         customAllowence = inputCustomeAllowencePRFCandidateEdit
         candidateStatus = spinnerInputCandidateStatusPRFCandidateEdit
-        signContractDate = inputSignContractDatePRFCandidateEdit
         notes = inputNotesPRFCandidateEdit
 
         name!!.addTextChangedListener(textWatcher)
         batch!!.addTextChangedListener(textWatcher)
         customAllowence!!.addTextChangedListener(textWatcher)
-        signContractDate!!.addTextChangedListener(textWatcher)
         notes!!.addTextChangedListener(textWatcher)
 
         ubahButtonResetSpinner()
@@ -128,7 +125,7 @@ class EditPRFCandidateActivity : AppCompatActivity() {
         val srfNumber = spinnerSRFNumberPRFCandidateEdit.selectedItemPosition
         val customAllowence = inputCustomeAllowencePRFCandidateEdit.text.toString()
         val candidateStatus = spinnerInputCandidateStatusPRFCandidateEdit.selectedItemPosition
-        val signContractDate = inputSignContractDatePRFCandidateEdit.text.toString().trim()
+        val signContractDate = inputSignContractDateEdit.text.toString().trim()
         val notes = inputNotesPRFCandidateEdit.text.toString().trim()
 
         if (name.isEmpty()) {
@@ -195,20 +192,27 @@ class EditPRFCandidateActivity : AppCompatActivity() {
         spinnerSRFNumberPRFCandidateEdit.setSelection(0)
         inputCustomeAllowencePRFCandidateEdit.setText("")
         spinnerInputCandidateStatusPRFCandidateEdit.setSelection(0)
-        inputSignContractDatePRFCandidateEdit.setText("")
+        inputSignContractDateEdit.setText("")
         inputNotesPRFCandidateEdit.setText("")
         requiredOff()
     }
 
     fun setReportDatePRFCandidatePicker(){
         val autoDate = inputPlacementDatePRFCandidateEdit.text.toString()
+        val autoDate2 = inputSignContractDateEdit.text.toString()
         val calendar = Calendar.getInstance()
+        val calendar2 = Calendar.getInstance()
         val formatter = SimpleDateFormat(DATE_PATTERN)
+        calendar.time = formatter.parse(autoDate)
+        calendar2.time = formatter.parse(autoDate2)
         val yearNow = calendar.get(Calendar.YEAR)
         val monthNow = calendar.get(Calendar.MONTH)
         val dayNow = calendar.get(Calendar.DATE)
+        val yearNow2 = calendar2.get(Calendar.YEAR)
+        val monthNow2 = calendar2.get(Calendar.MONTH)
+        val dayNow2 = calendar2.get(Calendar.DATE)
 
-        iconInputTanggalPRFCandidateEdit.setOnClickListener {
+        inputPlacementDatePRFCandidateEdit.setOnClickListener {
             val datePickerDialog = DatePickerDialog(context, R.style.CustomDatePicker, DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
                 val selectedDate = Calendar.getInstance()
                 selectedDate.set(year, month, dayOfMonth)
@@ -220,6 +224,23 @@ class EditPRFCandidateActivity : AppCompatActivity() {
                 //set tampilan
                 inputPlacementDatePRFCandidateEdit.setText(tanggal)
             }, yearNow,monthNow,dayNow )
+            datePickerDialog.show()
+            buttonResetPRFCandidateEdit.isEnabled = true
+            buttonResetPRFCandidateEdit.setBackgroundResource(R.drawable.button_reset_on)
+            buttonResetPRFCandidateEdit.setTextColor(Color.WHITE)
+        }
+        inputSignContractDateEdit.setOnClickListener {
+            val datePickerDialog = DatePickerDialog(context, R.style.CustomDatePicker, DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
+                val selectedDate = Calendar.getInstance()
+                selectedDate.set(year, month, dayOfMonth)
+
+                //konversi ke string
+                val formatDate = SimpleDateFormat("MMMM dd, yyyy")
+                val tanggal = formatDate.format(selectedDate.time)
+
+                //set tampilan
+                inputSignContractDateEdit.setText(tanggal)
+            }, yearNow2,monthNow2,dayNow2 )
             datePickerDialog.show()
             buttonResetPRFCandidateEdit.isEnabled = true
             buttonResetPRFCandidateEdit.setBackgroundResource(R.drawable.button_reset_on)
@@ -265,11 +286,9 @@ class EditPRFCandidateActivity : AppCompatActivity() {
             val namaTeks = name!!.text.toString().trim()
             val batchTeks = batch!!.text.toString().trim()
             val customAllowenceTeks = customAllowence!!.text.toString().trim()
-            val signContractDate = signContractDate!!.text.toString().trim()
             val notesTeks = notes!!.text.toString().trim()
 
-            val kondisi = !namaTeks.isEmpty() || !batchTeks.isEmpty() || !customAllowenceTeks.isEmpty()
-                    || !signContractDate.isEmpty() || !notesTeks.isEmpty()
+            val kondisi = !namaTeks.isEmpty() || !batchTeks.isEmpty() || !customAllowenceTeks.isEmpty() || !notesTeks.isEmpty()
             buttonResetPRFCandidateEdit.isEnabled = true
             ubahResetButton(context, kondisi, buttonReset!!)
         }
@@ -320,7 +339,7 @@ class EditPRFCandidateActivity : AppCompatActivity() {
             spinnerInputCandidateStatusPRFCandidateEdit.setSelection(indexCandidateStatus)
 
             data.sign_contract_date = cursor.getString(9)
-            inputSignContractDatePRFCandidateEdit.setText(data.sign_contract_date)
+            inputSignContractDateEdit.setText(data.sign_contract_date)
 
             data.notes = cursor.getString(10)
             inputNotesPRFCandidateEdit.setText(data.notes)

@@ -25,6 +25,7 @@ import com.xsis.android.batch217.ui.timesheet.timesheet_entry.EntryTimesheetActi
 import com.xsis.android.batch217.utils.HAPUS_DATA_BERHASIL
 import com.xsis.android.batch217.utils.HAPUS_DATA_GAGAL
 import com.xsis.android.batch217.utils.ID_TIMESHEET
+import com.xsis.android.batch217.utils.REQUEST_CODE_TIMESHEET
 import kotlinx.android.synthetic.main.fragment_detail_history_timesheet.*
 
 class FragmentDetailHistoryTimesheet (context: Context, val fm: FragmentManager) : Fragment() {
@@ -74,8 +75,8 @@ class FragmentDetailHistoryTimesheet (context: Context, val fm: FragmentManager)
         val buttonEditTimesheet = customView.findViewById(R.id.buttonEditTimesheet) as FloatingActionButton
         buttonEditTimesheet.setOnClickListener {
             val intentEdit = Intent(context, EntryTimesheetActivity::class.java)
-            intentEdit.putExtra(ID_TIMESHEET, idData)
-            context!!.startActivity(intentEdit)
+            intentEdit.putExtra(ID_TIMESHEET, data.id_timesheet)
+            activity!!.startActivityForResult(intentEdit, REQUEST_CODE_TIMESHEET)
         }
 
         return customView

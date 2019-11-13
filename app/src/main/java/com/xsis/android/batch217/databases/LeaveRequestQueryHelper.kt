@@ -94,6 +94,21 @@ class LeaveRequestQueryHelper(val databaseHelper: DatabaseHelper) {
         return listCutiKhusus
     }
 
+    private fun konversiCursorKeListApprovalModel(cursor: Cursor):ArrayList<LeaveRequest>{
+        var listCutiKhusus = ArrayList<LeaveRequest>()
+
+        for (c in 0 until cursor.count) {
+            cursor.moveToPosition(c)
+
+            var cutiKhusus = LeaveRequest()
+            cutiKhusus.approval1= cursor.getString(0)
+            cutiKhusus.approval2 =cursor.getString(1)
+            cutiKhusus.approval3 =cursor.getString(2)
+            listCutiKhusus.add(cutiKhusus)
+        }
+        return listCutiKhusus
+    }
+
     fun cariLeaveRequestModels(keyword: String): List<LeaveRequest> {
         var listLeaveRequest = ArrayList<LeaveRequest>()
         if (keyword.isNotBlank()) {
@@ -138,6 +153,24 @@ class LeaveRequestQueryHelper(val databaseHelper: DatabaseHelper) {
             return LeaveRequest()
         }
         return listLeaveRequest
+    }
+
+    fun getApprovalById(id:Int):LeaveRequest{
+        var leaveRequest= LeaveRequest()
+        val db = databaseHelper.readableDatabase
+        val queryCari = "SELECT " +
+                "a.approval1, a.approval2, a.approval3" +
+                "FROM $TABEL_LEAVE_REQUEST a " +
+                "WHERE a.$ID_LEAVE ='$id'"
+
+
+        val cursor = db.rawQuery(queryCari, null)
+        if (cursor.count > 0) {
+            leaveRequest= konversiCursorKeListApprovalModel(cursor)[0]
+        }else{
+            return LeaveRequest()
+        }
+        return leaveRequest
     }
 
     fun getLeaveTypeModels(): List<LeaveRequest> {

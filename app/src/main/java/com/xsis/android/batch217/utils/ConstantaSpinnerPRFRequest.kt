@@ -1,10 +1,5 @@
 package com.xsis.android.batch217.utils
 
-val ARRAY_TYPE = arrayOf(
-    "Type *",
-    "New",
-    "Edit"
-)
 
 val ARRAY_PID = arrayOf(
     "PID *",
@@ -27,12 +22,6 @@ val ARRAY_BAST = arrayOf(
     "BAST",
     "Yes",
     "No"
-)
-
-val ARRAY_POSITION = arrayOf(
-    "Position *",
-    "Java Programmer",
-    "Android Developer"
 )
 
 val ARRAY_SRF_NUMBER = arrayOf(

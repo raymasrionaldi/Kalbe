@@ -166,6 +166,8 @@ class InputPRFRequestActivity : AppCompatActivity() {
         val BAST = spinnerInputBastPRF.selectedItemPosition
         val billing = billing!!.text.toString().trim()
 
+        val emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z.]+"
+
         if (type == 0) {
             inputTypePRF.setHintTextColor(Color.RED)
             requiredTypePRFRequest.isVisible = true
@@ -190,9 +192,9 @@ class InputPRFRequestActivity : AppCompatActivity() {
             inputTelpPRF.setHintTextColor(Color.RED)
             requiredTelpPRFRequest.isVisible = true
         }
-        else if (email.isEmpty()) {
-            inputTelpPRF.setHintTextColor(Color.RED)
-            requiredTelpPRFRequest.isVisible = true
+        else if (email.isEmpty() or !email.matches(emailPattern.toRegex())) {
+            inputEmailPRF.setHintTextColor(Color.RED)
+            requiredEmailPRFRequest.isVisible = true
         }
         else if (notebook == 0){
             inputNotebookPRF.setHintTextColor(Color.RED)
@@ -200,7 +202,7 @@ class InputPRFRequestActivity : AppCompatActivity() {
         }
         else {
             insertKeDatabase(tanggal,
-                ARRAY_TYPE[type],
+                listTypePRF!![type],
                 placement,
                 ARRAY_PID[PID],
                 location,
@@ -288,7 +290,7 @@ class InputPRFRequestActivity : AppCompatActivity() {
         val monthNow = today.get(Calendar.MONTH)
         val dayNow = today.get(Calendar.DATE)
 
-        iconInputTanggalPRF.setOnClickListener {
+        inputTanggalPRF.setOnClickListener {
             val datePickerDialog = DatePickerDialog(context, R.style.CustomDatePicker, DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
                 val selectedDate = Calendar.getInstance()
                 selectedDate.set(year, month, dayOfMonth)

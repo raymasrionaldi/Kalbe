@@ -72,8 +72,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:inputType="text"
-                android:hint="Name *"/>
+                android:hint="Name *"
+                android:inputType="text" />
 
             <TextView
                 android:id="@+id/requiredNamePRFCandidate"
@@ -124,25 +124,14 @@
                 android:textSize="@dimen/text_size_small"
                 android:visibility="invisible" />
 
-            <FrameLayout
+            <EditText
+                android:id="@+id/inputPlacementDatePRFCandidate"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <EditText
-                    android:id="@+id/inputPlacementDatePRFCandidate"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:hint="Placement Date *" />
-
-                <ImageView
-                    android:id="@+id/iconInputTanggalPRFCandidate"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_gravity="right|center_vertical"
-                    android:layout_margin="15dp"
-                    android:src="@android:drawable/ic_menu_my_calendar" />
-            </FrameLayout>
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:focusable="false"
+                android:hint="Placement Date *"
+                android:longClickable="false" />
 
             <TextView
                 android:id="@+id/requiredPlacementDatePRFCandidate"
@@ -224,11 +213,13 @@
                 android:visibility="invisible" />
 
             <EditText
-                android:id="@+id/inputSignContractDatePRFCandidate"
+                android:id="@+id/inputSignContractDate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:hint="Sign Contract Date" />
+                android:focusable="false"
+                android:hint="Sign Contract Date"
+                android:longClickable="false" />
 
             <EditText
                 android:id="@+id/inputNotesPRFCandidate"

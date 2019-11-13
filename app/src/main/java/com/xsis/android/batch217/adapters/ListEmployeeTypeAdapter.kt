@@ -14,7 +14,7 @@ import com.xsis.android.batch217.viewholders.ViewHolderListEmployeeType
 
 class ListEmployeeTypeAdapter (
     val context: Context,
-    val listCompany: List<EmployeeType>,
+    val listEmpType: List<EmployeeType>,
     val fm: FragmentManager
 ) : RecyclerView.Adapter<ViewHolderListEmployeeType>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolderListEmployeeType {
@@ -24,11 +24,11 @@ class ListEmployeeTypeAdapter (
     }
 
     override fun getItemCount(): Int {
-        return listCompany.size
+        return listEmpType.size
     }
 
     override fun onBindViewHolder(holder: ViewHolderListEmployeeType, position: Int) {
-        val model = listCompany[position]
+        val model = listEmpType[position]
         holder.setModel(model)
 
         holder.layoutList.setOnClickListener { view ->

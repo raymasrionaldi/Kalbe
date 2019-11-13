@@ -5,6 +5,7 @@ import android.app.Activity
 import android.app.DatePickerDialog
 import android.graphics.Color
 import android.os.Bundle
+import android.view.MenuItem
 import android.view.View
 import android.widget.AdapterView
 import android.widget.Toast
@@ -33,6 +34,16 @@ class LeaveRequestEditActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_leave_request_edit)
         defaultColor = inputEditAddressLeave.currentHintTextColor
+
+        context.title = getString(R.string.menu_leave_detail)
+
+        supportActionBar?.let {
+            //menampilkan icon di toolbar
+            supportActionBar!!.setHomeButtonEnabled(true)
+            supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+            //ganti icon. Kalau mau default yang "<-", hapus line di bawah
+            supportActionBar!!.setHomeAsUpIndicator(R.drawable.ic_close_white)
+        }
 
         var databaseHelper = DatabaseHelper(context)
         databaseQueryHelper = LeaveRequestQueryHelper(databaseHelper)
@@ -97,6 +108,15 @@ class LeaveRequestEditActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        //untuk kembali ke home activity
+        if (item.itemId == android.R.id.home) {
+            super.onBackPressed()
+            return true
+        }
+        return super.onOptionsItemSelected(item)
     }
 
 

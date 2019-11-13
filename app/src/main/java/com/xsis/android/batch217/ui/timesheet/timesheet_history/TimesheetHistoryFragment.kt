@@ -10,8 +10,9 @@ import com.google.android.material.tabs.TabLayout
 import com.xsis.android.batch217.R
 import com.xsis.android.batch217.adapters.fragments.TimesheetHistoryAdapter
 import com.xsis.android.batch217.utils.CustomViewPager
+import com.xsis.android.batch217.utils.OnBackPressedListener
 
-class TimesheetHistoryFragment: Fragment() {
+class TimesheetHistoryFragment: Fragment(), OnBackPressedListener {
     private lateinit var timesheetHistoryViewModel: TimesheetHistoryViewModel
 
     override fun onCreateView(
@@ -42,5 +43,13 @@ class TimesheetHistoryFragment: Fragment() {
         slidingTabs.touchables.forEach { view -> view.isEnabled = false }
 
         return root
+    }
+    override fun onBackPressed(): Boolean {
+        val viewPager = view!!.findViewById(R.id.viewPagerTimesheetHistory) as CustomViewPager
+        if (viewPager.currentItem !=0) {
+            viewPager.setCurrentItem(0, true)
+            return true
+        }
+        return false
     }
 }

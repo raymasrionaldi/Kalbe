@@ -68,7 +68,11 @@ class LeaveRequestDetailActivity : AppCompatActivity() {
         buttonDeleteLeaveRequest.setOnClickListener {
             showDeleteDialog()
         }
+
+//        LeaveRequestFragmentApproval().getDetailApproval(idDetail)
     }
+
+
 
     fun showDeleteDialog() {
         AlertDialog.Builder(context!!, R.style.AlertDialogTheme)

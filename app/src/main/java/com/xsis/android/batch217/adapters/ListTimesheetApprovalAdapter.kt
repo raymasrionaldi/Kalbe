@@ -1,12 +1,15 @@
 package com.xsis.android.batch217.adapters
 
 import android.content.Context
+import android.content.Intent
 import android.util.SparseBooleanArray
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.xsis.android.batch217.R
 import com.xsis.android.batch217.models.Timesheet
+import com.xsis.android.batch217.ui.timesheet.timesheet_approval.TimesheetApprovalDetailActivity
+import com.xsis.android.batch217.utils.ID_TIMESHEET
 import com.xsis.android.batch217.viewholders.ViewHolderListTimesheetApproval
 
 
@@ -38,8 +41,9 @@ class ListTimesheetApprovalAdapter(
         holder.checkBox.isChecked = itemStateArray.get(position, false)
 
         holder.layoutList.setOnClickListener {
-            //            val intent = Intent(context, TimesheetApprovalDetailActivity::class.java)
-//            context.startActivity()
+            val intent = Intent(context, TimesheetApprovalDetailActivity::class.java)
+            intent.putExtra(ID_TIMESHEET, model.id_timesheet)
+            context.startActivity(intent)
         }
         holder.checkBox.setOnClickListener {
             val pos = holder.adapterPosition
