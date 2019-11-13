@@ -2,8 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:padding="20dp">
+    android:orientation="horizontal">
 
     <CheckBox
         android:id="@+id/checkboxTimesheetApproval"
@@ -11,13 +10,14 @@
         android:layout_height="wrap_content"
         android:drawableEnd="@null"
         android:buttonTint="@color/warnaBiru"
+        android:padding="20dp"
         android:layout_marginRight="20dp"/>
 
     <LinearLayout
         android:id="@+id/listTimesheetApprovalLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical|center_horizontal"
         android:orientation="horizontal"
         android:weightSum="2">
 

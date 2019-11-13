@@ -52,7 +52,6 @@ class TimesheetApprovalProcessActivity : AppCompatActivity() {
             val adapterTimesheetApproval = ListTimesheetApprovalAdapter(context!!, listData)
             listTimesheetApprovalRecycler.adapter = adapterTimesheetApproval
             adapterTimesheetApproval.notifyDataSetChanged()
-
         }
     }
 }

@@ -9,8 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.timesheet.timesheet_approval.TimesheetApprovalProcessActivity"></activity>
-        <activity android:name=".ui.timesheet.timesheet_collection.DataCollectedActivity"></activity>
+        <activity android:name=".ui.timesheet.timesheet_approval.TimesheetApprovalDetailActivity" />
+        <activity android:name=".ui.timesheet.timesheet_approval.TimesheetApprovalProcessActivity" />
+        <activity android:name=".ui.timesheet.timesheet_collection.DataCollectedActivity" />
         <activity android:name=".ui.prf_request.EditPRFCandidateActivity" />
         <activity android:name=".ui.prf_request.InputPRFCandidateActivity" />
         <activity android:name=".ui.prf_request.EditPRFRequestActivity" />

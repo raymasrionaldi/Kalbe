@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.timesheet.timesheet_approval.TimesheetApprovalDetailActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/custom_border_blue"
+            android:gravity="center_horizontal|center_vertical"
+            android:text="TIMESHEET DETAIL"
+            android:textAlignment="center"
+            android:textColor="@color/warnaBiru"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/reportDateDetailTimesheetApproval"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="22sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Status :"
+                android:textColor="@color/warnaAbu"
+                android:textSize="10sp" />
+
+            <TextView
+                android:id="@+id/statusDetailTimesheetApproval"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Client :"
+                android:textColor="@color/warnaAbu"
+                android:textSize="10sp" />
+
+            <TextView
+                android:id="@+id/clientDetailTimesheetApproval"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Reported On :"
+                android:textColor="@color/warnaAbu"
+                android:textSize="10sp" />
+
+            <TextView
+                android:id="@+id/tanggalDanJamReportDateApproval"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Overtime :"
+                android:textColor="@color/warnaAbu"
+                android:textSize="10sp" />
+
+            <TextView
+                android:id="@+id/overtimeDetailTimesheetApproval"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Notes :"
+                android:textColor="@color/warnaAbu"
+                android:textSize="10sp" />
+
+            <TextView
+                android:id="@+id/notesDetailTimesheetApproval"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

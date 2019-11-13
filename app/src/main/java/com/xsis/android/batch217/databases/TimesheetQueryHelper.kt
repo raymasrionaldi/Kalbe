@@ -227,4 +227,16 @@ class TimesheetQueryHelper(val databaseHelper: DatabaseHelper) {
 
         return db.insert(TABEL_TIMESHEET, null, values)
     }
+
+    fun getTimesheetById(id: Int): Timesheet {
+        val db = databaseHelper.readableDatabase
+
+        val queryRead = "SELECT * FROM $TABEL_TIMESHEET WHERE $ID_TIMESHEET = $id"
+
+        val cursor = db.rawQuery(queryRead, null)
+        if (cursor.count == 1) {
+            return konversiCursorKeListTimesheetModel(cursor)[0]
+        }
+        return Timesheet()
+    }
 }

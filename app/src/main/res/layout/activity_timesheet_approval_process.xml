@@ -23,7 +23,8 @@
             android:text="READY TO BE PROCESSED"
             android:textAlignment="center"
             android:textColor="@color/warnaBiru"
-            android:textSize="15sp" />
+            android:textSize="15sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/dataNotFoundTimesheetApproval"
@@ -31,18 +32,14 @@
             android:layout_height="match_parent"
             android:gravity="center_horizontal|center_vertical"
             android:text="Data not found"
-            android:textStyle="bold"
             android:textColor="@android:color/black"
+            android:textStyle="bold"
             android:visibility="gone" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/listTimesheetApprovalRecycler"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginBottom="10dp" />
+            android:layout_gravity="center_horizontal" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
