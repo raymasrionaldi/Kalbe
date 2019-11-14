@@ -64,6 +64,8 @@
     <string name="menu_project_create">Create</string>
     <string name="menu_project_list">List</string>
     <string name="project_detail">Project Detail</string>
+    <string name="menu_report">Report</string>
+    <string name="summary_prf">Summary PRF</string>
 
     <string name="ubah_agama">Ubah Agama</string>
 

@@ -8,8 +8,15 @@ import androidx.fragment.app.Fragment
 import com.xsis.android.batch217.R
 import com.xsis.android.batch217.databases.DatabaseHelper
 import com.xsis.android.batch217.databases.TimesheetQueryHelper
+import com.xsis.android.batch217.models.Company
+import com.xsis.android.batch217.models.Training
+import com.xsis.android.batch217.ui.timesheet.timesheet_approval.TimesheetApprovalProcessActivity
 import com.xsis.android.batch217.ui.timesheet.timesheet_submission.DataSubmitActivity
 import com.xsis.android.batch217.utils.*
+import kotlinx.android.synthetic.main.activity_employee_training_edit.*
+import kotlinx.android.synthetic.main.activity_entry_timesheet.*
+import kotlinx.android.synthetic.main.fragment_timesheet_approval.*
+import kotlinx.android.synthetic.main.fragment_timesheet_collection.*
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -47,13 +54,8 @@ class TimesheetCollectionFragment : Fragment() {
         isiSpinnerBulan(customView)
         isiSpinnerClient(customView)
 
-        val spinTahun = customView.findViewById(R.id.spinnerPilihTahunCollection) as Spinner
-        val spinBulan = customView.findViewById(R.id.spinnerPilihBulanCollection) as Spinner
-        val spinClient = customView.findViewById(R.id.spinnerPilihClientCollection) as Spinner
-
-
         //kondisi button reset dan search berdasarkan spinner tahun
-        spinTahun.onItemSelectedListener = object :
+        tahun!!.onItemSelectedListener = object :
             AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>?,
@@ -61,10 +63,10 @@ class TimesheetCollectionFragment : Fragment() {
                 position: Int,
                 id: Long
             ) {
-                if (position != 0 && spinBulan.selectedItemPosition != 0 && spinClient.selectedItemPosition != 0) {
+                if (position != 0 && bulan!!.selectedItemPosition != 0 && client!!.selectedItemPosition != 0) {
                     ubahResetButton(context!!, true, buttonReset!!)
                     ubahSearchButton(context!!, true, buttonSearch!!)
-                }else if(position != 0 || spinBulan.selectedItemPosition != 0 || spinClient.selectedItemPosition !=0){
+                }else if(position != 0 || bulan!!.selectedItemPosition != 0 || client!!.selectedItemPosition != 0){
                     ubahResetButton(context!!, true, buttonReset!!)
                     ubahSearchButton(context!!, false, buttonSearch!!)
                 } else {
@@ -76,7 +78,7 @@ class TimesheetCollectionFragment : Fragment() {
             override fun onNothingSelected(arg0: AdapterView<*>) {}
         }
 
-        spinBulan.onItemSelectedListener = object :
+        bulan!!.onItemSelectedListener = object :
             AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>?,
@@ -84,10 +86,10 @@ class TimesheetCollectionFragment : Fragment() {
                 position: Int,
                 id: Long
             ) {
-                if (position != 0 && spinTahun.selectedItemPosition != 0 && spinClient.selectedItemPosition != 0) {
+                if (position != 0 && tahun!!.selectedItemPosition != 0 && client!!.selectedItemPosition != 0) {
                     ubahResetButton(context!!, true, buttonReset!!)
                     ubahSearchButton(context!!, true, buttonSearch!!)
-                }else if(position != 0 || spinTahun.selectedItemPosition != 0 || spinClient.selectedItemPosition != 0){
+                }else if(position != 0 || tahun!!.selectedItemPosition != 0 || client!!.selectedItemPosition != 0){
                     ubahResetButton(context!!, true, buttonReset!!)
                     ubahSearchButton(context!!, false, buttonSearch!!)
                 }
@@ -100,7 +102,8 @@ class TimesheetCollectionFragment : Fragment() {
             override fun onNothingSelected(arg0: AdapterView<*>) {}
         }
 
-        spinClient.onItemSelectedListener = object :
+
+        client!!.onItemSelectedListener = object :
             AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>?,
@@ -108,10 +111,10 @@ class TimesheetCollectionFragment : Fragment() {
                 position: Int,
                 id: Long
             ) {
-                if (position != 0 && spinTahun.selectedItemPosition != 0 && spinBulan.selectedItemPosition != 0) {
+                if (position != 0 && tahun!!.selectedItemPosition != 0 && bulan!!.selectedItemPosition != 0) {
                     ubahResetButton(context!!, true, buttonReset!!)
                     ubahSearchButton(context!!, true, buttonSearch!!)
-                }else if(position != 0 || spinTahun.selectedItemPosition != 0 || spinBulan.selectedItemPosition != 0){
+                }else if(position != 0 || tahun!!.selectedItemPosition != 0 || bulan!!.selectedItemPosition != 0){
                     ubahResetButton(context!!, true, buttonReset!!)
                     ubahSearchButton(context!!, false, buttonSearch!!)
                 }
@@ -123,7 +126,6 @@ class TimesheetCollectionFragment : Fragment() {
 
             override fun onNothingSelected(arg0: AdapterView<*>) {}
         }
-
 
         buttonReset!!.setOnClickListener {
             resetForm()
@@ -131,8 +133,6 @@ class TimesheetCollectionFragment : Fragment() {
         buttonSearch!!.setOnClickListener {
             searchData()
         }
-
-
 
         return customView
     }
@@ -144,7 +144,14 @@ class TimesheetCollectionFragment : Fragment() {
     }
 
     fun searchData() {
-        val intent = Intent(context!!, DataCollectedActivity::class.java)
+        val year = spinnerPilihTahunCollection.selectedItem.toString()
+        val month = spinnerPilihBulanCollection.selectedItem.toString()
+        val client = spinnerPilihClientCollection.selectedItem.toString()
+        val intent = Intent(context, DataCollectedActivity::class.java)
+        intent.putExtra(YEAR_TIMESHEET, year)
+        intent.putExtra(MONTH_TIMESHEET, month)
+        intent.putExtra(CLIENT_DATABASE, client)
+        resetForm()
         startActivity(intent)
     }
 
@@ -183,24 +190,20 @@ class TimesheetCollectionFragment : Fragment() {
         spinnerBulan.adapter = adapterBulan
     }
 
+    //isi data spinner client
     fun isiSpinnerClient(view: View) {
         val listNamaCompany = databaseQueryHelper!!.tampilkanClientTimesheet()
-
-        val isiData = listNamaCompany.map {
+        val isiDataNamaCompany = listNamaCompany.map {
             it.namaCompany
         }.toMutableList()
-        isiData.add(0, "-- Choose Client --")
-        val adapterClientTimesheet = ArrayAdapter<String>(
-            context!!,
-            android.R.layout.simple_spinner_item,
-            isiData
+        isiDataNamaCompany.add(0, "--Choose Client --")
+        val adapterNamaCompany = ArrayAdapter<String>(
+            context!!, android.R.layout.simple_spinner_item,
+            isiDataNamaCompany
         )
-        adapterClientTimesheet.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        adapterNamaCompany.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         val spinnerClient = view.findViewById(R.id.spinnerPilihClientCollection) as Spinner
-        spinnerClient.adapter = adapterClientTimesheet
+        spinnerClient.adapter = adapterNamaCompany
     }
-
-
-
 
 }
