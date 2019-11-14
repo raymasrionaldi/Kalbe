@@ -42,6 +42,7 @@ import com.xsis.android.batch217.ui.timesheet.timesheet_collection.TimesheetColl
 import com.xsis.android.batch217.ui.timesheet.timesheet_entry.EntryTimesheetActivity
 import com.xsis.android.batch217.ui.timesheet.timesheet_history.FragmentDataHistoryTimesheet
 import com.xsis.android.batch217.ui.timesheet.timesheet_history.TimesheetHistoryFragment
+import com.xsis.android.batch217.ui.timesheet.timesheet_send.TimesheetSendFragment
 import com.xsis.android.batch217.ui.timesheet.timesheet_submission.TimesheetSubmissionFragment
 import com.xsis.android.batch217.ui.tipe_tes.TipeTesFragment
 import com.xsis.android.batch217.ui.training.TrainingFragment
@@ -401,7 +402,7 @@ class HomeActivity : AppCompatActivity() {
                 fragmentTransaction.commit()
                 closeNavDrawer()
             } else if (groupIndex == 17 && childIndex == 4) {
-                val fragment = TimesheetSubmissionFragment()
+                val fragment = TimesheetSendFragment()
                 val fragmentTransaction = supportFragmentManager.beginTransaction()
                 fragmentTransaction.replace(
                     R.id.nav_host_fragment,

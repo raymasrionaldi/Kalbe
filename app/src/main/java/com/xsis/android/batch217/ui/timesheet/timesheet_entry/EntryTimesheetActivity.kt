@@ -235,7 +235,7 @@ class EntryTimesheetActivity : AppCompatActivity() {
                     Toast.makeText(context, "Save Invalid, End time Overtime must be greater then Start time Overtime Date", Toast.LENGTH_SHORT).show()
                 }
             }
-            if (startOvertimeTimesheet <= endOvertimeTimesheet){
+            if (startOvertimeTimesheet <= endOvertimeTimesheet && positionOvertimeTimesheet == 1){
                 isValid = false
                 Toast.makeText(context, "Save Invalid, Start time Overtime must be greater then End Time Report date", Toast.LENGTH_SHORT).show()
             }
