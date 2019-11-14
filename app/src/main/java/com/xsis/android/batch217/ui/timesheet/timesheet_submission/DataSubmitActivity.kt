@@ -170,7 +170,7 @@ class DataSubmitActivity : AppCompatActivity() {
             }
         }
 
-        val body = "Timesheet tanggal ${formatter2.format(min)} s/d ${formatter2.format(max)}"
+        val body = "Timesheet tanggal ${formatter2.format(min)} s/d ${formatter2.format(max)} sudah disubmit"
 
 
         //fungsi send mail

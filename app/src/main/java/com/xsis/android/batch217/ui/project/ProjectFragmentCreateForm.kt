@@ -37,7 +37,7 @@ class ProjectFragmentCreateForm(context: Context, val fm: FragmentManager):Fragm
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val customView = inflater.inflate(R.layout.fragment_project_create_form, container, false)
+        val customView = inflater.inflate(R.layout.fragment_form_project_create, container, false)
 
         PID = customView.findViewById(R.id.PIDProjectCreate)
         noPOSPKKontrak = customView.findViewById(R.id.noPOSPKKontrakProjectCreate)
