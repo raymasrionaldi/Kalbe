@@ -210,7 +210,6 @@ val JENIS_OVERTIME = "jenis_overtime"
 val CATATAN_FIX_RATE = "catatan_fix_rate"
 val tanggal_BAST = "tanggal_bast"
 
-
 val TABEL_LEAVE_REQUEST = "leave_request"
 val ID_LEAVE= "id_leave_request"
 val START = "start"
@@ -218,14 +217,16 @@ val END = "end"
 val ADDRESS = "address"
 val CONTACT = "contact"
 val REASON = "reason"
-val APPROVAL1= ""
-val APPROVAL2 = ""
-val APPROVAL3 =""
 
 val TABEL_LEAVE_TYPE="leave_type"
 val ID_LEAVE_TYPE = "id_leave_type"
 val LEAVE_TYPE="leave_type"
 val QUOTA ="quota"
+
+val TABEL_LEAVE_APPROVAL= "leave_approval"
+val ID_LEAVE_APPROVAL="id_leave_approval"
+val APPROVAL_NAME="approval_name"
+val APPROVAL_STATE= "approval_state"
 
 val TABEL_CUTI_KHUSUS="cuti_khusus"
 val ID_CUTI_KHUSUS= "id_cuti_khusus"
@@ -252,4 +253,5 @@ val CATATAN = "catatan"
 
 //nama field sama
 val IS_DELETED= "is_deleted"
+val DATE="date"
 /*=================================================*/

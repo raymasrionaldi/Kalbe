@@ -8,9 +8,8 @@ class LeaveRequest {
     var address: String?=null
     var contact: String?=null
     var reason: String?=null
-    var approval1:String?=null
-    var approval2:String?=null
-    var approval3:String?=null
+    var approvalName: String? = null
+    var approvalState: String?=null
 
     var idLeaveType:Int=0
     var leaveType:String?=null

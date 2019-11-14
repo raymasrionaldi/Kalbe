@@ -13,10 +13,18 @@ import androidx.viewpager.widget.ViewPager
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.xsis.android.batch217.R
 import com.xsis.android.batch217.adapters.fragments.LeaveRequestFragmentAdapter
+import com.xsis.android.batch217.databases.DatabaseHelper
+import com.xsis.android.batch217.databases.LeaveRequestQueryHelper
+import com.xsis.android.batch217.models.LeaveRequest
+import com.xsis.android.batch217.utils.DATE_PATTERN
+import java.text.SimpleDateFormat
+import java.util.concurrent.TimeUnit
 
 class LeaveRequestFragmentData(context: Context, val fm: FragmentManager):Fragment() {
-    val regularLeaveQuota= 16
-    val annualLeaveQuota=4
+    var regularLeaveQuota=0
+    var annualLeaveQuota=0
+
+    internal lateinit var databaseQueryHelper: LeaveRequestQueryHelper
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -29,28 +37,65 @@ class LeaveRequestFragmentData(context: Context, val fm: FragmentManager):Fragme
             false
         )
 
+        val databaseHelper= DatabaseHelper(context!!)
+        databaseQueryHelper = LeaveRequestQueryHelper(databaseHelper)
+
+        regularLeaveQuota=databaseQueryHelper.regularLeaveQuota
+        annualLeaveQuota=databaseQueryHelper.annualLeaveQuota
+
+
+        var prevLeaveVal= hitungSisaPrevYearLeave()
+//        var leaveAlreadyTakenVal = hitungLeaveAlreadyTaken()
+
         val prevLeave: TextView = customView.findViewById(R.id.prevYearQuota) as TextView
-            prevLeave.text="0"
+            prevLeave.text=prevLeaveVal.toString()
+
         val regularLeave: TextView = customView.findViewById(R.id.regularQuota) as TextView
             regularLeave.text=regularLeaveQuota.toString()
+
         val annualLeave: TextView = customView.findViewById(R.id.annualQuota) as TextView
             annualLeave.text=annualLeaveQuota.toString()
+
         val takenLeave: TextView = customView.findViewById(R.id.takenQuota) as TextView
             takenLeave.text="0"
+
         val remainingLeave: TextView = customView.findViewById(R.id.remainingQuota) as TextView
             remainingLeave.text="0"
 
-        /*
-        DATE OPERATIONS
-         val dateMasuk= SimpleDateFormat("dd/MM/yyyy HH:mm:ss").parse(masuk)
-         val dateKeluar=SimpleDateFormat("dd/MM/yyyy HH:mm:ss").parse(keluar)
-         val rentangWaktu= Math.abs(dateKeluar.time-dateMasuk.time)
-         var lamaJamParkir= TimeUnit.HOURS.convert(rentangWaktu, TimeUnit.MILLISECONDS).toInt()
-        val lamaMenitParkir= TimeUnit.MINUTES.convert(rentangWaktu, TimeUnit.MILLISECONDS).toInt()
-        val lamaDetikParkir= TimeUnit.SECONDS.convert(rentangWaktu, TimeUnit.MILLISECONDS).toInt()
-        var sisaDetik=lamaDetikParkir%60
-        var sisaMenit=lamaMenitParkir%60
-       */
         return customView
     }
+
+    fun getPrevYearLeave():List<LeaveRequest>{
+        val listModel = databaseQueryHelper!!.getPrevYearLeave()
+        return listModel
+    }
+
+    /*fun getLeaveThisYear():List<LeaveRequest>{
+        val listModel = databaseQueryHelper!!.getCurYearLeave()
+        return listModel
+    }*/
+
+    fun hitungSisaPrevYearLeave():Int{
+        val listModel=getPrevYearLeave()
+        var remainingPrevYearQuota=0
+        var prevYearLeaveTaken=0
+
+        listModel.forEach {model->
+            println("BULAN# ${model.start}")
+            val dateStart= SimpleDateFormat(DATE_PATTERN).parse(model.start)
+            val dateEnd=SimpleDateFormat(DATE_PATTERN).parse(model.end)
+            var rentangWaktu= Math.abs(dateStart.time-dateEnd.time) //TODO check tanpa .toInt
+            var lamaHariLeave= TimeUnit.DAYS.convert(rentangWaktu, TimeUnit.MILLISECONDS).toInt()
+            prevYearLeaveTaken +=lamaHariLeave
+        }
+        remainingPrevYearQuota=regularLeaveQuota-(prevYearLeaveTaken+annualLeaveQuota)
+        return remainingPrevYearQuota
+    }
+
+    /*fun hitungLeaveAlreadyTaken():Int{
+        val listModel=getLeaveThisYear()
+        var leaveTaken=0
+
+        return leaveTaken
+    }*/
 }

@@ -13,11 +13,9 @@ import com.xsis.android.batch217.adapters.expandablelist.LeaveRequestExpandableL
 import com.xsis.android.batch217.databases.DatabaseHelper
 import com.xsis.android.batch217.databases.LeaveRequestQueryHelper
 import com.xsis.android.batch217.models.LeaveRequest
-import kotlinx.android.synthetic.main.fragment_approval_leave_request.*
 
 class LeaveRequestFragmentApproval(context: Context, val fm: FragmentManager, val id_detail: Int) :
     Fragment() {
-    var data = LeaveRequest()
 
     internal lateinit var menuAdapter: LeaveRequestExpandableListAdapter
     internal lateinit var listDataGroup: MutableList<String>
@@ -44,7 +42,6 @@ class LeaveRequestFragmentApproval(context: Context, val fm: FragmentManager, va
 
         getDetailApproval(id_detail)
 
-
         return customView
     }
 
@@ -54,7 +51,7 @@ class LeaveRequestFragmentApproval(context: Context, val fm: FragmentManager, va
         viewDetail(model)
     }
 
-    fun viewDetail(model: LeaveRequest) {
+    /*fun viewDetail(listModel: List<LeaveRequest>) {
         println("BULAN# viewDetail")
         //        (parentFragment as LeaveRequestFragment).changeTitleByFragmentPos(1)
         data = model
@@ -62,9 +59,9 @@ class LeaveRequestFragmentApproval(context: Context, val fm: FragmentManager, va
         prepareData()
         menuAdapter = LeaveRequestExpandableListAdapter(context!!, listDataGroup, listDataChild)
         listLeaveRequestApproval!!.setAdapter(menuAdapter)
-    }
+    }*/
 
-    private fun prepareData() {
+    /*private fun prepareData() {
         println("BULAN# prepareData")
         listDataGroup = ArrayList()
         listDataChild = HashMap()
@@ -92,5 +89,31 @@ class LeaveRequestFragmentApproval(context: Context, val fm: FragmentManager, va
         val info21 = arrayListOf("James Bond", data.approval3!!)
         child2.add(info21)
         listDataChild[listDataGroup[2]] = child2
+    }*/
+
+    fun viewDetail(listModel: List<LeaveRequest>) {
+        println("BULAN# viewDetail")
+
+        prepareData(listModel)
+        menuAdapter = LeaveRequestExpandableListAdapter(context!!, listDataGroup, listDataChild)
+        listLeaveRequestApproval!!.setAdapter(menuAdapter)
+    }
+
+    private fun prepareData(listModel: List<LeaveRequest>) {
+        println("BULAN# prepareData")
+        listDataGroup = ArrayList()
+        listDataChild = HashMap()
+        var i=1
+        var j=0
+        var group :String?= ""
+
+        listModel.forEach {model->
+            group="Approval ${i++}"
+            listDataGroup.add(group.toString())
+            val child = ArrayList<List<String>>()
+            val info = arrayListOf(model.approvalName!!, model.approvalState!!)
+            child.add(info)
+            listDataChild[listDataGroup[j++]] = child
+        }
     }
 }
