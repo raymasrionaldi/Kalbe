@@ -45,5 +45,11 @@ dependencies {
     implementation 'com.google.android.material:material:1.0.0'
 
     implementation 'com.github.chivorns:smartmaterialspinner:1.1.6'
+    //for smtp email
+    implementation 'com.sun.mail:android-mail:1.6.0'
+    implementation 'com.sun.mail:android-activation:1.6.0'
+
+    implementation 'com.squareup.retrofit2:retrofit:2.3.0' //retrofit library, current as of September 21, 2017
+    implementation 'com.squareup.retrofit2:converter-gson:2.3.0' //gson serialization and deserialization support for retrofit, version must match retrofit version
 
 }
