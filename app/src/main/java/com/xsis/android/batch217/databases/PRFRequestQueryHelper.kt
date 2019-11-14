@@ -15,6 +15,18 @@ class PRFRequestQueryHelper (val databaseHelper: DatabaseHelper) {
         return db.rawQuery(queryRead, null)
     }
 
+    fun getPRFRequestByID(id: Int): PRFRequest {
+        val db = databaseHelper.readableDatabase
+
+        val queryRead = "SELECT * FROM $TABEL_PRF_REQUEST WHERE $IS_DELETED = 'false' AND $ID_PRF_REQUEST = $id"
+
+        val cursor = db.rawQuery(queryRead, null)
+        if (cursor.count == 1) {
+            return konversiCursorKeListPRFRequestModel(cursor)[0]
+        }
+        return  PRFRequest()
+    }
+
     private fun konversiCursorKeListPRFRequestModel(cursor: Cursor): ArrayList<PRFRequest> {
         var listPRFRequest = ArrayList<PRFRequest>()
 
