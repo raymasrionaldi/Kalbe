@@ -33,6 +33,7 @@ import kotlinx.android.synthetic.main.fragment_form_srf.*
 class SRFFragmentForm(context: Context, val fm: FragmentManager) : Fragment() {
     var title: TextView? = null
     var buttonReset: Button? = null
+    var srfNumber : TextInputEditText? = null
     var spinnerJenis : SmartMaterialSpinner<String>? = null
     var jumKebutuhan : TextInputEditText? = null
     var spinnerClient : SmartMaterialSpinner<String>? = null
@@ -45,7 +46,7 @@ class SRFFragmentForm(context: Context, val fm: FragmentManager) : Fragment() {
     //var buttonDelete: FloatingActionButton? = null
     var defaultColor = 0
     var modeForm = 0
-    var idData = 0
+    var idData:String? = null
     var data = SRF()
 
     var databaseQueryHelper: SRFQueryHelper? = null
@@ -71,6 +72,7 @@ class SRFFragmentForm(context: Context, val fm: FragmentManager) : Fragment() {
 
         val buttonSave = customView.findViewById(R.id.buttonSimpanSRF) as Button
         buttonReset = customView.findViewById(R.id.buttonResetSRF) as Button
+        srfNumber = customView.findViewById(R.id.inputNumberSRF) as TextInputEditText
         spinnerJenis = customView.findViewById(R.id.spinnerJenisSRF) as SmartMaterialSpinner<String>
         jumKebutuhan = customView.findViewById(R.id.inputJumlahKebutuhan) as TextInputEditText
         spinnerClient = customView.findViewById(R.id.spinnerClient) as SmartMaterialSpinner<String>
@@ -81,7 +83,7 @@ class SRFFragmentForm(context: Context, val fm: FragmentManager) : Fragment() {
         lokasi = customView.findViewById(R.id.inputLokasi) as EditText
         catatan = customView.findViewById(R.id.inputCatatan) as EditText
 
-        defaultColor = salesPrice!!.currentHintTextColor
+        defaultColor = srfNumber!!.currentHintTextColor
 
         //buttonDelete = customView.findViewById(R.id.buttonDeleteSRF) as FloatingActionButton
 
@@ -97,7 +99,8 @@ class SRFFragmentForm(context: Context, val fm: FragmentManager) : Fragment() {
             showDeleteDialog()
         }*/
 
-        /*namaUser!!.addTextChangedListener(textWatcher)
+        /* srfNumber!!.addTextChangedListener(textWatcher)
+        namaUser!!.addTextChangedListener(textWatcher)
         jumKebutuhan!!.addTextChangedListener(textWatcher)
         emailUser!!.addTextChangedListener(textWatcher)
         salesPrice!!.addTextChangedListener(textWatcher)
@@ -110,6 +113,7 @@ class SRFFragmentForm(context: Context, val fm: FragmentManager) : Fragment() {
     }
 
     fun resetForm() {
+        srfNumber!!.setText("")
         spinnerJenis!!.setSelection(0)
         jumKebutuhan!!.setText("")
         spinnerClient!!.setSelection(0)
@@ -125,13 +129,17 @@ class SRFFragmentForm(context: Context, val fm: FragmentManager) : Fragment() {
         modeForm = MODE_EDIT
         changeMode()
 
-        idData = srf.id_srf
+        idData = srf.id_srf!!
+        srfNumber!!.setText(srf.id_srf)
+
         //cara dapat spinnernya
 //        spinnerJenis!!.setSelection(0)
         jumKebutuhan!!.setText(srf.jumlah_kebutuhan)
+        println(jumKebutuhan)
 //        spinnerClient!!.setSelection(0)
 //        spinnerGrade!!.setSelection(0)
         namaUser!!.setText(srf.nama_user)
+        println(namaUser)
         emailUser!!.setText(srf.email_user)
         salesPrice!!.setText(srf.sales_price)
         lokasi!!.setText(srf.lokasi)
@@ -161,7 +169,7 @@ class SRFFragmentForm(context: Context, val fm: FragmentManager) : Fragment() {
             .setMessage("Hapus ${data!!.nama_company}")
             .setCancelable(false)
             .setPositiveButton("DELETE") { dialog, which ->
-                if (databaseQueryHelper!!.hapusSRF(data.id_srf) != 0) {
+                if (databaseQueryHelper!!.hapusSRF(data.id_srf!!) != 0) {
                     Toast.makeText(context!!, HAPUS_DATA_BERHASIL, Toast.LENGTH_SHORT).show()
                     val viewPager = view!!.parent as ViewPager
                     val adapter = viewPager.adapter!! as SRFFragmentAdapter
@@ -185,6 +193,7 @@ class SRFFragmentForm(context: Context, val fm: FragmentManager) : Fragment() {
         }
 
         override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+            val idSRFTeks = srfNumber!!.text.toString().trim()
             val jumKebutuhanText = jumKebutuhan!!.text.toString().trim()
             val namaUserTeks = namaUser!!.text.toString().trim()
             val emailUserTeks = emailUser!!.text.toString().trim()
@@ -193,7 +202,7 @@ class SRFFragmentForm(context: Context, val fm: FragmentManager) : Fragment() {
             val catatanText = catatan!!.text.toString().trim()
 
 
-            val kondisi = !jumKebutuhanText.isEmpty() || !namaUserTeks.isEmpty() || !emailUserTeks.isEmpty() || !salesPriceTeks.isEmpty()  || !lokasiTeks.isEmpty() || !catatanText.isEmpty()
+            val kondisi = !idSRFTeks.isEmpty() || !jumKebutuhanText.isEmpty() || !namaUserTeks.isEmpty() || !emailUserTeks.isEmpty() || !salesPriceTeks.isEmpty()  || !lokasiTeks.isEmpty() || !catatanText.isEmpty()
 
             ubahResetButton(context!!, kondisi, buttonReset!!)
         }
