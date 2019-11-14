@@ -11,10 +11,12 @@ import com.xsis.android.batch217.R
 import com.xsis.android.batch217.adapters.fragments.ProjectCreateFragmentAdapter
 import com.xsis.android.batch217.utils.CustomViewPager
 import com.xsis.android.batch217.utils.OnBackPressedListener
+import kotlinx.android.synthetic.main.fragment_project_create.*
 
 class ProjectFragmentCreate:Fragment(), OnBackPressedListener {
     var modeTab = 0
     var viewPager0: ViewPager? = null
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -39,9 +41,14 @@ class ProjectFragmentCreate:Fragment(), OnBackPressedListener {
         slidingTabs.setupWithViewPager(viewPager)
         slidingTabs.touchables.forEach { view -> view.isEnabled = false }
 
-        viewPager.setCurrentItem(modeTab)
 
         return root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        viewPagerProjectCreate.setCurrentItem(modeTab)
     }
 
     fun pindahTab(tabIndex:Int){

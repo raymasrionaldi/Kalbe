@@ -10,12 +10,21 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
+import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import androidx.viewpager.widget.ViewPager
 import com.xsis.android.batch217.R
+import com.xsis.android.batch217.adapters.fragments.ProjectCreateFragmentAdapter
+import com.xsis.android.batch217.databases.DatabaseHelper
+import com.xsis.android.batch217.databases.ProjectCreateQueryHelper
+import com.xsis.android.batch217.models.ProjectCreate
+import com.xsis.android.batch217.utils.SIMPAN_DATA_BERHASIL
 
 class ProjectFragmentCreateForm(context: Context, val fm: FragmentManager):Fragment() {
+    val databaseHelper = DatabaseHelper(context)
+    val databaseQueryHelper = ProjectCreateQueryHelper(databaseHelper)
     var ID = 0
     var PID:EditText? = null
     var noPOSPKKontrak:EditText? = null
@@ -54,11 +63,14 @@ class ProjectFragmentCreateForm(context: Context, val fm: FragmentManager):Fragm
         reset = customView.findViewById(R.id.resetProjectCreate)
         save = customView.findViewById(R.id.saveProjectCreate)
 
+        startDate!!.isEnabled = false
+        endDate!!.isEnabled = false
 
         setIsi()
         reset()
         cekIsi()
         centang()
+        simpan()
 
 
         return customView
@@ -70,9 +82,44 @@ class ProjectFragmentCreateForm(context: Context, val fm: FragmentManager):Fragm
 
     fun setIsi(){
         if (ID != 0){
+            startDate!!.isEnabled = true
+            endDate!!.isEnabled = true
             //ambil data dari database berdasarkan id
+
         }
     }
+
+    fun simpan(){
+        save!!.setOnClickListener {
+            val data = ProjectCreate()
+            data.PID = PID!!.text.toString().trim()
+            data.noPOSPKKontrak = noPOSPKKontrak!!.text.toString().trim()
+            data.client = client!!.text.toString().trim()
+            data.startDate = startDate!!.text.toString().trim()
+            data.endDate = endDate!!.text.toString().trim()
+            data.posisiDiClient = posisiDiClient!!.text.toString().trim()
+            data.jenisOvertime = jenisOverTime!!.text.toString().trim()
+            data.catatanFixRate = catatanFixRate!!.text.toString().trim()
+            data.tanggalBAST = tanggalBAST!!.text.toString().trim()
+
+            databaseQueryHelper.addProjectCreate(data)
+
+            Toast.makeText(context, SIMPAN_DATA_BERHASIL, Toast.LENGTH_SHORT).show()
+            pindahKeFragmentData()
+        }
+    }
+
+    fun pindahKeFragmentData(){
+        fm.fragments.forEach { println(it) }
+        val fragment = fm.fragments[1] as ProjectFragmentCreateData
+        val viewPager = fragment.view!!.parent as ViewPager
+        val adapter = viewPager.adapter!! as ProjectCreateFragmentAdapter
+
+        fragment.search2()
+        adapter.notifyDataSetChanged()
+        viewPager.setCurrentItem(1, true)
+    }
+
     fun reset(){
         reset!!.setOnClickListener {
             PID!!.setText("")
@@ -123,54 +170,66 @@ class ProjectFragmentCreateForm(context: Context, val fm: FragmentManager):Fragm
 
     fun cekIsi(){
         //WARNING : Logic save masih salah
-        var enableSave0 = false
+        var enableSave0 = ArrayList<Boolean>()
+        for (i in 0 until 6){
+            enableSave0.add(false)
+        }
         PID!!.addTextChangedListener (object :TextWatcher{
             override fun afterTextChanged(s: Editable?) {}
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 reset!!.isEnabled = true
                 val enableSave = PID!!.text.toString().trim().isNotEmpty()
-                enableSave0 = true && enableSave
-                save!!.isEnabled = enableSave0}})
+                enableSave0[0] = enableSave
+                save!!.isEnabled = !enableSave0.contains(false)
+            }})
         noPOSPKKontrak!!.addTextChangedListener (object :TextWatcher{
             override fun afterTextChanged(s: Editable?) {}
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 reset!!.isEnabled = true
                 val enableSave = noPOSPKKontrak!!.text.toString().trim().isNotEmpty()
-                enableSave0 = true && enableSave
-                save!!.isEnabled = enableSave0}})
+                enableSave0[1] = enableSave
+                save!!.isEnabled = !enableSave0.contains(false)
+            }})
         client!!.addTextChangedListener (object :TextWatcher{
             override fun afterTextChanged(s: Editable?) {}
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 reset!!.isEnabled = true
                 val enableSave = client!!.text.toString().trim().isNotEmpty()
-                enableSave0 = true && enableSave
-                save!!.isEnabled = enableSave0}})
+                enableSave0[2] = enableSave
+                save!!.isEnabled = !enableSave0.contains(false)
+
+                startDate!!.isEnabled = enableSave
+                endDate!!.isEnabled = enableSave
+            }})
         startDate!!.addTextChangedListener (object :TextWatcher{
             override fun afterTextChanged(s: Editable?) {}
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 reset!!.isEnabled = true
                 val enableSave = PID!!.text.toString().trim().isNotEmpty()
-                enableSave0 = true && enableSave
-                save!!.isEnabled = enableSave0}})
+                enableSave0[3] = enableSave
+                save!!.isEnabled = !enableSave0.contains(false)
+            }})
         endDate!!.addTextChangedListener (object :TextWatcher{
             override fun afterTextChanged(s: Editable?) {}
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 reset!!.isEnabled = true
                 val enableSave = PID!!.text.toString().trim().isNotEmpty()
-                enableSave0 = true && enableSave
-                save!!.isEnabled = enableSave0}})
+                enableSave0[4] = enableSave
+                save!!.isEnabled = !enableSave0.contains(false)
+            }})
         posisiDiClient!!.addTextChangedListener (object :TextWatcher{
             override fun afterTextChanged(s: Editable?) {}
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 reset!!.isEnabled = true
                 val enableSave = PID!!.text.toString().trim().isNotEmpty()
-                enableSave0 = true && enableSave
-                save!!.isEnabled = enableSave0}})
+                enableSave0[5] = enableSave
+                save!!.isEnabled = !enableSave0.contains(false)
+            }})
     }
 }

@@ -1,10 +1,9 @@
 package com.xsis.android.batch217.databases
 
+import android.content.ContentValues
 import android.database.Cursor
 import com.xsis.android.batch217.models.ProjectCreate
-import com.xsis.android.batch217.utils.CLIENT
-import com.xsis.android.batch217.utils.NO_PO_SPK_KONTRAK
-import com.xsis.android.batch217.utils.TABEL_PROJECT_CREATE
+import com.xsis.android.batch217.utils.*
 
 class ProjectCreateQueryHelper(val databaseHelper: DatabaseHelper) {
     fun getAllProject(): List<ProjectCreate>{
@@ -54,6 +53,22 @@ class ProjectCreateQueryHelper(val databaseHelper: DatabaseHelper) {
             listProject.add(projectCreate)
         }
         return listProject
+
+    }
+
+    fun addProjectCreate(data:ProjectCreate){
+        val db = databaseHelper.writableDatabase
+        val values = ContentValues()
+        values.put(PID_CREATE, data.PID)
+        values.put(NO_PO_SPK_KONTRAK, data.noPOSPKKontrak)
+        values.put(CLIENT, data.client)
+        values.put(START_DATE_PROJECT_CREATE, data.startDate)
+        values.put(END_DATE_PROJECT_CREATE, data.endDate)
+        values.put(POSISI_DI_CLIENT, data.posisiDiClient)
+        values.put(JENIS_OVERTIME, data.jenisOvertime)
+        values.put(CATATAN_FIX_RATE, data.catatanFixRate)
+        values.put(tanggal_BAST, data.tanggalBAST)
+        db.insert(TABEL_PROJECT_CREATE, null, values)
 
     }
 }
