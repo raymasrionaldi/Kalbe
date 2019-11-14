@@ -42,6 +42,7 @@ class EditPRFRequestActivity : AppCompatActivity() {
     var billing: EditText? = null
     var ID_prf_request = 0
     var listTypePRF: List<String>? = null
+    var listPID: List<String>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -193,7 +194,7 @@ class EditPRFRequestActivity : AppCompatActivity() {
             insertKeDatabase(id, tanggal,
                 listTypePRF!![type],
                 placement,
-                ARRAY_PID[PID],
+                listPID!![PID],
                 location,
                 period,
                 userName,
@@ -289,9 +290,10 @@ class EditPRFRequestActivity : AppCompatActivity() {
     }
 
     fun isiSpinnerPID(){
+        listPID = databaseQueryHelper.readPIDPRF()
         val adapterPID = ArrayAdapter<String>(context,
             android.R.layout.simple_spinner_item,
-            ARRAY_PID
+            listPID!!
         )
         adapterPID.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinnerInputPIDPRFEdit.adapter = adapterPID
@@ -372,7 +374,7 @@ class EditPRFRequestActivity : AppCompatActivity() {
             inputPlacementPRFEdit.setText(data.placement)
 
             val dataPID = cursor.getString(4)
-            val indexPID = ARRAY_PID.indexOf(dataPID)
+            val indexPID = listPID!!.indexOf(dataPID)
             spinnerInputPIDPRFEdit.setSelection(indexPID)
 
             data.location = cursor.getString(5)

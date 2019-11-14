@@ -36,6 +36,7 @@ class EditPRFCandidateActivity : AppCompatActivity() {
     var notes: EditText? = null
     var ID_prf_candidate = 0
     var listPosition: List<String>? = null
+    var listSrf: List<String>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -150,7 +151,7 @@ class EditPRFCandidateActivity : AppCompatActivity() {
                 batch,
                 listPosition!![position],
                 placementDate,
-                ARRAY_SRF_NUMBER[srfNumber],
+                listSrf!![srfNumber],
                 customAllowence,
                 ARRAY_CANDIDATE_STATUS[candidateStatus],
                 signContractDate,
@@ -259,9 +260,10 @@ class EditPRFCandidateActivity : AppCompatActivity() {
     }
 
     fun isiSpinnerSRFNumber(){
+        listSrf = databaseQueryHelper.readSrfNumber()
         val adapterSRFNumber = ArrayAdapter<String>(context,
             android.R.layout.simple_spinner_item,
-            ARRAY_SRF_NUMBER
+            listSrf!!
         )
         adapterSRFNumber.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinnerSRFNumberPRFCandidateEdit.adapter = adapterSRFNumber
@@ -328,7 +330,7 @@ class EditPRFCandidateActivity : AppCompatActivity() {
             inputPlacementDatePRFCandidateEdit.setText(data.placement_date)
 
             val dataSrfNumber = cursor.getString(6)
-            val indexSrfNumber = ARRAY_SRF_NUMBER.indexOf(dataSrfNumber)
+            val indexSrfNumber = listSrf!!.indexOf(dataSrfNumber)
             spinnerSRFNumberPRFCandidateEdit.setSelection(indexSrfNumber)
 
             data.allowence_candidate = cursor.getString(7)

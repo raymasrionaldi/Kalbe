@@ -106,7 +106,7 @@ class ProviderToolsFragmentData(context: Context, val fm: FragmentManager): Frag
     }
 
     fun search(keyword: String, databaseQueryHelper: ProviderToolsQueryHelper) {
-        val listPositionLevel = databaseQueryHelper.cariProviderToolsModels(keyword)
-        tampilkanListProviderTools(listPositionLevel, recyclerView!!)
+        val listProviderTools = databaseQueryHelper.cariProviderToolsModels(keyword)
+        tampilkanListProviderTools(listProviderTools, recyclerView!!)
     }
 }

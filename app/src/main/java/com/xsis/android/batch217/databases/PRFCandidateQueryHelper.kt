@@ -143,4 +143,18 @@ class PRFCandidateQueryHelper(val databaseHelper: DatabaseHelper)  {
         return listEmployeePosition
     }
 
+    fun readSrfNumber():List<String> {
+        val listSrfNumber = ArrayList<String>()
+        val db = databaseHelper.readableDatabase
+        val queryReadPosition = "SELECT $ID_SRF FROM $TABEL_SRF WHERE $IS_DELETED = 'false'"
+        val cursor = db.rawQuery(queryReadPosition, null)
+        if (cursor.count > 0) {
+            for (i in 0 until cursor.count) {
+                cursor.moveToPosition(i)
+                listSrfNumber.add(cursor.getString(0))
+            }
+        }
+        return listSrfNumber
+    }
+
 }

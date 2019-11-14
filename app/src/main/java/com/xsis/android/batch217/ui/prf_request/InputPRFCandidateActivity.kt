@@ -35,6 +35,7 @@ class InputPRFCandidateActivity : AppCompatActivity() {
     var notes: EditText? = null
     var id_from_request = 0
     var listPosition: List<String>? = null
+    var listSrf: List<String>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -161,7 +162,7 @@ class InputPRFCandidateActivity : AppCompatActivity() {
                                 batch,
                                 listPosition!![position],
                                 placementDate,
-                                ARRAY_SRF_NUMBER[srfNumber],
+                                listSrf!![srfNumber],
                                 customAllowence,
                                 ARRAY_CANDIDATE_STATUS[candidateStatus],
                                 signContractDate,
@@ -294,9 +295,10 @@ class InputPRFCandidateActivity : AppCompatActivity() {
     }
 
     fun isiSpinnerSRFNumber(){
+        listSrf = databaseQueryHelper.readSrfNumber()
         val adapterSRFNumber = ArrayAdapter<String>(context,
             android.R.layout.simple_spinner_item,
-            ARRAY_SRF_NUMBER
+            listSrf!!
         )
         adapterSRFNumber.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinnerSRFNumberPRFCandidate.adapter = adapterSRFNumber

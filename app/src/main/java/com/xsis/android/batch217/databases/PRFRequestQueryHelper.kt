@@ -202,6 +202,20 @@ class PRFRequestQueryHelper (val databaseHelper: DatabaseHelper) {
         return listTypePRF
     }
 
+    fun readPIDPRF(): List<String> {
+        val listPID = ArrayList<String>()
+        val db = databaseHelper.readableDatabase
+        val queryReadType = "SELECT $PID_CREATE FROM $TABEL_PROJECT_CREATE "
+        val cursor = db.rawQuery(queryReadType, null)
+        if (cursor.count > 0) {
+            for (i in 0 until cursor.count) {
+                cursor.moveToPosition(i)
+                listPID.add(cursor.getString(0))
+            }
+        }
+        return listPID
+    }
+
     fun setWinPRF(id:Int){
         val db = databaseHelper.writableDatabase
         val values = ContentValues()

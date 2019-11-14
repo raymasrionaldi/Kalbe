@@ -39,6 +39,7 @@ class InputPRFRequestActivity : AppCompatActivity() {
     var bast: Spinner? = null
     var billing: EditText? = null
     var listTypePRF: List<String>? = null
+    var listPID: List<String>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -177,7 +178,6 @@ class InputPRFRequestActivity : AppCompatActivity() {
             requiredPlacementPRFRequest.isVisible = true
         }
         else if (PID == 0) {
-            inputPIDPRF.setHintTextColor(Color.RED)
             requiredPIDPRFRequest.isVisible = true
         }
         else if (period.isEmpty()) {
@@ -197,14 +197,13 @@ class InputPRFRequestActivity : AppCompatActivity() {
             requiredEmailPRFRequest.isVisible = true
         }
         else if (notebook == 0){
-            inputNotebookPRF.setHintTextColor(Color.RED)
             requiredNotebookPRFRequest.isVisible = true
         }
         else {
             insertKeDatabase(tanggal,
                 listTypePRF!![type],
                 placement,
-                ARRAY_PID[PID],
+                listPID!![PID],
                 location,
                 period,
                 userName,
@@ -321,9 +320,10 @@ class InputPRFRequestActivity : AppCompatActivity() {
     }
 
     fun isiSpinnerPID(){
+        listPID = databaseQueryHelper.readPIDPRF()
         val adapterPID = ArrayAdapter<String>(context,
             android.R.layout.simple_spinner_item,
-            ARRAY_PID
+            listPID!!
         )
         adapterPID.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinnerInputPIDPRF.adapter = adapterPID
