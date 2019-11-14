@@ -12,7 +12,7 @@
         android:background="@color/warnaBiru"
         android:gravity="center_horizontal|center_vertical"
         android:orientation="horizontal"
-        android:padding="10dp">
+        android:padding="12dp">
 
         <LinearLayout
             android:layout_width="0dp"
@@ -75,7 +75,7 @@
         <TextView
             android:id="@+id/text_collected"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="60dp"
             android:textAlignment="center"
             android:gravity="center_horizontal|center_vertical"
             android:text="READY TO BE COLLECTED"
@@ -85,8 +85,19 @@
             android:textStyle="bold"/>
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/dataNotFoundTimesheetCollection"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal|center_vertical"
+        android:text="Data not found"
+        android:textStyle="bold"
+        android:textColor="@android:color/black"
+        android:visibility="gone" />
+
+
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/listTimCollectionRecycler"
+        android:id="@+id/listTimesheetCollectionRecycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center_horizontal"

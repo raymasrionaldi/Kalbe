@@ -14,3 +14,4 @@ val COLLECTED = "Collected"
 
 val MONTH_TIMESHEET = "Month"
 val YEAR_TIMESHEET = "Year"
+val CLIENT_TIMESHEET = "Client"

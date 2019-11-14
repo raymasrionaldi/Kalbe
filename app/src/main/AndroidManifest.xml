@@ -15,6 +15,7 @@
         <activity android:name=".ui.timesheet.timesheet_approval.TimesheetApprovalDetailActivity" />
         <activity android:name=".ui.timesheet.timesheet_approval.TimesheetApprovalProcessActivity" />
         <activity android:name=".ui.timesheet.timesheet_collection.DataCollectedActivity" />
+        <activity android:name=".ui.timesheet.timesheet_collection.TimesheetCollectionDetailActivity"></activity>
         <activity android:name=".ui.prf_request.EditPRFCandidateActivity" />
         <activity android:name=".ui.prf_request.InputPRFCandidateActivity" />
         <activity android:name=".ui.prf_request.EditPRFRequestActivity" />
