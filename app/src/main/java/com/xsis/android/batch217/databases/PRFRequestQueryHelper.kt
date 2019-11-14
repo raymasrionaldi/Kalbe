@@ -1,5 +1,6 @@
 package com.xsis.android.batch217.databases
 
+import android.content.ContentValues
 import android.database.Cursor
 import com.xsis.android.batch217.models.PRFRequest
 import com.xsis.android.batch217.utils.*
@@ -187,6 +188,18 @@ class PRFRequestQueryHelper (val databaseHelper: DatabaseHelper) {
             }
         }
         return listTypePRF
+    }
+
+    fun setWinPRF(id:Int){
+        val db = databaseHelper.writableDatabase
+        val values = ContentValues()
+        values.put(WIN_STATUS, "true")
+        db.update(TABEL_PRF_REQUEST, values, "$ID_PRF_REQUEST = ?", arrayOf(id.toString()))
+
+
+//        val queryUpdate = "UPDATE $TABEL_PRF_REQUEST SET $WIN_STATUS = 'true' WHERE $ID_PRF_REQUEST = $id"
+//        val cursor = db.rawQuery(queryUpdate, null)
+        println("UPDATE $TABEL_PRF_REQUEST SET $WIN_STATUS = 'true' WHERE $ID_PRF_REQUEST = $id")
     }
 
 }
