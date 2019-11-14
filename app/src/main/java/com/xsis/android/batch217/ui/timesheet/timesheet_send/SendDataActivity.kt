@@ -1,6 +1,8 @@
 package com.xsis.android.batch217.ui.timesheet.timesheet_send
 
 
+import android.app.AlertDialog
+import android.content.DialogInterface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -13,9 +15,6 @@ import com.xsis.android.batch217.adapters.fragments.ListTimesheetSendAdapter
 import com.xsis.android.batch217.databases.DatabaseHelper
 import com.xsis.android.batch217.databases.TimesheetQueryHelper
 import com.xsis.android.batch217.models.Timesheet
-import com.xsis.android.batch217.utils.CREATED
-import com.xsis.android.batch217.utils.MONTH_TIMESHEET
-import com.xsis.android.batch217.utils.YEAR_TIMESHEET
 import kotlinx.android.synthetic.main.activity_send_data.*
 import java.util.*
 import javax.mail.Message.RecipientType
@@ -24,24 +23,24 @@ import javax.mail.internet.MimeMessage
 import java.util.Properties
 import javax.mail.*
 import android.os.StrictMode
-
-
-
+import android.view.MenuItem
+import android.widget.Toast
+import com.xsis.android.batch217.utils.*
+import java.text.SimpleDateFormat
 
 
 class SendDataActivity : AppCompatActivity() {
+    val context = this
+    lateinit var listTimesheet : List<Timesheet>
     val user = "satriahanif4@gmail.com"
-    val tos = arrayOf("other.user@otherserver.com")
+    val tos = arrayOf("satriahanif4@gmail.com")
     val ccs = arrayOf<String>()
     val title = "Rosetta Code Example"
-    val body = "This is just a test email"
     val password = "hanifan94"
 
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        val context = this
-        lateinit var listTimesheet : List<Timesheet>
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
         supportActionBar!!.hide()
@@ -68,7 +67,7 @@ class SendDataActivity : AppCompatActivity() {
         val databaseHelper = DatabaseHelper(context)
         val databaseQueryHelper = TimesheetQueryHelper(databaseHelper)
 
-        listTimesheet = databaseQueryHelper.getTimesheetBerdasarkanWaktuDanProgress(month, year, CREATED)
+        listTimesheet = databaseQueryHelper.getTimesheetBerdasarkanWaktuDanProgress(month, year, APPROVED)
         if (listTimesheet.isEmpty() || year.isEmpty() || month.isEmpty()) {
             dataNotFoundTimesheetSend.visibility = View.VISIBLE
             listTimesheetSendRecycler.visibility = View.GONE
@@ -84,9 +83,9 @@ class SendDataActivity : AppCompatActivity() {
             listTimesheetSendRecycler.addItemDecoration(dividerItemDecoration)
 
 
-            val adapterTimSub = ListTimesheetSendAdapter(context!!, listTimesheet)
-            listTimesheetSendRecycler.adapter = adapterTimSub
-            adapterTimSub.notifyDataSetChanged()
+            val adapterTimesheetSend = ListTimesheetSendAdapter(context!!, listTimesheet)
+            listTimesheetSendRecycler.adapter = adapterTimesheetSend
+            adapterTimesheetSend.notifyDataSetChanged()
 
             buttonNextSend.setOnClickListener{
 //                val recipient = context!!.toString().trim()
@@ -95,10 +94,13 @@ class SendDataActivity : AppCompatActivity() {
 
                 //method call for email intent with these inputs as parameters
 
-                sendEmail(user, tos, ccs, title, body, password)
+                sendEmail(user, tos, ccs, title, password)
 
             }
 
+        }
+        buttonBackTimesheetSend.setOnClickListener {
+            finish()
         }
     }
 
@@ -107,35 +109,83 @@ class SendDataActivity : AppCompatActivity() {
             PasswordAuthentication(user, password.toString())
     }
 
-    private fun sendEmail(user: String, tos: Array<String>, ccs: Array<String>, title: String,
-                          body: String, password: String) {
-        val props = Properties()
-        val host = "smtp.gmail.com"
-        with (props) {
-            put("mail.smtp.host", host)
-            put("mail.smtp.port", "587") // for TLS
-            put("mail.smtp.auth", "true")
-            put("mail.smtp.starttls.enable", "true")
-        }
+    fun sendEmail(user: String, tos: Array<String>, ccs: Array<String>, title: String,
+                           password: String) {
+        val konfirmasiSend = AlertDialog.Builder(context)
+        konfirmasiSend.setMessage("DATA SENDING\n\nAre you sure to send the data ?\n\n\n")
+            .setPositiveButton("SEND", DialogInterface.OnClickListener{ dialog, which ->
+                Toast.makeText(context,"SUKSES!!!", Toast.LENGTH_SHORT).show()
+                val databaseHelper = DatabaseHelper(context!!)
+                val databaseQueryHelper = TimesheetQueryHelper(databaseHelper)
+                val db = databaseHelper.writableDatabase
 
-        val session = Session.getInstance(
-            props,
-            auth
-        )
-        val message = MimeMessage(session)
-        with (message) {
-            setFrom(InternetAddress(user))
-            for (to in tos) addRecipient(Message.RecipientType.TO, InternetAddress(to))
-            for (cc in ccs) addRecipient(Message.RecipientType.TO, InternetAddress(cc))
-            setSubject(title)
-            setText(body)
-        }
-        val transport = session.getTransport("smtp")
-        with (transport) {
-            connect(host, user, password)
-            sendMessage(message, message.allRecipients)
-            close()
-        }
+                for(timesheet in listTimesheet) {
+                    val queryProgress =
+                        "UPDATE $TABEL_TIMESHEET SET $PROGRESS_TIMESHEET = 'Sent' WHERE $ID_TIMESHEET = ${timesheet.id_timesheet}"
+                    db.execSQL(queryProgress)
+                }
+                val formatter1 = SimpleDateFormat(DATE_PATTERN)
+                val formatter2 = SimpleDateFormat("dd-MM-yyyy")
+                var min = Long.MAX_VALUE
+                var max = Long.MIN_VALUE
+                for (timesheet in listTimesheet) {
+                    val dateString = formatter1.parse(timesheet.reportDate_timesheet).time
+                    if (dateString > max) {
+                        max = dateString
+                    }
+                    if (dateString < min) {
+                        min = dateString
+                    }
+                }
+
+                val body = "Timesheet tanggal ${formatter2.format(min)} s/d ${formatter2.format(max)} sudah dikirim"
+
+                val props = Properties()
+                val host = "smtp.gmail.com"
+                with (props) {
+                    put("mail.smtp.host", host)
+                    put("mail.smtp.port", "587") // for TLS
+                    put("mail.smtp.auth", "true")
+                    put("mail.smtp.starttls.enable", "true")
+                }
+
+                val session = Session.getInstance(
+                    props,
+                    auth
+                )
+                val message = MimeMessage(session)
+                with (message) {
+                    setFrom(InternetAddress(user))
+                    for (to in tos) addRecipient(Message.RecipientType.TO, InternetAddress(to))
+                    for (cc in ccs) addRecipient(Message.RecipientType.TO, InternetAddress(cc))
+                    setSubject(title)
+                    setText(body)
+                }
+                val transport = session.getTransport("smtp")
+                with (transport) {
+                    connect(host, user, password)
+                    sendMessage(message, message.allRecipients)
+                    close()
+                }
+
+                val berhasilSend = AlertDialog.Builder(context)
+                berhasilSend.setMessage("DATA HAS BEEN SENT\n\n")
+                    .setPositiveButton("CLOSE", DialogInterface.OnClickListener{ dialog, which ->
+                        dialog.cancel()
+                        finish()
+                    })
+                    .setCancelable(true)
+
+                berhasilSend.create().show()
+
+            })
+            .setNegativeButton("CANCEL", DialogInterface.OnClickListener{ dialog, which ->
+                dialog.cancel()
+            })
+            .setCancelable(true)
+
+        konfirmasiSend.create().show()
+
 
 //        /*ACTION_SEND action to launch an email client installed on your Android device.*/
 //        val mIntent = Intent(Intent.ACTION_SEND)
@@ -164,4 +214,6 @@ class SendDataActivity : AppCompatActivity() {
 //        }
 
     }
+
+
 }

@@ -1,5 +1,4 @@
 package com.xsis.android.batch217.ui.timesheet.timesheet_send
-
 import android.content.Intent
 import android.os.Bundle
 import android.view.*
@@ -49,10 +48,34 @@ class TimesheetSendFragment : Fragment(){
                 if (position != 0 && bulan!!.selectedItemPosition != 0) {
                     ubahResetButton(context!!, true, buttonReset!!)
                     ubahSearchButton(context!!, true, buttonSearch!!)
-//                }else if(position != 0 || bulan!!.selectedItemPosition != 0){
-//                    ubahResetButton(context!!, true, buttonReset!!)
-//                    ubahSearchButton(context!!, false, buttonSearch!!)
+                }else if(position != 0 || bulan!!.selectedItemPosition != 0){
+                    ubahResetButton(context!!, true, buttonReset!!)
+                    ubahSearchButton(context!!, false, buttonSearch!!)
                 } else {
+                    ubahResetButton(context!!, false, buttonReset!!)
+                    ubahSearchButton(context!!, false, buttonSearch!!)
+                }
+            }
+
+            override fun onNothingSelected(arg0: AdapterView<*>) {}
+        }
+        //kondisi button reset dan search berdasarkan spinner bulan
+        bulan!!.onItemSelectedListener = object :
+            AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                if (position != 0 && tahun!!.selectedItemPosition != 0) {
+                    ubahResetButton(context!!, true, buttonReset!!)
+                    ubahSearchButton(context!!, true, buttonSearch!!)
+                }else if(position != 0 || tahun!!.selectedItemPosition != 0){
+                    ubahResetButton(context!!, true, buttonReset!!)
+                    ubahSearchButton(context!!, false, buttonSearch!!)
+                }
+                else {
                     ubahResetButton(context!!, false, buttonReset!!)
                     ubahSearchButton(context!!, false, buttonSearch!!)
                 }
