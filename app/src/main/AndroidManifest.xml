@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.xsis.android.batch217">
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
@@ -11,11 +12,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.timesheet.timesheet_send.SendDataActivity"></activity>
+        <activity android:name=".ui.summary_prf.SummaryDetailActivity"></activity>
+        <activity android:name=".ui.timesheet.timesheet_send.SendDataActivity" />
         <activity android:name=".ui.timesheet.timesheet_approval.TimesheetApprovalDetailActivity" />
         <activity android:name=".ui.timesheet.timesheet_approval.TimesheetApprovalProcessActivity" />
         <activity android:name=".ui.timesheet.timesheet_collection.DataCollectedActivity" />
-        <activity android:name=".ui.timesheet.timesheet_collection.TimesheetCollectionDetailActivity"></activity>
+        <activity android:name=".ui.timesheet.timesheet_collection.TimesheetCollectionDetailActivity" />
         <activity android:name=".ui.prf_request.EditPRFCandidateActivity" />
         <activity android:name=".ui.prf_request.InputPRFCandidateActivity" />
         <activity android:name=".ui.prf_request.EditPRFRequestActivity" />
