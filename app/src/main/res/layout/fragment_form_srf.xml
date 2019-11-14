@@ -34,14 +34,22 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <com.google.android.material.textfield.TextInputEditText
+                <EditText
                     android:id="@+id/inputNumberSRF"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:focusable="false"
                     android:hint="Nomor SRF*"
-                    android:longClickable="false"
-                    android:textSize="15dp"/>
+                    android:textSize="15dp"
+                    android:inputType="text"/>
+
+                <TextView
+                    android:id="@+id/requiredNumberSRF"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Required"
+                    android:textColor="@color/warnaMerah"
+                    android:textSize="@dimen/text_size_small"
+                    android:visibility="invisible" />
 
                 <com.chivorn.smartmaterialspinner.SmartMaterialSpinner
                     android:id="@+id/spinnerJenisSRF"
@@ -51,14 +59,22 @@
                     app:smsp_hint="Jenis SRF*"
                     app:smsp_multilineError="false"/>
 
-                <com.google.android.material.textfield.TextInputEditText
+                <EditText
                     android:id="@+id/inputJumlahKebutuhan"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:focusable="false"
                     android:hint="Jumlah Kebutuhan*"
-                    android:longClickable="false"
-                    android:textSize="15dp"/>
+                    android:textSize="15dp"
+                    android:inputType="number"/>
+
+                <TextView
+                    android:id="@+id/requiredJumlahKebutuhan"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Required"
+                    android:textColor="@color/warnaMerah"
+                    android:textSize="@dimen/text_size_small"
+                    android:visibility="invisible" />
 
                 <com.chivorn.smartmaterialspinner.SmartMaterialSpinner
                     android:id="@+id/spinnerClient"
@@ -76,33 +92,55 @@
                     app:smsp_hint="Grade"
                     app:smsp_multilineError="false" />
 
-                <com.google.android.material.textfield.TextInputEditText
+                <EditText
                     android:id="@+id/inputNamaUser"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:focusable="false"
                     android:hint="Nama User*"
-                    android:longClickable="false"
-                    android:textSize="15dp"/>
+                    android:textSize="15dp"
+                    android:inputType="text"/>
 
-                <com.google.android.material.textfield.TextInputEditText
+                <TextView
+                    android:id="@+id/requiredNamaUser"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Required"
+                    android:textColor="@color/warnaMerah"
+                    android:textSize="@dimen/text_size_small"
+                    android:visibility="invisible" />
+
+                <EditText
                     android:id="@+id/inputEmailUser"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:focusable="false"
                     android:hint="Email User*"
-                    android:longClickable="false"
                     android:textSize="15dp"
                     android:inputType="textEmailAddress"/>
 
-                <com.google.android.material.textfield.TextInputEditText
+                <TextView
+                    android:id="@+id/requiredEmailUser"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Required"
+                    android:textColor="@color/warnaMerah"
+                    android:textSize="@dimen/text_size_small"
+                    android:visibility="invisible" />
+
+                <EditText
                     android:id="@+id/inputSalesPrice"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:focusable="false"
                     android:hint="Sales Price*"
-                    android:longClickable="false"
                     android:textSize="15dp"/>
+
+                <TextView
+                    android:id="@+id/requiredSalesPrice"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Required"
+                    android:textColor="@color/warnaMerah"
+                    android:textSize="@dimen/text_size_small"
+                    android:visibility="invisible" />
 
                 <EditText
                     android:id="@+id/inputLokasi"
@@ -132,7 +170,6 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:background="@drawable/button_reset_off"
-                        android:clickable="false"
                         android:text="@string/reset"
                         android:textColor="@color/warnaTeksResetOff" />
 

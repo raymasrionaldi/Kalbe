@@ -56,6 +56,34 @@ class SRFQueryHelper(val databaseHelper: DatabaseHelper) {
         return listSRF
     }
 
+    fun readListClient(): List<String> {
+        val listClientPosition = ArrayList<String>()
+        val db = databaseHelper.readableDatabase
+        val queryReadPosition = "SELECT $NAMA_COMPANY FROM $TABEL_COMPANY WHERE $IS_DELETED = 'false'"
+        val cursor = db.rawQuery(queryReadPosition, null)
+        if (cursor.count > 0) {
+            for (i in 0 until cursor.count) {
+                cursor.moveToPosition(i)
+                listClientPosition.add(cursor.getString(0))
+            }
+        }
+        return listClientPosition
+    }
+
+    fun readListGrade(): List<String> {
+        val listClientPosition = ArrayList<String>()
+        val db = databaseHelper.readableDatabase
+        val queryReadPosition = "SELECT $NAMA_GRADE FROM $TABEL_GRADE WHERE $IS_DELETED = 'false'"
+        val cursor = db.rawQuery(queryReadPosition, null)
+        if (cursor.count > 0) {
+            for (i in 0 until cursor.count) {
+                cursor.moveToPosition(i)
+                listClientPosition.add(cursor.getString(0))
+            }
+        }
+        return listClientPosition
+    }
+
     fun cariSRFModels(keyword: String): List<SRF> {
         var listSRF = ArrayList<SRF>()
         if (keyword.isNotBlank()) {
