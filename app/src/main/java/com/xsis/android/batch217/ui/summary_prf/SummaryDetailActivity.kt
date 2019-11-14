@@ -54,7 +54,7 @@ class SummaryDetailActivity : AppCompatActivity() {
 
     fun viewDetail() {
         dataPID = databaseQueryHelper.getPRFRequestByID(ID_PRF_Request)
-        dataTypeNama = databaseQueryHelper.readSemuaTypeNamaModels()
+//        dataTypeNama = databaseQueryHelper.readSemuaTypeNamaModels()
 
         prepareData()
         menuAdapter = SummaryPRFExpandableListAdapter(context!!, listDataGroup, listDataChild)
