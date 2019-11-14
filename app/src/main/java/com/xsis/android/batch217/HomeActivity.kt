@@ -37,6 +37,7 @@ import com.xsis.android.batch217.ui.project.ProjectFormActivity
 import com.xsis.android.batch217.ui.project.ProjectFragmentCreate
 import com.xsis.android.batch217.ui.provider_tools.ProviderToolsFragment
 import com.xsis.android.batch217.ui.srf.SRFFragment
+import com.xsis.android.batch217.ui.summary_prf.SummaryPRFFragment
 import com.xsis.android.batch217.ui.timesheet.timesheet_approval.TimesheetApprovalFragment
 import com.xsis.android.batch217.ui.timesheet.timesheet_collection.TimesheetCollectionFragment
 import com.xsis.android.batch217.ui.timesheet.timesheet_entry.EntryTimesheetActivity
@@ -342,6 +343,16 @@ class HomeActivity : AppCompatActivity() {
         heading22.add(getString(R.string.plotting))
         // Header, Child data
         listDataChild[listDataHeader[22]] = heading22
+
+        //Project
+        val item23 = ExpandedMenuModel()
+        item23.name = getString(R.string.menu_report)
+        item23.icon = R.drawable.ic_book_black
+        listDataHeader.add(item23)
+        val heading23 = ArrayList<String>()
+        heading23.add(getString(R.string.summary_prf))
+        listDataChild[listDataHeader[23]] = heading23
+
     }
 
     fun closeNavDrawer() {
@@ -491,7 +502,8 @@ class HomeActivity : AppCompatActivity() {
                 fragmentTransaction.commit()
                 fragment.pindahTab(0)
                 closeNavDrawer()
-            } else if (groupIndex == 22 && childIndex == 0){
+            }
+            else if (groupIndex == 22 && childIndex == 0){
             val fragment = SRFFragment()
             val fragmentTransaction = supportFragmentManager.beginTransaction()
             fragmentTransaction.replace(
@@ -504,6 +516,17 @@ class HomeActivity : AppCompatActivity() {
         } else if (groupIndex == 22 && childIndex == 1){
             //dipakai untuk plotting SRF
         }
+            else if (groupIndex == 23 && childIndex == 0) {
+                val fragment = SummaryPRFFragment()
+                val fragmentTransaction = supportFragmentManager.beginTransaction()
+                fragmentTransaction.replace(
+                    R.id.nav_host_fragment,
+                    fragment,
+                    getString(R.string.summary_prf)
+                )
+                fragmentTransaction.commit()
+                closeNavDrawer()
+            }
 
 
             return true

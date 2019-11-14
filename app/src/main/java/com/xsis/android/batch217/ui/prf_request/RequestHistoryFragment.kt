@@ -27,12 +27,12 @@ class RequestHistoryFragment : Fragment(), OnBackPressedListener {
 
         activity!!.title = getString(R.string.menu_PRF)
 
-        val tabKontrak = RequestHistoryFragmentAdapter(
+        val tabData = RequestHistoryFragmentAdapter(
             context!!,
             childFragmentManager
         )
         val viewPager = root.findViewById(R.id.viewPagerRequestHistory) as CustomViewPager
-        viewPager.adapter = tabKontrak
+        viewPager.adapter = tabData
         viewPager.setSwipePagingEnabled(false)
 //        viewPager.setOnTouchListener { v, event -> true  }
 
