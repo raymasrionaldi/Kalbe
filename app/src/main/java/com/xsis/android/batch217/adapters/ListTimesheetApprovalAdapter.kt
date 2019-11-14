@@ -96,7 +96,7 @@ class ListTimesheetApprovalAdapter(
                 if (databaseQueryHelper == null) {
                     databaseQueryHelper = TimesheetQueryHelper(databaseHelper!!)
                 }
-                AlertDialog.Builder(context)
+                AlertDialog.Builder(context, R.style.AlertDialogTheme)
                     .setCancelable(true)
                     .setTitle("DATA APPROVAL")
                     .setMessage("Are you sure to process timesheet ?")
@@ -131,7 +131,7 @@ class ListTimesheetApprovalAdapter(
             "AN ERROR OCCURRED"
         }
 
-        AlertDialog.Builder(context)
+        AlertDialog.Builder(context, R.style.AlertDialogTheme)
             .setCancelable(false)
             .setTitle(message)
             .setPositiveButton("CLOSE") { dialog, which ->
