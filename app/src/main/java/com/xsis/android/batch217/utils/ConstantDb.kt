@@ -150,6 +150,7 @@ val NOTEBOOK = "notebook"
 val OVERTIME = "overtime"
 val BAST = "bast"
 val BILLING = "billing"
+val WIN_STATUS = "win_status"
 
 val TABEL_PRF_CANDIDATE = "prf_candidates"
 val ID_FROM_PRF = "id_from_prf"
