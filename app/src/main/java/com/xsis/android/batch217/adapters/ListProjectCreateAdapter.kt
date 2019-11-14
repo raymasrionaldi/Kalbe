@@ -38,11 +38,6 @@ class ListProjectCreateAdapter(val context: Context, val listProjectCreate:List<
             fragment.bawaID(ID)
             adapter.notifyDataSetChanged()
             viewPager.setCurrentItem(1, true)
-
-//            val fragmentForm = ProjectFragmentCreateForm(context, fm)
-//            val fragmentParent = ProjectFragmentCreate()
-//            fragmentParent.pindahTab(1)
-//            fragmentForm.bawaID(ID)
         }
     }
 }

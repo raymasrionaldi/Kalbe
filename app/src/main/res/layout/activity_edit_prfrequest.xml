@@ -8,6 +8,7 @@
 
 
     <LinearLayout
+        android:id="@+id/toolbarPRF"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/warnaBiru"
@@ -69,6 +70,7 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/judulFormUbahPRFRequest"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
