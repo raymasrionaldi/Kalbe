@@ -3,6 +3,7 @@ package com.xsis.android.batch217.databases
 import android.content.ContentValues
 import android.database.Cursor
 import com.xsis.android.batch217.models.PRFRequest
+import com.xsis.android.batch217.models.TypeNama
 import com.xsis.android.batch217.utils.*
 
 class PRFRequestQueryHelper (val databaseHelper: DatabaseHelper) {
@@ -214,6 +215,41 @@ class PRFRequestQueryHelper (val databaseHelper: DatabaseHelper) {
             }
         }
         return listPID
+    }
+
+    fun getTypeNama(): Cursor {
+        val db = databaseHelper.readableDatabase
+        val queryGetTypeNama = "SELECT $TABEL_PRF_REQUEST.$TYPE, $TABEL_PRF_CANDIDATE.$NAMA_PRF_CANDIDATE " +
+                "FROM $TABEL_PRF_REQUEST " +
+                "JOIN $TABEL_PRF_CANDIDATE"
+        return db.rawQuery(queryGetTypeNama, null)
+    }
+
+    fun konversiCursorKeListTypeNamaModel(cursor: Cursor): ArrayList<TypeNama> {
+        var listTypeNama = ArrayList<TypeNama>()
+
+        for (c in 0 until cursor.count) {
+            cursor.moveToPosition(c)
+
+            val typeNama = TypeNama()
+            typeNama.type = cursor.getString(0)
+            typeNama.namaCandidate = cursor.getString(1)
+
+            listTypeNama.add(typeNama)
+        }
+
+        return listTypeNama
+    }
+
+    fun readSemuaTypeNamaModels(): List<TypeNama> {
+        var listTypeNama = ArrayList<TypeNama>()
+
+        val cursor = getTypeNama()
+        if (cursor.count > 0) {
+            listTypeNama = konversiCursorKeListTypeNamaModel(cursor)
+        }
+
+        return listTypeNama
     }
 
     fun setWinPRF(id:Int){

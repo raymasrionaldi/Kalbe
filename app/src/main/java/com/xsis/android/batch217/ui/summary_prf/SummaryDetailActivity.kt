@@ -10,12 +10,14 @@ import com.xsis.android.batch217.adapters.expandablelist.SummaryPRFExpandableLis
 import com.xsis.android.batch217.databases.DatabaseHelper
 import com.xsis.android.batch217.databases.PRFRequestQueryHelper
 import com.xsis.android.batch217.models.PRFRequest
+import com.xsis.android.batch217.models.TypeNama
 import com.xsis.android.batch217.utils.ID_PRF_REQUEST
 import kotlinx.android.synthetic.main.activity_summary_detail.*
 
 class SummaryDetailActivity : AppCompatActivity() {
     val context = this
-    var data = PRFRequest()
+    var dataPID = PRFRequest()
+    var dataTypeNama = TypeNama()
     internal lateinit var menuAdapter: SummaryPRFExpandableListAdapter
     internal lateinit var listDataGroup: MutableList<String>
     internal lateinit var listDataChild: HashMap<String, List<String>>
@@ -51,7 +53,8 @@ class SummaryDetailActivity : AppCompatActivity() {
 
 
     fun viewDetail() {
-        data = databaseQueryHelper.getPRFRequestByID(ID_PRF_Request)
+        dataPID = databaseQueryHelper.getPRFRequestByID(ID_PRF_Request)
+        dataTypeNama = databaseQueryHelper.readSemuaTypeNamaModels()
 
         prepareData()
         menuAdapter = SummaryPRFExpandableListAdapter(context!!, listDataGroup, listDataChild)
@@ -66,12 +69,19 @@ class SummaryDetailActivity : AppCompatActivity() {
         listDataGroup.add(group0)
 
         val childPIDs = ArrayList<String>()
-        val childPID0 = data.pid
+        val childPID0 = dataPID.pid
         childPIDs.add(childPID0!!)
         listDataChild[listDataGroup[0]] = childPIDs
 
         val group1 = "PRF"
         listDataGroup.add(group1)
+
+/*        val childPRFs = ArrayList<String>()
+        dataTypeNama.let {typeNama ->
+            for (dataPRF in typeNama) {
+                childPRFs.add("${dataPRF.type} \t-\t ${dataPRF.namaCandidate}")
+            }
+        }*/
 
         /*val childPRFs = ArrayList<String>()
         for( dataPRF in data2){
