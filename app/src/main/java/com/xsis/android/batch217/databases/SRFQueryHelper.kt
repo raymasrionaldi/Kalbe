@@ -26,7 +26,7 @@ class SRFQueryHelper(val databaseHelper: DatabaseHelper) {
             cursor.moveToPosition(c)
 
             val srf = SRF()
-            srf.id_srf = cursor.getInt(0)
+            srf.id_srf = cursor.getString(0)
             srf.jenis_srf = cursor.getString(1)
             srf.jumlah_kebutuhan = cursor.getInt(2)
             srf.id_company = cursor.getString(3)
@@ -63,11 +63,11 @@ class SRFQueryHelper(val databaseHelper: DatabaseHelper) {
             val queryCari =
                 "SELECT $TABEL_SRF.*, $TABEL_COMPANY.$NAMA_COMPANY, $TABEL_GRADE.$NAMA_GRADE " +
                         "FROM $TABEL_SRF,$TABEL_COMPANY,$TABEL_GRADE " +
-                        "WHERE $TABEL_SRF.$ID_COMPANY == $TABEL_COMPANY.$ID_COMPANY " +
-                        "AND $TABEL_SRF.$ID_GRADE = $TABEL_GRADE.$NAMA_GRADE " +
+                        "WHERE $TABEL_SRF.$ID_COMPANY = $TABEL_COMPANY.$ID_COMPANY " +
+                        "AND $TABEL_SRF.$ID_GRADE = $TABEL_GRADE.$ID_GRADE " +
                         "AND $TABEL_COMPANY.$NAMA_COMPANY LIKE '%$keyword%' " +
                         "AND $TABEL_SRF.$IS_DELETED = 'false'"
-
+            println(queryCari)
             val cursor = db.rawQuery(queryCari, null)
             if (cursor.count > 0) {
                 listSRF= konversiCursorKeListSRFModel(cursor)
@@ -113,7 +113,7 @@ class SRFQueryHelper(val databaseHelper: DatabaseHelper) {
         )
     }
 
-    fun hapusSRF(id: Int): Int {
+    fun hapusSRF(id: String): Int {
         val db = databaseHelper.writableDatabase
 
         val values = ContentValues()

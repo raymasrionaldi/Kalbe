@@ -50,7 +50,7 @@ class SRFFragmentData (context: Context, val fm: FragmentManager) : Fragment() {
         val databaseHelper = DatabaseHelper(context!!)
         databaseQueryHelper = SRFQueryHelper(databaseHelper)
 
-//        getSemuaCompany(recyclerView!!, databaseQueryHelper!!)
+        //getSemuaSRF(recyclerView!!, databaseQueryHelper!!)
 
         return customView
     }

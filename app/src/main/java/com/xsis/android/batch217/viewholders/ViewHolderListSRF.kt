@@ -17,9 +17,9 @@ class ViewHolderListSRF(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     fun setModel(model: SRF) {
         val nama = model.nama_company
-        val namaUser = model.nama_user
+        var teksbawah = "${model.jenis_srf}, ${model.id_srf}"
         teksUtama.text = nama
-        teksTambahan.text = namaUser
+        teksTambahan.text = teksbawah
 
         val image = NameInitialsCircleImageView.ImageInfo
             .Builder(ambilSemuaInisial(nama!!))

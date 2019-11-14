@@ -1,7 +1,7 @@
 package com.xsis.android.batch217.models
 
 class SRF {
-    var id_srf:Int= 0
+    var id_srf:String?= null
     var jenis_srf:String?=null
     var jumlah_kebutuhan:Int=0
     var id_company: String? = null
