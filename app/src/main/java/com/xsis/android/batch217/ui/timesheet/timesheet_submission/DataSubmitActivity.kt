@@ -106,7 +106,7 @@ class DataSubmitActivity : AppCompatActivity() {
 
 
     fun submitted() {
-        val konfirmasiSubmit = AlertDialog.Builder(context)
+        val konfirmasiSubmit = AlertDialog.Builder(context, R.style.AlertDialogTheme)
         konfirmasiSubmit.setMessage("DATA SUBMISSION\n\nAre you sure to submit the data ?\n\n\n")
             .setPositiveButton("SUBMIT", DialogInterface.OnClickListener { dialog, which ->
                 Toast.makeText(context, "SUKSES!!!", Toast.LENGTH_SHORT).show()
@@ -125,7 +125,7 @@ class DataSubmitActivity : AppCompatActivity() {
                 sendEmail(user, tos, ccs, title, password)
 
                 //pesan berhasil disubmit
-                val berhasilSubmited = AlertDialog.Builder(context)
+                val berhasilSubmited = AlertDialog.Builder(context, R.style.AlertDialogTheme)
                 berhasilSubmited.setMessage("DATA HAS BEEN SUBMISSION\n\n")
                     .setPositiveButton("CLOSE", DialogInterface.OnClickListener { dialog, which ->
                         dialog.cancel()
