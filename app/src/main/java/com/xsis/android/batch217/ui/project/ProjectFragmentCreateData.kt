@@ -34,7 +34,7 @@ class ProjectFragmentCreateData(context: Context, val fm: FragmentManager): Frag
         setHasOptionsMenu(true)
 
 
-        val customView = inflater.inflate(R.layout.fragment_project_create_data,container,false)
+        val customView = inflater.inflate(R.layout.fragment_data_project_create,container,false)
         val layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
 
         add = customView.findViewById(R.id.buttonCreateProject)
