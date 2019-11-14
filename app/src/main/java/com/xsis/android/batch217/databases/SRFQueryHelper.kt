@@ -2,6 +2,7 @@ package com.xsis.android.batch217.databases
 
 import android.content.ContentValues
 import android.database.Cursor
+import com.xsis.android.batch217.models.Company
 import com.xsis.android.batch217.models.SRF
 import com.xsis.android.batch217.utils.*
 
@@ -17,6 +18,28 @@ class SRFQueryHelper(val databaseHelper: DatabaseHelper) {
                 "AND $TABEL_SRF.$IS_DELETED = 'false'"
 
         return db.rawQuery(queryRead, null)
+    }
+
+    private fun konversiCursorKeListCompanyModel(cursor: Cursor): ArrayList<Company> {
+        var listCompany = ArrayList<Company>()
+
+        for (c in 0 until cursor.count) {
+            cursor.moveToPosition(c)
+
+            val company = Company()
+            company.idCompany = cursor.getInt(0)
+            company.namaCompany = cursor.getString(1)
+            company.kotaCompany = cursor.getString(2)
+            company.kdPosCompany = cursor.getString(3)
+            company.jlnCompany = cursor.getString(4)
+            company.buildingCompany = cursor.getString(5)
+            company.floorCompany = cursor.getString(6)
+            company.isDeleted = cursor.getString(7)
+
+            listCompany.add(company)
+        }
+
+        return listCompany
     }
 
     private fun konversiCursorKeListSRFModel(cursor: Cursor): ArrayList<SRF> {
@@ -104,10 +127,41 @@ class SRFQueryHelper(val databaseHelper: DatabaseHelper) {
         return listSRF
     }
 
+    fun cariClient(keyword: String): String {
+        var pilihClient = ""
+        if (keyword.isNotBlank()) {
+            val db = databaseHelper.readableDatabase
+            val queryCari = "SELECT $TABEL_COMPANY.$ID_COMPANY FROM $TABEL_COMPANY " +
+                        "WHERE $TABEL_COMPANY.$NAMA_COMPANY LIKE '$keyword' "
+            println(queryCari)
+            val cursor = db.rawQuery(queryCari, null)
+            cursor.moveToFirst()
+            println(cursor.getInt(0).toString())
+            pilihClient = cursor.getInt(0).toString()
+        }
+
+        return pilihClient
+    }
+
+    fun cariGrade(keyword: String): String {
+        var pilihGrade = ""
+        if (keyword.isNotBlank()) {
+            val db = databaseHelper.readableDatabase
+            val queryCari = "SELECT $TABEL_GRADE.$ID_GRADE FROM $TABEL_GRADE " +
+                    "WHERE $TABEL_GRADE.$NAMA_GRADE LIKE '$keyword' "
+            println(queryCari)
+            val cursor = db.rawQuery(queryCari, null)
+            cursor.moveToFirst()
+            pilihGrade = cursor.getInt(0).toString()
+        }
+        return pilihGrade
+    }
+
     fun tambahSRF(model: SRF): Long {
         val db = databaseHelper.writableDatabase
 
         val values = ContentValues()
+        values.put(ID_SRF, model.id_srf)
         values.put(JENIS_SRF, model.jenis_srf)
         values.put(JUM_KEBUTUHAN, model.jumlah_kebutuhan)
         values.put(ID_COMPANY, model.id_company)
@@ -122,7 +176,7 @@ class SRFQueryHelper(val databaseHelper: DatabaseHelper) {
         return db.insert(TABEL_SRF, null, values)
     }
 
-    fun editEmpType(model: SRF): Int {
+    fun editSRF(model: SRF): Int {
         val db = databaseHelper.writableDatabase
 
         val values = ContentValues()

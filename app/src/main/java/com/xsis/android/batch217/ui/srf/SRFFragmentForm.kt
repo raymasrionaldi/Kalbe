@@ -145,7 +145,7 @@ class SRFFragmentForm(context: Context, val fm: FragmentManager) : Fragment() {
 
         idData = srf.id_srf!!
         srfNumber!!.setText(srf.id_srf)
-
+        inputNumberSRF.isEnabled = false
         //cara dapat spinnernya
 //        spinnerJenis!!.setSelection(0)
         jumKebutuhan!!.setText(srf.jumlah_kebutuhan)
@@ -247,7 +247,6 @@ class SRFFragmentForm(context: Context, val fm: FragmentManager) : Fragment() {
     }
 
     fun simpanSRF(){
-/*
         val idSRFTeks = srfNumber!!.text.toString().trim()
         val jumKebutuhanText = jumKebutuhan!!.text.toString().trim()
         val namaUserTeks = namaUser!!.text.toString().trim()
@@ -282,40 +281,45 @@ class SRFFragmentForm(context: Context, val fm: FragmentManager) : Fragment() {
             salesPrice!!.setHintTextColor(Color.RED)
             requiredSalesPrice!!.visibility = View.VISIBLE
         }
-
         if (idSRFTeks.isNotEmpty() && jumKebutuhanText.isNotEmpty() && namaUserTeks.isNotEmpty() && emailUserTeks.isNotEmpty() && salesPriceTeks.isNotEmpty()) {
             val model = SRF()
             model.id_srf = data.id_srf
+            model.jenis_srf = spinnerJenis!!.selectedItem.toString()
             //spinner jenis
             model.jumlah_kebutuhan = jumKebutuhanText.toInt()
             //spinner grade dan company
+            println(listClient!![spinnerClient!!.selectedItemPosition])
+            var pilihClient = databaseQueryHelper!!.cariClient(listClient!![spinnerClient!!.selectedItemPosition])
+            model.id_company = pilihClient
+            var pilihGrade = databaseQueryHelper!!.cariGrade(listGrade!![spinnerGrade!!.selectedItemPosition])
+            model.id_grade = pilihGrade
             model.nama_user = namaUserTeks
             model.email_user = emailUserTeks
             model.sales_price = salesPriceTeks
             model.lokasi = lokasiTeks
             model.catatan = catatanText
 
-            val cekCompany = databaseQueryHelper!!.cekCompanySudahAda(model.namaCompany!!)
+            //val cekSRF = databaseQueryHelper!!.cekSRF(model.namaCompany!!)
 
             if (modeForm == MODE_ADD) {
-                if (cekCompany > 0) {
+                /*if (cekSRF > 0) {
                     Toast.makeText(context, DATA_SUDAH_ADA, Toast.LENGTH_SHORT).show()
                     return
-                }
-                if (databaseQueryHelper!!.tambahCompany(model) == -1L) {
+                }*/
+                if (databaseQueryHelper!!.tambahSRF(model) == -1L) {
                     Toast.makeText(context, SIMPAN_DATA_GAGAL, Toast.LENGTH_SHORT).show()
                 } else {
                     Toast.makeText(context, SIMPAN_DATA_BERHASIL, Toast.LENGTH_SHORT)
                         .show()
                 }
             } else if (modeForm == MODE_EDIT) {
-                if ((cekCompany != 1 && model.namaCompany == data.namaCompany) ||
+                /*if ((cekCompany != 1 && model.namaCompany == data.namaCompany) ||
                     (cekCompany != 0 && model.namaCompany != data.namaCompany)
                 ) {
                     Toast.makeText(context, DATA_SUDAH_ADA, Toast.LENGTH_SHORT).show()
                     return
-                }
-                if (databaseQueryHelper!!.editCompany(model) == 0) {
+                }*/
+                if (databaseQueryHelper!!.editSRF(model) == 0) {
                     Toast.makeText(context, EDIT_DATA_GAGAL, Toast.LENGTH_SHORT)
                         .show()
                 } else {
@@ -325,7 +329,6 @@ class SRFFragmentForm(context: Context, val fm: FragmentManager) : Fragment() {
             }
 
         }
-*/
     }
 
     fun pindah(){

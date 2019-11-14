@@ -242,7 +242,7 @@ val DESKRIPSI_POSITION = "deskripsi_position"
 
 val TABEL_SRF = "srf"
 val ID_SRF = "id_srf"
-val JENIS_SRF = "jenis srf"
+val JENIS_SRF = "jenis_srf"
 val JUM_KEBUTUHAN = "jumlah_kebutuhan"
 val NAMA_USER = "nama_user"
 val EMAIL_USER = "email_user"
