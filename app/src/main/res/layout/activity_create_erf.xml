@@ -112,12 +112,22 @@
                 app:smsp_hint="Keahlian*"
                 app:smsp_multilineError="false"/>
 
+            <TextView
+                android:id="@+id/requiredKeahlian"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Required"
+                android:textColor="@color/warnaMerah"
+                android:textSize="@dimen/text_size_small"
+                android:visibility="invisible" />
+
             <EditText
                 android:id="@+id/inputTglTerakhir"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Tgl terakhir di user*"
                 android:textSize="15dp"
+                android:focusable="false"
                 android:inputType="text"/>
 
             <TextView
@@ -159,6 +169,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Tgl dikembalikan*"
+                android:focusable="false"
                 android:textSize="15dp"
                 android:inputType="text"/>
 
@@ -194,6 +205,7 @@
                 android:layout_height="wrap_content"
                 android:hint="Tgl terima dokumen*"
                 android:textSize="15dp"
+                android:focusable="false"
                 android:inputType="text"/>
 
             <TextView
@@ -220,8 +232,6 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="@drawable/button_reset_on"
-                    android:clickable="false"
-                    android:enabled="false"
                     android:text="Cancel"
                     android:textColor="@color/colorWhite" />
 

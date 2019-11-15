@@ -39,12 +39,13 @@ class CreateERFActivity : AppCompatActivity() {
         }
 
         buttonCancelERF.setOnClickListener {
+            println("test1")
             resetForm()
+            println("test2")
         }
 
         buttonSimpanERF.setOnClickListener {
             simpan(idPRFReg)
-            finish()
         }
 
         inputTglTerakhir.setOnClickListener {
@@ -77,6 +78,7 @@ class CreateERFActivity : AppCompatActivity() {
         requiredTglKembali!!.visibility = View.INVISIBLE
         requiredNamaTerima!!.visibility = View.INVISIBLE
         requiredTglTerima!!.visibility = View.INVISIBLE
+        requiredKeahlian!!.visibility = View.INVISIBLE
         finish()
     }
 
@@ -93,6 +95,9 @@ class CreateERFActivity : AppCompatActivity() {
         if (resource.isEmpty()) {
             requiredNamaResource!!.visibility = View.VISIBLE
         }
+        if(keahlian.isEmpty()){
+            requiredKeahlian!!.visibility = View.VISIBLE
+        }
         if (tglTerakhir.isEmpty()) {
             requiredTglTerakhir!!.visibility = View.VISIBLE
         }
@@ -108,8 +113,8 @@ class CreateERFActivity : AppCompatActivity() {
         if (tglTerima.isEmpty()) {
             requiredTglTerima!!.visibility = View.VISIBLE
         }
-        if(resource.isNotEmpty() && tglTerakhir.isNotEmpty() && alasan.isNotEmpty() && userKembali.isNotEmpty() && tglKembali.isNotEmpty()
-            && namaTerima.isNotEmpty() && tglTerima.isNotEmpty()){
+        if(resource.isNotEmpty() && keahlian.isNotEmpty() && tglTerakhir.isNotEmpty() && alasan.isNotEmpty()
+            && userKembali.isNotEmpty() && tglKembali.isNotEmpty() && namaTerima.isNotEmpty() && tglTerima.isNotEmpty()){
             val model = ERF()
             model.id_prf_request =  idPRFReg
             model.nama_resource = resource
@@ -134,6 +139,7 @@ class CreateERFActivity : AppCompatActivity() {
     fun loadDataERF(id:Int){
         var client = databaseQueryHelper.cariClient(id)
         inputNamaClient.setText(client)
+        spinnerKeahlian.setSelection(0)
     }
 
     fun isiSpinnerKeahlian(){
