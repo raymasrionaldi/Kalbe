@@ -3,6 +3,7 @@ package com.xsis.android.batch217.ui.timesheet.timesheet_entry
 import android.app.Activity
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
+import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -16,6 +17,7 @@ import com.xsis.android.batch217.R
 import com.xsis.android.batch217.databases.DatabaseHelper
 import com.xsis.android.batch217.databases.TimesheetQueryHelper
 import com.xsis.android.batch217.models.Timesheet
+import com.xsis.android.batch217.ui.home.HomeFragment
 import com.xsis.android.batch217.utils.ARRAY_OVERTIME_TIMESHEET
 import com.xsis.android.batch217.utils.ARRAY_STATUS_TIMESHEET
 import com.xsis.android.batch217.utils.HOUR_PATTERN
@@ -39,6 +41,9 @@ class EntryTimesheetActivity : AppCompatActivity() {
     var buttonReset: Button? = null
     val databaseHelper = DatabaseHelper(this)
     val databaseQueryHelper = TimesheetQueryHelper(databaseHelper)
+    var clientSpinner: Spinner? = null
+    var statusSpinner: Spinner? = null
+    var reportDate: TextView? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -64,6 +69,9 @@ class EntryTimesheetActivity : AppCompatActivity() {
         }
 
         buttonReset = findViewById(R.id.buttonResetEntryFormTimesheet)
+        clientSpinner = findViewById(R.id.inputClientTimesheet)
+        statusSpinner = findViewById(R.id.inputStatusTimesheet)
+        reportDate = findViewById(R.id.inputReportDateEntryTimesheet)
 
 
         setReportDateTimesheetPicker()
@@ -92,6 +100,7 @@ class EntryTimesheetActivity : AppCompatActivity() {
                 }
 
                 if (position > 1 ) {
+                    ubahResetButton(context, true, buttonReset!!)
                     // hide form dan set value ke default
                     inputStarDatetEntryTimesheet!!.visibility = View.GONE
                     inputEndDateEntryTimesheet!!.visibility = View.GONE
@@ -104,6 +113,13 @@ class EntryTimesheetActivity : AppCompatActivity() {
                     requiredStartEntryTimesheet!!.visibility = View.GONE
                     requiredEndEntryTimesheet!!.visibility = View.GONE
                     requiredNotesEntryTimesheet!!.visibility = View.GONE
+
+//                    inputStarDatetEntryTimesheet.isEnabled = false
+//                    inputEndDateEntryTimesheet.isEnabled = false
+//                    inputOvertimeTimesheet.isEnabled = false
+//                    inputStartOvertimeEntryTimesheet.isEnabled = false
+//                    inputEndtOvertimeEntryTimesheet.isEnabled = false
+//                    inputNotesEntryTimesheet.isEnabled = false
 
                     inputStarDatetEntryTimesheet!!.setText("")
                     inputEndDateEntryTimesheet!!.setText("")
@@ -120,6 +136,13 @@ class EntryTimesheetActivity : AppCompatActivity() {
                     inputStartOvertimeEntryTimesheet!!.visibility = View.VISIBLE
                     inputEndtOvertimeEntryTimesheet!!.visibility = View.VISIBLE
                     inputNotesEntryTimesheet!!.visibility = View.VISIBLE
+
+//                    inputStarDatetEntryTimesheet.isEnabled = true
+//                    inputEndDateEntryTimesheet.isEnabled = true
+//                    inputOvertimeTimesheet.isEnabled = true
+//                    inputStartOvertimeEntryTimesheet.isEnabled = true
+//                    inputEndtOvertimeEntryTimesheet.isEnabled = true
+//                    inputNotesEntryTimesheet.isEnabled = true
                 }
 
             }
@@ -134,7 +157,7 @@ class EntryTimesheetActivity : AppCompatActivity() {
                 position: Int,
                 id: Long
             ) {
-                if (position != 0) {
+                if (position != 0 ) {
                     ubahResetButton(context, true, buttonReset!!)
                 } else {
                     ubahResetButton(context, false, buttonReset!!)
@@ -173,6 +196,7 @@ class EntryTimesheetActivity : AppCompatActivity() {
                         inputStartOvertimeEntryTimesheet.isClickable = false
                         inputEndtOvertimeEntryTimesheet.isClickable = false
                     }
+
                 }
 
                 override fun onNothingSelected(arg0: AdapterView<*>) {}
@@ -603,4 +627,5 @@ class EntryTimesheetActivity : AppCompatActivity() {
 
         }
     }
+
 }

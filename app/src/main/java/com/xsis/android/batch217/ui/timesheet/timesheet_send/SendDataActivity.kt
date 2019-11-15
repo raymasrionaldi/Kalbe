@@ -125,20 +125,30 @@ class SendDataActivity : AppCompatActivity() {
                     db.execSQL(queryProgress)
                 }
                 val formatter1 = SimpleDateFormat(DATE_PATTERN)
-                val formatter2 = SimpleDateFormat("dd-MM-yyyy")
-                var min = Long.MAX_VALUE
-                var max = Long.MIN_VALUE
-                for (timesheet in listTimesheet) {
+                val formatter2 = SimpleDateFormat("dd-MMMM-yyyy")
+                var body=""
+                if(listTimesheet.size == 1){
+                    var timesheet = listTimesheet[0]
                     val dateString = formatter1.parse(timesheet.reportDate_timesheet).time
-                    if (dateString > max) {
-                        max = dateString
+                    body = "Timesheet tanggal ${formatter2.format(dateString)} sudah dikirim"
+
+                }else {
+
+                    var min = Long.MAX_VALUE
+                    var max = Long.MIN_VALUE
+                    for (timesheet in listTimesheet) {
+                        val dateString = formatter1.parse(timesheet.reportDate_timesheet).time
+                        if (dateString > max) {
+                            max = dateString
+                        }
+                        if (dateString < min) {
+                            min = dateString
+                        }
                     }
-                    if (dateString < min) {
-                        min = dateString
-                    }
+
+                    body = "Timesheet tanggal ${formatter2.format(min)} s/d ${formatter2.format(max)} sudah dikirim"
                 }
 
-                val body = "Timesheet tanggal ${formatter2.format(min)} s/d ${formatter2.format(max)} sudah dikirim"
 
                 val props = Properties()
                 val host = "smtp.gmail.com"
