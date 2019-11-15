@@ -125,7 +125,6 @@ class LeaveRequestDetailActivity : AppCompatActivity() {
         if(model.approvalState!="approved"){
             isApproved=false
         }
-
         return isApproved
     }
 

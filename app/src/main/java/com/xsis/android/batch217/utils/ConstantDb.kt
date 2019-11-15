@@ -187,6 +187,9 @@ val TABEL_STATUS_TIMESHEET = "status_timesheet"
 val ID_STSTIMESHEET = "id_ststimesheet"
 val NAMA_STSTIMESHEET = "nama_timesheet"
 
+val TABEL_TIMESHEET_APPROVAL="timesheet_approval"
+val ID_TIMESHEET_APPROVAL="id_timesheet_approval"
+val TIMESHEET_STATE="timesheet_state"
 
 val TABEL_PROJECT = "project"
 val ID_PROJECT = "id_project"

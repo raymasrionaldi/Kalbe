@@ -46,6 +46,7 @@ import com.xsis.android.batch217.ui.timesheet.timesheet_history.FragmentDataHist
 import com.xsis.android.batch217.ui.timesheet.timesheet_history.TimesheetHistoryFragment
 import com.xsis.android.batch217.ui.timesheet.timesheet_send.TimesheetSendFragment
 import com.xsis.android.batch217.ui.timesheet.timesheet_submission.TimesheetSubmissionFragment
+import com.xsis.android.batch217.ui.timesheet_report.TimesheetReportFragment
 import com.xsis.android.batch217.ui.tipe_tes.TipeTesFragment
 import com.xsis.android.batch217.ui.training.TrainingFragment
 import com.xsis.android.batch217.ui.tipe_identitas.TipeIdentitasFragment
@@ -354,8 +355,8 @@ class HomeActivity : AppCompatActivity() {
         listDataHeader.add(item23)
         val heading23 = ArrayList<String>()
         heading23.add(getString(R.string.summary_prf))
+        heading23.add(getString(R.string.timesheet_report))
         listDataChild[listDataHeader[23]] = heading23
-
     }
 
     fun closeNavDrawer() {
@@ -517,21 +518,19 @@ class HomeActivity : AppCompatActivity() {
                 fragmentTransaction.commit()
                 fragment.pindahTab(0)
                 closeNavDrawer()
-            }
-            else if (groupIndex == 22 && childIndex == 0){
-            val fragment = SRFFragment()
-            val fragmentTransaction = supportFragmentManager.beginTransaction()
-            fragmentTransaction.replace(
-                R.id.nav_host_fragment,
-                fragment,
-                getString(R.string.request)
-            )
-            fragmentTransaction.commit()
-            closeNavDrawer()
-        } else if (groupIndex == 22 && childIndex == 1){
-            //dipakai untuk plotting SRF
-        }
-            else if (groupIndex == 23 && childIndex == 0) {
+            } else if (groupIndex == 22 && childIndex == 0) {
+                val fragment = SRFFragment()
+                val fragmentTransaction = supportFragmentManager.beginTransaction()
+                fragmentTransaction.replace(
+                    R.id.nav_host_fragment,
+                    fragment,
+                    getString(R.string.request)
+                )
+                fragmentTransaction.commit()
+                closeNavDrawer()
+            } else if (groupIndex == 22 && childIndex == 1) {
+                //dipakai untuk plotting SRF
+            } else if (groupIndex == 23 && childIndex == 0) {
                 val fragment = SummaryPRFFragment()
                 val fragmentTransaction = supportFragmentManager.beginTransaction()
                 fragmentTransaction.replace(
@@ -541,9 +540,17 @@ class HomeActivity : AppCompatActivity() {
                 )
                 fragmentTransaction.commit()
                 closeNavDrawer()
+            } else if (groupIndex == 23 && childIndex == 1) {
+                val fragment = TimesheetReportFragment()
+                val fragmentTransaction = supportFragmentManager.beginTransaction()
+                fragmentTransaction.replace(
+                    R.id.nav_host_fragment,
+                    fragment,
+                    getString(R.string.timesheet_report)
+                )
+                fragmentTransaction.commit()
+                closeNavDrawer()
             }
-
-
             return true
         }
     }
