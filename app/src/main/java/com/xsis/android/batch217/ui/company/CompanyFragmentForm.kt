@@ -236,8 +236,8 @@ class CompanyFragmentForm(context: Context, val fm: FragmentManager) : Fragment(
                         .show()
                 }
             } else if (modeForm == MODE_EDIT) {
-                if ((cekCompany != 1 && model.namaCompany == data.namaCompany) ||
-                    (cekCompany != 0 && model.namaCompany != data.namaCompany)
+                if ((cekCompany != 1 && model.namaCompany.equals(data.namaCompany, true)) ||
+                    (cekCompany != 0 && !model.namaCompany.equals(data.namaCompany, true))
                 ) {
                     Toast.makeText(context, DATA_SUDAH_ADA, Toast.LENGTH_SHORT).show()
                     return
