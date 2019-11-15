@@ -29,7 +29,7 @@ class SummaryPRFFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        activity!!.title = getString(R.string.summary_prf)
+        activity!!.title = getString(R.string.menu_report)
 
         //ambil KeahlianViewModel untuk fragment_keahlian
         summaryPRFViewModel = ViewModelProviders.of(this).get(SummaryPrfViewModel::class.java)

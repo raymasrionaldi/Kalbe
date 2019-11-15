@@ -59,7 +59,6 @@ class UbahDataKeahlianActivity : AppCompatActivity() {
 
         }
 
-        //Ke activity list
     }
 
     fun insertKeDatabase(id: Int) {

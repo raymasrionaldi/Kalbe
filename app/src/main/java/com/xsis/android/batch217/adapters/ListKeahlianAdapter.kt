@@ -35,7 +35,7 @@ class ListKeahlianAdapter(val context: Context?,
         val selectedListKeahlain = listKeahlian[position]
         holder.setModelKeahlian(selectedListKeahlain)
         val databaseHelper = DatabaseHelper(context!!)
-        val databaseQueryHelper = KeahlianQueryHelper(databaseHelper)
+//        val databaseQueryHelper = KeahlianQueryHelper(databaseHelper)
         val db = databaseHelper.writableDatabase
 
         holder.bukaMenu.setOnClickListener {view ->

@@ -35,7 +35,6 @@ class InputDataKeahlianActivity : AppCompatActivity() {
         } catch (e: NullPointerException){
         }
 
-
         cekIsi()
         hapus()
         simpan()
@@ -58,7 +57,6 @@ class InputDataKeahlianActivity : AppCompatActivity() {
             }
 
         }
-        //Ke activity list
 
     }
 

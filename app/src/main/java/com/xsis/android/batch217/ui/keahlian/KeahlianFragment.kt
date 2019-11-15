@@ -4,10 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.*
-import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.widget.SearchView
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -18,7 +15,6 @@ import com.xsis.android.batch217.databases.DatabaseHelper
 import com.xsis.android.batch217.databases.KeahlianQueryHelper
 import com.xsis.android.batch217.models.Keahlian
 import kotlinx.android.synthetic.main.fragment_keahlian.view.*
-import org.w3c.dom.Text
 
 class KeahlianFragment : Fragment() {
     //membawakan view model
@@ -26,8 +22,6 @@ class KeahlianFragment : Fragment() {
     private var recyclerView: RecyclerView? = null
     var databaseQueryHelper: KeahlianQueryHelper? = null
     var databaseHelper: DatabaseHelper? = null
-    private var searchView: SearchView? = null
-    private var queryTextListener: SearchView.OnQueryTextListener? = null
     val fragment = this
 
     override fun onCreateView(
@@ -79,7 +73,6 @@ class KeahlianFragment : Fragment() {
         adapterKeahlian.notifyDataSetChanged()
     }
 
-
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.main, menu)
 
@@ -89,22 +82,11 @@ class KeahlianFragment : Fragment() {
         searchView!!.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
 
             override fun onQueryTextSubmit(query: String): Boolean {
-                // collapse the view ?
-                //menu.findItem(R.id.menu_search).collapseActionView();
                 Log.e("Fragment queryText", query)
                 return false
             }
             override fun onQueryTextChange(keyword: String): Boolean {
-                // search goes here !!
-                // listAdapter.getFilter().filter(query);
-                // Log.e("Fragment queryText", keyword)
                 search(keyword,databaseQueryHelper!!)
-
-                /*TODO
-                1. do search based on active fragment table
-                2. send list result to active fragment
-                3.
-                */
                 return true
             }
         })

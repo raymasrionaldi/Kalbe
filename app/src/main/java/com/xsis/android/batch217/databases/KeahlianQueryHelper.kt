@@ -26,7 +26,7 @@ class KeahlianQueryHelper(val databaseHelper: DatabaseHelper) {
             keahlian.id_keahlian = cursor.getInt(0)
             keahlian.nama_keahlian = cursor.getString(1)
             keahlian.des_keahlian = cursor.getString(2)
-//            keahlian.is_deleted = cursor.getString(3)
+            keahlian.is_deleted = cursor.getString(3)
 
             listKeahlian.add(keahlian)
         }
@@ -85,8 +85,6 @@ class KeahlianQueryHelper(val databaseHelper: DatabaseHelper) {
         if (cursor.count > 0){
             listKeahlian = konversiCursorKeListKeahlianModel(cursor)
         }
-
-        println(queryUpdate)
         return listKeahlian
     }
 
@@ -101,7 +99,6 @@ class KeahlianQueryHelper(val databaseHelper: DatabaseHelper) {
         if (cursor.count > 0){
             listKeahlian = konversiCursorKeListKeahlianModel(cursor)
         }
-        println(queryUpdate)
         return listKeahlian
     }
 
@@ -122,12 +119,12 @@ class KeahlianQueryHelper(val databaseHelper: DatabaseHelper) {
         return listKeahlian
     }
 
-    fun hapusKeahlian(id: Int): Int {
+/*    fun hapusKeahlian(id: Int): Int {
         val db = databaseHelper.writableDatabase
 
         val values = ContentValues()
         values.put(IS_DELETED, "true")
 
         return db.update(TABEL_KEAHLIAN, values, "$ID_KEAHLIAN = ?", arrayOf(id.toString()))
-    }
+    }*/
 }
