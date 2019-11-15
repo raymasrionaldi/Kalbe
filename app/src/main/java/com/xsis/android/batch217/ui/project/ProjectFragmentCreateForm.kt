@@ -1,30 +1,38 @@
 package com.xsis.android.batch217.ui.project
 
+import android.app.AlertDialog
+import android.app.DatePickerDialog
 import android.content.Context
+import android.content.DialogInterface
+import android.graphics.Color
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.CheckBox
-import android.widget.EditText
-import android.widget.Toast
+import android.widget.*
+import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.viewpager.widget.ViewPager
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.xsis.android.batch217.R
 import com.xsis.android.batch217.adapters.fragments.ProjectCreateFragmentAdapter
 import com.xsis.android.batch217.databases.DatabaseHelper
 import com.xsis.android.batch217.databases.ProjectCreateQueryHelper
 import com.xsis.android.batch217.models.ProjectCreate
+import com.xsis.android.batch217.utils.DATE_PATTERN
 import com.xsis.android.batch217.utils.SIMPAN_DATA_BERHASIL
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 class ProjectFragmentCreateForm(context: Context, val fm: FragmentManager):Fragment() {
     val databaseHelper = DatabaseHelper(context)
     val databaseQueryHelper = ProjectCreateQueryHelper(databaseHelper)
+    val isiSpinnerJenisOvertime = arrayOf("-Jenis Overtime-","Paket","Standar")
     var ID = 0
     var PID:EditText? = null
     var noPOSPKKontrak:EditText? = null
@@ -33,13 +41,14 @@ class ProjectFragmentCreateForm(context: Context, val fm: FragmentManager):Fragm
     var endDate:EditText? = null
     var posisiDiClient:EditText? = null
     var cekJenisOvertime:CheckBox? = null
-    var jenisOverTime:EditText? = null
+    var jenisOverTime:Spinner? = null
     var cekCatatanFixRate:CheckBox? = null
     var catatanFixRate:EditText? = null
     var cekTanggalBAST:CheckBox? = null
     var tanggalBAST:EditText? = null
     var reset:Button? = null
     var save:Button? = null
+    var delete:FloatingActionButton? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -62,53 +71,105 @@ class ProjectFragmentCreateForm(context: Context, val fm: FragmentManager):Fragm
         tanggalBAST = customView.findViewById(R.id.tanggalBASTProjectCreate)
         reset = customView.findViewById(R.id.resetProjectCreate)
         save = customView.findViewById(R.id.saveProjectCreate)
+        delete = customView.findViewById(R.id.deleteProjectCreate)
 
         startDate!!.isEnabled = false
         endDate!!.isEnabled = false
+        jenisOverTime!!.isEnabled = false
 
-        setIsi()
-        reset()
+        isiSpinnerJenisOvertime()
+
+        reset!!.setOnClickListener {reset()}
         cekIsi()
         centang()
         simpan()
-
+        hapus()
+        setTanggalClickListener()
 
         return customView
     }
 
     fun bawaID(id:Int){
         ID = id
+        setIsi()
+        println("-------$ID")
     }
+    fun hapus(){
+        delete!!.setOnClickListener {
+            val konfirmasiWin = AlertDialog.Builder(context)
+            konfirmasiWin.setMessage("Yakin mau hapus data ini ?")
+                .setPositiveButton("Ya", DialogInterface.OnClickListener{ dialog, which ->
+                    Toast.makeText(context,"Hapus data berhasil", Toast.LENGTH_SHORT).show()
+                    databaseQueryHelper.deleteProjectCreate(ID)
+                    pindahKeFragmentData()
 
-    fun setIsi(){
-        if (ID != 0){
-            startDate!!.isEnabled = true
-            endDate!!.isEnabled = true
-            //ambil data dari database berdasarkan id
+                })
+                .setNegativeButton("Tidak", DialogInterface.OnClickListener{ dialog, which ->
+                    dialog.cancel()
+                })
+                .setCancelable(true)
 
+            konfirmasiWin.create().show()
         }
     }
+    fun setIsi(){
+        if (ID != 0){
+            delete!!.isVisible = true
+            delete!!.isClickable = true
+            startDate!!.isEnabled = true
+            endDate!!.isEnabled = true
+            //Ambil data dari database berdasarkan id
+            val data = databaseQueryHelper.loadDataProjectCreate(ID)
 
+            //Set isi di setiap EditText
+            PID!!.setText(data.PID)
+            noPOSPKKontrak!!.setText(data.noPOSPKKontrak)
+            client!!.setText(data.client)
+            startDate!!.setText(data.startDate)
+            endDate!!.setText(data.endDate)
+            posisiDiClient!!.setText(data.posisiDiClient)
+            jenisOverTime!!.setSelection(isiSpinnerJenisOvertime.indexOf(data.jenisOvertime))
+            catatanFixRate!!.setText(data.catatanFixRate)
+            tanggalBAST!!.setText(data.tanggalBAST)
+
+            cekJenisOvertime!!.isChecked = data.jenisOvertime.isNotEmpty()
+            cekCatatanFixRate!!.isChecked = data.catatanFixRate.isNotEmpty()
+            cekTanggalBAST!!.isChecked = data.tanggalBAST.isNotEmpty()
+
+        } else{
+            reset()
+        }
+    }
     fun simpan(){
         save!!.setOnClickListener {
             val data = ProjectCreate()
+            data.idProjectCreate = ID
             data.PID = PID!!.text.toString().trim()
             data.noPOSPKKontrak = noPOSPKKontrak!!.text.toString().trim()
             data.client = client!!.text.toString().trim()
             data.startDate = startDate!!.text.toString().trim()
             data.endDate = endDate!!.text.toString().trim()
             data.posisiDiClient = posisiDiClient!!.text.toString().trim()
-            data.jenisOvertime = jenisOverTime!!.text.toString().trim()
+            if (jenisOverTime!!.selectedItemPosition == 0){
+                data.jenisOvertime = ""
+            } else{
+                data.jenisOvertime = isiSpinnerJenisOvertime[jenisOverTime!!.selectedItemPosition]
+            }
             data.catatanFixRate = catatanFixRate!!.text.toString().trim()
             data.tanggalBAST = tanggalBAST!!.text.toString().trim()
 
-            databaseQueryHelper.addProjectCreate(data)
+            if (ID == 0){
+                databaseQueryHelper.addProjectCreate(data)
+                Toast.makeText(context, SIMPAN_DATA_BERHASIL, Toast.LENGTH_SHORT).show()
+            } else{
+                //update
+                databaseQueryHelper.updateProjectCreate(data)
+                Toast.makeText(context, "Data berhasil diupdate", Toast.LENGTH_SHORT).show()
+            }
 
-            Toast.makeText(context, SIMPAN_DATA_BERHASIL, Toast.LENGTH_SHORT).show()
             pindahKeFragmentData()
         }
     }
-
     fun pindahKeFragmentData(){
         fm.fragments.forEach { println(it) }
         val fragment = fm.fragments[0] as ProjectFragmentCreateData
@@ -120,22 +181,46 @@ class ProjectFragmentCreateForm(context: Context, val fm: FragmentManager):Fragm
         viewPager.setCurrentItem(0, true)
     }
 
-    fun reset(){
-        reset!!.setOnClickListener {
-            PID!!.setText("")
-            noPOSPKKontrak!!.setText("")
-            client!!.setText("")
-            startDate!!.setText("")
-            endDate!!.setText("")
-            posisiDiClient!!.setText("")
-            jenisOverTime!!.setText("")
-            catatanFixRate!!.setText("")
-            tanggalBAST!!.setText("")
+    fun setTanggalClickListener(){
+        startDate!!.setOnClickListener {setTanggal(startDate)}
+        endDate!!.setOnClickListener { setTanggal(endDate) }
+        tanggalBAST!!.setOnClickListener { setTanggal(tanggalBAST) }
+    }
 
-            cekJenisOvertime!!.isChecked = false
-            cekCatatanFixRate!!.isChecked = false
-            cekTanggalBAST!!.isChecked = false
-        }
+    fun setTanggal(editText: EditText?){
+        val calendar = Calendar.getInstance()
+        val yearNow = calendar.get(Calendar.YEAR)
+        val monthNow = calendar.get(Calendar.MONTH)
+        val dayNow = calendar.get(Calendar.DATE)
+
+        val datePickerDialog = DatePickerDialog(context!!, R.style.CustomDatePicker, DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
+            val selectedDate = Calendar.getInstance()
+            selectedDate.set(year, month, dayOfMonth)
+
+            //konversi ke string
+            val formatDate = SimpleDateFormat(DATE_PATTERN)
+            val tanggal = formatDate.format(selectedDate.time)
+
+            //set tampilan
+            editText!!.setText(tanggal)
+        }, yearNow,monthNow,dayNow )
+        datePickerDialog.show()
+    }
+
+    fun reset(){
+        PID!!.setText("")
+        noPOSPKKontrak!!.setText("")
+        client!!.setText("")
+        startDate!!.setText("")
+        endDate!!.setText("")
+        posisiDiClient!!.setText("")
+        jenisOverTime!!.setSelection(0)
+        catatanFixRate!!.setText("")
+        tanggalBAST!!.setText("")
+
+        cekJenisOvertime!!.isChecked = false
+        cekCatatanFixRate!!.isChecked = false
+        cekTanggalBAST!!.isChecked = false
     }
 
     fun centang(){
@@ -143,7 +228,7 @@ class ProjectFragmentCreateForm(context: Context, val fm: FragmentManager):Fragm
             if (isChecked){
                 jenisOverTime!!.isEnabled = true
             } else{
-                jenisOverTime!!.setText("")
+                jenisOverTime!!.setSelection(0)
                 jenisOverTime!!.isEnabled = false
             }
             reset!!.isEnabled = true
@@ -231,5 +316,13 @@ class ProjectFragmentCreateForm(context: Context, val fm: FragmentManager):Fragm
                 enableSave0[5] = enableSave
                 save!!.isEnabled = !enableSave0.contains(false)
             }})
+    }
+    fun isiSpinnerJenisOvertime(){
+        val adapterJenisOvertime = context?.let { ArrayAdapter<String>(it,
+            android.R.layout.simple_spinner_item,
+            isiSpinnerJenisOvertime
+        ) }
+        adapterJenisOvertime!!.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        jenisOverTime!!.adapter = adapterJenisOvertime
     }
 }

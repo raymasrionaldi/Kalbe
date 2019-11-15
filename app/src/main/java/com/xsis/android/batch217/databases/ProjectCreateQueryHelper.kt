@@ -58,6 +58,15 @@ class ProjectCreateQueryHelper(val databaseHelper: DatabaseHelper) {
 
     }
 
+    fun loadDataProjectCreate(id:Int): ProjectCreate{
+        val db = databaseHelper.readableDatabase
+        val queryLoad = "SELECT * FROM $TABEL_PROJECT_CREATE WHERE $ID_PROJECT_CREATE = $id"
+        val cursor = db.rawQuery(queryLoad, null)
+        val listProject = konversiCursorKeListProjectCreate(cursor)
+        val data = listProject[0]
+        return data
+    }
+
     fun addProjectCreate(data:ProjectCreate){
         val db = databaseHelper.writableDatabase
         val values = ContentValues()
@@ -72,5 +81,27 @@ class ProjectCreateQueryHelper(val databaseHelper: DatabaseHelper) {
         values.put(tanggal_BAST, data.tanggalBAST)
         db.insert(TABEL_PROJECT_CREATE, null, values)
 
+    }
+
+    fun updateProjectCreate(data:ProjectCreate){
+        val db = databaseHelper.writableDatabase
+
+        val values = ContentValues()
+        values.put(PID_CREATE, data.PID)
+        values.put(NO_PO_SPK_KONTRAK, data.noPOSPKKontrak)
+        values.put(CLIENT, data.client)
+        values.put(START_DATE_PROJECT_CREATE, data.startDate)
+        values.put(END_DATE_PROJECT_CREATE, data.endDate)
+        values.put(POSISI_DI_CLIENT, data.posisiDiClient)
+        values.put(JENIS_OVERTIME, data.jenisOvertime)
+        values.put(CATATAN_FIX_RATE, data.catatanFixRate)
+        values.put(tanggal_BAST, data.tanggalBAST)
+        db.update(TABEL_PROJECT_CREATE, values, "$ID_PROJECT_CREATE = ${data.idProjectCreate}", null)
+    }
+
+    fun deleteProjectCreate(id:Int){
+        val db = databaseHelper.writableDatabase
+        val queryDelete = "DELETE FROM $TABEL_PROJECT_CREATE WHERE $ID_PROJECT_CREATE=$id"
+        db.execSQL(queryDelete)
     }
 }

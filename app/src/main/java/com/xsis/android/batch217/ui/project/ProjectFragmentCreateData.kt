@@ -9,9 +9,11 @@ import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager.widget.ViewPager
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.xsis.android.batch217.R
 import com.xsis.android.batch217.adapters.ListProjectCreateAdapter
+import com.xsis.android.batch217.adapters.fragments.ProjectCreateFragmentAdapter
 import com.xsis.android.batch217.databases.DatabaseHelper
 import com.xsis.android.batch217.databases.KeluargaQueryHelper
 import com.xsis.android.batch217.databases.ProjectCreateQueryHelper
@@ -44,19 +46,21 @@ class ProjectFragmentCreateData(context: Context, val fm: FragmentManager): Frag
         val dividerItemDecoration = DividerItemDecoration(context, layoutManager.orientation)
         recyclerView!!.addItemDecoration(dividerItemDecoration)
 
-
-//        val listProject = databaseQueryHelper.getAllProject()
-//        listProject.forEach{
-//            println("client = ${it.client}")
-//        }
-//        tampilkanListProject(listProject, recyclerView!!)
-
         add!!.setOnClickListener {
-
+            pindahKeFragmentForm()
         }
 
-
         return customView
+    }
+
+    fun pindahKeFragmentForm(){
+        val fragment = fm.fragments[1] as ProjectFragmentCreateForm
+        val viewPager = fragment.view!!.parent as ViewPager
+        val adapter = viewPager.adapter!! as ProjectCreateFragmentAdapter
+
+        fragment.bawaID(0)
+        adapter.notifyDataSetChanged()
+        viewPager.setCurrentItem(1, true)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
