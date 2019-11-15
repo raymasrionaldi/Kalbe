@@ -137,21 +137,24 @@ class SRFFragmentForm(context: Context, val fm: FragmentManager) : Fragment() {
         salesPrice!!.setText("")
         lokasi!!.setText("")
         catatan!!.setText("")
+        inputNumberSRF.isEnabled = true
+
     }
 
     fun modeEdit(srf: SRF) {
         modeForm = MODE_EDIT
         changeMode()
-
         idData = srf.id_srf!!
         srfNumber!!.setText(srf.id_srf)
         inputNumberSRF.isEnabled = false
-        //cara dapat spinnernya
-//        spinnerJenis!!.setSelection(0)
-        jumKebutuhan!!.setText(srf.jumlah_kebutuhan)
+        val indexJenis = ARRAY_JENIS_SRF.indexOf(srf.jenis_srf)
+        spinnerJenis!!.setSelection(indexJenis)
+        jumKebutuhan!!.setText(srf.jumlah_kebutuhan.toString())
         println(jumKebutuhan)
-//        spinnerClient!!.setSelection(0)
-//        spinnerGrade!!.setSelection(0)
+        val indexClient = listClient!!.indexOf(srf.nama_company)
+        spinnerClient!!.setSelection(indexClient)
+        val indexGrade = listGrade!!.indexOf(srf.nama_grade)
+        spinnerGrade!!.setSelection(indexGrade)
         namaUser!!.setText(srf.nama_user)
         println(namaUser)
         emailUser!!.setText(srf.email_user)
@@ -311,6 +314,7 @@ class SRFFragmentForm(context: Context, val fm: FragmentManager) : Fragment() {
                 } else {
                     Toast.makeText(context, SIMPAN_DATA_BERHASIL, Toast.LENGTH_SHORT)
                         .show()
+                    pindah()
                 }
             } else if (modeForm == MODE_EDIT) {
                 /*if ((cekCompany != 1 && model.namaCompany == data.namaCompany) ||
@@ -325,6 +329,7 @@ class SRFFragmentForm(context: Context, val fm: FragmentManager) : Fragment() {
                 } else {
                     Toast.makeText(context, EDIT_DATA_BERHASIL, Toast.LENGTH_SHORT)
                         .show()
+                    pindah()
                 }
             }
 
