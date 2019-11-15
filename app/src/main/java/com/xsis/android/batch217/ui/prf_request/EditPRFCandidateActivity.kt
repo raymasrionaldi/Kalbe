@@ -18,6 +18,7 @@ import com.xsis.android.batch217.databases.PRFCandidateQueryHelper
 import com.xsis.android.batch217.models.PRFCandidate
 import com.xsis.android.batch217.utils.*
 import kotlinx.android.synthetic.main.activity_edit_prfcandidate.*
+import kotlinx.android.synthetic.main.activity_input_prfcandidate.*
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -30,9 +31,11 @@ class EditPRFCandidateActivity : AppCompatActivity() {
     var name: EditText? = null
     var batch: EditText? = null
     var position: Spinner? = null
+    var placementDate: EditText? = null
     var srfNumber: Spinner? = null
     var customAllowence: EditText? = null
     var candidateStatus: Spinner? = null
+    var signContractDate: EditText? = null
     var notes: EditText? = null
     var ID_prf_candidate = 0
     var listPosition: List<String>? = null
@@ -55,14 +58,18 @@ class EditPRFCandidateActivity : AppCompatActivity() {
         name = inputNamaPRFCandidateEdit
         batch = inputBatchBootcampPRFCandidateEdit
         position = spinnerInputPositionPRFCandidateEdit
+        placementDate = inputPlacementDatePRFCandidateEdit
         srfNumber = spinnerSRFNumberPRFCandidateEdit
         customAllowence = inputCustomeAllowencePRFCandidateEdit
         candidateStatus = spinnerInputCandidateStatusPRFCandidateEdit
+        signContractDate = inputSignContractDateEdit
         notes = inputNotesPRFCandidateEdit
 
         name!!.addTextChangedListener(textWatcher)
         batch!!.addTextChangedListener(textWatcher)
+        placementDate!!.addTextChangedListener(textWatcher)
         customAllowence!!.addTextChangedListener(textWatcher)
+        signContractDate!!.addTextChangedListener(textWatcher)
         notes!!.addTextChangedListener(textWatcher)
 
         ubahButtonResetSpinner()
@@ -285,12 +292,15 @@ class EditPRFCandidateActivity : AppCompatActivity() {
 
         override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
             buttonReset = buttonResetPRFCandidateEdit
-            val namaTeks = name!!.text.toString().trim()
+            val placementDateTeks = placementDate!!.text.toString().trim()
             val batchTeks = batch!!.text.toString().trim()
             val customAllowenceTeks = customAllowence!!.text.toString().trim()
+            val signContractDateTeks = signContractDate!!.text.toString().trim()
             val notesTeks = notes!!.text.toString().trim()
 
-            val kondisi = !namaTeks.isEmpty() || !batchTeks.isEmpty() || !customAllowenceTeks.isEmpty() || !notesTeks.isEmpty()
+            val kondisi = placementDateTeks.isNotEmpty() || !batchTeks.isEmpty()
+                    || !customAllowenceTeks.isEmpty() || !notesTeks.isEmpty()
+                    || signContractDateTeks.isNotEmpty()
             buttonResetPRFCandidateEdit.isEnabled = true
             ubahResetButton(context, kondisi, buttonReset!!)
         }

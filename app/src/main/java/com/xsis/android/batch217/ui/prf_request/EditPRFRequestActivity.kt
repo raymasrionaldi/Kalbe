@@ -28,6 +28,7 @@ class EditPRFRequestActivity : AppCompatActivity() {
     var databaseQueryHelper = PRFRequestQueryHelper(databaseHelper)
     var data = PRFRequest()
     var buttonReset: Button? = null
+    var tanggal: EditText? = null
     var type: Spinner? = null
     var placement: EditText? = null
     var pid: Spinner? = null
@@ -58,6 +59,7 @@ class EditPRFRequestActivity : AppCompatActivity() {
         } catch (e: NullPointerException){
         }
 
+        tanggal = inputTanggalPRFEdit
         type = spinnerInputTypePRFEdit
         placement = inputPlacementPRFEdit
         pid = spinnerInputPIDPRFEdit
@@ -273,9 +275,9 @@ class EditPRFRequestActivity : AppCompatActivity() {
                 inputTanggalPRFEdit.setText(tanggal)
             }, yearNow,monthNow,dayNow )
             datePickerDialog.show()
-            buttonResetPRFRequestEdit.isEnabled = true
-            buttonResetPRFRequestEdit.setBackgroundResource(R.drawable.button_reset_on)
-            buttonResetPRFRequestEdit.setTextColor(Color.WHITE)
+//            buttonResetPRFRequestEdit.isEnabled = true
+//            buttonResetPRFRequestEdit.setBackgroundResource(R.drawable.button_reset_on)
+//            buttonResetPRFRequestEdit.setTextColor(Color.WHITE)
         }
     }
 
@@ -324,6 +326,7 @@ class EditPRFRequestActivity : AppCompatActivity() {
 
         override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
             buttonReset = buttonResetPRFRequestEdit
+            val tanggalTeks = tanggal!!.text.toString().trim()
             val placementTeks = placement!!.text.toString().trim()
             val locationTeks = location!!.text.toString().trim()
             val periodTeks = period!!.text.toString().trim()
@@ -333,7 +336,7 @@ class EditPRFRequestActivity : AppCompatActivity() {
             val overtimeTeks = overtime!!.text.toString().trim()
             val billingTeks = billing!!.text.toString().trim()
 
-            val kondisi = !placementTeks.isEmpty() || !locationTeks.isEmpty() || !periodTeks.isEmpty()
+            val kondisi = tanggalTeks!!.isNotEmpty() ||  !placementTeks.isEmpty() || !locationTeks.isEmpty() || !periodTeks.isEmpty()
                     || !userNameTeks.isEmpty() || !telpMobilePhoneTeks.isEmpty() || !emailTeks.isEmpty()
                     || !overtimeTeks.isEmpty() || !billingTeks.isEmpty()
 

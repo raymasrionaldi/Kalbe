@@ -29,9 +29,11 @@ class InputPRFCandidateActivity : AppCompatActivity() {
     var name: EditText? = null
     var batch: EditText? = null
     var position: Spinner? = null
+    var placementDate: EditText? = null
     var srfNumber: Spinner? = null
     var customAllowence: EditText? = null
     var candidateStatus: Spinner? = null
+    var signContractDate: EditText? = null
     var notes: EditText? = null
     var id_from_request = 0
     var listPosition: List<String>? = null
@@ -60,9 +62,11 @@ class InputPRFCandidateActivity : AppCompatActivity() {
         name = inputNamaPRFCandidate
         batch = inputBatchBootcampPRFCandidate
         position = spinnerInputPositionPRFCandidate
+        placementDate = inputPlacementDatePRFCandidate
         srfNumber = spinnerSRFNumberPRFCandidate
         customAllowence = inputCustomeAllowencePRFCandidate
         candidateStatus = spinnerInputCandidateStatusPRFCandidate
+        signContractDate = inputSignContractDate
         notes = inputNotesPRFCandidate
 
         ubahButtonResetSpinner()
@@ -85,7 +89,9 @@ class InputPRFCandidateActivity : AppCompatActivity() {
 
         name!!.addTextChangedListener(textWatcher)
         batch!!.addTextChangedListener(textWatcher)
+        placementDate!!.addTextChangedListener(textWatcher)
         customAllowence!!.addTextChangedListener(textWatcher)
+        signContractDate!!.addTextChangedListener(textWatcher)
         notes!!.addTextChangedListener(textWatcher)
     }
 
@@ -260,9 +266,9 @@ class InputPRFCandidateActivity : AppCompatActivity() {
                 inputPlacementDatePRFCandidate.setText(tanggal)
             }, yearNow,monthNow,dayNow )
             datePickerDialog.show()
-            buttonResetPRFCandidate.isEnabled = true
-            buttonResetPRFCandidate.setBackgroundResource(R.drawable.button_reset_on)
-            buttonResetPRFCandidate.setTextColor(Color.WHITE)
+//            buttonResetPRFCandidate.isEnabled = true
+//            buttonResetPRFCandidate.setBackgroundResource(R.drawable.button_reset_on)
+//            buttonResetPRFCandidate.setTextColor(Color.WHITE)
         }
         inputSignContractDate.setOnClickListener {
             val datePickerDialog = DatePickerDialog(context, R.style.CustomDatePicker, DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
@@ -277,9 +283,9 @@ class InputPRFCandidateActivity : AppCompatActivity() {
                 inputSignContractDate.setText(tanggal)
             }, yearNow,monthNow,dayNow )
             datePickerDialog.show()
-            buttonResetPRFCandidate.isEnabled = true
-            buttonResetPRFCandidate.setBackgroundResource(R.drawable.button_reset_on)
-            buttonResetPRFCandidate.setTextColor(Color.WHITE)
+//            buttonResetPRFCandidate.isEnabled = true
+//            buttonResetPRFCandidate.setBackgroundResource(R.drawable.button_reset_on)
+//            buttonResetPRFCandidate.setTextColor(Color.WHITE)
         }
 
     }
@@ -320,11 +326,15 @@ class InputPRFCandidateActivity : AppCompatActivity() {
 
         override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
             buttonReset = buttonResetPRFCandidate
+            val placementDateTeks = placementDate!!.text.toString().trim()
             val batchTeks = batch!!.text.toString().trim()
             val customAllowenceTeks = customAllowence!!.text.toString().trim()
+            val signContractDateTeks = signContractDate!!.text.toString().trim()
             val notesTeks = notes!!.text.toString().trim()
 
-            val kondisi = !batchTeks.isEmpty() || !customAllowenceTeks.isEmpty() || !notesTeks.isEmpty()
+            val kondisi = placementDateTeks.isNotEmpty() || !batchTeks.isEmpty()
+                                || !customAllowenceTeks.isEmpty() || !notesTeks.isEmpty()
+                                || signContractDateTeks.isNotEmpty()
             buttonResetPRFCandidate.isEnabled = true
             ubahResetButton(context, kondisi, buttonReset!!)
         }

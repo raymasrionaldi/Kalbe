@@ -26,6 +26,7 @@ class InputPRFRequestActivity : AppCompatActivity() {
     var databaseHelper = DatabaseHelper(context)
     var databaseQueryHelper = PRFRequestQueryHelper(databaseHelper)
     var buttonReset: Button? = null
+    var tanggal: EditText? = null
     var type: Spinner? = null
     var placement: EditText? = null
     var pid: Spinner? = null
@@ -55,6 +56,7 @@ class InputPRFRequestActivity : AppCompatActivity() {
         } catch (e: NullPointerException){
         }
 
+        tanggal = inputTanggalPRF
         type = spinnerInputTypePRF
         placement = inputPlacementPRF
         pid = spinnerInputPIDPRF
@@ -88,6 +90,7 @@ class InputPRFRequestActivity : AppCompatActivity() {
             validasiInput()
         }
 
+        tanggal!!.addTextChangedListener(textWatcher)
         placement!!.addTextChangedListener(textWatcher)
         location!!.addTextChangedListener(textWatcher)
         period!!.addTextChangedListener(textWatcher)
@@ -351,6 +354,7 @@ class InputPRFRequestActivity : AppCompatActivity() {
         override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) { }
         override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
             buttonReset = buttonResetPRFRequest
+            val tanggal = tanggal!!.text.toString().trim()
             val placementTeks = placement!!.text.toString().trim()
             val locationTeks = location!!.text.toString().trim()
             val periodTeks = period!!.text.toString().trim()
@@ -360,7 +364,7 @@ class InputPRFRequestActivity : AppCompatActivity() {
             val overtimeTeks = overtime!!.text.toString().trim()
             val billingTeks = billing!!.text.toString().trim()
 
-            val kondisi = !placementTeks.isEmpty() || !locationTeks.isEmpty() || !periodTeks.isEmpty()
+            val kondisi = tanggal.isNotEmpty() || !placementTeks.isEmpty() || !locationTeks.isEmpty() || !periodTeks.isEmpty()
                             || !userNameTeks.isEmpty() || !telpMobilePhoneTeks.isEmpty() || !emailTeks.isEmpty()
                             || !overtimeTeks.isEmpty() || !billingTeks.isEmpty()
             buttonResetPRFRequest.isEnabled = true
