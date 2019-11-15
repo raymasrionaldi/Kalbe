@@ -259,6 +259,17 @@ val SALES_PRICE = "sales_price"
 val LOKASI = "lokasi"
 val CATATAN = "catatan"
 
+val TABEL_ERF = "erf"
+val ID_ERF = "id_erf"
+val NAMA_RESOURCE = "nama_resource"
+val TGL_TERAKHIR = "tgl_terakhir"
+val ALASAN = "alasan"
+val USER_KEMBALI = "user_kembali"
+val TGL_KEMBALI = "tgl_kembali"
+val NAMA_TERIMA = "nama_terima"
+val TGL_TERIMA = "tgl_diterima"
+
+
 //nama field sama
 val IS_DELETED= "is_deleted"
 val DATE="date"
