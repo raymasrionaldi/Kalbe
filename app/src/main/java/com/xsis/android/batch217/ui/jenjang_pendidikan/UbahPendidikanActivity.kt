@@ -33,13 +33,13 @@ class UbahPendidikanActivity : AppCompatActivity() {
         val bundle: Bundle? = intent.extras
         bundle?.let {
             idPendidikan = bundle!!.getInt(ID_PENDIDIKAN)
-            loadDataKeahlian(idPendidikan)
+            loadDataPendidikan(idPendidikan)
         }
 
         btnNavDrawerUpdate.setOnClickListener { finish() }
     }
 
-    fun loadDataKeahlian(id: Int) {
+    fun loadDataPendidikan(id: Int) {
         val db = databaseHelper.readableDatabase
 
         val projection = arrayOf<String>(
