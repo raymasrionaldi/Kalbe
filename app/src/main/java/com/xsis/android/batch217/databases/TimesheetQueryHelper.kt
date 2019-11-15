@@ -44,17 +44,18 @@ class TimesheetQueryHelper(val databaseHelper: DatabaseHelper) {
         return listTimesheet
     }
 
-    fun readDetailProgressTimesheetById(id:Int):List<Timesheet>{
+    fun readDetailProgressTimesheetById(id:Int):ArrayList<Timesheet>{
         var listTimesheet = ArrayList<Timesheet>()
 
         val db = databaseHelper.readableDatabase
 
-        val queryRead = "SELECT $TIMESHEET_STATE, $DATE FROM $TABEL_TIMESHEET_APPROVAL WHERE $ID_TIMESHEET = $id"
+        val queryRead = "SELECT $TIMESHEET_STATE, $DATE FROM $TABEL_TIMESHEET_APPROVAL WHERE $ID_TIMESHEET=$id"
 
         val cursor = db.rawQuery(queryRead, null)
-        if (cursor.count == 1) {
-            return konversiCursorKeListProgressModel(cursor)
+        if (cursor.count > 0) {
+            listTimesheet = konversiCursorKeListProgressModel(cursor)
         }
+
         return listTimesheet
     }
 

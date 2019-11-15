@@ -15,8 +15,6 @@ class TimesheetReportFragment : Fragment(), OnBackPressedListener {
 
     var root:View?=null
 
-//    private lateinit var viewModel: TimesheetReportViewModel
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

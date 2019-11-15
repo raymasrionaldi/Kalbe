@@ -8,20 +8,26 @@ import androidx.recyclerview.widget.RecyclerView
 import com.xsis.android.batch217.R
 import com.xsis.android.batch217.models.Timesheet
 import com.xsis.android.batch217.viewholders.ViewHolderListTimesheet
+import com.xsis.android.batch217.viewholders.ViewHolderListTimesheetProgress
 
 class ListReportTimesheetProgressAdapter(val context: Context,
-                                         val listTimesheet: List<Timesheet>,
-                                         val fm: FragmentManager
-): RecyclerView.Adapter<ViewHolderListTimesheet>() {
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolderListTimesheet {
+                                         val listTimesheet: List<Timesheet>
+): RecyclerView.Adapter<ViewHolderListTimesheetProgress>() {
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolderListTimesheetProgress {
+        println("List")
         val customLayout =
             LayoutInflater.from(parent.context).inflate(R.layout.list_progress_timesheet_layout, parent, false)
-        return ViewHolderListTimesheet(customLayout)    }
+        return ViewHolderListTimesheetProgress(customLayout)
+    }
 
     override fun getItemCount(): Int {
-        return listTimesheet.size    }
+        return listTimesheet.size
+    }
 
-    override fun onBindViewHolder(holder: ViewHolderListTimesheet, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolderListTimesheetProgress, position: Int) {
         val model = listTimesheet[position]
-        holder.setModel(model)    }
+        holder.setModel(model)
+    }
+
 }

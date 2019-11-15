@@ -33,12 +33,15 @@ class ListReportTimesheetDataAdapter(
         val model = listTimesheet[position]
         holder.setModel(model)
 
+        val ID = model.id_timesheet
+
         holder.layoutList.setOnClickListener { view ->
             val fragment = fm.fragments[1] as TimesheetReportFragmentProgress
             val viewPager = fragment.view!!.parent as ViewPager
             val adapter = viewPager.adapter!! as TimesheetReportFragmentAdapter
 
-            fragment.detail(model)
+//            fragment.detail(model)
+            fragment.bawaID(ID)
             adapter.notifyDataSetChanged()
             viewPager.setCurrentItem(1, true)
         }

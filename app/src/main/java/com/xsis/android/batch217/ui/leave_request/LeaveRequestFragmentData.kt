@@ -86,7 +86,6 @@ class LeaveRequestFragmentData(context: Context, val fm: FragmentManager) : Frag
 
     }
 
-
     fun hitungSisaPrevYearLeave(): Int {
         val listModel = getPrevYearLeave()
         var prevYearQuota = 0
@@ -98,12 +97,16 @@ class LeaveRequestFragmentData(context: Context, val fm: FragmentManager) : Frag
             *  check isHariBesar && isWeekEnd  */
             val dateStart = SimpleDateFormat(DATE_PATTERN).parse(model.start)
             val dateEnd = SimpleDateFormat(DATE_PATTERN).parse(model.end)
+            println("ubah jadi day : ${dateStart.time /1000/60/60/24}")
+
+
+
             /*val ddStart= dateStart.getDate()
               val ddEnd= dateStart.getDate()
-            for(i in ddStart until ddEnd){
-                if(!isHariBesar("")&&!isWeekEnd()){
-                    lamaHariLeave+=1
-            }
+                for(i in ddStart until ddEnd){
+                    if(!isHariBesar("")&&!isWeekEnd()){
+                        lamaHariLeave+=1
+                }
             }*/
             var rentangWaktu = Math.abs(dateStart.time - dateEnd.time)
             var lamaHariLeave =
