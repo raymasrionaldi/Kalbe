@@ -37,14 +37,14 @@ class SummaryPRFExpandableListAdapter(private val mContext: Context,
         if (convertView == null) {
             val infalInflater = this.mContext
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-            convertView = infalInflater.inflate(R.layout.list_detail_project, null)
+            convertView = infalInflater.inflate(R.layout.list_detail_summary_prf, null)
         }
 
-        val listGroupName = convertView!!.findViewById(R.id.namaGrupProject) as TextView
+        val listGroupName = convertView!!.findViewById(R.id.namaGrupSummaryPRF) as TextView
         listGroupName.text = groupName
 
-        val arrowDown = convertView.findViewById(R.id.arrowDownProject) as ImageView
-        val arrowUp = convertView.findViewById(R.id.arrowUpProject) as ImageView
+        val arrowDown = convertView.findViewById(R.id.arrowDownSummaryPRF) as ImageView
+        val arrowUp = convertView.findViewById(R.id.arrowUpSummaryPRF) as ImageView
 
         if (isExpanded) {
             arrowDown.visibility = View.VISIBLE

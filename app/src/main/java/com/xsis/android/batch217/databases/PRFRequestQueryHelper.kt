@@ -217,12 +217,19 @@ class PRFRequestQueryHelper (val databaseHelper: DatabaseHelper) {
         return listPID
     }
 
-    fun getTypeNama(): Cursor {
+    fun getListTypeNama(id: Int): ArrayList<TypeNama> {
+        var listTypeNama = ArrayList<TypeNama>()
         val db = databaseHelper.readableDatabase
         val queryGetTypeNama = "SELECT $TABEL_PRF_REQUEST.$TYPE, $TABEL_PRF_CANDIDATE.$NAMA_PRF_CANDIDATE " +
                 "FROM $TABEL_PRF_REQUEST " +
-                "JOIN $TABEL_PRF_CANDIDATE"
-        return db.rawQuery(queryGetTypeNama, null)
+                "JOIN $TABEL_PRF_CANDIDATE " +
+                "WHERE $TABEL_PRF_REQUEST.$ID_PRF_REQUEST = $TABEL_PRF_CANDIDATE.$ID_FROM_PRF " +
+                "AND $TABEL_PRF_CANDIDATE.$ID_FROM_PRF = $id"
+        val cursor =  db.rawQuery(queryGetTypeNama, null)
+        if (cursor.count  > 0) {
+            listTypeNama = konversiCursorKeListTypeNamaModel(cursor)
+        }
+        return listTypeNama
     }
 
     fun konversiCursorKeListTypeNamaModel(cursor: Cursor): ArrayList<TypeNama> {
@@ -236,17 +243,6 @@ class PRFRequestQueryHelper (val databaseHelper: DatabaseHelper) {
             typeNama.namaCandidate = cursor.getString(1)
 
             listTypeNama.add(typeNama)
-        }
-
-        return listTypeNama
-    }
-
-    fun readSemuaTypeNamaModels(): List<TypeNama> {
-        var listTypeNama = ArrayList<TypeNama>()
-
-        val cursor = getTypeNama()
-        if (cursor.count > 0) {
-            listTypeNama = konversiCursorKeListTypeNamaModel(cursor)
         }
 
         return listTypeNama

@@ -17,7 +17,7 @@ import kotlinx.android.synthetic.main.activity_summary_detail.*
 class SummaryDetailActivity : AppCompatActivity() {
     val context = this
     var dataPID = PRFRequest()
-    var dataTypeNama = TypeNama()
+    var dataListTypeNama = ArrayList<TypeNama>()
     internal lateinit var menuAdapter: SummaryPRFExpandableListAdapter
     internal lateinit var listDataGroup: MutableList<String>
     internal lateinit var listDataChild: HashMap<String, List<String>>
@@ -47,6 +47,10 @@ class SummaryDetailActivity : AppCompatActivity() {
         databaseQueryHelper = PRFRequestQueryHelper(databaseHelper)
         listSummaryDetail = listSummaryDetailExpandable
 
+        buttonBackSummaryDetail.setOnClickListener {
+            finish()
+        }
+
         viewDetail()
 
     }
@@ -54,7 +58,7 @@ class SummaryDetailActivity : AppCompatActivity() {
 
     fun viewDetail() {
         dataPID = databaseQueryHelper.getPRFRequestByID(ID_PRF_Request)
-//        dataTypeNama = databaseQueryHelper.readSemuaTypeNamaModels()
+       dataListTypeNama = databaseQueryHelper.getListTypeNama(ID_PRF_Request)
 
         prepareData()
         menuAdapter = SummaryPRFExpandableListAdapter(context!!, listDataGroup, listDataChild)
@@ -76,13 +80,11 @@ class SummaryDetailActivity : AppCompatActivity() {
         val group1 = "PRF"
         listDataGroup.add(group1)
 
-/*        val childPRFs = ArrayList<String>()
-        dataTypeNama.let {typeNama ->
-            for (dataPRF in typeNama) {
-                childPRFs.add("${dataPRF.type} \t-\t ${dataPRF.namaCandidate}")
-            }
-        }*/
-
+        val childPRFs = ArrayList<String>()
+        dataListTypeNama.forEach{typeNama ->
+                childPRFs.add("${typeNama.type} \t-\t ${typeNama.namaCandidate}")
+        }
+        listDataChild[listDataGroup[1]] = childPRFs
         /*val childPRFs = ArrayList<String>()
         for( dataPRF in data2){
             childPRFs.add("$dataPRF.tipe\t-\t$dataPRF.nama")

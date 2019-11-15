@@ -13,7 +13,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:textAlignment="textStart"
-        android:textColor="@color/warnaDetailText"
-        android:layout_weight="1"/>
+        android:textColor="@color/warnaBlack"
+        android:layout_weight="8"/>
     
 </LinearLayout>
