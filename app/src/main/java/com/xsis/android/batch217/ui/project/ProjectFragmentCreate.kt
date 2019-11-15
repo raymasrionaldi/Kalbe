@@ -48,6 +48,7 @@ class ProjectFragmentCreate:Fragment(), OnBackPressedListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        viewPagerProjectCreate.setCurrentItem(0)
         viewPagerProjectCreate.setCurrentItem(modeTab)
 
     }
