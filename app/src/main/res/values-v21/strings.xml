@@ -53,6 +53,7 @@
     <string name="menu_prf_win">Win</string>
     <string name="prf_win">Win PRF</string>
     <string name="menu_prf_check">Check</string>
+    <string name="prf_check">Check PRF</string>
     <string name="candidate">Candidate</string>
     <string name="menu_employee_training">Employee Training</string>
     <string name="menu_set_training">Set Training</string>
