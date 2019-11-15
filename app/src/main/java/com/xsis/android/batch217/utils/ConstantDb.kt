@@ -267,7 +267,7 @@ val ALASAN = "alasan"
 val USER_KEMBALI = "user_kembali"
 val TGL_KEMBALI = "tgl_kembali"
 val NAMA_TERIMA = "nama_terima"
-val TGL_TERIMA = "tgl_diterima"
+val TGL_TERIMA = "tgl_terima"
 
 
 //nama field sama

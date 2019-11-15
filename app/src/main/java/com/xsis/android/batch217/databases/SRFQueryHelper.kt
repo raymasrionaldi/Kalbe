@@ -144,22 +144,6 @@ class SRFQueryHelper(val databaseHelper: DatabaseHelper) {
         return pilihClient
     }
 
-    fun getClient(keyword: String): String {
-        var pilihClient = ""
-        if (keyword.isNotBlank()) {
-            val db = databaseHelper.readableDatabase
-            val queryCari = "SELECT $TABEL_COMPANY.$NAMA_COMPANY FROM $TABEL_COMPANY " +
-                    "WHERE $TABEL_COMPANY.$ID_COMPANY = $TABEL_SRF.$ID_COMPANY "
-            println(queryCari)
-            val cursor = db.rawQuery(queryCari, null)
-            cursor.moveToFirst()
-            println(cursor.getInt(0).toString())
-            pilihClient = cursor.getInt(0).toString()
-        }
-
-        return pilihClient
-    }
-
 
     fun cariGrade(keyword: String): String {
         var pilihGrade = ""
