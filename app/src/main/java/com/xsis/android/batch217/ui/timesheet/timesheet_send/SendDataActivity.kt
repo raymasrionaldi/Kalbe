@@ -35,7 +35,7 @@ class SendDataActivity : AppCompatActivity() {
     val user = "satriahanif4@gmail.com"
     val tos = arrayOf("satriahanif4@gmail.com")
     val ccs = arrayOf<String>()
-    val title = "Rosetta Code Example"
+    val title = "Data Terkirim"
     val password = "hanifan94"
 
 

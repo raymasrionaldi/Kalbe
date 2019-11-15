@@ -49,7 +49,7 @@
                 android:layout_width="22dp"
                 android:layout_height="22dp"
                 android:layout_margin="5dp"
-                android:src="@drawable/button_next" />
+                android:src="@drawable/ic_send_white" />
         </LinearLayout>
 
         <LinearLayout

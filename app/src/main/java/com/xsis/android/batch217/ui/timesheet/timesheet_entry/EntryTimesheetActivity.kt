@@ -91,7 +91,7 @@ class EntryTimesheetActivity : AppCompatActivity() {
                     ubahResetButton(context, false, buttonReset!!)
                 }
 
-                if (position > 1) {
+                if (position > 1 ) {
                     // hide form dan set value ke default
                     inputStarDatetEntryTimesheet!!.visibility = View.GONE
                     inputEndDateEntryTimesheet!!.visibility = View.GONE
@@ -235,7 +235,7 @@ class EntryTimesheetActivity : AppCompatActivity() {
                     Toast.makeText(context, "Save Invalid, End time Overtime must be greater then Start time Overtime Date", Toast.LENGTH_SHORT).show()
                 }
             }
-            if (startOvertimeTimesheet <= endOvertimeTimesheet && positionOvertimeTimesheet == 1){
+            if (startOvertimeTimesheet <= endReportDateTimesheet && positionOvertimeTimesheet == 1){
                 isValid = false
                 Toast.makeText(context, "Save Invalid, Start time Overtime must be greater then End Time Report date", Toast.LENGTH_SHORT).show()
             }
