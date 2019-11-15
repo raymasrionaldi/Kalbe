@@ -18,7 +18,6 @@ import com.xsis.android.batch217.databases.DatabaseHelper
 import com.xsis.android.batch217.databases.KeluargaQueryHelper
 import com.xsis.android.batch217.databases.ProjectCreateQueryHelper
 import com.xsis.android.batch217.models.ProjectCreate
-import com.xsis.android.batch217.utils.TAB_PROJECT_CREATE
 import java.util.*
 import kotlin.concurrent.schedule
 
