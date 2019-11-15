@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.DialogInterface
 import android.graphics.Color
 import android.icu.util.LocaleData
+import android.icu.util.TimeUnit
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -27,7 +28,6 @@ import com.xsis.android.batch217.databases.ProjectCreateQueryHelper
 import com.xsis.android.batch217.models.ProjectCreate
 import com.xsis.android.batch217.utils.DATE_PATTERN
 import com.xsis.android.batch217.utils.SIMPAN_DATA_BERHASIL
-import com.xsis.android.batch217.utils.TAB_PROJECT_CREATE
 import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -107,7 +107,6 @@ class ProjectFragmentCreateForm(context: Context, val fm: FragmentManager):Fragm
                     Toast.makeText(context,"Hapus data berhasil", Toast.LENGTH_SHORT).show()
                     databaseQueryHelper.deleteProjectCreate(ID)
                     pindahKeFragmentData()
-                    TAB_PROJECT_CREATE = 0
 
                 })
                 .setNegativeButton("Tidak", DialogInterface.OnClickListener{ dialog, which ->
@@ -148,7 +147,6 @@ class ProjectFragmentCreateForm(context: Context, val fm: FragmentManager):Fragm
     }
     fun simpan(){
         save!!.setOnClickListener {
-            TAB_PROJECT_CREATE = 0
 
             val data = ProjectCreate()
             data.idProjectCreate = ID
@@ -192,24 +190,9 @@ class ProjectFragmentCreateForm(context: Context, val fm: FragmentManager):Fragm
     fun setTanggalClickListener(){
         startDate!!.setOnClickListener {
             setTanggal(startDate)
-            if (endDate!!.text.isNotEmpty()){
-                val formatter = DateTimeFormatter.ofPattern(DATE_PATTERN, Locale.ENGLISH)
-
-                val start_date = startDate!!.text
-                val start_date_2 = LocalDate.parse(start_date, formatter)
-                val end_date = endDate!!.text
-                val end_date_2 = LocalDate.parse(end_date, formatter)
-
-                println(start_date_2)
-                println(endDate)
-
-            }
         }
         endDate!!.setOnClickListener {
             setTanggal(endDate)
-            if (startDate!!.text.isNotEmpty()){
-
-            }
         }
         tanggalBAST!!.setOnClickListener { setTanggal(tanggalBAST) }
     }
