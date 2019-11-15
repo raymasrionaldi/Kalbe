@@ -82,7 +82,7 @@ class DataCollectedActivity : AppCompatActivity() {
                 androidx.appcompat.app.AlertDialog.Builder(context, R.style.AlertDialogTheme)
                     .setCancelable(true)
                     .setTitle("DATA COLLLECTING")
-                    .setMessage("Are you sure to process timesheet ?")
+                    .setMessage("Are you sure to collect the data ?")
                     .setPositiveButton("COLLECT") { dialog, which ->
                         changeProgress(COLLECTED, listSelected)
                     }
@@ -100,13 +100,13 @@ class DataCollectedActivity : AppCompatActivity() {
 
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == android.R.id.home) {
-            super.onBackPressed()
-            return true
-        }
-        return super.onOptionsItemSelected(item)
-    }
+//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+//        if (item.itemId == android.R.id.home) {
+//            super.onBackPressed()
+//            return true
+//        }
+//        return super.onOptionsItemSelected(item)
+//    }
 
     private fun changeProgress(progress: String, list: ArrayList<Int>) {
         val ids = ArrayList<Int>()
