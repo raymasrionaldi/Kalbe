@@ -1,9 +1,168 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.timesheet.timesheet_collection.TimesheetCollectionDetailActivity">
+    android:orientation="vertical">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/warnaBiru"
+        android:gravity="center_horizontal|center_vertical"
+        android:orientation="horizontal"
+        android:padding="12dp">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/buttonBackCollection"
+                android:layout_width="23dp"
+                android:layout_height="23dp"
+                android:layout_margin="5dp"
+                android:src="@drawable/ic_arrow_back_white" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="9"
+            android:orientation="vertical">
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_marginRight="30dp">
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/text_collected"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:textAlignment="center"
+            android:gravity="center_horizontal|center_vertical"
+            android:text="TIMESHEET DETAIL"
+            android:textSize="13sp"
+            android:textColor="@color/warnaBiru"
+            android:background="@drawable/custom_border_blue"
+            android:textStyle="bold"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="10dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/reportDateDetailTimesheetCollection"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="24sp"
+            android:textColor="@android:color/black"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Status :"
+            android:textSize="10sp"
+            android:layout_margin="3dp"
+            android:textColor="@color/warnaAbu"/>
+
+        <TextView
+            android:id="@+id/statusDetailTimesheetCollection"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:layout_margin="5dp"
+            android:textColor="@android:color/black"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Client :"
+            android:textSize="10sp"
+            android:textColor="@color/warnaAbu"
+            android:layout_margin="3dp"/>
+
+        <TextView
+            android:id="@+id/clientDetailTimesheetCollection"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:layout_margin="5dp"
+            android:textColor="@android:color/black"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Reported On :"
+            android:textSize="10sp"
+            android:textColor="@color/warnaAbu"
+            android:layout_margin="5dp"/>
+
+        <TextView
+            android:id="@+id/tanggalDanJamReportDateCollection"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:layout_margin="5dp"
+            android:textColor="@android:color/black"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Overtime :"
+            android:textSize="10sp"
+            android:textColor="@color/warnaAbu"
+            android:layout_margin="5dp"/>
+
+        <TextView
+            android:id="@+id/overtimeDetailTimesheetCollection"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:layout_margin="5dp"
+            android:textColor="@android:color/black"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Notes :"
+            android:textSize="10sp"
+            android:textColor="@color/warnaAbu"
+            android:layout_margin="5dp"/>
+
+        <TextView
+            android:id="@+id/notesDetailTimesheetCollection"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:layout_margin="5dp"
+            android:textColor="@android:color/black"/>
+    </LinearLayout>
+
+
+</LinearLayout>

@@ -9,6 +9,7 @@
     <string name="action_search">Search</string>
     <string name="action_t_sub">Submission</string>
     <string name="action_approve">Approve</string>
+    <string name="action_collection">Collection</string>
 
     <string name="menu_home">Home</string>
     <string name="menu_tipe_identitas">Tipe Identitas</string>

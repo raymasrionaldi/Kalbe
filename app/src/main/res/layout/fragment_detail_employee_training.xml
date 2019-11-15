@@ -28,6 +28,7 @@
             android:layout_height="wrap_content"
             android:text="Training Name"
             android:textSize="10sp"
+            android:layout_margin="3dp"
             android:textColor="@color/warnaAbu"/>
 
         <TextView
