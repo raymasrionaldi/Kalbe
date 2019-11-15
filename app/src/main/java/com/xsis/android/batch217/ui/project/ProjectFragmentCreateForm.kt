@@ -5,6 +5,7 @@ import android.app.DatePickerDialog
 import android.content.Context
 import android.content.DialogInterface
 import android.graphics.Color
+import android.icu.util.LocaleData
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -12,6 +13,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.activity.OnBackPressedCallback
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
@@ -25,7 +27,10 @@ import com.xsis.android.batch217.databases.ProjectCreateQueryHelper
 import com.xsis.android.batch217.models.ProjectCreate
 import com.xsis.android.batch217.utils.DATE_PATTERN
 import com.xsis.android.batch217.utils.SIMPAN_DATA_BERHASIL
+import com.xsis.android.batch217.utils.TAB_PROJECT_CREATE
 import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -102,6 +107,7 @@ class ProjectFragmentCreateForm(context: Context, val fm: FragmentManager):Fragm
                     Toast.makeText(context,"Hapus data berhasil", Toast.LENGTH_SHORT).show()
                     databaseQueryHelper.deleteProjectCreate(ID)
                     pindahKeFragmentData()
+                    TAB_PROJECT_CREATE = 0
 
                 })
                 .setNegativeButton("Tidak", DialogInterface.OnClickListener{ dialog, which ->
@@ -113,7 +119,7 @@ class ProjectFragmentCreateForm(context: Context, val fm: FragmentManager):Fragm
         }
     }
     fun setIsi(){
-        if (ID != 0){
+        if (ID > 0){
             delete!!.isVisible = true
             delete!!.isClickable = true
             startDate!!.isEnabled = true
@@ -142,6 +148,8 @@ class ProjectFragmentCreateForm(context: Context, val fm: FragmentManager):Fragm
     }
     fun simpan(){
         save!!.setOnClickListener {
+            TAB_PROJECT_CREATE = 0
+
             val data = ProjectCreate()
             data.idProjectCreate = ID
             data.PID = PID!!.text.toString().trim()
@@ -182,8 +190,27 @@ class ProjectFragmentCreateForm(context: Context, val fm: FragmentManager):Fragm
     }
 
     fun setTanggalClickListener(){
-        startDate!!.setOnClickListener {setTanggal(startDate)}
-        endDate!!.setOnClickListener { setTanggal(endDate) }
+        startDate!!.setOnClickListener {
+            setTanggal(startDate)
+            if (endDate!!.text.isNotEmpty()){
+                val formatter = DateTimeFormatter.ofPattern(DATE_PATTERN, Locale.ENGLISH)
+
+                val start_date = startDate!!.text
+                val start_date_2 = LocalDate.parse(start_date, formatter)
+                val end_date = endDate!!.text
+                val end_date_2 = LocalDate.parse(end_date, formatter)
+
+                println(start_date_2)
+                println(endDate)
+
+            }
+        }
+        endDate!!.setOnClickListener {
+            setTanggal(endDate)
+            if (startDate!!.text.isNotEmpty()){
+
+            }
+        }
         tanggalBAST!!.setOnClickListener { setTanggal(tanggalBAST) }
     }
 
@@ -263,28 +290,30 @@ class ProjectFragmentCreateForm(context: Context, val fm: FragmentManager):Fragm
             override fun afterTextChanged(s: Editable?) {}
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                reset!!.isEnabled = true
+//                reset!!.isEnabled = true
                 val enableSave = PID!!.text.toString().trim().isNotEmpty()
                 enableSave0[0] = enableSave
                 save!!.isEnabled = !enableSave0.contains(false)
+                reset!!.isEnabled = !enableSave0.contains(false)
             }})
         noPOSPKKontrak!!.addTextChangedListener (object :TextWatcher{
             override fun afterTextChanged(s: Editable?) {}
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                reset!!.isEnabled = true
+//                reset!!.isEnabled = true
                 val enableSave = noPOSPKKontrak!!.text.toString().trim().isNotEmpty()
                 enableSave0[1] = enableSave
-                save!!.isEnabled = !enableSave0.contains(false)
+                reset!!.isEnabled = !enableSave0.contains(false)
             }})
         client!!.addTextChangedListener (object :TextWatcher{
             override fun afterTextChanged(s: Editable?) {}
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                reset!!.isEnabled = true
+//                reset!!.isEnabled = true
                 val enableSave = client!!.text.toString().trim().isNotEmpty()
                 enableSave0[2] = enableSave
                 save!!.isEnabled = !enableSave0.contains(false)
+                reset!!.isEnabled = !enableSave0.contains(false)
 
                 startDate!!.isEnabled = enableSave
                 endDate!!.isEnabled = enableSave
@@ -293,28 +322,31 @@ class ProjectFragmentCreateForm(context: Context, val fm: FragmentManager):Fragm
             override fun afterTextChanged(s: Editable?) {}
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                reset!!.isEnabled = true
+//                reset!!.isEnabled = true
                 val enableSave = PID!!.text.toString().trim().isNotEmpty()
                 enableSave0[3] = enableSave
                 save!!.isEnabled = !enableSave0.contains(false)
+                reset!!.isEnabled = !enableSave0.contains(false)
             }})
         endDate!!.addTextChangedListener (object :TextWatcher{
             override fun afterTextChanged(s: Editable?) {}
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                reset!!.isEnabled = true
+//                reset!!.isEnabled = true
                 val enableSave = PID!!.text.toString().trim().isNotEmpty()
                 enableSave0[4] = enableSave
                 save!!.isEnabled = !enableSave0.contains(false)
+                reset!!.isEnabled = !enableSave0.contains(false)
             }})
         posisiDiClient!!.addTextChangedListener (object :TextWatcher{
             override fun afterTextChanged(s: Editable?) {}
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                reset!!.isEnabled = true
+//                reset!!.isEnabled = true
                 val enableSave = PID!!.text.toString().trim().isNotEmpty()
                 enableSave0[5] = enableSave
                 save!!.isEnabled = !enableSave0.contains(false)
+                reset!!.isEnabled = !enableSave0.contains(false)
             }})
     }
     fun isiSpinnerJenisOvertime(){

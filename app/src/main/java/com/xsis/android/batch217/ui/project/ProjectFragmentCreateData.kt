@@ -18,10 +18,14 @@ import com.xsis.android.batch217.databases.DatabaseHelper
 import com.xsis.android.batch217.databases.KeluargaQueryHelper
 import com.xsis.android.batch217.databases.ProjectCreateQueryHelper
 import com.xsis.android.batch217.models.ProjectCreate
+import com.xsis.android.batch217.utils.TAB_PROJECT_CREATE
+import java.util.*
+import kotlin.concurrent.schedule
 
 class ProjectFragmentCreateData(context: Context, val fm: FragmentManager): Fragment() {
     var recyclerView: RecyclerView? = null
     var add: FloatingActionButton? = null
+    var ID = 0
 
     val databaseHelper = DatabaseHelper(context)
     val databaseQueryHelper = ProjectCreateQueryHelper(databaseHelper)
@@ -50,7 +54,17 @@ class ProjectFragmentCreateData(context: Context, val fm: FragmentManager): Frag
             pindahKeFragmentForm()
         }
 
+//        Timer().schedule(1000){
+//            if (TAB_PROJECT_CREATE == 1){
+//                pindahKeFragmentForm()
+//            }
+//        }
+
         return customView
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
     }
 
     fun pindahKeFragmentForm(){
@@ -58,7 +72,7 @@ class ProjectFragmentCreateData(context: Context, val fm: FragmentManager): Frag
         val viewPager = fragment.view!!.parent as ViewPager
         val adapter = viewPager.adapter!! as ProjectCreateFragmentAdapter
 
-        fragment.bawaID(0)
+        fragment.bawaID(ID)
         adapter.notifyDataSetChanged()
         viewPager.setCurrentItem(1, true)
     }

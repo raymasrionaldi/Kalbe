@@ -12,6 +12,7 @@ import com.xsis.android.batch217.ui.project.ProjectFragmentDetail
 class ProjectCreateFragmentAdapter(val context: Context, val fm: FragmentManager) :
     FragmentPagerAdapter(fm) {
     override fun getItem(position: Int): Fragment {
+
         if (position == 0) {
             return ProjectFragmentCreateData(context, fm)
         } else if (position == 1) {
