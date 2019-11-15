@@ -147,6 +147,7 @@ class ProjectFragmentCreateForm(context: Context, val fm: FragmentManager):Fragm
     }
     fun simpan(){
         save!!.setOnClickListener {
+            ID = 0
 
             val data = ProjectCreate()
             data.idProjectCreate = ID
@@ -190,6 +191,12 @@ class ProjectFragmentCreateForm(context: Context, val fm: FragmentManager):Fragm
     fun setTanggalClickListener(){
         startDate!!.setOnClickListener {
             setTanggal(startDate)
+            /*if (endDate!!.text.isNotEmpty()){
+                val start_date = SimpleDateFormat(DATE_PATTERN).parse(startDate!!.text.toString()).time
+                val end_date = SimpleDateFormat(DATE_PATTERN).parse(endDate!!.text.toString()).time
+                val selisih = end_date - start_date
+                println(selisih/1000/60/60/24+1)
+            }*/
         }
         endDate!!.setOnClickListener {
             setTanggal(endDate)
@@ -310,6 +317,17 @@ class ProjectFragmentCreateForm(context: Context, val fm: FragmentManager):Fragm
                 enableSave0[3] = enableSave
                 save!!.isEnabled = !enableSave0.contains(false)
                 reset!!.isEnabled = !enableSave0.contains(false)
+
+                if (startDate!!.text.isNotEmpty() && endDate!!.text.isNotEmpty()){
+                    val start_date = SimpleDateFormat(DATE_PATTERN).parse(startDate!!.text.toString()).time
+                    val end_date = SimpleDateFormat(DATE_PATTERN).parse(endDate!!.text.toString()).time
+                    val selisih = end_date - start_date
+                    println("selisih hari = ${selisih/1000/60/60/24}")
+                    if (selisih < 1){
+                        Toast.makeText(context, "Start Date harus kurang dari End Date !", Toast.LENGTH_SHORT).show()
+                        startDate!!.setText("")
+                    }
+                }
             }})
         endDate!!.addTextChangedListener (object :TextWatcher{
             override fun afterTextChanged(s: Editable?) {}
@@ -320,6 +338,17 @@ class ProjectFragmentCreateForm(context: Context, val fm: FragmentManager):Fragm
                 enableSave0[4] = enableSave
                 save!!.isEnabled = !enableSave0.contains(false)
                 reset!!.isEnabled = !enableSave0.contains(false)
+
+                if (startDate!!.text.isNotEmpty() && endDate!!.text.isNotEmpty()){
+                    val start_date = SimpleDateFormat(DATE_PATTERN).parse(startDate!!.text.toString()).time
+                    val end_date = SimpleDateFormat(DATE_PATTERN).parse(endDate!!.text.toString()).time
+                    val selisih = end_date - start_date
+                    println("selisih hari = ${selisih/1000/60/60/24}")
+                    if (selisih < 1){
+                        Toast.makeText(context, "End Date harus lebih dari Start Date !", Toast.LENGTH_SHORT).show()
+                        endDate!!.setText("")
+                    }
+                }
             }})
         posisiDiClient!!.addTextChangedListener (object :TextWatcher{
             override fun afterTextChanged(s: Editable?) {}
