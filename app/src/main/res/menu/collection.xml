@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/collection"
-        android:icon="@drawable/check_double"
-        android:iconTint="@color/colorWhite"
+        android:icon="@drawable/ic_double_check_white"
         android:title="@string/action_collection"
         app:showAsAction="always" />
 

@@ -22,7 +22,7 @@ class ListTimeSheetCollectAdapter(
     val listTimesheet: List<Timesheet>
 ): RecyclerView.Adapter<ViewHolderListTimesheetCollect>() {
 
-//    var actionMode: ActionMode? = null
+    var actionMode: ActionMode? = null
     var databaseHelper: DatabaseHelper? = null
     var databaseQueryHelper: TimesheetQueryHelper? = null
     var selectedTimesheets = ArrayList<Int>()
@@ -57,6 +57,7 @@ class ListTimeSheetCollectAdapter(
             if (!selectedTimesheets.contains(pos)) {
                 holder.inisial.isSelected = true
                 holder.itemView.setBackgroundColor(Color.GRAY)
+
                 selectedTimesheets.add(pos)
             } else {
                 holder.inisial.isSelected = false
@@ -64,60 +65,81 @@ class ListTimeSheetCollectAdapter(
                 selectedTimesheets.remove(pos)
             }
 
-//            if (actionMode == null) {
-//                actionMode =
-//                    (context as AppCompatActivity).startSupportActionMode(actionModeCallbacks)
-//            } else if (selectedTimesheets.isEmpty()) {
-//                actionMode!!.finish()
-//            }
+            if (actionMode == null) {
+                actionMode =
+                    (context as AppCompatActivity).startSupportActionMode(actionModeCallbacks)
+            } else if (selectedTimesheets.isEmpty()) {
+                actionMode!!.finish()
+            }
         }
     }
 
-//    private val actionModeCallbacks = object : ActionMode.Callback {
-//        override fun onCreateActionMode(mode: ActionMode, menu: Menu): Boolean {
-//            mode.menuInflater.inflate(R.menu.collection, menu)
-//            return true
-//        }
+    private val actionModeCallbacks = object : ActionMode.Callback {
+        override fun onCreateActionMode(mode: ActionMode, menu: Menu): Boolean {
+            mode.menuInflater.inflate(R.menu.collection, menu)
+            return true
+        }
 
-//        override fun onPrepareActionMode(mode: ActionMode, menu: Menu): Boolean {
-//            return false
-//        }
-//
-//        override fun onActionItemClicked(mode: ActionMode, item: MenuItem): Boolean {
-//            if (item.itemId == R.id.collection) {
-//                if (databaseHelper == null) {
-//                    databaseHelper = DatabaseHelper(context)
-//                }
-//                if (databaseQueryHelper == null) {
-//                    databaseQueryHelper = TimesheetQueryHelper(databaseHelper!!)
-//                }
-//                AlertDialog.Builder(context, R.style.AlertDialogTheme)
-//                    .setCancelable(true)
-//                    .setTitle("")
-//                    .setMessage("Are you sure to collect the data ?")
-//                    .setPositiveButton("COLLECTING") { dialog, which ->
-//                        changeProgress(COLLECTED)
-//                    }
-//                    .setNegativeButton("CANCEL") { dialog, which ->
-//                        dialog.cancel()
-//                        (context as AppCompatActivity).finish()
-//                    }
-//                    .create().show()
-//            }
-//            return true
-//        }
-//
-//        override fun onDestroyActionMode(mode: ActionMode) {
-//            //hilangkan selected
-//            selectedTimesheets.clear()
-//            notifyDataSetChanged()
-//            actionMode = null
-//        }
-//    }
+        override fun onPrepareActionMode(mode: ActionMode, menu: Menu): Boolean {
+            return false
+        }
 
-    fun getSelectedList(): ArrayList<Int>{
-        return selectedTimesheets
+        override fun onActionItemClicked(mode: ActionMode, item: MenuItem): Boolean {
+            if (item.itemId == R.id.collection) {
+                if (databaseHelper == null) {
+                    databaseHelper = DatabaseHelper(context)
+                }
+                if (databaseQueryHelper == null) {
+                    databaseQueryHelper = TimesheetQueryHelper(databaseHelper!!)
+                }
+                AlertDialog.Builder(context, R.style.AlertDialogTheme)
+                    .setCancelable(true)
+                    .setTitle("")
+                    .setMessage("Are you sure to collect the data ?")
+                    .setPositiveButton("COLLECTING") { dialog, which ->
+                        changeProgress(COLLECTED)
+                    }
+                    .setNegativeButton("CANCEL") { dialog, which ->
+                        dialog.cancel()
+                        (context as AppCompatActivity).finish()
+                    }
+                    .create().show()
+            }
+            return true
+        }
+
+        override fun onDestroyActionMode(mode: ActionMode) {
+            //hilangkan selected
+            selectedTimesheets.clear()
+            notifyDataSetChanged()
+            actionMode = null
+        }
     }
+
+    private fun changeProgress(progress: String) {
+        val ids = ArrayList<Int>()
+        selectedTimesheets.forEach { index -> ids.add(listTimesheet[index].id_timesheet) }
+
+        val isSucceed = databaseQueryHelper!!.changeProgress(ids, progress)
+
+        val message = if (isSucceed) {
+            "DATA HAS BEEN ${progress.toUpperCase()}"
+        } else {
+            "AN ERROR OCCURRED"
+        }
+
+        androidx.appcompat.app.AlertDialog.Builder(context, R.style.AlertDialogTheme)
+            .setCancelable(false)
+            .setTitle(message)
+            .setPositiveButton("CLOSE") { dialog, which ->
+                (context as AppCompatActivity).finish()
+            }
+            .create().show()
+    }
+
+//    fun getSelectedList(): ArrayList<Int>{
+//        return selectedTimesheets
+//    }
 
 
 }
