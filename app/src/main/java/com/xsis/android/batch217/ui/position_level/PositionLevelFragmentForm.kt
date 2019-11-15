@@ -191,8 +191,8 @@ class PositionLevelFragmentForm(context: Context, val fm: FragmentManager) : Fra
                         .show()
                 }
             } else if (modeForm == MODE_EDIT) {
-                if ((cekPostionLevel != 1 && model.namaPosition == data.namaPosition) ||
-                    (cekPostionLevel != 0 && model.namaPosition != data.namaPosition)
+                if ((cekPostionLevel != 1 && model.namaPosition.equals(data.namaPosition, true)) ||
+                    (cekPostionLevel != 0 && !model.namaPosition.equals(data.namaPosition, true))
                 ) {
                     Toast.makeText(context, DATA_SUDAH_ADA, Toast.LENGTH_SHORT).show()
                     return
