@@ -260,4 +260,39 @@ class PRFRequestQueryHelper (val databaseHelper: DatabaseHelper) {
         println("UPDATE $TABEL_PRF_REQUEST SET $WIN_STATUS = 'true' WHERE $ID_PRF_REQUEST = $id")
     }
 
+    fun checkTahapPRF(id:Int):String{
+        var check = ""
+        val db = databaseHelper.readableDatabase
+        val queryCari = "SELECT * FROM $TABEL_PRF_REQUEST " +
+                "WHERE $TABEL_PRF_REQUEST.$ID_PRF_REQUEST = '$id' "
+        val cursor = db.rawQuery(queryCari, null)
+        cursor.moveToFirst()
+        val t1 = cursor.getString(15)
+        val t2 = cursor.getString(16)
+        val t3 = cursor.getString(17)
+        val t4 = cursor.getString(18)
+        if (t1=="false"){
+            check = TAHAP1_STATUS
+        } else if (t2 == "false"){
+            check = TAHAP2_STATUS
+        } else if (t3 == "false"){
+            check = TAHAP3_STATUS
+        } else if (t4 == "false"){
+            check = TAHAP4_STATUS
+        }
+        println("INI CHECK : $check")
+        return check
+
+    }
+
+    fun updateCheckPRF(id:Int): String {
+        val check = checkTahapPRF(id)
+        println("INI CHECK : $check")
+        val db = databaseHelper.writableDatabase
+        val values = ContentValues()
+        values.put(check, "true")
+        db.update(TABEL_PRF_REQUEST, values, "$ID_PRF_REQUEST = ?", arrayOf(id.toString()))
+        return check
+    }
+
 }
