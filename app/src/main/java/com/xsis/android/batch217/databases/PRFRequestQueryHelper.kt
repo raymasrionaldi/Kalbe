@@ -89,7 +89,7 @@ class PRFRequestQueryHelper (val databaseHelper: DatabaseHelper) {
 
         val db = databaseHelper.readableDatabase
         val queryCari = "SELECT * FROM $TABEL_PRF_REQUEST " +
-                "WHERE $PLACEMENT = '$placement' "
+                "WHERE $PLACEMENT LIKE '$placement' "
         val cursor = db.rawQuery(queryCari, null)
 
         if (cursor.count > 0) {

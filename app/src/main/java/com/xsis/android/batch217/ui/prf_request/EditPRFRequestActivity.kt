@@ -239,7 +239,7 @@ class EditPRFRequestActivity : AppCompatActivity() {
                          overtime: String,
                          bast: String,
                          billing: String) {
-        val listPRFRequest = databaseQueryHelper.readUpdate(id, placement)
+        val listPRFRequest = databaseQueryHelper.readPlacementPRF(placement)
         if(listPRFRequest.isEmpty()){
             databaseQueryHelper.updateDelete(id,tanggal, type, placement, pid, location, period, userName, telpMobilePhone, email, notebook,overtime, bast, billing)
             Toast.makeText(context, EDIT_DATA_BERHASIL, Toast.LENGTH_SHORT).show()

@@ -69,7 +69,7 @@ class UbahDataKeahlianActivity : AppCompatActivity() {
         val db = databaseHelper.writableDatabase
 
         val databaseQueryHelper = KeahlianQueryHelper(databaseHelper)
-        val listKeahlian = databaseQueryHelper.readUpdate(id, isiTipeKeahlian)
+        val listKeahlian = databaseQueryHelper.readNamaKeahlian(isiTipeKeahlian)
 
         if(listKeahlian.isEmpty()){
             databaseQueryHelper.updateDelete(id, isiTipeKeahlian,isiDeskripsiKeahlian)

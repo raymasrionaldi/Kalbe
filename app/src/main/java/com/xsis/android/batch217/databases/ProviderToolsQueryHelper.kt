@@ -100,7 +100,7 @@ class ProviderToolsQueryHelper(val databaseHelper: DatabaseHelper) {
     fun cekProviderToolsSudahAda(nama: String): Int {
         val db = databaseHelper.readableDatabase
         val queryCari =
-            "SELECT * FROM $TABEL_PROVIDER WHERE $NAMA_PROVIDER = '$nama' AND " +
+            "SELECT * FROM $TABEL_PROVIDER WHERE $NAMA_PROVIDER LIKE '$nama' AND " +
                     "$IS_DELETED = 'false'"
 
         val cursor = db.rawQuery(queryCari, null)

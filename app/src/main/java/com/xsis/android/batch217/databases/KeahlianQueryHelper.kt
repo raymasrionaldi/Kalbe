@@ -50,7 +50,7 @@ class KeahlianQueryHelper(val databaseHelper: DatabaseHelper) {
 
         val db = databaseHelper.readableDatabase
         val queryCari = "SELECT * FROM $TABEL_KEAHLIAN " +
-                "WHERE $NAMA_KEAHLIAN = '$nama' "
+                "WHERE $NAMA_KEAHLIAN LIKE '%$nama%' "
         val cursor = db.rawQuery(queryCari, null)
 
         if (cursor.count > 0) {
@@ -80,7 +80,7 @@ class KeahlianQueryHelper(val databaseHelper: DatabaseHelper) {
 
         val db = databaseHelper.writableDatabase
         val queryUpdate = "SELECT * FROM $TABEL_KEAHLIAN " +
-                "WHERE $NAMA_KEAHLIAN = '$nama' AND $ID_KEAHLIAN != '$id'"
+                "WHERE $NAMA_KEAHLIAN LIKE '%$nama%' AND $ID_KEAHLIAN != '$id'"
         val cursor = db.rawQuery(queryUpdate, null)
         if (cursor.count > 0){
             listKeahlian = konversiCursorKeListKeahlianModel(cursor)

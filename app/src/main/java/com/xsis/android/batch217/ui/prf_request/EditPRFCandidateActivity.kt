@@ -175,7 +175,7 @@ class EditPRFCandidateActivity : AppCompatActivity() {
         val databaseHelper = DatabaseHelper(context)
         val db = databaseHelper.writableDatabase
         val databaseQueryHelper = PRFCandidateQueryHelper(databaseHelper)
-        val listPRFCandidate = databaseQueryHelper.readUpdate(id,name)
+        val listPRFCandidate = databaseQueryHelper.readNamaPRFCandidate(name)
         if(listPRFCandidate.isEmpty()){
             databaseQueryHelper.updateDelete(id, name, batch, position, placementDate, srfNumber, customAllowence, candidateStatus, signContractDate, notes)
             Toast.makeText(context, EDIT_DATA_BERHASIL, Toast.LENGTH_SHORT).show()

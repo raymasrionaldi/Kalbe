@@ -55,7 +55,7 @@ class PRFCandidateQueryHelper(val databaseHelper: DatabaseHelper)  {
 
         val db = databaseHelper.readableDatabase
         val queryCari = "SELECT * FROM $TABEL_PRF_CANDIDATE " +
-                "WHERE $NAMA_PRF_CANDIDATE = '$nama' "
+                "WHERE $NAMA_PRF_CANDIDATE LIKE '$nama' "
         val cursor = db.rawQuery(queryCari, null)
 
         if (cursor.count > 0) {
