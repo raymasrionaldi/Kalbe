@@ -98,7 +98,7 @@ class TrainingQueryHelper(val databaseHelper: DatabaseHelper) {
     fun cekTrainingCodeSudahAda(code: String): Int {
         val db = databaseHelper.readableDatabase
         val queryCari =
-            "SELECT * FROM $TABEL_TRAINING WHERE $CODE_TRAINING = '$code' AND " +
+            "SELECT * FROM $TABEL_TRAINING WHERE $CODE_TRAINING LIKE '$code' AND " +
                     "$IS_DELETED = 'false'"
 
         val cursor = db.rawQuery(queryCari, null)

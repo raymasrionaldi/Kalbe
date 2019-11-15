@@ -98,7 +98,7 @@ class TipeTesQueryHelper(val databaseHelper: DatabaseHelper) {
     fun cekTipeTesSudahAda(nama: String): Int {
         val db = databaseHelper.readableDatabase
         val queryCari =
-            "SELECT * FROM $TABEL_TIPE_TES WHERE $NAMA_TES= '$nama' AND " +
+            "SELECT * FROM $TABEL_TIPE_TES WHERE $NAMA_TES LIKE '$nama' AND " +
                     "$IS_DELETED = 'false'"
 
         val cursor = db.rawQuery(queryCari, null)
