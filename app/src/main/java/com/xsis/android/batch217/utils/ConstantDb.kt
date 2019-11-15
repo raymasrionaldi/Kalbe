@@ -151,6 +151,11 @@ val OVERTIME = "overtime"
 val BAST = "bast"
 val BILLING = "billing"
 val WIN_STATUS = "win_status"
+val TAHAP1_STATUS = "tahap_1"
+val TAHAP2_STATUS = "tahap_2"
+val TAHAP3_STATUS = "tahap_3"
+val TAHAP4_STATUS = "tahap_4"
+
 
 val TABEL_PRF_CANDIDATE = "prf_candidates"
 val ID_FROM_PRF = "id_from_prf"
