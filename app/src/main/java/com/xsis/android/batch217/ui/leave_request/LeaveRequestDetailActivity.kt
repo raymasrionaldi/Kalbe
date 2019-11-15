@@ -101,17 +101,32 @@ class LeaveRequestDetailActivity : AppCompatActivity() {
             .setMessage("Hapus Leave Request")
             .setCancelable(false)
             .setPositiveButton("DELETE") { dialog, which ->
-                if (databaseQueryHelper!!.hapusLeaveRequest(idDetail) != 0) {
-                    Toast.makeText(context!!, HAPUS_DATA_BERHASIL, Toast.LENGTH_SHORT).show()
-                    finish()
-                } else {
-                    Toast.makeText(context!!, HAPUS_DATA_GAGAL, Toast.LENGTH_SHORT).show()
+                if(cekLatestApprovalById(idDetail)){
+                    if (databaseQueryHelper!!.hapusLeaveRequest(idDetail) != 0) {
+                        Toast.makeText(context!!, HAPUS_DATA_BERHASIL, Toast.LENGTH_SHORT).show()
+                        finish()
+                    } else {
+                        Toast.makeText(context!!, HAPUS_DATA_GAGAL, Toast.LENGTH_SHORT).show()
+                    }
+                }else{
+                    Toast.makeText(context!!, "Rejected Request Tidak Bisa Dihapus", Toast.LENGTH_SHORT).show()
                 }
             }
             .setNegativeButton("CANCEL") { dialog, which ->
             }
             .create()
             .show()
+    }
+
+    fun cekLatestApprovalById(idDetail:Int):Boolean{
+        var isApproved=true
+
+        val model = databaseQueryHelper!!.getLatestApprovalStateById(idDetail)
+        if(model.approvalState!="approved"){
+            isApproved=false
+        }
+
+        return isApproved
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

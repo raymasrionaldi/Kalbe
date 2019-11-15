@@ -18,9 +18,13 @@ import com.xsis.android.batch217.databases.LeaveRequestQueryHelper
 import com.xsis.android.batch217.models.LeaveRequest
 import com.xsis.android.batch217.utils.DATE_PATTERN
 import java.text.SimpleDateFormat
+import java.time.Duration
+import java.time.LocalDate
+import java.util.*
 import java.util.concurrent.TimeUnit
 
 class LeaveRequestFragmentData(context: Context, val fm: FragmentManager):Fragment() {
+    val currentYear = Calendar.getInstance().get(Calendar.YEAR)
     var regularLeaveQuota=0
     var annualLeaveQuota=0
 
@@ -44,8 +48,9 @@ class LeaveRequestFragmentData(context: Context, val fm: FragmentManager):Fragme
         annualLeaveQuota=databaseQueryHelper.annualLeaveQuota
 
 
-        var prevLeaveVal= hitungSisaPrevYearLeave()
-//        var leaveAlreadyTakenVal = hitungLeaveAlreadyTaken()
+        val prevLeaveVal= hitungSisaPrevYearLeave()
+        val leaveAlreadyTakenVal = hitungLeaveAlreadyTaken()
+        val remainingQuota= prevLeaveVal + regularLeaveQuota - (leaveAlreadyTakenVal+annualLeaveQuota)
 
         val prevLeave: TextView = customView.findViewById(R.id.prevYearQuota) as TextView
             prevLeave.text=prevLeaveVal.toString()
@@ -57,45 +62,73 @@ class LeaveRequestFragmentData(context: Context, val fm: FragmentManager):Fragme
             annualLeave.text=annualLeaveQuota.toString()
 
         val takenLeave: TextView = customView.findViewById(R.id.takenQuota) as TextView
-            takenLeave.text="0"
+            takenLeave.text=leaveAlreadyTakenVal.toString()
 
         val remainingLeave: TextView = customView.findViewById(R.id.remainingQuota) as TextView
-            remainingLeave.text="0"
+            remainingLeave.text=remainingQuota.toString()
 
         return customView
     }
 
     fun getPrevYearLeave():List<LeaveRequest>{
-        val listModel = databaseQueryHelper!!.getPrevYearLeave()
+        val prevYear= currentYear-1
+        val listModel = databaseQueryHelper!!.getLeaveDateRangeByYear(prevYear)
         return listModel
     }
 
-    /*fun getLeaveThisYear():List<LeaveRequest>{
-        val listModel = databaseQueryHelper!!.getCurYearLeave()
+    fun getLeaveTaken():List<LeaveRequest>{
+        val listModel = databaseQueryHelper!!.getLeaveDateRangeByYear(currentYear)
         return listModel
-    }*/
+    }
+
+    fun isHariBesar(){
+
+    }
+
+
 
     fun hitungSisaPrevYearLeave():Int{
         val listModel=getPrevYearLeave()
-        var remainingPrevYearQuota=0
+        var prevYearQuota=0
         var prevYearLeaveTaken=0
+        var lamaHariLeave=0
 
         listModel.forEach {model->
-            println("BULAN# ${model.start}")
-            val dateStart= SimpleDateFormat(DATE_PATTERN).parse(model.start)
-            val dateEnd=SimpleDateFormat(DATE_PATTERN).parse(model.end)
-            var rentangWaktu= Math.abs(dateStart.time-dateEnd.time) //TODO check tanpa .toInt
-            var lamaHariLeave= TimeUnit.DAYS.convert(rentangWaktu, TimeUnit.MILLISECONDS).toInt()
+
+            /*TODO find iterate trough date,
+            *  check isHariBesar && isWeekEnd  */
+            val dateStart= SimpleDateFormat("MMMMM dd, yyyy").parse(model.start)
+            val dateEnd=SimpleDateFormat("MMMMM dd, yyyy").parse(model.end)
+//            val ddStart= dateStart.getDate()
+//            val ddEnd= dateStart.getDate()
+//            for(i in ddStart until ddEnd){
+//                if(!isHariBesar("")&&!isWeekEnd()){
+//                    lamaHariLeave+=1
+//                }
+//            }
+            var rentangWaktu= Math.abs(dateStart.time-dateEnd.time)
+            var lamaHariLeave= TimeUnit.DAYS.convert(rentangWaktu, TimeUnit.MILLISECONDS).toInt()+1
+           /* println("BULAN# ${model.start} - ${model.end}")
+            println("BULAN# lamahariLeave= $lamaHariLeave")*/
             prevYearLeaveTaken +=lamaHariLeave
         }
-        remainingPrevYearQuota=regularLeaveQuota-(prevYearLeaveTaken+annualLeaveQuota)
-        return remainingPrevYearQuota
+        prevYearQuota=regularLeaveQuota-(prevYearLeaveTaken+annualLeaveQuota)
+        return prevYearQuota
     }
 
-    /*fun hitungLeaveAlreadyTaken():Int{
-        val listModel=getLeaveThisYear()
+    fun hitungLeaveAlreadyTaken():Int{
+        val listModel=getLeaveTaken()
         var leaveTaken=0
 
+        listModel.forEach {model->
+            val dateStart= SimpleDateFormat(DATE_PATTERN).parse(model.start)
+            val dateEnd=SimpleDateFormat(DATE_PATTERN).parse(model.end)
+            var rentangWaktu= Math.abs(dateStart.time-dateEnd.time)
+            var lamaHariLeave= TimeUnit.DAYS.convert(rentangWaktu, TimeUnit.MILLISECONDS).toInt()+1
+            println("BULAN# ${model.start} - ${model.end}")
+            println("BULAN# lamahariLeave= $lamaHariLeave")
+            leaveTaken +=lamaHariLeave
+        }
         return leaveTaken
-    }*/
+    }
 }

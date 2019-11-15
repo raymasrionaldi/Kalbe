@@ -155,6 +155,31 @@ class LeaveRequestQueryHelper(val databaseHelper: DatabaseHelper) {
         return listLeaveApproval
     }
 
+    fun getLatestApprovalStateById(id: Int): LeaveRequest{
+        var latestApproval = LeaveRequest()
+        val db = databaseHelper.readableDatabase
+        val queryCari = "SELECT " +
+                "a.approval_state " +
+                "FROM $TABEL_LEAVE_APPROVAL a " +
+                "WHERE a.$ID_LEAVE ='$id' ORDER BY $ID_LEAVE_APPROVAL DESC LIMIT 1"
+
+        val cursor = db.rawQuery(queryCari, null)
+        if (cursor.count > 0) {
+            latestApproval = konversiCursorKeApprovalModel(cursor)
+        }
+        return latestApproval
+    }
+
+    private fun konversiCursorKeApprovalModel(cursor: Cursor): LeaveRequest {
+
+        var approvalModel = LeaveRequest()
+        for (c in 0 until cursor.count) {
+            cursor.moveToPosition(c)
+            approvalModel.approvalState = cursor.getString(0)
+        }
+        return approvalModel
+    }
+
     private fun konversiCursorKeListApprovalModel(cursor: Cursor): ArrayList<LeaveRequest> {
         var listCutiKhusus = ArrayList<LeaveRequest>()
 
@@ -258,15 +283,15 @@ class LeaveRequestQueryHelper(val databaseHelper: DatabaseHelper) {
 
     /*GET PREV YEAR LEAVE QUOTA*/
 
-    fun getPrevYearLeave(): List<LeaveRequest> {
-        val prevYear= currentYear-1
+    fun getLeaveDateRangeByYear(year:Int): List<LeaveRequest> {
+//        val prevYear= currentYear-1
         var listLeaveDate = ArrayList<LeaveRequest>()
 
         val db = databaseHelper.readableDatabase
         val queryCari = "SELECT " +
                 "start,end " +
                 "FROM $TABEL_LEAVE_REQUEST " +
-                "WHERE start LIKE '%$prevYear'"
+                "WHERE start LIKE '%$year'"
 
         val cursor = db.rawQuery(queryCari, null)
         if (cursor.count > 0) {
@@ -275,8 +300,59 @@ class LeaveRequestQueryHelper(val databaseHelper: DatabaseHelper) {
         return listLeaveDate
     }
 
-//    fun getCurYearLeave(): List<LeaveRequest>{
-//        var
-//        return listLeaveDate
-//    }
+    fun getHariLiburNasional(year:Int): ArrayList<String> {
+        var listLiburNasional = ArrayList<String>()
+
+        listLiburNasional.add("January 01, ${year.toString()}")
+        listLiburNasional.add("May 01, ${year.toString()}")
+        listLiburNasional.add("June 01, ${year.toString()}")
+        listLiburNasional.add("August 17, ${year.toString()}")
+        listLiburNasional.add("June 01, ${year.toString()}")
+        listLiburNasional.add("December 24, ${year.toString()}")
+        listLiburNasional.add("December 25, ${year.toString()}")
+
+        when(year){
+            2018->{
+                //https://publicholidays.co.id/id/2018-dates/
+                listLiburNasional.add("February 16, ${year.toString()}")
+                listLiburNasional.add("March 17, ${year.toString()}")
+                listLiburNasional.add("March 30, ${year.toString()}")
+                listLiburNasional.add("April 14, ${year.toString()}")
+                listLiburNasional.add("May 10, ${year.toString()}")
+                listLiburNasional.add("May 29, ${year.toString()}")
+                listLiburNasional.add("June 11, ${year.toString()}")
+                listLiburNasional.add("June 12, ${year.toString()}")
+                listLiburNasional.add("June 13, ${year.toString()}")
+                listLiburNasional.add("June 14, ${year.toString()}")
+                listLiburNasional.add("June 15, ${year.toString()}")
+                listLiburNasional.add("June 18, ${year.toString()}")
+                listLiburNasional.add("June 20, ${year.toString()}")
+                listLiburNasional.add("June 27, ${year.toString()}")
+                listLiburNasional.add("August 22, ${year.toString()}")
+                listLiburNasional.add("September 11, ${year.toString()}")
+                listLiburNasional.add("November 20, ${year.toString()}")
+
+            }
+            2019->{
+                //https://publicholidays.co.id/id/2019-dates/
+                listLiburNasional.add("February 05, ${year.toString()}")
+                listLiburNasional.add("March 07, ${year.toString()}")
+                listLiburNasional.add("April 14, ${year.toString()}")
+                listLiburNasional.add("April 03, ${year.toString()}")
+                listLiburNasional.add("April 19, ${year.toString()}")
+                listLiburNasional.add("May 19, ${year.toString()}")
+                listLiburNasional.add("May 30, ${year.toString()}")
+                listLiburNasional.add("June 03, ${year.toString()}")
+                listLiburNasional.add("June 04, ${year.toString()}")
+                listLiburNasional.add("June 05, ${year.toString()}")
+                listLiburNasional.add("June 06, ${year.toString()}")
+                listLiburNasional.add("June 07, ${year.toString()}")
+                listLiburNasional.add("August 11, ${year.toString()}")
+                listLiburNasional.add("September 01, ${year.toString()}")
+                listLiburNasional.add("November 09, ${year.toString()}")
+            }
+        }
+
+        return listLiburNasional
+    }
 }

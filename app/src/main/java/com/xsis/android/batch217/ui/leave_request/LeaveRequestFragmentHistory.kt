@@ -19,6 +19,7 @@ import com.xsis.android.batch217.models.LeaveRequest
 class LeaveRequestFragmentHistory(context: Context, val fm: FragmentManager):Fragment() {
     var recyclerView: RecyclerView? = null
     var databaseQueryHelper: LeaveRequestQueryHelper? = null
+    var SEARCH_KEYWORD = ""
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -60,6 +61,7 @@ class LeaveRequestFragmentHistory(context: Context, val fm: FragmentManager):Fra
             }
 
             override fun onQueryTextChange(keyword: String): Boolean {
+                SEARCH_KEYWORD=keyword
                 search(keyword, databaseQueryHelper!!)
                 return true
             }
@@ -80,5 +82,10 @@ class LeaveRequestFragmentHistory(context: Context, val fm: FragmentManager):Fra
             recyclerView.adapter = adapterLeaveRequest
             adapterLeaveRequest.notifyDataSetChanged()
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        search(SEARCH_KEYWORD!!,databaseQueryHelper!!)
     }
 }

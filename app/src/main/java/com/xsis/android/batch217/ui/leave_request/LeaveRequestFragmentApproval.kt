@@ -51,6 +51,32 @@ class LeaveRequestFragmentApproval(context: Context, val fm: FragmentManager, va
         viewDetail(model)
     }
 
+    fun viewDetail(listModel: List<LeaveRequest>) {
+        println("BULAN# viewDetail")
+
+        prepareData(listModel)
+        menuAdapter = LeaveRequestExpandableListAdapter(context!!, listDataGroup, listDataChild)
+        listLeaveRequestApproval!!.setAdapter(menuAdapter)
+    }
+
+    private fun prepareData(listModel: List<LeaveRequest>) {
+        println("BULAN# prepareData")
+        listDataGroup = ArrayList()
+        listDataChild = HashMap()
+        var i=1
+        var j=0
+        var group :String?= ""
+
+        listModel.forEach {model->
+            group="Approval ${i++}"
+            listDataGroup.add(group.toString())
+            val child = ArrayList<List<String>>()
+            val info = arrayListOf(model.approvalName!!, model.approvalState!!)
+            child.add(info)
+            listDataChild[listDataGroup[j++]] = child
+        }
+    }
+
     /*fun viewDetail(listModel: List<LeaveRequest>) {
         println("BULAN# viewDetail")
         //        (parentFragment as LeaveRequestFragment).changeTitleByFragmentPos(1)
@@ -90,30 +116,4 @@ class LeaveRequestFragmentApproval(context: Context, val fm: FragmentManager, va
         child2.add(info21)
         listDataChild[listDataGroup[2]] = child2
     }*/
-
-    fun viewDetail(listModel: List<LeaveRequest>) {
-        println("BULAN# viewDetail")
-
-        prepareData(listModel)
-        menuAdapter = LeaveRequestExpandableListAdapter(context!!, listDataGroup, listDataChild)
-        listLeaveRequestApproval!!.setAdapter(menuAdapter)
-    }
-
-    private fun prepareData(listModel: List<LeaveRequest>) {
-        println("BULAN# prepareData")
-        listDataGroup = ArrayList()
-        listDataChild = HashMap()
-        var i=1
-        var j=0
-        var group :String?= ""
-
-        listModel.forEach {model->
-            group="Approval ${i++}"
-            listDataGroup.add(group.toString())
-            val child = ArrayList<List<String>>()
-            val info = arrayListOf(model.approvalName!!, model.approvalState!!)
-            child.add(info)
-            listDataChild[listDataGroup[j++]] = child
-        }
-    }
 }

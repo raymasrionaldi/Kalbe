@@ -62,4 +62,10 @@ class LeaveRequestFragmentDetail(context: Context, val fm: FragmentManager,val i
         contactNumber!!.text=model.contact
         reason!!.text=model.reason
     }
+
+    override fun onResume() {
+        super.onResume()
+        tampilkanDetail(id_detail)
+
+    }
 }
