@@ -155,23 +155,31 @@ class DataSubmitActivity : AppCompatActivity() {
         user: String, tos: Array<String>, ccs: Array<String>, title: String,
         password: String
     ) {
-        //fungsi tampilin tanggal min max
         val formatter1 = SimpleDateFormat(DATE_PATTERN)
         val formatter2 = SimpleDateFormat("dd-MMMM-yyyy")
-        var min = Long.MAX_VALUE
-        var max = Long.MIN_VALUE
-        for (timesheet in listTimesheet) {
+        var body=""
+        if(listTimesheet.size == 1){
+            var timesheet = listTimesheet[0]
             val dateString = formatter1.parse(timesheet.reportDate_timesheet).time
-            if (dateString > max) {
-                max = dateString
+             body = "Timesheet tanggal ${formatter2.format(dateString)} sudah disubmit"
+
+        }else {
+            //fungsi tampilin tanggal min max
+
+            var min = Long.MAX_VALUE
+            var max = Long.MIN_VALUE
+            for (timesheet in listTimesheet) {
+                val dateString = formatter1.parse(timesheet.reportDate_timesheet).time
+                if (dateString > max) {
+                    max = dateString
+                }
+                if (dateString < min) {
+                    min = dateString
+                }
             }
-            if (dateString < min) {
-                min = dateString
-            }
+
+             body = "Timesheet tanggal ${formatter2.format(min)} s/d ${formatter2.format(max)} sudah disubmit"
         }
-
-        val body = "Timesheet tanggal ${formatter2.format(min)} s/d ${formatter2.format(max)} sudah disubmit"
-
 
         //fungsi send mail
         val props = Properties()

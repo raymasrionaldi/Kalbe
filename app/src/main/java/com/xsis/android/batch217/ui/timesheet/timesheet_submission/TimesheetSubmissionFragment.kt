@@ -157,7 +157,6 @@ class TimesheetSubmissionFragment : Fragment() {
         for (i in 1990..thisYear) {
             years.add(Integer.toString(i))
         }
-
         val adapterTahun = ArrayAdapter<String>(
             context!!,
             android.R.layout.simple_spinner_item,
