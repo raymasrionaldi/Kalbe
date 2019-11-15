@@ -23,7 +23,9 @@ class ProjectCreateQueryHelper(val databaseHelper: DatabaseHelper) {
 
         if (keyword.isNotBlank()){
             val db = databaseHelper.readableDatabase
-            val queryCari = "SELECT * FROM $TABEL_PROJECT_CREATE where $CLIENT LIKE '%$keyword%' OR $NO_PO_SPK_KONTRAK LIKE '%$keyword%'"
+            val queryCari = "SELECT * FROM $TABEL_PROJECT_CREATE where " +
+                    "($CLIENT LIKE '%$keyword%' OR $NO_PO_SPK_KONTRAK LIKE '%$keyword%')" +
+                    "AND $PID != 'PID *'"
             val cursor = db.rawQuery(queryCari, null)
             if (cursor.count > 0){
                 listProject = konversiCursorKeListProjectCreate(cursor)
