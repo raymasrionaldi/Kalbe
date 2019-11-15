@@ -30,13 +30,13 @@ class CreateERFActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_erf)
 
+        isiSpinnerKeahlian()
+
         val bundle: Bundle? = intent.extras
         bundle?.let {
             idPRFReg = bundle!!.getInt(ID_PRF_REQUEST)
             loadDataERF(idPRFReg)
         }
-
-        isiSpinnerKeahlian()
 
         buttonCancelERF.setOnClickListener {
             resetForm()
@@ -126,8 +126,8 @@ class CreateERFActivity : AppCompatActivity() {
                 Toast.makeText(context, SIMPAN_DATA_GAGAL, Toast.LENGTH_SHORT).show()
             } else {
                 Toast.makeText(context, SIMPAN_DATA_BERHASIL, Toast.LENGTH_SHORT).show()
+                resetForm()
             }
-            resetForm()
         }
     }
 
@@ -139,6 +139,7 @@ class CreateERFActivity : AppCompatActivity() {
     fun isiSpinnerKeahlian(){
         listKeahlian = databaseQueryHelper.readListKeahlian()
         val adapterKeahlian= ArrayAdapter<String>(context,android.R.layout.simple_spinner_item, listKeahlian!!)
+        adapterKeahlian.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinnerKeahlian.adapter = adapterKeahlian
     }
 

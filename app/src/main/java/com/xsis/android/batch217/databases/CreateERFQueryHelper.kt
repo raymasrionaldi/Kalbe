@@ -40,17 +40,17 @@ class CreateERFQueryHelper (val databaseHelper:DatabaseHelper) {
     }
 
     fun readListKeahlian(): List<String> {
-        val listClientPosition = ArrayList<String>()
+        val listKeahlian = ArrayList<String>()
         val db = databaseHelper.readableDatabase
         val queryReadPosition = "SELECT $NAMA_KEAHLIAN FROM $TABEL_KEAHLIAN WHERE $IS_DELETED = 'false'"
         val cursor = db.rawQuery(queryReadPosition, null)
         if (cursor.count > 0) {
             for (i in 0 until cursor.count) {
                 cursor.moveToPosition(i)
-                listClientPosition.add(cursor.getString(0))
+                listKeahlian.add(cursor.getString(0))
             }
         }
-        return listClientPosition
+        return listKeahlian
     }
 
 
