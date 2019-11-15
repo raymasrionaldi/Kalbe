@@ -69,6 +69,7 @@
     <string name="menu_report">Report</string>
     <string name="summary_prf">Summary PRF</string>
     <string name="timesheet_report">Timesheet</string>
+    <string name="title_report_timesheet">Timesheet Report</string>
 
     <string name="ubah_agama">Ubah Agama</string>
 

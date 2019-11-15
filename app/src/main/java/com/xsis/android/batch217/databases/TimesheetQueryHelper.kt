@@ -44,6 +44,37 @@ class TimesheetQueryHelper(val databaseHelper: DatabaseHelper) {
         return listTimesheet
     }
 
+    fun readDetailProgressTimesheetById(id:Int):List<Timesheet>{
+        var listTimesheet = ArrayList<Timesheet>()
+
+        val db = databaseHelper.readableDatabase
+
+        val queryRead = "SELECT $TIMESHEET_STATE, $DATE FROM $TABEL_TIMESHEET_APPROVAL WHERE $ID_TIMESHEET = $id"
+
+        val cursor = db.rawQuery(queryRead, null)
+        if (cursor.count == 1) {
+            return konversiCursorKeListProgressModel(cursor)
+        }
+        return listTimesheet
+    }
+
+    private fun konversiCursorKeListProgressModel(cursor: Cursor): ArrayList<Timesheet> {
+
+        var listTimesheet = ArrayList<Timesheet>()
+
+        for (c in 0 until cursor.count) {
+            cursor.moveToPosition(c)
+
+            val timesheet = Timesheet()
+            timesheet.progress_state = cursor.getString(0)
+            timesheet.date_state = cursor.getString(1)
+
+            listTimesheet.add(timesheet)
+        }
+
+        return listTimesheet
+    }
+
     fun readSemuaTimesheetModels(): List<Timesheet> {
         var listTimesheet = ArrayList<Timesheet>()
 
