@@ -142,16 +142,17 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@color/warnaButtonBatal"
-            android:text="Batal" />
+            android:text="Batal"
+            android:textColor="@color/colorWhite"/>
 
         <Button
             android:id="@+id/tipeKeahlianSimpanEdit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@color/warnaAbu"
+            android:background="@color/warnaButtonSimpan"
             android:text="Simpan"
-            android:enabled="false"/>
+            android:textColor="@color/colorWhite"/>
 
     </LinearLayout>
 

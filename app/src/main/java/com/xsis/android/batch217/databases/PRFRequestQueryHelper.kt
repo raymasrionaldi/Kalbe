@@ -146,7 +146,7 @@ class PRFRequestQueryHelper (val databaseHelper: DatabaseHelper) {
         return listPRFRequest
     }
 
-    fun updateDelete(id: Int,
+    fun updateIsi(id: Int,
                      tanggal: String,
                      type: String,
                      placement: String,
@@ -164,7 +164,7 @@ class PRFRequestQueryHelper (val databaseHelper: DatabaseHelper) {
 
         val db = databaseHelper.writableDatabase
         val queryUpdate = "UPDATE $TABEL_PRF_REQUEST " +
-                "SET $TANGGAL = $tanggal, $PLACEMENT = $placement $TYPE = '$type', $PID = '$pid', $LOCATION = '$location', $PERIOD = '$period', " +
+                "SET $TANGGAL = '$tanggal', $PLACEMENT = '$placement', $TYPE = '$type', $PID = '$pid', $LOCATION = '$location', $PERIOD = '$period', " +
                 "$USER_NAME = '$userName', $TELP_NUMBER = '$telpMobilePhone', $EMAIL = '$email'," +
                 "$NOTEBOOK = '$notebook', $OVERTIME = '$overtime', $BAST = '$bast', $BILLING = '$billing'," +
                 "  $IS_DELETED = 'false' " +
@@ -294,6 +294,30 @@ class PRFRequestQueryHelper (val databaseHelper: DatabaseHelper) {
         }
 
         return listTypeNama
+    }
+
+    fun cariType(nama: String): Int {
+        var pilihType = 0
+        val db = databaseHelper.readableDatabase
+        val queryCari = "SELECT $ID_TYPE_PRF FROM $TABEL_TYPE_PRF " +
+                "WHERE $NAMA_TYPE_PRF = '$nama' "
+        val cursor = db.rawQuery(queryCari, null)
+        cursor.moveToFirst()
+        pilihType = cursor.getInt(0)
+
+        return pilihType
+    }
+
+    fun cariPid(pid: String): Int {
+        var pilihPid = 0
+        val db = databaseHelper.readableDatabase
+        val queryCari = "SELECT $ID_PROJECT_CREATE FROM $TABEL_PROJECT_CREATE " +
+                "WHERE $PID_CREATE = '$pid' "
+        val cursor = db.rawQuery(queryCari, null)
+        cursor.moveToFirst()
+        pilihPid = cursor.getInt(0)
+
+        return pilihPid
     }
 
     fun setWinPRF(id:Int){

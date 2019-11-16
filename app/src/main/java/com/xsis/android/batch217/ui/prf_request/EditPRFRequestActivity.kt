@@ -57,7 +57,7 @@ class EditPRFRequestActivity : AppCompatActivity() {
         setContentView(R.layout.activity_edit_prfrequest)
         try {
             this.supportActionBar!!.hide()
-        } catch (e: NullPointerException){
+        } catch (e: NullPointerException) {
         }
 
         tanggal = inputTanggalPRFEdit
@@ -87,7 +87,7 @@ class EditPRFRequestActivity : AppCompatActivity() {
             loadDataPRFRequest(ID_prf_request)
         }
 
-        buttonBackInputPRFRequestEdit.setOnClickListener{
+        buttonBackInputPRFRequestEdit.setOnClickListener {
             finish()
         }
 
@@ -96,7 +96,12 @@ class EditPRFRequestActivity : AppCompatActivity() {
     fun ubahButtonResetSpinner() {
         buttonReset = buttonResetPRFRequestEdit
         type!!.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
                 buttonReset = buttonResetPRFRequestEdit
                 if (position != 0) {
                     buttonResetPRFRequestEdit.isEnabled = true
@@ -105,10 +110,16 @@ class EditPRFRequestActivity : AppCompatActivity() {
                     ubahResetButton(context, false, buttonReset!!)
                 }
             }
+
             override fun onNothingSelected(arg0: AdapterView<*>) {}
         }
         pid!!.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
                 buttonReset = buttonResetPRFRequestEdit
                 if (position != 0) {
                     buttonResetPRFRequestEdit.isEnabled = true
@@ -117,10 +128,16 @@ class EditPRFRequestActivity : AppCompatActivity() {
                     ubahResetButton(context, false, buttonReset!!)
                 }
             }
+
             override fun onNothingSelected(arg0: AdapterView<*>) {}
         }
         notebook!!.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
                 buttonReset = buttonResetPRFRequestEdit
                 if (position != 0) {
                     buttonResetPRFRequestEdit.isEnabled = true
@@ -129,10 +146,16 @@ class EditPRFRequestActivity : AppCompatActivity() {
                     ubahResetButton(context, false, buttonReset!!)
                 }
             }
+
             override fun onNothingSelected(arg0: AdapterView<*>) {}
         }
         bast!!.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
                 buttonReset = buttonResetPRFRequestEdit
                 if (position != 0) {
                     buttonResetPRFRequestEdit.isEnabled = true
@@ -141,15 +164,18 @@ class EditPRFRequestActivity : AppCompatActivity() {
                     ubahResetButton(context, false, buttonReset!!)
                 }
             }
+
             override fun onNothingSelected(arg0: AdapterView<*>) {}
         }
     }
 
     fun validasiInput(id: Int) {
         val tanggal = inputTanggalPRFEdit.text.toString().trim()
-        val type = spinnerInputTypePRFEdit.selectedItemPosition
+        val typePosition = spinnerInputTypePRFEdit.selectedItemPosition
+        val typeItem = spinnerInputTypePRFEdit.selectedItem.toString()
         val placement = placement!!.text.toString().trim()
-        val PID = spinnerInputPIDPRFEdit.selectedItemPosition
+        val pidPosition = spinnerInputPIDPRFEdit.selectedItemPosition
+        val pidItem = spinnerInputPIDPRFEdit.selectedItem.toString()
         val location = location!!.text.toString().trim()
         val period = period!!.text.toString().trim()
         val userName = userName!!.text.toString().trim()
@@ -162,16 +188,17 @@ class EditPRFRequestActivity : AppCompatActivity() {
 
         val emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z.]+"
 
-        if (type == 0 || placement.isEmpty() || PID == 0 || period.isEmpty() || userName.isEmpty()
+        if (typePosition == 0 || placement.isEmpty() || pidPosition == 0 || period.isEmpty() || userName.isEmpty()
             || telpMobilePhone.isEmpty() || email.isEmpty() || !email.matches(emailPattern.toRegex())
-            || notebook == 0) {
+            || notebook == 0
+        ) {
             requiredOn()
-        }
-        else {
-            insertKeDatabase(id, tanggal,
-                type,
+        } else {
+            insertKeDatabase(
+                id, tanggal,
+                typeItem,
                 placement,
-                PID,
+                pidItem,
                 location,
                 period,
                 userName,
@@ -180,7 +207,8 @@ class EditPRFRequestActivity : AppCompatActivity() {
                 ARRAY_NOTEBOOK[notebook],
                 overtime,
                 ARRAY_BAST[BAST],
-                billing)
+                billing
+            )
         }
 
     }
@@ -202,7 +230,7 @@ class EditPRFRequestActivity : AppCompatActivity() {
         requiredNotebookPRFRequestEdit.isVisible = true
     }
 
-    fun resetForm(){
+    fun resetForm() {
         inputTanggalPRFEdit.setText("")
         spinnerInputTypePRFEdit.setSelection(0)
         inputPlacementPRFEdit.setText("")
@@ -219,31 +247,45 @@ class EditPRFRequestActivity : AppCompatActivity() {
         requiredOff()
     }
 
-    fun insertKeDatabase(id: Int,
-                         tanggal: String,
-                         type: Int,
-                         placement: String,
-                         pid: Int,
-                         location: String,
-                         period: String,
-                         userName: String,
-                         telpMobilePhone: String,
-                         email: String,
-                         notebook: String,
-                         overtime: String,
-                         bast: String,
-                         billing: String) {
-        val listPRFRequest = databaseQueryHelper.readPlacementPRF(placement)
-        if(listPRFRequest.isEmpty()){
-            databaseQueryHelper.updateDelete(id,tanggal, type.toString(), placement, pid.toString(), location, period, userName, telpMobilePhone, email, notebook,overtime, bast, billing)
-            Toast.makeText(context, EDIT_DATA_BERHASIL, Toast.LENGTH_SHORT).show()
-            finish()
-        } else {
-            Toast.makeText(context, DATA_SUDAH_ADA, Toast.LENGTH_SHORT).show()
-        }
+    fun insertKeDatabase(
+        id: Int,
+        tanggal: String,
+        type: String,
+        placement: String,
+        pid: String,
+        location: String,
+        period: String,
+        userName: String,
+        telpMobilePhone: String,
+        email: String,
+        notebook: String,
+        overtime: String,
+        bast: String,
+        billing: String
+    ) {
+        var cariType = databaseQueryHelper.cariType(type)
+        var cariPid = databaseQueryHelper.cariPid(pid)
+        databaseQueryHelper.updateIsi(
+            id,
+            tanggal,
+            cariType.toString(),
+            placement,
+            cariPid.toString(),
+            location,
+            period,
+            userName,
+            telpMobilePhone,
+            email,
+            notebook,
+            overtime,
+            bast,
+            billing
+        )
+        Toast.makeText(context, EDIT_DATA_BERHASIL, Toast.LENGTH_SHORT).show()
+        finish()
     }
 
-    fun setDatePRFRequestPicker(){
+    fun setDatePRFRequestPicker() {
 
         val autoDate = inputTanggalPRFEdit.text.toString()
         val calendar = Calendar.getInstance()
@@ -256,17 +298,24 @@ class EditPRFRequestActivity : AppCompatActivity() {
         val dayNow = calendar.get(Calendar.DATE)
 
         inputTanggalPRFEdit.setOnClickListener {
-            val datePickerDialog = DatePickerDialog(context, R.style.CustomDatePicker, DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
-                val selectedDate = Calendar.getInstance()
-                selectedDate.set(year, month, dayOfMonth)
+            val datePickerDialog = DatePickerDialog(
+                context,
+                R.style.CustomDatePicker,
+                DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
+                    val selectedDate = Calendar.getInstance()
+                    selectedDate.set(year, month, dayOfMonth)
 
-                //konversi ke string
-                val formatDate = SimpleDateFormat(DATE_PATTERN)
-                val tanggal = formatDate.format(selectedDate.time)
+                    //konversi ke string
+                    val formatDate = SimpleDateFormat(DATE_PATTERN)
+                    val tanggal = formatDate.format(selectedDate.time)
 
-                //set tampilan
-                inputTanggalPRFEdit.setText(tanggal)
-            }, yearNow,monthNow,dayNow )
+                    //set tampilan
+                    inputTanggalPRFEdit.setText(tanggal)
+                },
+                yearNow,
+                monthNow,
+                dayNow
+            )
             datePickerDialog.show()
         }
     }
@@ -287,7 +336,7 @@ class EditPRFRequestActivity : AppCompatActivity() {
         return isilistType
     }
 
-    fun isiSpinnerPID(): List<String>{
+    fun isiSpinnerPID(): List<String> {
         listPID = databaseQueryHelper.readPIDPRFNew()
         val isilistPID = listPID.map {
             it.PID
@@ -303,8 +352,9 @@ class EditPRFRequestActivity : AppCompatActivity() {
         return isilistPID
     }
 
-    fun isiSpinnerNotebook(){
-        val adapterNotebook = ArrayAdapter<String>(context,
+    fun isiSpinnerNotebook() {
+        val adapterNotebook = ArrayAdapter<String>(
+            context,
             android.R.layout.simple_spinner_item,
             ARRAY_NOTEBOOK
         )
@@ -312,8 +362,9 @@ class EditPRFRequestActivity : AppCompatActivity() {
         spinnerInputNotebookPRFEdit.adapter = adapterNotebook
     }
 
-    fun isiSpinnerBAST(){
-        val adapterBAST = ArrayAdapter<String>(context,
+    fun isiSpinnerBAST() {
+        val adapterBAST = ArrayAdapter<String>(
+            context,
             android.R.layout.simple_spinner_item,
             ARRAY_BAST
         )
@@ -338,9 +389,10 @@ class EditPRFRequestActivity : AppCompatActivity() {
             val overtimeTeks = overtime!!.text.toString().trim()
             val billingTeks = billing!!.text.toString().trim()
 
-            val kondisi = tanggalTeks!!.isNotEmpty() ||  !placementTeks.isEmpty() || !locationTeks.isEmpty() || !periodTeks.isEmpty()
-                    || !userNameTeks.isEmpty() || !telpMobilePhoneTeks.isEmpty() || !emailTeks.isEmpty()
-                    || !overtimeTeks.isEmpty() || !billingTeks.isEmpty()
+            val kondisi =
+                tanggalTeks!!.isNotEmpty() || !placementTeks.isEmpty() || !locationTeks.isEmpty() || !periodTeks.isEmpty()
+                        || !userNameTeks.isEmpty() || !telpMobilePhoneTeks.isEmpty() || !emailTeks.isEmpty()
+                        || !overtimeTeks.isEmpty() || !billingTeks.isEmpty()
 
             ubahResetButton(context, kondisi, buttonReset!!)
         }
@@ -372,7 +424,7 @@ class EditPRFRequestActivity : AppCompatActivity() {
             val dataType = cursor.getString(2)
             val indexType = isiSpinnerType().indexOf(dataType)
             println("index type = $indexType")
-            spinnerInputTypePRFEdit.setSelection(indexType)
+            spinnerInputTypePRFEdit.setSelection(dataType.toInt())
             println("data type = $dataType")
 
             data.placement = cursor.getString(3)
@@ -380,7 +432,7 @@ class EditPRFRequestActivity : AppCompatActivity() {
 
             val dataPID = cursor.getString(4)
             val indexPID = isiSpinnerPID().indexOf(dataPID)
-            spinnerInputPIDPRFEdit.setSelection(indexPID)
+            spinnerInputPIDPRFEdit.setSelection(dataPID.toInt())
 
             data.location = cursor.getString(5)
             inputLocationPRFEdit.setText(data.location)
@@ -405,7 +457,7 @@ class EditPRFRequestActivity : AppCompatActivity() {
             inputOvertimePRFEdit.setText(data.overtime)
 
             val dataBast = cursor.getString(12)
-            val indexBast  = ARRAY_BAST.indexOf(dataBast)
+            val indexBast = ARRAY_BAST.indexOf(dataBast)
             spinnerInputBastPRFEdit.setSelection(indexBast)
 
             data.billing = cursor.getString(13)
@@ -415,7 +467,7 @@ class EditPRFRequestActivity : AppCompatActivity() {
         }
         setDatePRFRequestPicker()
 
-        buttonResetPRFRequestEdit.setOnClickListener{
+        buttonResetPRFRequestEdit.setOnClickListener {
             resetForm()
         }
         buttonSubmitPRFRequestEdit.setOnClickListener {

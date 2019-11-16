@@ -184,10 +184,11 @@ class InputPRFRequestActivity : AppCompatActivity() {
 
     fun validasiInput() {
         val tanggal = inputTanggalPRF.text.toString().trim()
-        println("tanggal = $tanggal")
-        val type = spinnerInputTypePRF.selectedItemPosition
+        val typePosition = spinnerInputTypePRF.selectedItemPosition
+        val typeItem = spinnerInputTypePRF.selectedItem.toString()
         val placement = placement!!.text.toString().trim()
-        val PID = spinnerInputPIDPRF.selectedItemPosition
+        val pidPosition = spinnerInputPIDPRF.selectedItemPosition
+        val pidItem = spinnerInputPIDPRF.selectedItem.toString()
         val location = location!!.text.toString().trim()
         val period = period!!.text.toString().trim()
         val userName = userName!!.text.toString().trim()
@@ -200,7 +201,7 @@ class InputPRFRequestActivity : AppCompatActivity() {
 
         val emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z.]+"
 
-        if (type == 0 || placement.isEmpty() || PID == 0 || period.isEmpty() || userName.isEmpty()
+        if (typePosition == 0 || placement.isEmpty() || pidPosition == 0 || period.isEmpty() || userName.isEmpty()
             || telpMobilePhone.isEmpty() || email.isEmpty() || !email.matches(emailPattern.toRegex())
             || notebook == 0
         ) {
@@ -208,9 +209,9 @@ class InputPRFRequestActivity : AppCompatActivity() {
         } else {
             insertKeDatabase(
                 tanggal,
-                type,
+                typeItem,
                 placement,
-                PID,
+                pidItem,
                 location,
                 period,
                 userName,
@@ -261,9 +262,9 @@ class InputPRFRequestActivity : AppCompatActivity() {
 
     fun insertKeDatabase(
         tanggal: String,
-        type: Int,
+        type: String,
         placement: String,
-        pid: Int,
+        pid: String,
         location: String,
         period: String,
         userName: String,
@@ -277,9 +278,11 @@ class InputPRFRequestActivity : AppCompatActivity() {
         val model = PRFRequest()
         model.id_prf_request = model.id_prf_request
         model.tanggal = tanggal
-        model.type = type.toString()
+        var cariType = databaseQueryHelper.cariType(type)
+        model.type = cariType.toString()
         model.placement = placement
-        model.pid = pid.toString()
+        var cariPid = databaseQueryHelper.cariPid(pid)
+        model.pid = cariPid.toString()
         model.location = location
         model.period = period
         model.user_name = userName

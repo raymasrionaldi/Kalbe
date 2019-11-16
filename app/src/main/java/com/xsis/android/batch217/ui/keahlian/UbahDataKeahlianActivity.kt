@@ -96,7 +96,6 @@ class UbahDataKeahlianActivity : AppCompatActivity() {
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 //Enable tombol simpan ketika user sudah mulai mengisi form
-                tipeKeahlianSimpanEdit.isEnabled = true
                 tipeKeahlianSimpanEdit.setBackgroundResource(R.drawable.button_simpan_on_2)
                 tipeKeahlianSimpanEdit.setTextColor(Color.WHITE)
 

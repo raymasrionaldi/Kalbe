@@ -31,16 +31,12 @@
             android:screenOrientation="portrait"
             android:name=".ui.timesheet.timesheet_collection.TimesheetCollectionDetailActivity" />
         <activity
-            android:screenOrientation="portrait"
             android:name=".ui.prf_request.EditPRFCandidateActivity" />
         <activity
-            android:screenOrientation="portrait"
             android:name=".ui.prf_request.InputPRFCandidateActivity" />
         <activity
-            android:screenOrientation="portrait"
             android:name=".ui.prf_request.EditPRFRequestActivity" />
         <activity
-            android:screenOrientation="portrait"
             android:name=".ui.prf_request.InputPRFRequestActivity" />
         <activity
             android:screenOrientation="portrait"
@@ -80,10 +76,8 @@
             android:name=".ui.jenjang_pendidikan.UbahPendidikanActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
-            android:screenOrientation="portrait"
             android:name=".ui.keahlian.UbahDataKeahlianActivity" />
         <activity
-            android:screenOrientation="portrait"
             android:name=".ui.keahlian.InputDataKeahlianActivity" />
         <activity
             android:screenOrientation="portrait"
