@@ -53,6 +53,9 @@ class PRFRequestQueryHelper (val databaseHelper: DatabaseHelper) {
             prfRequest.billing = cursor.getString(13)
             prfRequest.is_Deleted = cursor.getString(14)
 
+            prfRequest.namaType = cursor.getString(20)
+            prfRequest.namaPid = cursor.getString(21)
+
             listPRFRequest.add(prfRequest)
         }
 
@@ -86,63 +89,22 @@ class PRFRequestQueryHelper (val databaseHelper: DatabaseHelper) {
         return listPRFRequest
     }
 
-    fun readPlacementPRF (placement: String): List<PRFRequest> {
+    fun cariPrf(keyword: String): List<PRFRequest> {
         var listPRFRequest = ArrayList<PRFRequest>()
+        if (keyword.isNotBlank()) {
+            val db = databaseHelper.readableDatabase
+            val queryCari = "SELECT a.*, b.$NAMA_TYPE_PRF, c.$PID_CREATE FROM $TABEL_PRF_REQUEST a, $TABEL_TYPE_PRF b, $TABEL_PROJECT_CREATE c " +
+                    "WHERE a.$PLACEMENT LIKE '%$keyword%' AND a.$IS_DELETED = 'false' " +
+                    "AND a.$TYPE = b.$ID_TYPE_PRF " +
+                    "AND a.$PID = c.$ID_PROJECT_CREATE"
 
-        val db = databaseHelper.readableDatabase
-        val queryCari = "SELECT * FROM $TABEL_PRF_REQUEST " +
-                "WHERE $PLACEMENT LIKE '$placement' "
-        val cursor = db.rawQuery(queryCari, null)
-
-        if (cursor.count > 0) {
-            listPRFRequest = konversiCursorKeListPRFRequestModel(cursor)
+            val cursor = db.rawQuery(queryCari, null)
+            if (cursor.count > 0) {
+                listPRFRequest = konversiCursorKeListPRFRequestModel(cursor)
+                println("$queryCari")
+            }
         }
 
-        return listPRFRequest
-    }
-
-    fun updatePRFRequest(tanggal: String,
-                         type: String,
-                         placement: String,
-                         pid: String,
-                         location: String,
-                         period: String,
-                         userName: String,
-                         telpMobilePhone: String,
-                         email: String,
-                         notebook: String,
-                         overtime: String,
-                         bast: String,
-                         billing: String): List<PRFRequest> {
-        var listPRFRequest = ArrayList<PRFRequest>()
-
-        val db = databaseHelper.writableDatabase
-        val queryUpdate = "UPDATE $TABEL_PRF_REQUEST " +
-                "SET $TANGGAL = $tanggal $TYPE = '$type', $PID = '$pid', $LOCATION = '$location', $PERIOD = '$period', " +
-                "$USER_NAME = '$userName', $TELP_NUMBER = '$telpMobilePhone', $EMAIL = '$email'," +
-                "$NOTEBOOK = '$notebook', $OVERTIME = '$overtime', $BAST = '$bast', $BILLING = '$billing'," +
-                "  $IS_DELETED = 'false' " +
-                "WHERE $PLACEMENT = '$placement' AND $IS_DELETED = 'true'"
-        val cursor = db.rawQuery(queryUpdate, null)
-        if (cursor.count > 0) {
-            listPRFRequest = konversiCursorKeListPRFRequestModel(cursor)
-        }
-        println(queryUpdate)
-        return listPRFRequest
-    }
-
-    fun readUpdate(id:Int, placement:String):List<PRFRequest>{
-        var listPRFRequest = ArrayList<PRFRequest>()
-
-        val db = databaseHelper.writableDatabase
-        val queryUpdate = "SELECT * FROM $TABEL_PRF_REQUEST " +
-                "WHERE $PLACEMENT = '$placement' AND $ID_PRF_REQUEST != '$id'"
-        val cursor = db.rawQuery(queryUpdate, null)
-        if (cursor.count > 0){
-            listPRFRequest = konversiCursorKeListPRFRequestModel(cursor)
-        }
-
-        println(queryUpdate)
         return listPRFRequest
     }
 
@@ -189,20 +151,6 @@ class PRFRequestQueryHelper (val databaseHelper: DatabaseHelper) {
             }
         }
         return listTypePRF
-    }
-
-    fun readPIDPRF(): List<String> {
-        val listPID = ArrayList<String>()
-        val db = databaseHelper.readableDatabase
-        val queryReadType = "SELECT $PID_CREATE FROM $TABEL_PROJECT_CREATE "
-        val cursor = db.rawQuery(queryReadType, null)
-        if (cursor.count > 0) {
-            for (i in 0 until cursor.count) {
-                cursor.moveToPosition(i)
-                listPID.add(cursor.getString(0))
-            }
-        }
-        return listPID
     }
 
     fun readTypePRFNew(): List<TypePRF> {

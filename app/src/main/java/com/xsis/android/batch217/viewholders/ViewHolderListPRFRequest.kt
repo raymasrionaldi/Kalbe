@@ -7,6 +7,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.github.ramiz.nameinitialscircleimageview.NameInitialsCircleImageView
 import com.xsis.android.batch217.R
+import com.xsis.android.batch217.databases.DatabaseHelper
 import com.xsis.android.batch217.models.PRFRequest
 import com.xsis.android.batch217.utils.ambilSemuaInisial
 
@@ -20,8 +21,8 @@ class ViewHolderListPRFRequest(itemView: View) : RecyclerView.ViewHolder(itemVie
 
     fun setModel(model: PRFRequest) {
         val placement = model.placement
-        val pid = model.pid
-        val type = model.type
+        val pid = model.namaPid
+        val type = model.namaType
         teksUtama.text = placement
         teksTambahan.text = "$type , $pid"
 
