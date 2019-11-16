@@ -158,8 +158,9 @@ class PRFCandidateQueryHelper(val databaseHelper: DatabaseHelper) {
         val listEmployeePosition = ArrayList<EmployeePosition>()
         val db = databaseHelper.readableDatabase
         val queryReadPosition =
-            "SELECT * FROM $TABEL_EMPLOYEE_POSITION WHERE $IS_DELETED = 'false'"
+            "SELECT * FROM $TABEL_EMPLOYEE_POSITION"
         val cursor = db.rawQuery(queryReadPosition, null)
+        println("$queryReadPosition")
         for (i in 0 until cursor.count) {
             cursor.moveToPosition(i)
             val employeePosition = EmployeePosition()
