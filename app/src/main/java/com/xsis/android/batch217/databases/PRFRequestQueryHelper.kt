@@ -3,7 +3,9 @@ package com.xsis.android.batch217.databases
 import android.content.ContentValues
 import android.database.Cursor
 import com.xsis.android.batch217.models.PRFRequest
+import com.xsis.android.batch217.models.ProjectCreate
 import com.xsis.android.batch217.models.TypeNama
+import com.xsis.android.batch217.models.TypePRF
 import com.xsis.android.batch217.utils.*
 
 class PRFRequestQueryHelper (val databaseHelper: DatabaseHelper) {
@@ -175,20 +177,6 @@ class PRFRequestQueryHelper (val databaseHelper: DatabaseHelper) {
         return listPRFRequest
     }
 
-/*    fun readPID () : List<String> {
-        val listPID = ArrayList<String>()
-        val db = databaseHelper.readableDatabase
-        val queryReadPID = "SELECT $NAMA_PID FROM $TABEL_PID_PRF"
-        val cursor = db.rawQuery(queryReadPID, null)
-        if (cursor.count > 0) {
-            for (i in 1 until cursor.count) {
-                cursor.moveToPosition(i)
-                listPID.add(cursor.getString(0))
-            }
-        }
-        return  listPID
-    }*/
-
     fun readTypePRF(): List<String> {
         val listTypePRF = ArrayList<String>()
         val db = databaseHelper.readableDatabase
@@ -215,6 +203,66 @@ class PRFRequestQueryHelper (val databaseHelper: DatabaseHelper) {
             }
         }
         return listPID
+    }
+
+    fun readTypePRFNew(): List<TypePRF> {
+        var listTypePRF = ArrayList<TypePRF>()
+        val db = databaseHelper.readableDatabase
+        val queryReadType = "SELECT * FROM $TABEL_TYPE_PRF WHERE $IS_DELETED = 'false'"
+        val cursor = db.rawQuery(queryReadType, null)
+
+        for (i in 0 until cursor.count) {
+            cursor.moveToPosition(i)
+            val typepRF = TypePRF()
+            typepRF.id_type_prf = cursor.getInt(0)
+            typepRF.nama_type_prf = cursor.getString(1)
+            typepRF.deskripsi = cursor.getString(2)
+            typepRF.is_deleted = cursor.getString(3)
+
+            listTypePRF.add(typepRF)
+        }
+
+        return listTypePRF
+    }
+
+    fun readPIDPRFNew(): List<ProjectCreate> {
+        val listPID = ArrayList<ProjectCreate>()
+        val db = databaseHelper.readableDatabase
+        val queryReadType = "SELECT * FROM $TABEL_PROJECT_CREATE"
+        val cursor = db.rawQuery(queryReadType, null)
+
+        for (i in 0 until cursor.count) {
+            cursor.moveToPosition(i)
+            val pidPRF = ProjectCreate()
+            pidPRF.idProjectCreate = cursor.getInt(0)
+            pidPRF.PID = cursor.getString(1)
+
+            listPID.add(pidPRF)
+        }
+
+        return listPID
+    }
+
+    fun tambahPRFRequest(model: PRFRequest): Long {
+        val db = databaseHelper.writableDatabase
+
+        val values = ContentValues()
+        values.put(TANGGAL, model.tanggal)
+        values.put(TYPE, model.type)
+        values.put(PLACEMENT, model.placement)
+        values.put(PID, model.pid)
+        values.put(LOCATION, model.location)
+        values.put(PERIOD, model.period)
+        values.put(USER_NAME, model.user_name)
+        values.put(TELP_NUMBER, model.telp_number)
+        values.put(EMAIL, model.email)
+        values.put(NOTEBOOK, model.notebook)
+        values.put(OVERTIME, model.overtime)
+        values.put(BAST, model.bast)
+        values.put(BILLING, model.billing)
+        values.put(IS_DELETED, "false")
+
+        return db.insert(TABEL_PRF_REQUEST, null, values)
     }
 
     fun getListTypeNama(id: Int): ArrayList<TypeNama> {

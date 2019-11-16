@@ -15,6 +15,7 @@ import androidx.core.view.isVisible
 import com.xsis.android.batch217.R
 import com.xsis.android.batch217.databases.DatabaseHelper
 import com.xsis.android.batch217.databases.PRFCandidateQueryHelper
+import com.xsis.android.batch217.models.EmployeePosition
 import com.xsis.android.batch217.models.PRFCandidate
 import com.xsis.android.batch217.utils.*
 import kotlinx.android.synthetic.main.activity_edit_prfcandidate.*
@@ -38,7 +39,7 @@ class EditPRFCandidateActivity : AppCompatActivity() {
     var signContractDate: EditText? = null
     var notes: EditText? = null
     var ID_prf_candidate = 0
-    var listPosition: List<String>? = null
+    lateinit var listPosition: List<EmployeePosition>
     var listSrf: List<String>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -73,7 +74,7 @@ class EditPRFCandidateActivity : AppCompatActivity() {
         notes!!.addTextChangedListener(textWatcher)
 
         ubahButtonResetSpinner()
-
+        requiredOff()
         isiSpinnerPosition()
         isiSpinnerSRFNumber()
         isiSpinnerCandidateStatus()
@@ -136,27 +137,13 @@ class EditPRFCandidateActivity : AppCompatActivity() {
         val signContractDate = inputSignContractDateEdit.text.toString().trim()
         val notes = inputNotesPRFCandidateEdit.text.toString().trim()
 
-        if (name.isEmpty()) {
-            inputNamaPRFCandidateEdit.setHintTextColor(Color.RED)
-            requiredNamePRFCandidateEdit.isVisible = true
-        }
-        else if (position == 0) {
-            requiredPositionPRFCandidateEdit.isVisible = true
-        }
-        else if (placementDate.isEmpty()) {
-            inputPlacementDatePRFCandidateEdit.setHintTextColor(Color.RED)
-            requiredPlacementDatePRFCandidateEdit.isVisible = true
-        }
-        else if (srfNumber == 0) {
-            requiredSRFNumberPRFCandidateEdit.isVisible = true
-        }
-        else if (candidateStatus == 0){
-            requiredCandidateStatusPRFCandidateEdit.isVisible = true
+        if (name.isEmpty() || position == 0 || placementDate.isEmpty() || srfNumber == 0 || candidateStatus == 0) {
+            requiredOn()
         }
         else {
             insertKeDatabase(id, name,
                 batch,
-                listPosition!![position],
+                position,
                 placementDate,
                 listSrf!![srfNumber],
                 customAllowence,
@@ -168,10 +155,20 @@ class EditPRFCandidateActivity : AppCompatActivity() {
 
     }
 
+    fun requiredOn() {
+        inputNamaPRFCandidateEdit.setHintTextColor(Color.RED)
+        requiredNamePRFCandidateEdit.isVisible = true
+        requiredPositionPRFCandidateEdit.isVisible = true
+        inputPlacementDatePRFCandidateEdit.setHintTextColor(Color.RED)
+        requiredPlacementDatePRFCandidateEdit.isVisible = true
+        requiredSRFNumberPRFCandidateEdit.isVisible = true
+        requiredCandidateStatusPRFCandidateEdit.isVisible = true
+    }
+
     fun insertKeDatabase(id: Int,
                          name: String,
                          batch: String,
-                         position: String,
+                         position: Int,
                          placementDate: String,
                          srfNumber: String,
                          customAllowence: String,
@@ -184,7 +181,7 @@ class EditPRFCandidateActivity : AppCompatActivity() {
         val databaseQueryHelper = PRFCandidateQueryHelper(databaseHelper)
         val listPRFCandidate = databaseQueryHelper.readNamaPRFCandidate(name)
         if(listPRFCandidate.isEmpty()){
-            databaseQueryHelper.updateDelete(id, name, batch, position, placementDate, srfNumber, customAllowence, candidateStatus, signContractDate, notes)
+            databaseQueryHelper.updateDelete(id, name, batch, position.toString(), placementDate, srfNumber, customAllowence, candidateStatus, signContractDate, notes)
             Toast.makeText(context, EDIT_DATA_BERHASIL, Toast.LENGTH_SHORT).show()
             finish()
         } else {
@@ -205,14 +202,18 @@ class EditPRFCandidateActivity : AppCompatActivity() {
         requiredOff()
     }
 
-    fun setReportDatePRFCandidatePicker(){
+    fun setDatePRFCandidatePicker(){
         val autoDate = inputPlacementDatePRFCandidateEdit.text.toString()
         val autoDate2 = inputSignContractDateEdit.text.toString()
         val calendar = Calendar.getInstance()
         val calendar2 = Calendar.getInstance()
         val formatter = SimpleDateFormat(DATE_PATTERN)
         calendar.time = formatter.parse(autoDate)
-        calendar2.time = formatter.parse(autoDate2)
+
+        if (autoDate2.isNotEmpty()) {
+            calendar.time = formatter.parse(autoDate)
+        }
+
         val yearNow = calendar.get(Calendar.YEAR)
         val monthNow = calendar.get(Calendar.MONTH)
         val dayNow = calendar.get(Calendar.DATE)
@@ -256,14 +257,19 @@ class EditPRFCandidateActivity : AppCompatActivity() {
         }
     }
 
-    fun isiSpinnerPosition(){
+    fun isiSpinnerPosition(): MutableList<String?> {
         listPosition = databaseQueryHelper.readEmployeePosition()
+        val isilistPosition = listPosition.map {
+            it.nama_employee_position
+        }.toMutableList()
+        isilistPosition.add(0, "Position *")
         val adapterPosition = ArrayAdapter<String>(context,
             android.R.layout.simple_spinner_item,
-            listPosition!!
+            isilistPosition
         )
         adapterPosition.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinnerInputPositionPRFCandidateEdit.adapter = adapterPosition
+        return isilistPosition
     }
 
     fun isiSpinnerSRFNumber(){
@@ -333,7 +339,7 @@ class EditPRFCandidateActivity : AppCompatActivity() {
             inputBatchBootcampPRFCandidateEdit.setText(data.batch)
 
             val dataPosition = cursor.getString(4)
-            val indexPosition = listPosition!!.indexOf(dataPosition)
+            val indexPosition = isiSpinnerPosition().indexOf(dataPosition)
             spinnerInputPositionPRFCandidateEdit.setSelection(indexPosition)
 
             data.placement_date = cursor.getString(5)
@@ -358,7 +364,7 @@ class EditPRFCandidateActivity : AppCompatActivity() {
 
             data.is_Deleted = cursor.getString(11)
         }
-        setReportDatePRFCandidatePicker()
+        setDatePRFCandidatePicker()
 
         buttonSubmitPRFCandidateEdit.setOnClickListener {
             validasiInput(id)
@@ -369,6 +375,9 @@ class EditPRFCandidateActivity : AppCompatActivity() {
     }
 
     fun requiredOff() {
+        inputPlacementDatePRFCandidateEdit.setHintTextColor(Color.GRAY)
+        requiredPlacementDatePRFCandidateEdit.isVisible =false
+        inputNamaPRFCandidateEdit.setHintTextColor(Color.GRAY)
         requiredNamePRFCandidateEdit.isVisible = false
         requiredPositionPRFCandidateEdit.isVisible = false
         requiredSRFNumberPRFCandidateEdit.isVisible = false

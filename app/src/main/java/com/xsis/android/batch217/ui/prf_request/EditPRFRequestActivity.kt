@@ -16,9 +16,10 @@ import com.xsis.android.batch217.R
 import com.xsis.android.batch217.databases.DatabaseHelper
 import com.xsis.android.batch217.databases.PRFRequestQueryHelper
 import com.xsis.android.batch217.models.PRFRequest
+import com.xsis.android.batch217.models.ProjectCreate
+import com.xsis.android.batch217.models.TypePRF
 import com.xsis.android.batch217.utils.*
 import kotlinx.android.synthetic.main.activity_edit_prfrequest.*
-import kotlinx.android.synthetic.main.activity_input_prfrequest.*
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -42,8 +43,8 @@ class EditPRFRequestActivity : AppCompatActivity() {
     var bast: Spinner? = null
     var billing: EditText? = null
     var ID_prf_request = 0
-    var listTypePRF: List<String>? = null
-    var listPID: List<String>? = null
+    lateinit var listTypePRF: List<TypePRF>
+    lateinit var listPID: List<ProjectCreate>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -74,6 +75,7 @@ class EditPRFRequestActivity : AppCompatActivity() {
         billing = inputBillingPRFEdit
 
         ubahButtonResetSpinner()
+        requiredOff()
         isiSpinnerType()
         isiSpinnerPID()
         isiSpinnerNotebook()
@@ -160,43 +162,16 @@ class EditPRFRequestActivity : AppCompatActivity() {
 
         val emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z.]+"
 
-        if (type == 0) {
-            inputTypePRFEdit.setHintTextColor(Color.RED)
-            requiredTypePRFRequestEdit.isVisible = true
-        }
-        else if (placement.isEmpty()) {
-            inputPlacementPRFEdit.setHintTextColor(Color.RED)
-            requiredPlacementPRFRequestEdit.isVisible = true
-        }
-        else if (PID == 0) {
-            inputPIDPRFEdit.setHintTextColor(Color.RED)
-            requiredPIDPRFRequestEdit.isVisible = true
-        }
-        else if (period.isEmpty()) {
-            inputPeriodPRFEdit.setHintTextColor(Color.RED)
-            requiredPeriodPRFRequestEdit.isVisible = true
-        }
-        else if (userName.isEmpty()) {
-            inputUserNamePRFEdit.setHintTextColor(Color.RED)
-            requiredUsernamePRFRequestEdit.isVisible = true
-        }
-        else if (telpMobilePhone.isEmpty()) {
-            inputTelpPRFEdit.setHintTextColor(Color.RED)
-            requiredTelpPRFRequestEdit.isVisible = true
-        }
-        else if (email.isEmpty() or !email.matches(emailPattern.toRegex())) {
-            inputEmailPRFEdit.setHintTextColor(Color.RED)
-            requiredEmailPRFRequestEdit.isVisible = true
-        }
-        else if (notebook == 0){
-            inputNotebookPRFEdit.setHintTextColor(Color.RED)
-            requiredNotebookPRFRequestEdit.isVisible = true
+        if (type == 0 || placement.isEmpty() || PID == 0 || period.isEmpty() || userName.isEmpty()
+            || telpMobilePhone.isEmpty() || email.isEmpty() || !email.matches(emailPattern.toRegex())
+            || notebook == 0) {
+            requiredOn()
         }
         else {
             insertKeDatabase(id, tanggal,
-                listTypePRF!![type],
+                type,
                 placement,
-                listPID!![PID],
+                PID,
                 location,
                 period,
                 userName,
@@ -208,6 +183,23 @@ class EditPRFRequestActivity : AppCompatActivity() {
                 billing)
         }
 
+    }
+
+    fun requiredOn() {
+        inputTypePRFEdit.setHintTextColor(Color.RED)
+        requiredTypePRFRequestEdit.isVisible = true
+        inputPlacementPRFEdit.setHintTextColor(Color.RED)
+        requiredPlacementPRFRequestEdit.isVisible = true
+        requiredPIDPRFRequestEdit.isVisible = true
+        inputPeriodPRFEdit.setHintTextColor(Color.RED)
+        requiredPeriodPRFRequestEdit.isVisible = true
+        inputUserNamePRFEdit.setHintTextColor(Color.RED)
+        requiredUsernamePRFRequestEdit.isVisible = true
+        inputTelpPRFEdit.setHintTextColor(Color.RED)
+        requiredTelpPRFRequestEdit.isVisible = true
+        inputEmailPRFEdit.setHintTextColor(Color.RED)
+        requiredEmailPRFRequestEdit.isVisible = true
+        requiredNotebookPRFRequestEdit.isVisible = true
     }
 
     fun resetForm(){
@@ -229,9 +221,9 @@ class EditPRFRequestActivity : AppCompatActivity() {
 
     fun insertKeDatabase(id: Int,
                          tanggal: String,
-                         type: String,
+                         type: Int,
                          placement: String,
-                         pid: String,
+                         pid: Int,
                          location: String,
                          period: String,
                          userName: String,
@@ -243,7 +235,7 @@ class EditPRFRequestActivity : AppCompatActivity() {
                          billing: String) {
         val listPRFRequest = databaseQueryHelper.readPlacementPRF(placement)
         if(listPRFRequest.isEmpty()){
-            databaseQueryHelper.updateDelete(id,tanggal, type, placement, pid, location, period, userName, telpMobilePhone, email, notebook,overtime, bast, billing)
+            databaseQueryHelper.updateDelete(id,tanggal, type.toString(), placement, pid.toString(), location, period, userName, telpMobilePhone, email, notebook,overtime, bast, billing)
             Toast.makeText(context, EDIT_DATA_BERHASIL, Toast.LENGTH_SHORT).show()
             finish()
         } else {
@@ -251,13 +243,14 @@ class EditPRFRequestActivity : AppCompatActivity() {
         }
     }
 
-    fun setReportDatePRFRequestPicker(){
+    fun setDatePRFRequestPicker(){
 
         val autoDate = inputTanggalPRFEdit.text.toString()
-
         val calendar = Calendar.getInstance()
         val formatter = SimpleDateFormat(DATE_PATTERN)
-        calendar.time = formatter.parse(autoDate)
+        if (autoDate.isNotEmpty()) {
+            calendar.time = formatter.parse(autoDate)
+        }
         val yearNow = calendar.get(Calendar.YEAR)
         val monthNow = calendar.get(Calendar.MONTH)
         val dayNow = calendar.get(Calendar.DATE)
@@ -275,30 +268,39 @@ class EditPRFRequestActivity : AppCompatActivity() {
                 inputTanggalPRFEdit.setText(tanggal)
             }, yearNow,monthNow,dayNow )
             datePickerDialog.show()
-//            buttonResetPRFRequestEdit.isEnabled = true
-//            buttonResetPRFRequestEdit.setBackgroundResource(R.drawable.button_reset_on)
-//            buttonResetPRFRequestEdit.setTextColor(Color.WHITE)
         }
     }
 
-    fun isiSpinnerType(){
-        listTypePRF = databaseQueryHelper.readTypePRF()
-        val adapterType = ArrayAdapter<String>(context,
+    fun isiSpinnerType(): MutableList<String?> {
+        listTypePRF = databaseQueryHelper.readTypePRFNew()
+        val isilistType = listTypePRF.map {
+            it.nama_type_prf
+        }.toMutableList()
+        isilistType.add(0, "Type *")
+        val adapterType = ArrayAdapter<String>(
+            context,
             android.R.layout.simple_spinner_item,
-            listTypePRF!!
+            isilistType
         )
         adapterType.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinnerInputTypePRFEdit.adapter = adapterType
+        return isilistType
     }
 
-    fun isiSpinnerPID(){
-        listPID = databaseQueryHelper.readPIDPRF()
-        val adapterPID = ArrayAdapter<String>(context,
+    fun isiSpinnerPID(): List<String>{
+        listPID = databaseQueryHelper.readPIDPRFNew()
+        val isilistPID = listPID.map {
+            it.PID
+        }.toMutableList()
+        isilistPID.add(0, "PID *")
+        val adapterPID = ArrayAdapter<String>(
+            context,
             android.R.layout.simple_spinner_item,
-            listPID!!
+            isilistPID
         )
         adapterPID.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinnerInputPIDPRFEdit.adapter = adapterPID
+        return isilistPID
     }
 
     fun isiSpinnerNotebook(){
@@ -368,7 +370,7 @@ class EditPRFRequestActivity : AppCompatActivity() {
             println("-------------------------------------${data.tanggal}")
 
             val dataType = cursor.getString(2)
-            val indexType = listTypePRF!!.indexOf(dataType)
+            val indexType = isiSpinnerType().indexOf(dataType)
             println("index type = $indexType")
             spinnerInputTypePRFEdit.setSelection(indexType)
             println("data type = $dataType")
@@ -377,7 +379,7 @@ class EditPRFRequestActivity : AppCompatActivity() {
             inputPlacementPRFEdit.setText(data.placement)
 
             val dataPID = cursor.getString(4)
-            val indexPID = listPID!!.indexOf(dataPID)
+            val indexPID = isiSpinnerPID().indexOf(dataPID)
             spinnerInputPIDPRFEdit.setSelection(indexPID)
 
             data.location = cursor.getString(5)
@@ -411,7 +413,7 @@ class EditPRFRequestActivity : AppCompatActivity() {
 
             data.is_Deleted = cursor.getString(14)
         }
-        setReportDatePRFRequestPicker()
+        setDatePRFRequestPicker()
 
         buttonResetPRFRequestEdit.setOnClickListener{
             resetForm()
@@ -423,12 +425,16 @@ class EditPRFRequestActivity : AppCompatActivity() {
 
     fun requiredOff() {
         requiredTypePRFRequestEdit.isVisible = false
+        inputPlacementPRFEdit.setHintTextColor(Color.GRAY)
         requiredPlacementPRFRequestEdit.isVisible = false
         requiredPIDPRFRequestEdit.isVisible = false
         requiredEmailPRFRequestEdit.isVisible = false
         requiredPeriodPRFRequestEdit.isVisible = false
+        inputPeriodPRFEdit.setHintTextColor(Color.GRAY)
         requiredUsernamePRFRequestEdit.isVisible = false
+        inputUserNamePRFEdit.setHintTextColor(Color.GRAY)
         requiredTelpPRFRequestEdit.isVisible = false
+        inputEmailPRFEdit.setHintTextColor(Color.GRAY)
         requiredNotebookPRFRequestEdit.isVisible = false
     }
 }
