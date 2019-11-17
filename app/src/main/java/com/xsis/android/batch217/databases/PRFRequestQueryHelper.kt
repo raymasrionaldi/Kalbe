@@ -2,10 +2,7 @@ package com.xsis.android.batch217.databases
 
 import android.content.ContentValues
 import android.database.Cursor
-import com.xsis.android.batch217.models.PRFRequest
-import com.xsis.android.batch217.models.ProjectCreate
-import com.xsis.android.batch217.models.TypeNama
-import com.xsis.android.batch217.models.TypePRF
+import com.xsis.android.batch217.models.*
 import com.xsis.android.batch217.utils.*
 
 class PRFRequestQueryHelper (val databaseHelper: DatabaseHelper) {
@@ -18,16 +15,33 @@ class PRFRequestQueryHelper (val databaseHelper: DatabaseHelper) {
         return db.rawQuery(queryRead, null)
     }
 
-    fun getPRFRequestByID(id: Int): PRFRequest {
+    fun getPidByPlacement(placement : String): ArrayList<PIDByPlacement> {
+        var listPID = ArrayList<PIDByPlacement>()
         val db = databaseHelper.readableDatabase
-
-        val queryRead = "SELECT * FROM $TABEL_PRF_REQUEST WHERE $IS_DELETED = 'false' AND $ID_PRF_REQUEST = $id"
-
-        val cursor = db.rawQuery(queryRead, null)
-        if (cursor.count == 1) {
-            return konversiCursorKeListPRFRequestModel(cursor)[0]
+        val queryGetTypeNama = "SELECT a.$PID_CREATE " +
+                "FROM $TABEL_PROJECT_CREATE a, $TABEL_PRF_REQUEST b " +
+                "WHERE a.$ID_PROJECT_CREATE = b.$PID " +
+                "AND b.$PLACEMENT LIKE '%$placement%'"
+        val cursor =  db.rawQuery(queryGetTypeNama, null)
+        if (cursor.count  > 0) {
+            listPID = konversiCursorKeListPIDModel(cursor)
         }
-        return  PRFRequest()
+        return listPID
+    }
+
+    fun konversiCursorKeListPIDModel(cursor: Cursor): ArrayList<PIDByPlacement> {
+        var listPID = ArrayList<PIDByPlacement>()
+
+        for (c in 0 until cursor.count) {
+            cursor.moveToPosition(c)
+
+            val pid = PIDByPlacement()
+            pid.pid = cursor.getString(0)
+
+            listPID.add(pid)
+        }
+
+        return listPID
     }
 
     private fun konversiCursorKeListPRFRequestModel(cursor: Cursor): ArrayList<PRFRequest> {
@@ -213,14 +227,19 @@ class PRFRequestQueryHelper (val databaseHelper: DatabaseHelper) {
         return db.insert(TABEL_PRF_REQUEST, null, values)
     }
 
-    fun getListTypeNama(id: Int): ArrayList<TypeNama> {
+    fun getListTypeNama(placement: String): ArrayList<TypeNama> {
         var listTypeNama = ArrayList<TypeNama>()
         val db = databaseHelper.readableDatabase
-        val queryGetTypeNama = "SELECT $TABEL_PRF_REQUEST.$TYPE, $TABEL_PRF_CANDIDATE.$NAMA_PRF_CANDIDATE " +
-                "FROM $TABEL_PRF_REQUEST " +
-                "JOIN $TABEL_PRF_CANDIDATE " +
-                "WHERE $TABEL_PRF_REQUEST.$ID_PRF_REQUEST = $TABEL_PRF_CANDIDATE.$ID_FROM_PRF " +
-                "AND $TABEL_PRF_CANDIDATE.$ID_FROM_PRF = $id"
+//        val queryGetTypeNama = "SELECT $TABEL_PRF_REQUEST.$TYPE, $TABEL_PRF_CANDIDATE.$NAMA_PRF_CANDIDATE " +
+//                "FROM $TABEL_PRF_REQUEST " +
+//                "JOIN $TABEL_PRF_CANDIDATE " +
+//                "WHERE $TABEL_PRF_REQUEST.$ID_PRF_REQUEST = $TABEL_PRF_CANDIDATE.$ID_FROM_PRF " +
+//                "AND $TABEL_PRF_CANDIDATE.$ID_FROM_PRF = $id"
+        val queryGetTypeNama = "SELECT c.$NAMA_TYPE_PRF, b.$NAMA_PRF_CANDIDATE " +
+                "FROM $TABEL_PRF_REQUEST a, $TABEL_PRF_CANDIDATE b, $TABEL_TYPE_PRF c " +
+                "WHERE a.$ID_PRF_REQUEST = b.$ID_FROM_PRF " +
+                "AND a.$TYPE = c.$ID_TYPE_PRF " +
+                "AND a.$PLACEMENT LIKE '%$placement%'"
         val cursor =  db.rawQuery(queryGetTypeNama, null)
         if (cursor.count  > 0) {
             listTypeNama = konversiCursorKeListTypeNamaModel(cursor)
