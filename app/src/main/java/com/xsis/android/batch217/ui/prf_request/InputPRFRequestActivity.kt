@@ -201,12 +201,37 @@ class InputPRFRequestActivity : AppCompatActivity() {
 
         val emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z.]+"
 
-        if (typePosition == 0 || placement.isEmpty() || pidPosition == 0 || period.isEmpty() || userName.isEmpty()
-            || telpMobilePhone.isEmpty() || email.isEmpty() || !email.matches(emailPattern.toRegex())
-            || notebook == 0
-        ) {
-            requiredOn()
-        } else {
+        if (typePosition == 0) {
+            requiredTypePRFRequest.isVisible = true
+        }
+        if ( placement.isEmpty()) {
+            inputPlacementPRF.setHintTextColor(Color.RED)
+            requiredPlacementPRFRequest.isVisible = true
+        }
+        if (pidPosition == 0) {
+            requiredPIDPRFRequest.isVisible = true
+        }
+        if (period.isEmpty()) {
+            inputPeriodPRF.setHintTextColor(Color.RED)
+            requiredPeriodPRFRequest.isVisible = true
+        }
+        if (userName.isEmpty()) {
+            inputUserNamePRF.setHintTextColor(Color.RED)
+            requiredUsernamePRFRequest.isVisible = true
+        }
+        if (telpMobilePhone.isEmpty()) {
+            inputTelpPRF.setHintTextColor(Color.RED)
+            requiredTelpPRFRequest.isVisible = true
+        }
+        if (email.isEmpty() || !email.matches(emailPattern.toRegex())) {
+            inputEmailPRF.setHintTextColor(Color.RED)
+            requiredEmailPRFRequest.isVisible = true
+        }
+        if (notebook == 0) {
+            requiredEmailPRFRequest.isVisible = true
+        }
+
+        else {
             insertKeDatabase(
                 tanggal,
                 typeItem,
@@ -223,24 +248,6 @@ class InputPRFRequestActivity : AppCompatActivity() {
                 billing
             )
         }
-
-    }
-
-    fun requiredOn() {
-        inputTypePRF.setHintTextColor(Color.RED)
-        requiredTypePRFRequest.isVisible = true
-        inputPlacementPRF.setHintTextColor(Color.RED)
-        requiredPlacementPRFRequest.isVisible = true
-        requiredPIDPRFRequest.isVisible = true
-        inputPeriodPRF.setHintTextColor(Color.RED)
-        requiredPeriodPRFRequest.isVisible = true
-        inputUserNamePRF.setHintTextColor(Color.RED)
-        requiredUsernamePRFRequest.isVisible = true
-        inputTelpPRF.setHintTextColor(Color.RED)
-        requiredTelpPRFRequest.isVisible = true
-        inputEmailPRF.setHintTextColor(Color.RED)
-        requiredEmailPRFRequest.isVisible = true
-        requiredNotebookPRFRequest.isVisible = true
     }
 
     fun resetForm() {
@@ -296,8 +303,7 @@ class InputPRFRequestActivity : AppCompatActivity() {
         if (databaseQueryHelper!!.tambahPRFRequest(model) == -1L) {
             Toast.makeText(context, SIMPAN_DATA_GAGAL, Toast.LENGTH_SHORT).show()
         } else {
-            Toast.makeText(context, SIMPAN_DATA_BERHASIL, Toast.LENGTH_SHORT)
-                .show()
+            Toast.makeText(context, SIMPAN_DATA_BERHASIL, Toast.LENGTH_SHORT).show()
         }
         finish()
     }
@@ -413,12 +419,13 @@ class InputPRFRequestActivity : AppCompatActivity() {
         requiredPlacementPRFRequest.isVisible = false
         requiredPIDPRFRequest.isVisible = false
         requiredEmailPRFRequest.isVisible = false
+        inputEmailPRF.setHintTextColor(Color.GRAY)
         requiredPeriodPRFRequest.isVisible = false
         inputPeriodPRF.setHintTextColor(Color.GRAY)
         requiredUsernamePRFRequest.isVisible = false
         inputUserNamePRF.setHintTextColor(Color.GRAY)
         requiredTelpPRFRequest.isVisible = false
-        inputEmailPRF.setHintTextColor(Color.GRAY)
+        inputTelpPRF.setHintTextColor(Color.GRAY)
         requiredNotebookPRFRequest.isVisible = false
     }
 }

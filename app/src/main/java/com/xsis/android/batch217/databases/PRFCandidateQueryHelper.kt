@@ -11,7 +11,11 @@ class PRFCandidateQueryHelper(val databaseHelper: DatabaseHelper) {
         val db = databaseHelper.readableDatabase
 
         val queryRead =
-            "SELECT * FROM $TABEL_PRF_CANDIDATE WHERE $IS_DELETED = 'false' AND $ID_FROM_PRF = $id"
+//            "SELECT * FROM $TABEL_PRF_CANDIDATE WHERE $IS_DELETED = 'false' AND $ID_FROM_PRF = $id"
+            "SELECT a.*, b.$NAMA_EMPLOYEE_POSITION " +
+            "FROM $TABEL_PRF_CANDIDATE a, $TABEL_EMPLOYEE_POSITION b " +
+            "WHERE a.$POSITION = b.$ID_EMPLOYEE_POSITION " +
+            "AND a.$ID_FROM_PRF = $id"
 
         return db.rawQuery(queryRead, null)
     }
@@ -35,6 +39,8 @@ class PRFCandidateQueryHelper(val databaseHelper: DatabaseHelper) {
             prfCandidate.sign_contract_date = cursor.getString(9)
             prfCandidate.notes = cursor.getString(10)
             prfCandidate.is_Deleted = cursor.getString(11)
+
+            prfCandidate.namaPosition = cursor.getString(12)
 
             listPRFCandidate.add(prfCandidate)
         }
@@ -109,7 +115,7 @@ class PRFCandidateQueryHelper(val databaseHelper: DatabaseHelper) {
         return listPRFCandidate
     }
 
-    fun updateDelete(
+    fun updateIsi(
         id: Int,
         name: String,
         batch: String,
@@ -136,10 +142,11 @@ class PRFCandidateQueryHelper(val databaseHelper: DatabaseHelper) {
         return listPRFCandidate
     }
 
-    fun tambahPRFRequest(model: PRFCandidate): Long {
+    fun tambahPRFCandidate(model: PRFCandidate): Long {
         val db = databaseHelper.writableDatabase
 
         val values = ContentValues()
+        values.put(ID_FROM_PRF, model.id_from_prf)
         values.put(NAMA_PRF_CANDIDATE, model.nama_prf_candidate)
         values.put(BATCH, model.batch)
         values.put(POSITION, model.position)
@@ -151,7 +158,7 @@ class PRFCandidateQueryHelper(val databaseHelper: DatabaseHelper) {
         values.put(NOTES, model.notes)
         values.put(IS_DELETED, "false")
 
-        return db.insert(TABEL_PRF_REQUEST, null, values)
+        return db.insert(TABEL_PRF_CANDIDATE, null, values)
     }
 
     fun readEmployeePosition(): List<EmployeePosition> {
@@ -168,9 +175,23 @@ class PRFCandidateQueryHelper(val databaseHelper: DatabaseHelper) {
             employeePosition.nama_employee_position = cursor.getString(1)
             employeePosition.deskripsi_employee_position = cursor.getString(2)
             employeePosition.is_deleted = cursor.getString(3)
+
+            listEmployeePosition.add(employeePosition)
         }
 
         return listEmployeePosition
+    }
+
+    fun cariEmployeePosition(position: String): Int {
+        var pilihPosition = 0
+        val db = databaseHelper.readableDatabase
+        val queryCari = "SELECT $ID_EMPLOYEE_POSITION FROM $TABEL_EMPLOYEE_POSITION " +
+                "WHERE $NAMA_EMPLOYEE_POSITION = '$position' "
+        val cursor = db.rawQuery(queryCari, null)
+        cursor.moveToFirst()
+        pilihPosition = cursor.getInt(0)
+
+        return pilihPosition
     }
 
     fun readSrfNumber(): List<String> {

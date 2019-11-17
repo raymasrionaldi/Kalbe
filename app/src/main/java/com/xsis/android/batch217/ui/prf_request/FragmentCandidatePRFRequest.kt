@@ -85,6 +85,7 @@ class FragmentCandidatePRFRequest(context: Context, val fm: FragmentManager) : F
 
     fun bawaID(id:Int){
         ID = id
+        println("ID dari prf request = $ID")
 
         databaseHelper = DatabaseHelper(context!!)
         databaseQueryHelper = PRFCandidateQueryHelper(databaseHelper!!)

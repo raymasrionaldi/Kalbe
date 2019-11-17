@@ -48,7 +48,7 @@ class SummaryPRFFragment : Fragment() {
     }
 
     fun search(keyword:String,databaseQueryHelper: PRFRequestQueryHelper){
-        val listPRFRequest= databaseQueryHelper.cariPRFRequestModels(keyword)
+        val listPRFRequest= databaseQueryHelper.cariPrf(keyword)
         tampilkanListKeahlian(listPRFRequest,recyclerView!!)
     }
 

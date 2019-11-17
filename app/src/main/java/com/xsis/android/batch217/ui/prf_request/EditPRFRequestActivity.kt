@@ -188,12 +188,37 @@ class EditPRFRequestActivity : AppCompatActivity() {
 
         val emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z.]+"
 
-        if (typePosition == 0 || placement.isEmpty() || pidPosition == 0 || period.isEmpty() || userName.isEmpty()
-            || telpMobilePhone.isEmpty() || email.isEmpty() || !email.matches(emailPattern.toRegex())
-            || notebook == 0
-        ) {
-            requiredOn()
-        } else {
+        if (typePosition == 0) {
+            requiredTypePRFRequestEdit.isVisible = true
+        }
+        if ( placement.isEmpty()) {
+            inputPlacementPRFEdit.setHintTextColor(Color.RED)
+            requiredPlacementPRFRequestEdit.isVisible = true
+        }
+        if (pidPosition == 0) {
+            requiredPIDPRFRequestEdit.isVisible = true
+        }
+        if (period.isEmpty()) {
+            inputPeriodPRFEdit.setHintTextColor(Color.RED)
+            requiredPeriodPRFRequestEdit.isVisible = true
+        }
+        if (userName.isEmpty()) {
+            inputUserNamePRFEdit.setHintTextColor(Color.RED)
+            requiredUsernamePRFRequestEdit.isVisible = true
+        }
+        if (telpMobilePhone.isEmpty()) {
+            inputTelpPRFEdit.setHintTextColor(Color.RED)
+            requiredTelpPRFRequestEdit.isVisible = true
+        }
+        if (email.isEmpty() || !email.matches(emailPattern.toRegex())) {
+            inputEmailPRFEdit.setHintTextColor(Color.RED)
+            requiredEmailPRFRequestEdit.isVisible = true
+        }
+        if (notebook == 0) {
+            requiredEmailPRFRequestEdit.isVisible = true
+        }
+
+        else {
             insertKeDatabase(
                 id, tanggal,
                 typeItem,
@@ -211,23 +236,6 @@ class EditPRFRequestActivity : AppCompatActivity() {
             )
         }
 
-    }
-
-    fun requiredOn() {
-        inputTypePRFEdit.setHintTextColor(Color.RED)
-        requiredTypePRFRequestEdit.isVisible = true
-        inputPlacementPRFEdit.setHintTextColor(Color.RED)
-        requiredPlacementPRFRequestEdit.isVisible = true
-        requiredPIDPRFRequestEdit.isVisible = true
-        inputPeriodPRFEdit.setHintTextColor(Color.RED)
-        requiredPeriodPRFRequestEdit.isVisible = true
-        inputUserNamePRFEdit.setHintTextColor(Color.RED)
-        requiredUsernamePRFRequestEdit.isVisible = true
-        inputTelpPRFEdit.setHintTextColor(Color.RED)
-        requiredTelpPRFRequestEdit.isVisible = true
-        inputEmailPRFEdit.setHintTextColor(Color.RED)
-        requiredEmailPRFRequestEdit.isVisible = true
-        requiredNotebookPRFRequestEdit.isVisible = true
     }
 
     fun resetForm() {

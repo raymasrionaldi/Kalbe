@@ -160,6 +160,7 @@ class InputPRFCandidateActivity : AppCompatActivity() {
         val name = name!!.text.toString().trim()
         val batch = batch!!.text.toString().trim()
         val position = spinnerInputPositionPRFCandidate.selectedItemPosition
+        val positionItem = spinnerInputPositionPRFCandidate.selectedItem.toString()
         val placementDate = inputPlacementDatePRFCandidate.text.toString()
         val srfNumber = spinnerSRFNumberPRFCandidate.selectedItemPosition
         val customAllowence = customAllowence!!.text.toString()
@@ -167,13 +168,28 @@ class InputPRFCandidateActivity : AppCompatActivity() {
         val signContractDate = inputSignContractDate.text.toString().trim()
         val notes = notes!!.text.toString().trim()
 
-        if (name.isEmpty() || position == 0 || placementDate.isEmpty() || srfNumber == 0 || candidateStatus == 0) {
-            requiredOn()
-        } else {
+        if (name.isEmpty()) {
+            inputNamaPRFCandidate.setHintTextColor(Color.RED)
+            requiredNamePRFCandidate.isVisible = true
+        }
+        if (position == 0) {
+            requiredPositionPRFCandidate.isVisible = true
+        }
+        if (placementDate.isEmpty()) {
+            requiredPlacementDatePRFCandidate.isVisible = true
+        }
+        if (srfNumber == 0) {
+            requiredSRFNumberPRFCandidate.isVisible = true
+        }
+        if (candidateStatus == 0) {
+            requiredCandidateStatusPRFCandidate.isVisible = true
+        }
+
+        else {
             insertKeDatabase(
                 name,
                 batch,
-                position,
+                positionItem,
                 placementDate,
                 listSrf!![srfNumber],
                 customAllowence,
@@ -184,20 +200,10 @@ class InputPRFCandidateActivity : AppCompatActivity() {
         }
     }
 
-    fun requiredOn() {
-        inputNamaPRFCandidate.setHintTextColor(Color.RED)
-        requiredNamePRFCandidate.isVisible = true
-        requiredPositionPRFCandidate.isVisible = true
-        inputPlacementDatePRFCandidate.setHintTextColor(Color.RED)
-        requiredPlacementDatePRFCandidate.isVisible = true
-        requiredSRFNumberPRFCandidate.isVisible = true
-        requiredCandidateStatusPRFCandidate.isVisible = true
-    }
-
     fun insertKeDatabase(
         name: String,
         batch: String,
-        position: Int,
+        position: String,
         placementDate: String,
         srfNumber: String,
         customAllowence: String,
@@ -207,9 +213,11 @@ class InputPRFCandidateActivity : AppCompatActivity() {
     ) {
         val model = PRFCandidate()
         model.id_prf_candidate = model.id_prf_candidate
+        model.id_from_prf = id_from_request
         model.nama_prf_candidate = name
         model.batch = batch
-        model.position = position.toString()
+        var cariPosition = databaseQueryHelper.cariEmployeePosition(position)
+        model.position = cariPosition.toString()
         model.placement_date = placementDate
         model.srf_number = srfNumber
         model.allowence_candidate = customAllowence
@@ -217,11 +225,10 @@ class InputPRFCandidateActivity : AppCompatActivity() {
         model.sign_contract_date = signContractDate
         model.notes = notes
 
-        if (databaseQueryHelper!!.tambahPRFRequest(model) == -1L) {
+        if (databaseQueryHelper!!.tambahPRFCandidate(model) == -1L) {
             Toast.makeText(context, SIMPAN_DATA_GAGAL, Toast.LENGTH_SHORT).show()
         } else {
-            Toast.makeText(context, SIMPAN_DATA_BERHASIL, Toast.LENGTH_SHORT)
-                .show()
+            Toast.makeText(context, SIMPAN_DATA_BERHASIL, Toast.LENGTH_SHORT).show()
         }
         finish()
 
