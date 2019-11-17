@@ -121,6 +121,26 @@ class PRFRequestQueryHelper (val databaseHelper: DatabaseHelper) {
 
         return listPRFRequest
     }
+    fun cariPrfForSummary(keyword: String): List<PRFRequest> {
+        var listPRFRequest = ArrayList<PRFRequest>()
+        if (keyword.isNotBlank()) {
+            val db = databaseHelper.readableDatabase
+            val queryCari = "SELECT a.*, b.$NAMA_TYPE_PRF, c.$PID_CREATE FROM $TABEL_PRF_REQUEST a, $TABEL_TYPE_PRF b, $TABEL_PROJECT_CREATE c " +
+                    "WHERE a.$PLACEMENT LIKE '%$keyword%' AND a.$IS_DELETED = 'false' " +
+                    "AND a.$TYPE = b.$ID_TYPE_PRF " +
+                    "AND a.$PID = c.$ID_PROJECT_CREATE " +
+                    "ORDER BY $PLACEMENT " +
+                    "LIMIT 1"
+
+            val cursor = db.rawQuery(queryCari, null)
+            if (cursor.count > 0) {
+                listPRFRequest = konversiCursorKeListPRFRequestModel(cursor)
+                println("$queryCari")
+            }
+        }
+
+        return listPRFRequest
+    }
 
     fun updateIsi(id: Int,
                      tanggal: String,
