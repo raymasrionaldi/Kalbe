@@ -54,6 +54,7 @@ class SummaryPRFExpandableListAdapter(private val mContext: Context,
             arrowUp.visibility = View.VISIBLE
         }
 
+
         return convertView
     }
 

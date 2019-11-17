@@ -395,7 +395,7 @@ class EditPRFCandidateActivity : AppCompatActivity() {
 
             val dataPosition = cursor.getString(4)
             val indexPosition = isiSpinnerPosition().indexOf(dataPosition)
-            spinnerInputPositionPRFCandidateEdit.setSelection(indexPosition)
+            spinnerInputPositionPRFCandidateEdit.setSelection(dataPosition.toInt())
 
             data.placement_date = cursor.getString(5)
             inputPlacementDatePRFCandidateEdit.setText(data.placement_date)

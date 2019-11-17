@@ -91,6 +91,16 @@ class EditPRFRequestActivity : AppCompatActivity() {
             finish()
         }
 
+        tanggal!!.addTextChangedListener(textWatcher)
+        placement!!.addTextChangedListener(textWatcher)
+        location!!.addTextChangedListener(textWatcher)
+        period!!.addTextChangedListener(textWatcher)
+        userName!!.addTextChangedListener(textWatcher)
+        telpMobilePhone!!.addTextChangedListener(textWatcher)
+        email!!.addTextChangedListener(textWatcher)
+        overtime!!.addTextChangedListener(textWatcher)
+        billing!!.addTextChangedListener(textWatcher)
+
     }
 
     fun ubahButtonResetSpinner() {
@@ -217,6 +227,7 @@ class EditPRFRequestActivity : AppCompatActivity() {
         if (notebook == 0) {
             requiredEmailPRFRequestEdit.isVisible = true
         }
+
 
         else {
             insertKeDatabase(
