@@ -210,13 +210,7 @@ class EntryTimesheetActivity : AppCompatActivity() {
         buttonResetEntryFormTimesheet.setOnClickListener {
             resetTimesheet()
         }
-        if (inputReportDateEntryTimesheet.text.equals("")){
-            inputStarDatetEntryTimesheet!!.isEnabled = false
-            inputEndDateEntryTimesheet!!.isEnabled = false
-        }else{
-            inputStarDatetEntryTimesheet!!.isEnabled = true
-            inputEndDateEntryTimesheet!!.isEnabled = true
-        }
+
 
     }
 
@@ -563,6 +557,13 @@ class EntryTimesheetActivity : AppCompatActivity() {
             val kondisi = !reportDateTimesheet.isEmpty() || !startReportDateTimesheet.isEmpty() ||
                     !endReportDateTimesheet.isEmpty()
                     || !startOvertimeTimesheet.isEmpty() || !endOvertimeTimesheet.isEmpty() || !notesTimesheet.isEmpty()
+            if (reportDateTimesheet.isEmpty()){
+                inputStarDatetEntryTimesheet.isEnabled = false
+                inputEndDateEntryTimesheet.isEnabled = false
+            }else{
+                inputStarDatetEntryTimesheet.isEnabled = true
+                inputEndDateEntryTimesheet.isEnabled = true
+            }
 
             ubahResetButton(context!!, kondisi, buttonReset!!)
         }
