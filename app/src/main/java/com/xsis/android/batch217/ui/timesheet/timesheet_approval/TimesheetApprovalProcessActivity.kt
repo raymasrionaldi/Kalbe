@@ -55,7 +55,7 @@ class TimesheetApprovalProcessActivity : AppCompatActivity() {
             listTimesheetApprovalRecycler.addItemDecoration(dividerItemDecoration)
 
 
-            val adapterTimesheetApproval = ListTimesheetApprovalAdapter(context!!, listData)
+            val adapterTimesheetApproval = ListTimesheetApprovalAdapter(context, listData)
             listTimesheetApprovalRecycler.adapter = adapterTimesheetApproval
             adapterTimesheetApproval.notifyDataSetChanged()
         }

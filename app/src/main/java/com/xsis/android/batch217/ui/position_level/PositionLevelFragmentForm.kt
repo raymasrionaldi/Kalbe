@@ -13,22 +13,17 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.viewpager.widget.ViewPager
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.xsis.android.batch217.R
 import com.xsis.android.batch217.adapters.fragments.PositionLevelFragmentAdapter
 import com.xsis.android.batch217.databases.DatabaseHelper
 import com.xsis.android.batch217.databases.PositionLevelQueryHelper
 import com.xsis.android.batch217.models.PositionLevel
 import com.xsis.android.batch217.utils.*
+import kotlinx.android.synthetic.main.fragment_form_position_level.*
 
 
 class PositionLevelFragmentForm(context: Context, val fm: FragmentManager) : Fragment() {
-    var title: TextView? = null
-    var buttonReset: Button? = null
-    var nama: EditText? = null
-    var required: TextView? = null
-    var notes: EditText? = null
-    var buttonDelete: FloatingActionButton? = null
+
     var defaultColor = 0
     var modeForm = 0
     var idData = 0
@@ -53,40 +48,35 @@ class PositionLevelFragmentForm(context: Context, val fm: FragmentManager) : Fra
         val databaseHelper = DatabaseHelper(context!!)
         databaseQueryHelper = PositionLevelQueryHelper(databaseHelper)
 
-        title = customView.findViewById(R.id.titleFormPositionLevel) as TextView
-
-        val buttonSave = customView.findViewById(R.id.buttonSavePositionLevel) as Button
-        buttonReset = customView.findViewById(R.id.buttonResetPositionLevel) as Button
-        nama = customView.findViewById(R.id.inputNamaPositionLevel) as EditText
-        defaultColor = nama!!.currentHintTextColor
-        required = customView.findViewById(R.id.requiredNamaPositionLevel) as TextView
-        notes = customView.findViewById(R.id.inputNotesPositionLevel) as EditText
-        buttonDelete =
-            customView.findViewById(R.id.buttonDeletePositionLevel) as FloatingActionButton
-
-        buttonSave.setOnClickListener {
-            simpanPositionLevel()
-        }
-
-        buttonReset!!.setOnClickListener {
-            resetForm()
-        }
-
-        buttonDelete!!.setOnClickListener {
-            showDeleteDialog()
-        }
-
-        nama!!.addTextChangedListener(textWatcher)
-        notes!!.addTextChangedListener(textWatcher)
-
-        title!!.text = TITLE_ADD
-
         return customView
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        defaultColor = inputNamaPositionLevel.currentHintTextColor
+
+        buttonSavePositionLevel.setOnClickListener {
+            simpanPositionLevel()
+        }
+
+        buttonResetPositionLevel.setOnClickListener {
+            resetForm()
+        }
+
+        buttonDeletePositionLevel.setOnClickListener {
+            showDeleteDialog()
+        }
+
+        inputNamaPositionLevel.addTextChangedListener(textWatcher)
+        inputNotesPositionLevel.addTextChangedListener(textWatcher)
+
+        titleFormPositionLevel.text = TITLE_ADD
+    }
+
     fun resetForm() {
-        nama!!.setText("")
-        notes!!.setText("")
+        inputNamaPositionLevel.text = null
+        inputNotesPositionLevel.text = null
     }
 
     fun modeEdit(positionLevel: PositionLevel) {
@@ -94,8 +84,8 @@ class PositionLevelFragmentForm(context: Context, val fm: FragmentManager) : Fra
         changeMode()
 
         idData = positionLevel.idPostionLevel
-        nama!!.setText(positionLevel.namaPosition)
-        notes!!.setText(positionLevel.desPosition)
+        inputNamaPositionLevel.setText(positionLevel.namaPosition)
+        inputNotesPositionLevel.setText(positionLevel.desPosition)
         data = positionLevel
     }
 
@@ -108,15 +98,15 @@ class PositionLevelFragmentForm(context: Context, val fm: FragmentManager) : Fra
 
     fun changeMode() {
         if (modeForm == MODE_ADD) {
-            title!!.text = TITLE_ADD
-            buttonDelete!!.hide()
+            titleFormPositionLevel.text = TITLE_ADD
+            buttonDeletePositionLevel.hide()
         } else if (modeForm == MODE_EDIT) {
-            title!!.text = TITLE_EDIT
-            buttonDelete!!.show()
+            titleFormPositionLevel.text = TITLE_EDIT
+            buttonDeletePositionLevel.show()
         }
 
-        nama!!.setHintTextColor(defaultColor)
-        required!!.visibility = View.INVISIBLE
+        inputNamaPositionLevel.setHintTextColor(defaultColor)
+        layoutNamaPositionLevel.isErrorEnabled = false
     }
 
     fun showDeleteDialog() {
@@ -148,12 +138,12 @@ class PositionLevelFragmentForm(context: Context, val fm: FragmentManager) : Fra
         }
 
         override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-            val namaTeks = nama!!.text.toString().trim()
-            val notesTeks = notes!!.text.toString().trim()
+            val namaTeks = inputNamaPositionLevel.text.toString().trim()
+            val notesTeks = inputNotesPositionLevel.text.toString().trim()
 
             val kondisi = !namaTeks.isEmpty() || !notesTeks.isEmpty()
 
-            ubahResetButton(context!!, kondisi, buttonReset!!)
+            ubahResetButton(context!!, kondisi, buttonResetPositionLevel)
         }
 
         override fun afterTextChanged(s: Editable) {
@@ -162,22 +152,21 @@ class PositionLevelFragmentForm(context: Context, val fm: FragmentManager) : Fra
     }
 
     fun simpanPositionLevel() {
-        val namaPositionLevel = nama!!.text.toString().trim()
-        val notesPositionLevel = notes!!.text.toString().trim()
-
-        nama!!.setHintTextColor(defaultColor)
-        required!!.visibility = View.INVISIBLE
+        val namaPositionLevel = inputNamaPositionLevel.text.toString().trim()
+        val notesPositionLevel = inputNotesPositionLevel.text.toString().trim()
 
         if (namaPositionLevel.isEmpty()) {
-            nama!!.setHintTextColor(Color.RED)
-            required!!.visibility = View.VISIBLE
+            inputNamaPositionLevel.setHintTextColor(Color.RED)
+            layoutNamaPositionLevel.error = "Required"
         } else {
+
             val model = PositionLevel()
             model.idPostionLevel = data.idPostionLevel
             model.namaPosition = namaPositionLevel
             model.desPosition = notesPositionLevel
 
-            val cekPostionLevel = databaseQueryHelper!!.cekPositionLevelSudahAda(model.namaPosition!!)
+            val cekPostionLevel =
+                databaseQueryHelper!!.cekPositionLevelSudahAda(model.namaPosition!!)
 
             if (modeForm == MODE_ADD) {
                 if (cekPostionLevel > 0) {

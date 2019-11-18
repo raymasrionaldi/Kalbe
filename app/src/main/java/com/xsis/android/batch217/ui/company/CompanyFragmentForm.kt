@@ -13,26 +13,16 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.viewpager.widget.ViewPager
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.xsis.android.batch217.R
 import com.xsis.android.batch217.adapters.fragments.CompanyFragmentAdapter
 import com.xsis.android.batch217.databases.CompanyQueryHelper
 import com.xsis.android.batch217.databases.DatabaseHelper
 import com.xsis.android.batch217.models.Company
 import com.xsis.android.batch217.utils.*
+import kotlinx.android.synthetic.main.fragment_form_company.*
 
 class CompanyFragmentForm(context: Context, val fm: FragmentManager) : Fragment() {
-    var title: TextView? = null
-    var buttonReset: Button? = null
-    var nama: EditText? = null
-    var requiredNama: TextView? = null
-    var kota: EditText? = null
-    var requiredKota: TextView? = null
-    var kdPos: EditText? = null
-    var jalan: EditText? = null
-    var gedung: EditText? = null
-    var lantai: EditText? = null
-    var buttonDelete: FloatingActionButton? = null
+
     var defaultColor = 0
     var modeForm = 0
     var idData = 0
@@ -57,54 +47,43 @@ class CompanyFragmentForm(context: Context, val fm: FragmentManager) : Fragment(
         val databaseHelper = DatabaseHelper(context!!)
         databaseQueryHelper = CompanyQueryHelper(databaseHelper)
 
-        title = customView.findViewById(R.id.titleFormCompany) as TextView
-
-        val buttonSave = customView.findViewById(R.id.buttonSaveCompany) as Button
-        buttonReset = customView.findViewById(R.id.buttonResetCompany) as Button
-        nama = customView.findViewById(R.id.inputNamaCompany) as EditText
-        defaultColor = nama!!.currentHintTextColor
-        requiredNama = customView.findViewById(R.id.requiredNamaCompany) as TextView
-        kota = customView.findViewById(R.id.inputKotaCompany) as EditText
-        requiredKota = customView.findViewById(R.id.requiredKotaCompany) as TextView
-        kdPos = customView.findViewById(R.id.inputKodePosCompany) as EditText
-        jalan = customView.findViewById(R.id.inputJalanCompany) as EditText
-        gedung = customView.findViewById(R.id.inputGedungCompany) as EditText
-        lantai = customView.findViewById(R.id.inputLantaiCompany) as EditText
-
-        buttonDelete =
-            customView.findViewById(R.id.buttonDeleteCompany) as FloatingActionButton
-
-        buttonSave.setOnClickListener {
-            simpanCompany()
-        }
-
-        buttonReset!!.setOnClickListener {
-            resetForm()
-        }
-
-        buttonDelete!!.setOnClickListener {
-            showDeleteDialog()
-        }
-
-        nama!!.addTextChangedListener(textWatcher)
-        kota!!.addTextChangedListener(textWatcher)
-        kdPos!!.addTextChangedListener(textWatcher)
-        jalan!!.addTextChangedListener(textWatcher)
-        gedung!!.addTextChangedListener(textWatcher)
-        lantai!!.addTextChangedListener(textWatcher)
-
-        title!!.text = TITLE_ADD
-
         return customView
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        defaultColor = inputNamaCompany.currentHintTextColor
+
+        buttonSaveCompany.setOnClickListener {
+            simpanCompany()
+        }
+
+        buttonResetCompany.setOnClickListener {
+            resetForm()
+        }
+
+        buttonDeleteCompany.setOnClickListener {
+            showDeleteDialog()
+        }
+
+        inputNamaCompany.addTextChangedListener(textWatcher)
+        inputKotaCompany.addTextChangedListener(textWatcher)
+        inputKodePosCompany.addTextChangedListener(textWatcher)
+        inputJalanCompany.addTextChangedListener(textWatcher)
+        inputGedungCompany.addTextChangedListener(textWatcher)
+        inputLantaiCompany.addTextChangedListener(textWatcher)
+
+        titleFormCompany.text = TITLE_ADD
+    }
+
     fun resetForm() {
-        nama!!.setText("")
-        kota!!.setText("")
-        kdPos!!.setText("")
-        jalan!!.setText("")
-        gedung!!.setText("")
-        lantai!!.setText("")
+        inputNamaCompany.text = null
+        inputKotaCompany.text = null
+        inputKodePosCompany.text = null
+        inputJalanCompany.text = null
+        inputGedungCompany.text = null
+        inputLantaiCompany.text = null
     }
 
     fun modeEdit(company: Company) {
@@ -112,12 +91,12 @@ class CompanyFragmentForm(context: Context, val fm: FragmentManager) : Fragment(
         changeMode()
 
         idData = company.idCompany
-        nama!!.setText(company.namaCompany)
-        kota!!.setText(company.kotaCompany)
-        kdPos!!.setText(company.kdPosCompany)
-        jalan!!.setText(company.jlnCompany)
-        gedung!!.setText(company.buildingCompany)
-        lantai!!.setText(company.floorCompany)
+        inputNamaCompany.setText(company.namaCompany)
+        inputKotaCompany.setText(company.kotaCompany)
+        inputKodePosCompany.setText(company.kdPosCompany)
+        inputJalanCompany.setText(company.jlnCompany)
+        inputGedungCompany.setText(company.buildingCompany)
+        inputLantaiCompany.setText(company.floorCompany)
         data = company
     }
 
@@ -130,17 +109,17 @@ class CompanyFragmentForm(context: Context, val fm: FragmentManager) : Fragment(
 
     fun changeMode() {
         if (modeForm == MODE_ADD) {
-            title!!.text = TITLE_ADD
-            buttonDelete!!.hide()
+            titleFormCompany.text = TITLE_ADD
+            buttonDeleteCompany.hide()
         } else if (modeForm == MODE_EDIT) {
-            title!!.text = TITLE_EDIT
-            buttonDelete!!.show()
+            titleFormCompany.text = TITLE_EDIT
+            buttonDeleteCompany.show()
         }
 
-        nama!!.setHintTextColor(defaultColor)
-        kota!!.setHintTextColor(defaultColor)
-        requiredNama!!.visibility = View.INVISIBLE
-        requiredKota!!.visibility = View.INVISIBLE
+        inputNamaCompany.setHintTextColor(defaultColor)
+        inputKotaCompany.setHintTextColor(defaultColor)
+        layoutNamaCompany.isErrorEnabled = false
+        layoutKotaCompany.isErrorEnabled = false
     }
 
     fun showDeleteDialog() {
@@ -172,18 +151,18 @@ class CompanyFragmentForm(context: Context, val fm: FragmentManager) : Fragment(
         }
 
         override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-            val namaTeks = nama!!.text.toString().trim()
-            val kotaTeks = kota!!.text.toString().trim()
-            val kdPosTeks = kdPos!!.text.toString().trim()
-            val jalanTeks = jalan!!.text.toString().trim()
-            val gedungTeks = gedung!!.text.toString().trim()
-            val lantaiTeks = lantai!!.text.toString().trim()
+            val namaTeks = inputNamaCompany.text.toString().trim()
+            val kotaTeks = inputKotaCompany.text.toString().trim()
+            val kdPosTeks = inputKodePosCompany.text.toString().trim()
+            val jalanTeks = inputJalanCompany.text.toString().trim()
+            val gedungTeks = inputGedungCompany.text.toString().trim()
+            val lantaiTeks = inputLantaiCompany.text.toString().trim()
             val kondisi =
                 namaTeks.isNotEmpty() || kotaTeks.isNotEmpty() || kdPosTeks.isNotEmpty()
                         || jalanTeks.isNotEmpty() || gedungTeks.isNotEmpty()
                         || lantaiTeks.isNotEmpty()
 
-            ubahResetButton(context, kondisi, buttonReset!!)
+            ubahResetButton(context, kondisi, buttonResetCompany)
         }
 
         override fun afterTextChanged(s: Editable) {
@@ -192,27 +171,33 @@ class CompanyFragmentForm(context: Context, val fm: FragmentManager) : Fragment(
     }
 
     fun simpanCompany() {
-        val namaCompany = nama!!.text.toString().trim()
-        val kotaCompany = kota!!.text.toString().trim()
-        val kdPosCompany = kdPos!!.text.toString().trim()
-        val jalanCompany = jalan!!.text.toString().trim()
-        val gedungCompany = gedung!!.text.toString().trim()
-        val lantaiCompany = lantai!!.text.toString().trim()
+        val namaCompany = inputNamaCompany.text.toString().trim()
+        val kotaCompany = inputKotaCompany.text.toString().trim()
+        val kdPosCompany = inputKodePosCompany.text.toString().trim()
+        val jalanCompany = inputJalanCompany.text.toString().trim()
+        val gedungCompany = inputGedungCompany.text.toString().trim()
+        val lantaiCompany = inputLantaiCompany.text.toString().trim()
 
-        nama!!.setHintTextColor(defaultColor)
-        kota!!.setHintTextColor(defaultColor)
-        requiredNama!!.visibility = View.INVISIBLE
-        requiredKota!!.visibility = View.INVISIBLE
-
+        var isValid = true
         if (namaCompany.isEmpty()) {
-            nama!!.setHintTextColor(Color.RED)
-            requiredNama!!.visibility = View.VISIBLE
+            inputNamaCompany.setHintTextColor(Color.RED)
+            layoutNamaCompany.error = "Required"
+            isValid = false
+        } else {
+            inputNamaCompany.setHintTextColor(defaultColor)
+            layoutNamaCompany.isErrorEnabled = false
         }
+
         if (kotaCompany.isEmpty()) {
-            kota!!.setHintTextColor(Color.RED)
-            requiredKota!!.visibility = View.VISIBLE
+            inputKotaCompany.setHintTextColor(Color.RED)
+            layoutKotaCompany.error = "Required"
+            isValid = false
+        } else {
+            inputKotaCompany.setHintTextColor(defaultColor)
+            layoutKotaCompany.isErrorEnabled = false
         }
-        if (namaCompany.isNotEmpty() && kotaCompany.isNotEmpty()) {
+
+        if (isValid) {
             val model = Company()
             model.idCompany = data.idCompany
             model.namaCompany = namaCompany

@@ -4,111 +4,117 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="10dp"
-        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <TextView
-            android:id="@+id/titleFormCompany"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Title"
-            android:textSize="@dimen/title_form_text_size"
-            android:textStyle="bold" />
-
-        <EditText
-            android:id="@+id/inputNamaCompany"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Name *"
-            android:inputType="text" />
-
-        <TextView
-            android:id="@+id/requiredNamaCompany"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Required"
-            android:textColor="@color/warnaMerah"
-            android:textSize="@dimen/text_size_small"
-            android:visibility="invisible" />
-
-        <EditText
-            android:id="@+id/inputKotaCompany"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="City *"
-            android:inputType="text" />
-
-        <TextView
-            android:id="@+id/requiredKotaCompany"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Required"
-            android:textColor="@color/warnaMerah"
-            android:textSize="@dimen/text_size_small"
-            android:visibility="invisible" />
-
-        <EditText
-            android:id="@+id/inputKodePosCompany"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Postal Code"
-            android:inputType="number"
-            android:maxLength="5" />
-
-        <EditText
-            android:id="@+id/inputJalanCompany"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Street"
-            android:inputType="text" />
-
-        <EditText
-            android:id="@+id/inputGedungCompany"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Building"
-            android:inputType="text" />
-
-        <EditText
-            android:id="@+id/inputLantaiCompany"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Floor"
-            android:inputType="text" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:paddingBottom="40dp">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:orientation="horizontal">
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:orientation="vertical">
 
-            <Button
-                android:id="@+id/buttonResetCompany"
-                android:layout_width="0dp"
+            <TextView
+                android:id="@+id/titleFormCompany"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@drawable/button_reset_off"
-                android:clickable="false"
-                android:text="@string/reset"
-                android:textColor="@color/warnaTeksResetOff" />
+                android:text="Title"
+                android:textSize="@dimen/title_form_text_size"
+                android:textStyle="bold" />
 
-            <Button
-                android:id="@+id/buttonSaveCompany"
-                android:layout_width="0dp"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layoutNamaCompany"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@drawable/button_save"
-                android:text="@string/save"
-                android:textColor="@color/colorWhite" />
+                app:errorEnabled="false"
+                app:errorTextAppearance="@style/errorTextInputLayout"
+                app:hintEnabled="false">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/inputNamaCompany"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Name *"
+                    android:inputType="text" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layoutKotaCompany"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:errorEnabled="false"
+                app:errorTextAppearance="@style/errorTextInputLayout"
+                app:hintEnabled="false">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/inputKotaCompany"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="City *"
+                    android:inputType="text" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <EditText
+                android:id="@+id/inputKodePosCompany"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Postal Code"
+                android:inputType="number"
+                android:maxLength="5" />
+
+            <EditText
+                android:id="@+id/inputJalanCompany"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Street"
+                android:inputType="text" />
+
+            <EditText
+                android:id="@+id/inputGedungCompany"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Building"
+                android:inputType="text" />
+
+            <EditText
+                android:id="@+id/inputLantaiCompany"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Floor"
+                android:inputType="text" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/buttonResetCompany"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_reset_off"
+                    android:clickable="false"
+                    android:text="@string/reset"
+                    android:textColor="@color/warnaTeksResetOff" />
+
+                <Button
+                    android:id="@+id/buttonSaveCompany"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_save"
+                    android:text="@string/save"
+                    android:textColor="@color/colorWhite" />
+            </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
+    </ScrollView>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/buttonDeleteCompany"

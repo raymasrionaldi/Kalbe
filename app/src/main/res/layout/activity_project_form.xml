@@ -35,7 +35,7 @@
                 android:layout_marginRight="4dp"
                 app:smsp_enableFloatingLabel="false"
                 app:smsp_hint="Client Name *"
-                app:smsp_hintSize="18sp"
+                app:smsp_hintSize="14sp"
                 app:smsp_itemSize="18sp"
                 app:smsp_multilineError="false" />
 
@@ -64,7 +64,7 @@
                 android:id="@+id/layoutProjectNameProject"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:errorEnabled="true"
+                app:errorEnabled="false"
                 app:errorTextAppearance="@style/errorTextInputLayout"
                 app:hintEnabled="false">
 
@@ -80,7 +80,7 @@
                 android:id="@+id/layoutStartProject"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:errorEnabled="true"
+                app:errorEnabled="false"
                 app:errorTextAppearance="@style/errorTextInputLayout"
                 app:hintEnabled="false">
 
@@ -97,7 +97,7 @@
                 android:id="@+id/layoutEndProject"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:errorEnabled="true"
+                app:errorEnabled="false"
                 app:errorTextAppearance="@style/errorTextInputLayout"
                 app:hintEnabled="false">
 
@@ -114,7 +114,7 @@
                 android:id="@+id/layoutRoleProject"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:errorEnabled="true"
+                app:errorEnabled="false"
                 app:errorTextAppearance="@style/errorTextInputLayout"
                 app:hintEnabled="false">
 
@@ -130,7 +130,7 @@
                 android:id="@+id/layoutProjectPhaseProject"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:errorEnabled="true"
+                app:errorEnabled="false"
                 app:errorTextAppearance="@style/errorTextInputLayout"
                 app:hintEnabled="false">
 
@@ -146,7 +146,7 @@
                 android:id="@+id/layoutProjectDesProject"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:errorEnabled="true"
+                app:errorEnabled="false"
                 app:errorTextAppearance="@style/errorTextInputLayout"
                 app:hintEnabled="false">
 
@@ -162,7 +162,7 @@
                 android:id="@+id/layoutProjectTechProject"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:errorEnabled="true"
+                app:errorEnabled="false"
                 app:errorTextAppearance="@style/errorTextInputLayout"
                 app:hintEnabled="false">
 
@@ -178,7 +178,7 @@
                 android:id="@+id/layoutMainTaskProject"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:errorEnabled="true"
+                app:errorEnabled="false"
                 app:errorTextAppearance="@style/errorTextInputLayout"
                 app:hintEnabled="false">
 
@@ -186,8 +186,7 @@
                     android:id="@+id/inputMainTaskProject"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Main Task *"
-                    android:inputType="text" />
+                    android:hint="Main Task *" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <LinearLayout

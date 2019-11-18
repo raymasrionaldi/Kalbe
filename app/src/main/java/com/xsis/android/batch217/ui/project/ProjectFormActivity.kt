@@ -275,7 +275,7 @@ class ProjectFormActivity : AppCompatActivity() {
             layoutProjectNameProject.error = "Required"
         } else {
             inputProjectNameProject.setHintTextColor(defaultColor)
-            layoutProjectNameProject.error = null
+            layoutProjectNameProject.isErrorEnabled = false
         }
 
         if (inputStart.isEmpty()) {
@@ -284,7 +284,7 @@ class ProjectFormActivity : AppCompatActivity() {
             layoutStartProject.error = "Required"
         } else {
             inputStartProject.setHintTextColor(defaultColor)
-            layoutStartProject.error = null
+            layoutStartProject.isErrorEnabled = false
         }
 
         if (inputEnd.isEmpty()) {
@@ -293,7 +293,7 @@ class ProjectFormActivity : AppCompatActivity() {
             layoutEndProject.error = "Required"
         } else {
             inputEndProject.setHintTextColor(defaultColor)
-            layoutEndProject.error = null
+            layoutEndProject.isErrorEnabled = false
         }
 
         if (inputRole.isEmpty()) {
@@ -302,7 +302,7 @@ class ProjectFormActivity : AppCompatActivity() {
             layoutRoleProject.error = "Required"
         } else {
             inputRoleProject.setHintTextColor(defaultColor)
-            layoutRoleProject.error = null
+            layoutRoleProject.isErrorEnabled = false
         }
 
         if (inputPhase.isEmpty()) {
@@ -311,7 +311,7 @@ class ProjectFormActivity : AppCompatActivity() {
             layoutProjectPhaseProject.error = "Required"
         } else {
             inputProjectPhaseProject.setHintTextColor(defaultColor)
-            layoutProjectPhaseProject.error = null
+            layoutProjectPhaseProject.isErrorEnabled = false
         }
 
         if (inputDes.isEmpty()) {
@@ -320,7 +320,7 @@ class ProjectFormActivity : AppCompatActivity() {
             layoutProjectDesProject.error = "Required"
         } else {
             inputProjectDesProject.setHintTextColor(defaultColor)
-            layoutProjectDesProject.error = null
+            layoutProjectDesProject.isErrorEnabled = false
         }
 
         if (inputTech.isEmpty()) {
@@ -329,7 +329,7 @@ class ProjectFormActivity : AppCompatActivity() {
             layoutProjectTechProject.error = "Required"
         } else {
             inputProjectTechProject.setHintTextColor(defaultColor)
-            layoutProjectTechProject.error = null
+            layoutProjectTechProject.isErrorEnabled = false
         }
 
         if (inputTask.isEmpty()) {
@@ -338,7 +338,7 @@ class ProjectFormActivity : AppCompatActivity() {
             layoutMainTaskProject.error = "Required"
         } else {
             inputMainTaskProject.setHintTextColor(defaultColor)
-            layoutMainTaskProject.error = null
+            layoutMainTaskProject.isErrorEnabled = false
         }
 
         // check valid duration

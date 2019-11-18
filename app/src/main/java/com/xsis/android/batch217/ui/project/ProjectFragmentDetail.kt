@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.*
+import android.widget.ExpandableListView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
@@ -54,6 +55,17 @@ class ProjectFragmentDetail(context: Context, val fm: FragmentManager) : Fragmen
             intent.putExtra(ID_PROJECT, data.idProject)
             activity!!.startActivityForResult(intent, REQUEST_CODE_PROJECT)
         }
+
+        listProjectInformation.setOnGroupExpandListener(object :
+            ExpandableListView.OnGroupExpandListener {
+            var previousItem = -1
+
+            override fun onGroupExpand(groupPosition: Int) {
+                if (groupPosition != previousItem)
+                    listProjectInformation.collapseGroup(previousItem)
+                previousItem = groupPosition
+            }
+        })
     }
 
     fun viewDetail(model: Project) {
@@ -98,7 +110,8 @@ class ProjectFragmentDetail(context: Context, val fm: FragmentManager) : Fragmen
         val info03 = arrayListOf("Department", data.departmentProject!!)
         val info04 = arrayListOf("User/PIC Name", data.userProject!!)
         val info05 = arrayListOf("Project Name", data.nameProject!!)
-        val info06 = arrayListOf("Project Started - Ended", "${data.startProject} - ${data.endProject}")
+        val info06 =
+            arrayListOf("Project Started - Ended", "${data.startProject} - ${data.endProject}")
         val info07 = arrayListOf("Role", data.roleProject!!)
         val info08 = arrayListOf("Project Phase", data.phaseProject!!)
         child0.add(info01)

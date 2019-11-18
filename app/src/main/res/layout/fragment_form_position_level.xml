@@ -23,21 +23,21 @@
             android:textSize="@dimen/title_form_text_size"
             android:textStyle="bold" />
 
-        <EditText
-            android:id="@+id/inputNamaPositionLevel"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layoutNamaPositionLevel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Name *"
-            android:inputType="text" />
+            app:errorEnabled="false"
+            app:errorTextAppearance="@style/errorTextInputLayout"
+            app:hintEnabled="false">
 
-        <TextView
-            android:id="@+id/requiredNamaPositionLevel"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Required"
-            android:textColor="@color/warnaMerah"
-            android:textSize="@dimen/text_size_small"
-            android:visibility="invisible" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/inputNamaPositionLevel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Name *"
+                android:inputType="text" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <EditText
             android:id="@+id/inputNotesPositionLevel"
