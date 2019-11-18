@@ -7,16 +7,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.FragmentManager
-import androidx.viewpager.widget.ViewPager
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.tabs.TabLayout
 
 import com.xsis.android.batch217.R
-import com.xsis.android.batch217.adapters.fragments.AgamaFragmentAdapter
 import com.xsis.android.batch217.adapters.fragments.LeaveRequestFragmentAdapter
-import com.xsis.android.batch217.ui.agama.AgamaFragmentData
-import com.xsis.android.batch217.ui.project.ProjectFormActivity
 import com.xsis.android.batch217.utils.*
 
 class LeaveRequestFragment() : Fragment(), OnBackPressedListener {
@@ -28,7 +23,6 @@ class LeaveRequestFragment() : Fragment(), OnBackPressedListener {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        //leaveRequstViewModel = ViewModelProviders.of(this).get(LeaveRequestViewModel::class.java)
 
         val root = inflater.inflate(R.layout.fragment_leave_request, container, false)
 
@@ -40,7 +34,7 @@ class LeaveRequestFragment() : Fragment(), OnBackPressedListener {
 
         val slidingTabs = root.findViewById(R.id.slidingTabsLeaveRequest) as TabLayout
         slidingTabs.setupWithViewPager(viewPager)
-        slidingTabs.touchables.forEach { view -> view.isEnabled = false }
+        slidingTabs.touchables.forEach { view -> view.isEnabled = true }
 
         val buttonAdd =
             root.findViewById(R.id.buttonAddLeaveRequest) as FloatingActionButton
