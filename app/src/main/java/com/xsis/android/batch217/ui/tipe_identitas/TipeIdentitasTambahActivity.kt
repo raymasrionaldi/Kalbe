@@ -98,11 +98,17 @@ class TipeIdentitasTambahActivity : AppCompatActivity() {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 //Enable tombol simpan ketika user sudah mulai mengisi form
-                simpan!!.isEnabled = true
+                simpan!!.setBackgroundResource(R.drawable.button_simpan_on)
+                simpan!!.setTextColor(Color.WHITE)
+                simpan!!.isClickable = true
 
                 val Nama = nama!!.text.toString().trim()
-                error!!.isVisible = Nama.isEmpty()
                 clearNama!!.isVisible = !Nama.isEmpty()
+                if (Nama.isEmpty()){
+                    error!!.visibility = View.VISIBLE
+                } else{
+                    error!!.visibility = View.INVISIBLE
+                }
             }
         })
         teksDesTipeIdentitas.addTextChangedListener(object : TextWatcher {
@@ -110,7 +116,9 @@ class TipeIdentitasTambahActivity : AppCompatActivity() {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 //Enable tombol simpan ketika user sudah mulai mengisi form
-                simpan!!.isEnabled = true
+                simpan!!.setBackgroundResource(R.drawable.button_simpan_on)
+                simpan!!.setTextColor(Color.WHITE)
+                simpan!!.isClickable = true
 
                 val Des = des!!.text.toString().trim()
                 clearDes!!.isVisible = !Des.isEmpty()
@@ -120,8 +128,6 @@ class TipeIdentitasTambahActivity : AppCompatActivity() {
 
     fun simpan(id:Int) {
         simpan!!.setOnClickListener {
-            val Nama = nama!!.text.toString().trim()
-            val Des = des!!.text.toString().trim()
 
             if (id == 0){
                 insertKeDatabase()

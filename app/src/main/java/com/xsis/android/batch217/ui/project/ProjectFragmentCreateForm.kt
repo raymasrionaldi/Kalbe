@@ -261,6 +261,30 @@ class ProjectFragmentCreateForm(context: Context, val fm: FragmentManager):Fragm
         }
     }
 
+    fun setButtonReset(keterangan:Boolean){
+        if (keterangan){
+            reset!!.setBackgroundResource(R.drawable.button_batal)
+            reset!!.setTextColor(Color.WHITE)
+            reset!!.isEnabled = true
+        } else{
+            reset!!.setBackgroundResource(R.drawable.button_simpan_off)
+            reset!!.setTextColor(resources.getColor(R.color.warnaTeksResetOff))
+            reset!!.isEnabled = false
+        }
+    }
+
+    fun setButtonSave(keterangan: Boolean){
+        if (keterangan){
+            save!!.setBackgroundResource(R.drawable.button_simpan_on)
+            save!!.setTextColor(Color.WHITE)
+            save!!.isEnabled = true
+        } else{
+            save!!.setBackgroundResource(R.drawable.button_simpan_off)
+            save!!.setTextColor(resources.getColor(R.color.warnaTeksResetOff))
+            save!!.isEnabled = false
+        }
+    }
+
     fun cekIsi(){
         //WARNING : Logic save masih salah
         var enableSave0 = ArrayList<Boolean>()
@@ -274,8 +298,8 @@ class ProjectFragmentCreateForm(context: Context, val fm: FragmentManager):Fragm
 //                reset!!.isEnabled = true
                 val enableSave = PID!!.text.toString().trim().isNotEmpty()
                 enableSave0[0] = enableSave
-                save!!.isEnabled = !enableSave0.contains(false)
-                reset!!.isEnabled = !enableSave0.contains(false)
+                setButtonReset(!enableSave0.contains(false))
+                setButtonSave(!enableSave0.contains(false))
             }})
         noPOSPKKontrak!!.addTextChangedListener (object :TextWatcher{
             override fun afterTextChanged(s: Editable?) {}
@@ -284,7 +308,8 @@ class ProjectFragmentCreateForm(context: Context, val fm: FragmentManager):Fragm
 //                reset!!.isEnabled = true
                 val enableSave = noPOSPKKontrak!!.text.toString().trim().isNotEmpty()
                 enableSave0[1] = enableSave
-                reset!!.isEnabled = !enableSave0.contains(false)
+                setButtonReset(!enableSave0.contains(false))
+                setButtonSave(!enableSave0.contains(false))
             }})
         client!!.addTextChangedListener (object :TextWatcher{
             override fun afterTextChanged(s: Editable?) {}
@@ -293,8 +318,8 @@ class ProjectFragmentCreateForm(context: Context, val fm: FragmentManager):Fragm
 //                reset!!.isEnabled = true
                 val enableSave = client!!.text.toString().trim().isNotEmpty()
                 enableSave0[2] = enableSave
-                save!!.isEnabled = !enableSave0.contains(false)
-                reset!!.isEnabled = !enableSave0.contains(false)
+                setButtonReset(!enableSave0.contains(false))
+                setButtonSave(!enableSave0.contains(false))
 
                 startDate!!.isEnabled = enableSave
                 endDate!!.isEnabled = enableSave
@@ -306,8 +331,8 @@ class ProjectFragmentCreateForm(context: Context, val fm: FragmentManager):Fragm
 //                reset!!.isEnabled = true
                 val enableSave = PID!!.text.toString().trim().isNotEmpty()
                 enableSave0[3] = enableSave
-                save!!.isEnabled = !enableSave0.contains(false)
-                reset!!.isEnabled = !enableSave0.contains(false)
+                setButtonReset(!enableSave0.contains(false))
+                setButtonSave(!enableSave0.contains(false))
 
                 if (startDate!!.text.isNotEmpty() && endDate!!.text.isNotEmpty()){
                     val start_date = SimpleDateFormat(DATE_PATTERN).parse(startDate!!.text.toString()).time
@@ -327,8 +352,8 @@ class ProjectFragmentCreateForm(context: Context, val fm: FragmentManager):Fragm
 //                reset!!.isEnabled = true
                 val enableSave = PID!!.text.toString().trim().isNotEmpty()
                 enableSave0[4] = enableSave
-                save!!.isEnabled = !enableSave0.contains(false)
-                reset!!.isEnabled = !enableSave0.contains(false)
+                setButtonReset(!enableSave0.contains(false))
+                setButtonSave(!enableSave0.contains(false))
 
                 if (startDate!!.text.isNotEmpty() && endDate!!.text.isNotEmpty()){
                     val start_date = SimpleDateFormat(DATE_PATTERN).parse(startDate!!.text.toString()).time
@@ -348,8 +373,8 @@ class ProjectFragmentCreateForm(context: Context, val fm: FragmentManager):Fragm
 //                reset!!.isEnabled = true
                 val enableSave = PID!!.text.toString().trim().isNotEmpty()
                 enableSave0[5] = enableSave
-                save!!.isEnabled = !enableSave0.contains(false)
-                reset!!.isEnabled = !enableSave0.contains(false)
+                setButtonReset(!enableSave0.contains(false))
+                setButtonSave(!enableSave0.contains(false))
             }})
     }
     fun isiSpinnerJenisOvertime(){

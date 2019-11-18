@@ -11,6 +11,10 @@
         <item name="android:textColor">@android:color/holo_red_dark</item>
         <item name="android:textSize">14sp</item>
     </style>
+    <style name="TextAppearance.App.TextInputLayoutBlack" parent="@android:style/TextAppearance">
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:textSize">14sp</item>
+    </style>
 
     <!--SPINNER STYLE-->
     <style name="defaultViewStyle">

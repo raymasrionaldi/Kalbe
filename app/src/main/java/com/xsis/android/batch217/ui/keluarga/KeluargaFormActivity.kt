@@ -17,6 +17,7 @@ import com.xsis.android.batch217.utils.ID_JENIS
 import kotlinx.android.synthetic.main.activity_keluarga_form.*
 import android.app.Activity
 import android.content.Context
+import android.graphics.Color
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
@@ -143,8 +144,17 @@ class KeluargaFormActivity : AppCompatActivity() {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 val Jenis = jenisKeluarga!!.text.toString().trim()
-                errorJenis!!.isVisible = Jenis.isEmpty()
+
+                if (Jenis.isNotEmpty()){
+                    errorJenis!!.visibility = View.INVISIBLE
+                } else{
+                    errorJenis!!.visibility = View.VISIBLE
+                }
+
                 simpan!!.isEnabled = true
+                simpan!!.setBackgroundResource(R.drawable.button_simpan_on)
+                simpan!!.setTextColor(Color.WHITE)
+                simpan!!.isClickable = true
             }
 
         })

@@ -63,7 +63,9 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="9">
+        android:layout_weight="9"
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp">
 
         <LinearLayout
             android:id="@+id/formTambah"
@@ -77,7 +79,8 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:textStyle="bold"
-                android:textSize="30sp"/>
+                android:textSize="20sp"
+                android:textColor="@android:color/black"/>
 
             <!--<TextView android:text="Jenis Keluarga"
                 android:layout_width="match_parent"
@@ -98,7 +101,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text=""
-                        android:layout_margin="5dp"
+                        android:textSize="15dp"
                         android:hint="Jenis Keluarga*"
                         android:singleLine="true"/>
 
@@ -111,11 +114,12 @@
                 android:textColor="@android:color/holo_red_dark"
                 android:visibility="invisible"/>
 
-            <Button android:id="@+id/tambahHubunganKeluarga"
+            <Button
+                android:id="@+id/tambahHubunganKeluarga"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_gravity="end|center_vertical"
-                android:background="@android:drawable/ic_menu_add" />
+                android:background="@drawable/ic_add_grey_24dp" />
 
 
             <TextView android:text="Hubungan Keluarga"
@@ -123,7 +127,8 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:textStyle="bold"
-                android:textSize="25sp"/>
+                android:textSize="20sp"
+                android:textColor="@android:color/black"/>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/anggotaKeluarga"
@@ -139,20 +144,24 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_alignParentBottom="true"
-        android:layout_margin="5dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginBottom="15dp"
         android:layout_weight="1">
 
         <Button android:id="@+id/keluargaBatal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="#03A9F4"
+            android:background="@drawable/button_batal"
+            android:textColor="@color/colorWhite"
             android:text="Batal" />
         <Button android:id="@+id/keluargaSimpan"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="#FF9800"
+            android:background="@drawable/button_simpan_off"
+            android:textColor="@color/warnaTeksSimpanOff"
             android:text="Simpan"
             android:enabled="false"/>
 
