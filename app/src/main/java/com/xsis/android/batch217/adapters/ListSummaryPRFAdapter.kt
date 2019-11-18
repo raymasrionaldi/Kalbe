@@ -15,6 +15,7 @@ import com.xsis.android.batch217.models.PRFRequest
 import com.xsis.android.batch217.ui.summary_prf.SummaryDetailActivity
 import com.xsis.android.batch217.ui.summary_prf.SummaryPRFFragment
 import com.xsis.android.batch217.utils.ID_PRF_REQUEST
+import com.xsis.android.batch217.utils.PLACEMENT
 import com.xsis.android.batch217.viewholders.ViewHolderListSummaryPRF
 
 class ListSummaryPRFAdapter(
@@ -40,10 +41,12 @@ class ListSummaryPRFAdapter(
         val databaseQueryHelper = PRFRequestQueryHelper(databaseHelper)
         val db = databaseHelper.writableDatabase
         val ID = model.id_prf_request
+        val placement = model.placement
 
         holder.layoutList.setOnClickListener{
             val intentDetail = Intent(context, SummaryDetailActivity::class.java)
             intentDetail.putExtra(ID_PRF_REQUEST, ID )
+            intentDetail.putExtra(PLACEMENT, placement)
             println("------------------------- $ID")
             context.startActivity(intentDetail)
         }

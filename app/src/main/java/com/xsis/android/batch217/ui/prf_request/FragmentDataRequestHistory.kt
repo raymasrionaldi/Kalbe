@@ -100,7 +100,7 @@ class FragmentDataRequestHistory(context: Context, val fm: FragmentManager) : Fr
     }
 
     fun search(keyword: String, databaseQueryHelper: PRFRequestQueryHelper) {
-        val listPRFRequest = databaseQueryHelper.cariPRFRequestModels(keyword)
+        val listPRFRequest = databaseQueryHelper.cariPrf(keyword)
         tampilkanListRequestHistory(listPRFRequest, recyclerView!!)
     }
 

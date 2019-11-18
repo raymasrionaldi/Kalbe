@@ -53,12 +53,6 @@ class ProjectFragmentCreateData(context: Context, val fm: FragmentManager): Frag
             pindahKeFragmentForm()
         }
 
-//        Timer().schedule(1000){
-//            if (TAB_PROJECT_CREATE == 1){
-//                pindahKeFragmentForm()
-//            }
-//        }
-
         return customView
     }
 

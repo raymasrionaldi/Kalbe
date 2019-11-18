@@ -87,15 +87,24 @@ class EmployeeTrainingFragmentDetail(context: Context, val fm: FragmentManager) 
         employeeTrainingNameText!!.setText(employeeTraining.namaEmployeeTraining)
         employeeTrainingDateText!!.setText(employeeTraining.dateEmployeeTraining)
         employeeTrainingOrganizerText!!.setText(employeeTraining.namaEmployeeTO)
-        employeeTrainingTypeText!!.setText(employeeTraining.typeEmployeeTraining)
-        employeeCertificationTypeText!!.setText(employeeTraining.typeEmployeeCertification)
-
+        if (employeeTraining.typeEmployeeTraining == "Training Type"){
+            employeeTrainingTypeText!!.setText("")
+        }
+        else{
+            employeeTrainingTypeText!!.setText(employeeTraining.typeEmployeeTraining)
+        }
+        if (employeeTraining.typeEmployeeCertification == "Certification Type"){
+            employeeCertificationTypeText!!.setText("")
+        }
+        else{
+            employeeCertificationTypeText!!.setText(employeeTraining.typeEmployeeCertification)
+        }
         data = employeeTraining
     }
 
     fun showDeleteDialog() {
         AlertDialog.Builder(context!!, R.style.AlertDialogTheme)
-            .setMessage("Hapus ${data!!.namaEmployeeTraining} ?")
+            .setMessage("Hapus ${data!!.namaTrainee} ?")
             .setCancelable(false)
             .setPositiveButton("DELETE") { dialog, which ->
                 if (databaseQueryHelper!!.hapusEmployeeTraining(data.idEmployeeTraining) != 0) {

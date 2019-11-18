@@ -15,6 +15,7 @@ import androidx.core.view.isVisible
 import com.xsis.android.batch217.R
 import com.xsis.android.batch217.databases.DatabaseHelper
 import com.xsis.android.batch217.databases.PRFCandidateQueryHelper
+import com.xsis.android.batch217.models.EmployeePosition
 import com.xsis.android.batch217.models.PRFCandidate
 import com.xsis.android.batch217.utils.*
 import kotlinx.android.synthetic.main.activity_edit_prfcandidate.*
@@ -38,7 +39,7 @@ class EditPRFCandidateActivity : AppCompatActivity() {
     var signContractDate: EditText? = null
     var notes: EditText? = null
     var ID_prf_candidate = 0
-    var listPosition: List<String>? = null
+    lateinit var listPosition: List<EmployeePosition>
     var listSrf: List<String>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,7 +53,7 @@ class EditPRFCandidateActivity : AppCompatActivity() {
         setContentView(R.layout.activity_edit_prfcandidate)
         try {
             this.supportActionBar!!.hide()
-        } catch (e: NullPointerException){
+        } catch (e: NullPointerException) {
         }
 
         name = inputNamaPRFCandidateEdit
@@ -73,7 +74,7 @@ class EditPRFCandidateActivity : AppCompatActivity() {
         notes!!.addTextChangedListener(textWatcher)
 
         ubahButtonResetSpinner()
-
+        requiredOff()
         isiSpinnerPosition()
         isiSpinnerSRFNumber()
         isiSpinnerCandidateStatus()
@@ -88,7 +89,12 @@ class EditPRFCandidateActivity : AppCompatActivity() {
     fun ubahButtonResetSpinner() {
         buttonReset = buttonResetPRFCandidateEdit
         position!!.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
                 buttonReset = buttonResetPRFCandidateEdit
                 if (position != 0) {
                     buttonResetPRFCandidateEdit.isEnabled = true
@@ -97,10 +103,16 @@ class EditPRFCandidateActivity : AppCompatActivity() {
                     ubahResetButton(context, false, buttonReset!!)
                 }
             }
+
             override fun onNothingSelected(arg0: AdapterView<*>) {}
         }
         srfNumber!!.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
                 buttonReset = buttonResetPRFCandidateEdit
                 if (position != 0) {
                     buttonResetPRFCandidateEdit.isEnabled = true
@@ -109,10 +121,16 @@ class EditPRFCandidateActivity : AppCompatActivity() {
                     ubahResetButton(context, false, buttonReset!!)
                 }
             }
+
             override fun onNothingSelected(arg0: AdapterView<*>) {}
         }
         candidateStatus!!.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
                 buttonReset = buttonResetPRFCandidateEdit
                 if (position != 0) {
                     buttonResetPRFCandidateEdit.isEnabled = true
@@ -121,6 +139,7 @@ class EditPRFCandidateActivity : AppCompatActivity() {
                     ubahResetButton(context, false, buttonReset!!)
                 }
             }
+
             override fun onNothingSelected(arg0: AdapterView<*>) {}
         }
     }
@@ -129,6 +148,7 @@ class EditPRFCandidateActivity : AppCompatActivity() {
         val name = inputNamaPRFCandidateEdit.text.toString().trim()
         val batch = inputBatchBootcampPRFCandidateEdit.text.toString().trim()
         val position = spinnerInputPositionPRFCandidateEdit.selectedItemPosition
+        val positionItem = spinnerInputPositionPRFCandidate.selectedItem.toString()
         val placementDate = inputPlacementDatePRFCandidateEdit.text.toString()
         val srfNumber = spinnerSRFNumberPRFCandidateEdit.selectedItemPosition
         val customAllowence = inputCustomeAllowencePRFCandidateEdit.text.toString()
@@ -138,58 +158,63 @@ class EditPRFCandidateActivity : AppCompatActivity() {
 
         if (name.isEmpty()) {
             inputNamaPRFCandidateEdit.setHintTextColor(Color.RED)
-            requiredNamePRFCandidateEdit.isVisible = true
+            requiredNamePRFCandidate.isVisible = true
         }
-        else if (position == 0) {
+        if (position == 0) {
             requiredPositionPRFCandidateEdit.isVisible = true
         }
-        else if (placementDate.isEmpty()) {
-            inputPlacementDatePRFCandidateEdit.setHintTextColor(Color.RED)
+        if (placementDate.isEmpty()) {
             requiredPlacementDatePRFCandidateEdit.isVisible = true
         }
-        else if (srfNumber == 0) {
+        if (srfNumber == 0) {
             requiredSRFNumberPRFCandidateEdit.isVisible = true
         }
-        else if (candidateStatus == 0){
+        if (candidateStatus == 0) {
             requiredCandidateStatusPRFCandidateEdit.isVisible = true
-        }
-        else {
-            insertKeDatabase(id, name,
+        } else {
+            insertKeDatabase(
+                id, name,
                 batch,
-                listPosition!![position],
+                positionItem,
                 placementDate,
                 listSrf!![srfNumber],
                 customAllowence,
                 ARRAY_CANDIDATE_STATUS[candidateStatus],
                 signContractDate,
-                notes)
+                notes
+            )
 
         }
 
     }
 
-    fun insertKeDatabase(id: Int,
-                         name: String,
-                         batch: String,
-                         position: String,
-                         placementDate: String,
-                         srfNumber: String,
-                         customAllowence: String,
-                         candidateStatus: String,
-                         signContractDate: String,
-                         notes: String) {
-
-        val databaseHelper = DatabaseHelper(context)
-        val db = databaseHelper.writableDatabase
-        val databaseQueryHelper = PRFCandidateQueryHelper(databaseHelper)
-        val listPRFCandidate = databaseQueryHelper.readNamaPRFCandidate(name)
-        if(listPRFCandidate.isEmpty()){
-            databaseQueryHelper.updateDelete(id, name, batch, position, placementDate, srfNumber, customAllowence, candidateStatus, signContractDate, notes)
-            Toast.makeText(context, EDIT_DATA_BERHASIL, Toast.LENGTH_SHORT).show()
-            finish()
-        } else {
-            Toast.makeText(context, DATA_SUDAH_ADA, Toast.LENGTH_SHORT).show()
-        }
+    fun insertKeDatabase(
+        id: Int,
+        name: String,
+        batch: String,
+        position: String,
+        placementDate: String,
+        srfNumber: String,
+        customAllowence: String,
+        candidateStatus: String,
+        signContractDate: String,
+        notes: String
+    ) {
+        var cariPosition = databaseQueryHelper.cariEmployeePosition(position)
+        databaseQueryHelper.updateIsi(
+            id,
+            name,
+            batch,
+            cariPosition.toString(),
+            placementDate,
+            srfNumber,
+            customAllowence,
+            candidateStatus,
+            signContractDate,
+            notes
+        )
+        Toast.makeText(context, EDIT_DATA_BERHASIL, Toast.LENGTH_SHORT).show()
+        finish()
     }
 
     fun resetForm() {
@@ -205,14 +230,18 @@ class EditPRFCandidateActivity : AppCompatActivity() {
         requiredOff()
     }
 
-    fun setReportDatePRFCandidatePicker(){
+    fun setDatePRFCandidatePicker() {
         val autoDate = inputPlacementDatePRFCandidateEdit.text.toString()
         val autoDate2 = inputSignContractDateEdit.text.toString()
         val calendar = Calendar.getInstance()
         val calendar2 = Calendar.getInstance()
         val formatter = SimpleDateFormat(DATE_PATTERN)
         calendar.time = formatter.parse(autoDate)
-        calendar2.time = formatter.parse(autoDate2)
+
+        if (autoDate2.isNotEmpty()) {
+            calendar.time = formatter.parse(autoDate)
+        }
+
         val yearNow = calendar.get(Calendar.YEAR)
         val monthNow = calendar.get(Calendar.MONTH)
         val dayNow = calendar.get(Calendar.DATE)
@@ -221,34 +250,48 @@ class EditPRFCandidateActivity : AppCompatActivity() {
         val dayNow2 = calendar2.get(Calendar.DATE)
 
         inputPlacementDatePRFCandidateEdit.setOnClickListener {
-            val datePickerDialog = DatePickerDialog(context, R.style.CustomDatePicker, DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
-                val selectedDate = Calendar.getInstance()
-                selectedDate.set(year, month, dayOfMonth)
+            val datePickerDialog = DatePickerDialog(
+                context,
+                R.style.CustomDatePicker,
+                DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
+                    val selectedDate = Calendar.getInstance()
+                    selectedDate.set(year, month, dayOfMonth)
 
-                //konversi ke string
-                val formatDate = SimpleDateFormat("MMMM dd, yyyy")
-                val tanggal = formatDate.format(selectedDate.time)
+                    //konversi ke string
+                    val formatDate = SimpleDateFormat("MMMM dd, yyyy")
+                    val tanggal = formatDate.format(selectedDate.time)
 
-                //set tampilan
-                inputPlacementDatePRFCandidateEdit.setText(tanggal)
-            }, yearNow,monthNow,dayNow )
+                    //set tampilan
+                    inputPlacementDatePRFCandidateEdit.setText(tanggal)
+                },
+                yearNow,
+                monthNow,
+                dayNow
+            )
             datePickerDialog.show()
             buttonResetPRFCandidateEdit.isEnabled = true
             buttonResetPRFCandidateEdit.setBackgroundResource(R.drawable.button_reset_on)
             buttonResetPRFCandidateEdit.setTextColor(Color.WHITE)
         }
         inputSignContractDateEdit.setOnClickListener {
-            val datePickerDialog = DatePickerDialog(context, R.style.CustomDatePicker, DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
-                val selectedDate = Calendar.getInstance()
-                selectedDate.set(year, month, dayOfMonth)
+            val datePickerDialog = DatePickerDialog(
+                context,
+                R.style.CustomDatePicker,
+                DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
+                    val selectedDate = Calendar.getInstance()
+                    selectedDate.set(year, month, dayOfMonth)
 
-                //konversi ke string
-                val formatDate = SimpleDateFormat("MMMM dd, yyyy")
-                val tanggal = formatDate.format(selectedDate.time)
+                    //konversi ke string
+                    val formatDate = SimpleDateFormat("MMMM dd, yyyy")
+                    val tanggal = formatDate.format(selectedDate.time)
 
-                //set tampilan
-                inputSignContractDateEdit.setText(tanggal)
-            }, yearNow2,monthNow2,dayNow2 )
+                    //set tampilan
+                    inputSignContractDateEdit.setText(tanggal)
+                },
+                yearNow2,
+                monthNow2,
+                dayNow2
+            )
             datePickerDialog.show()
             buttonResetPRFCandidateEdit.isEnabled = true
             buttonResetPRFCandidateEdit.setBackgroundResource(R.drawable.button_reset_on)
@@ -256,19 +299,26 @@ class EditPRFCandidateActivity : AppCompatActivity() {
         }
     }
 
-    fun isiSpinnerPosition(){
+    fun isiSpinnerPosition(): MutableList<String?> {
         listPosition = databaseQueryHelper.readEmployeePosition()
-        val adapterPosition = ArrayAdapter<String>(context,
+        val isilistPosition = listPosition.map {
+            it.nama_employee_position
+        }.toMutableList()
+        isilistPosition.add(0, "Position *")
+        val adapterPosition = ArrayAdapter<String>(
+            context,
             android.R.layout.simple_spinner_item,
-            listPosition!!
+            isilistPosition
         )
         adapterPosition.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinnerInputPositionPRFCandidateEdit.adapter = adapterPosition
+        return isilistPosition
     }
 
-    fun isiSpinnerSRFNumber(){
+    fun isiSpinnerSRFNumber() {
         listSrf = databaseQueryHelper.readSrfNumber()
-        val adapterSRFNumber = ArrayAdapter<String>(context,
+        val adapterSRFNumber = ArrayAdapter<String>(
+            context,
             android.R.layout.simple_spinner_item,
             listSrf!!
         )
@@ -276,8 +326,9 @@ class EditPRFCandidateActivity : AppCompatActivity() {
         spinnerSRFNumberPRFCandidateEdit.adapter = adapterSRFNumber
     }
 
-    fun isiSpinnerCandidateStatus(){
-        val adapterCandidateStatus = ArrayAdapter<String>(context,
+    fun isiSpinnerCandidateStatus() {
+        val adapterCandidateStatus = ArrayAdapter<String>(
+            context,
             android.R.layout.simple_spinner_item,
             ARRAY_CANDIDATE_STATUS
         )
@@ -315,8 +366,18 @@ class EditPRFCandidateActivity : AppCompatActivity() {
         val db = databaseHelper.readableDatabase
 
         val projection = arrayOf<String>(
-            ID_FROM_PRF, ID_PRF_CANDIDATE, NAMA_PRF_CANDIDATE, BATCH, POSITION, PLACEMENT_DATE, SRF_NUMBER, ALLOWENCE_CANDIDATE,
-            STATUS_CANDIDATE, SIGN_CONTRACT_DATE, NOTES, IS_DELETED
+            ID_FROM_PRF,
+            ID_PRF_CANDIDATE,
+            NAMA_PRF_CANDIDATE,
+            BATCH,
+            POSITION,
+            PLACEMENT_DATE,
+            SRF_NUMBER,
+            ALLOWENCE_CANDIDATE,
+            STATUS_CANDIDATE,
+            SIGN_CONTRACT_DATE,
+            NOTES,
+            IS_DELETED
         )
         val selection = ID_PRF_CANDIDATE + "=?"
         val selectionArgs = arrayOf(id.toString())
@@ -333,8 +394,8 @@ class EditPRFCandidateActivity : AppCompatActivity() {
             inputBatchBootcampPRFCandidateEdit.setText(data.batch)
 
             val dataPosition = cursor.getString(4)
-            val indexPosition = listPosition!!.indexOf(dataPosition)
-            spinnerInputPositionPRFCandidateEdit.setSelection(indexPosition)
+            val indexPosition = isiSpinnerPosition().indexOf(dataPosition)
+            spinnerInputPositionPRFCandidateEdit.setSelection(dataPosition.toInt())
 
             data.placement_date = cursor.getString(5)
             inputPlacementDatePRFCandidateEdit.setText(data.placement_date)
@@ -358,7 +419,7 @@ class EditPRFCandidateActivity : AppCompatActivity() {
 
             data.is_Deleted = cursor.getString(11)
         }
-        setReportDatePRFCandidatePicker()
+        setDatePRFCandidatePicker()
 
         buttonSubmitPRFCandidateEdit.setOnClickListener {
             validasiInput(id)
@@ -369,6 +430,9 @@ class EditPRFCandidateActivity : AppCompatActivity() {
     }
 
     fun requiredOff() {
+        inputPlacementDatePRFCandidateEdit.setHintTextColor(Color.GRAY)
+        requiredPlacementDatePRFCandidateEdit.isVisible = false
+        inputNamaPRFCandidateEdit.setHintTextColor(Color.GRAY)
         requiredNamePRFCandidateEdit.isVisible = false
         requiredPositionPRFCandidateEdit.isVisible = false
         requiredSRFNumberPRFCandidateEdit.isVisible = false

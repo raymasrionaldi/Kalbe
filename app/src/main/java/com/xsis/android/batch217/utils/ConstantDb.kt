@@ -247,6 +247,7 @@ val DESKRIPSI_TYPE_PRF = "deskripsi_type_prf"
 
 val TABEL_EMPLOYEE_POSITION = "employee_position"
 val ID_EMPLOYEE_POSITION = "id_employee_position"
+val NAMA_EMPLOYEE_POSITION = "nama_position"
 val DESKRIPSI_POSITION = "deskripsi_position"
 
 val TABEL_SRF = "srf"

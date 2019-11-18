@@ -88,7 +88,7 @@ class TrainingOrganizerQueryHelper (val databaseHelper: DatabaseHelper) {
 
     fun cekTrainingOrg(nama: String): Int {
         val db = databaseHelper.readableDatabase
-        val queryCari = "SELECT * FROM $TABEL_TRAINING_ORG WHERE $NAMA_TRAINING_ORG = '$nama' AND " +
+        val queryCari = "SELECT * FROM $TABEL_TRAINING_ORG WHERE $NAMA_TRAINING_ORG LIKE '$nama' AND " +
                 "$IS_DELETED = 'false'"
         val cursor = db.rawQuery(queryCari, null)
 

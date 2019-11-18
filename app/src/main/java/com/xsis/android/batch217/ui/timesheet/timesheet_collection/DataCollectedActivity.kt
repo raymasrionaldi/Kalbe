@@ -18,7 +18,6 @@ import com.xsis.android.batch217.databases.TimesheetQueryHelper
 import com.xsis.android.batch217.models.Timesheet
 import com.xsis.android.batch217.utils.*
 import kotlinx.android.synthetic.main.activity_data_collected.*
-import kotlinx.android.synthetic.main.activity_timesheet_collection_detail.*
 
 class DataCollectedActivity : AppCompatActivity() {
 
@@ -27,14 +26,26 @@ class DataCollectedActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        requestWindowFeature(Window.FEATURE_NO_TITLE)
+        supportActionBar!!.hide()
+        window.setFlags(
+            WindowManager.LayoutParams.FLAG_FULLSCREEN,
+            WindowManager.LayoutParams.FLAG_FULLSCREEN
+        )
+        try {
+            this.supportActionBar!!.hide()
+        } catch (e: NullPointerException){
+        }
+
         setContentView(R.layout.activity_data_collected)
 
-        title = ""
-
-        supportActionBar?.let {
-            supportActionBar!!.setHomeButtonEnabled(true)
-            supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-        }
+//        title = ""
+//
+//        supportActionBar?.let {
+//            supportActionBar!!.setHomeButtonEnabled(true)
+//            supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+//        }
 
         var year = ""
         var month = ""
@@ -55,7 +66,7 @@ class DataCollectedActivity : AppCompatActivity() {
         if (listTimesheet.isEmpty() || year.isEmpty() || month.isEmpty() || client.isEmpty()) {
             dataNotFoundTimesheetCollection.visibility = View.VISIBLE
             listTimesheetCollectionRecycler.visibility = View.GONE
-                               }
+        }
         else {
 
             val layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
@@ -69,57 +80,102 @@ class DataCollectedActivity : AppCompatActivity() {
             listTimesheetCollectionRecycler.adapter = adapterTimesheetCollection
             adapterTimesheetCollection.notifyDataSetChanged()
 
-//            buttonCheckCollection.setOnClickListener {
-//               val listSelected= adapterTimesheetCollection.getSelectedList()
-//
-//                androidx.appcompat.app.AlertDialog.Builder(context, R.style.AlertDialogTheme)
-//                    .setCancelable(true)
-//                    .setTitle("DATA COLLLECTING")
-//                    .setMessage("Are you sure to collect the data ?")
-//                    .setPositiveButton("COLLECT") { dialog, which ->
-//                        changeProgress(COLLECTED, listSelected)
-//                    }
-//                    .setNegativeButton("CANCEL") { dialog, which ->
-//                        dialog.cancel()
-//                    }
-//                    .create().show()
-//            }
+            buttonCheckCollection.setOnClickListener {
+
+
+                var listSelected= adapterTimesheetCollection.getSelectedList()
+
+                if (listSelected.isEmpty()){
+                    collected()
+                }
+
+                else{
+                    androidx.appcompat.app.AlertDialog.Builder(context, R.style.AlertDialogTheme)
+                        .setCancelable(true)
+                        .setTitle("DATA COLLLECTING")
+                        .setMessage("Are you sure to collect the data ?")
+                        .setPositiveButton("COLLECT") { dialog, which ->
+                            changeProgress(COLLECTED, listSelected)
+                        }
+                        .setNegativeButton("CANCEL") { dialog, which ->
+                            dialog.cancel()
+                        }
+                        .create().show()
+                }
+
+
+            }
 
         }
 
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == android.R.id.home) {
-            super.onBackPressed()
-            return true
-        }
-        return super.onOptionsItemSelected(item)
+    fun collected() {
+        val konfirmasiCollected = AlertDialog.Builder(context, R.style.AlertDialogTheme)
+        konfirmasiCollected.setMessage("DATA COLLECTING\n\nAre you sure to collect the data ?\n\n\n")
+            .setPositiveButton("COLLECT", DialogInterface.OnClickListener { dialog, which ->
+
+                val databaseHelper = DatabaseHelper(context!!)
+                val databaseQueryHelper = TimesheetQueryHelper(databaseHelper)
+                val db = databaseHelper.writableDatabase
+                //ubah status sent to collected
+                for (timesheet in listTimesheet) {
+                    val queryProgress =
+                        "UPDATE $TABEL_TIMESHEET SET $PROGRESS_TIMESHEET = 'Collected' WHERE $ID_TIMESHEET = ${timesheet.id_timesheet}"
+                    db.execSQL(queryProgress)
+                }
+
+                //pesan berhasil di collect
+                val berhasilCollected = AlertDialog.Builder(context, R.style.AlertDialogTheme)
+                berhasilCollected.setMessage("DATA HAS BEEN COLLECTED\n\n")
+                    .setPositiveButton("CLOSE", DialogInterface.OnClickListener { dialog, which ->
+                        dialog.cancel()
+                        finish()
+                    })
+                    .setCancelable(true)
+
+                berhasilCollected.create().show()
+
+            })
+            .setNegativeButton("CANCEL", DialogInterface.OnClickListener { dialog, which ->
+                dialog.cancel()
+            })
+            .setCancelable(true)
+
+        konfirmasiCollected.create().show()
     }
 
-//    private fun changeProgress(progress: String, list: ArrayList<Int>) {
-//        val ids = ArrayList<Int>()
-//        list.forEach { index -> ids.add(listTimesheet[index].id_timesheet) }
-//
-//        val databaseHelper = DatabaseHelper(context!!)
-//        val databaseQueryHelper = TimesheetQueryHelper(databaseHelper)
-//
-//        val isSucceed = databaseQueryHelper!!.changeProgress(ids, progress)
-//
-//        val message = if (isSucceed) {
-//            "DATA HAS BEEN ${progress.toUpperCase()}"
-//        } else {
-//            "AN ERROR OCCURRED"
+//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+//        if (item.itemId == android.R.id.home) {
+//            super.onBackPressed()
+//            return true
 //        }
-//
-//        androidx.appcompat.app.AlertDialog.Builder(context, R.style.AlertDialogTheme)
-//            .setCancelable(false)
-//            .setTitle(message)
-//            .setPositiveButton("CLOSE") { dialog, which ->
-//                (context as AppCompatActivity).finish()
-//            }
-//            .create().show()
+//        return super.onOptionsItemSelected(item)
 //    }
+
+    private fun changeProgress(progress: String, list: ArrayList<Int>) {
+        val ids = ArrayList<Int>()
+        list.forEach { index -> ids.add(listTimesheet[index].id_timesheet) }
+
+        val databaseHelper = DatabaseHelper(context!!)
+        val databaseQueryHelper = TimesheetQueryHelper(databaseHelper)
+
+        val isSucceed = databaseQueryHelper!!.changeProgress(ids, progress)
+
+        val message = if (isSucceed) {
+            "DATA HAS BEEN ${progress.toUpperCase()}"
+        } else {
+            "AN ERROR OCCURRED"
+        }
+
+        androidx.appcompat.app.AlertDialog.Builder(context, R.style.AlertDialogTheme)
+            .setCancelable(false)
+            .setTitle(message)
+            .setPositiveButton("CLOSE") { dialog, which ->
+                (context as AppCompatActivity).finish()
+            }
+            .create().show()
+    }
 
 }
 

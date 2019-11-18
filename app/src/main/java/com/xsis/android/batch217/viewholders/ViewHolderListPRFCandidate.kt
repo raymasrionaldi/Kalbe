@@ -19,7 +19,7 @@ class ViewHolderListPRFCandidate(itemView: View) : RecyclerView.ViewHolder(itemV
 
     fun setModel(model: PRFCandidate) {
         val nama = model.nama_prf_candidate
-        val position = model.position
+        val position = model.namaPosition
         teksUtama.text = nama
         teksTambahan.text = position
 

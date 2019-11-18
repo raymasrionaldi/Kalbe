@@ -91,7 +91,7 @@ class ContractStatusQueryHelper(val databaseHelper: DatabaseHelper) {
 
     fun cekContractStatus(nama: String): Int {
         val db = databaseHelper.readableDatabase
-        val queryCari = "SELECT * FROM $TABEL_CONTRACT_STATUS WHERE $NAMA_CONTRACT = '$nama' AND " +
+        val queryCari = "SELECT * FROM $TABEL_CONTRACT_STATUS WHERE $NAMA_CONTRACT LIKE '$nama' AND " +
                 "$IS_DELETED = 'false'"
         val cursor = db.rawQuery(queryCari, null)
 

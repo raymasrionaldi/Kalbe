@@ -1,14 +1,21 @@
 package com.xsis.android.batch217.databases
 
+import android.content.ContentValues
 import android.database.Cursor
+import com.xsis.android.batch217.models.EmployeePosition
 import com.xsis.android.batch217.models.PRFCandidate
 import com.xsis.android.batch217.utils.*
 
-class PRFCandidateQueryHelper(val databaseHelper: DatabaseHelper)  {
+class PRFCandidateQueryHelper(val databaseHelper: DatabaseHelper) {
     private fun getSemuaPRFCandidate(id: Int): Cursor {
         val db = databaseHelper.readableDatabase
 
-        val queryRead = "SELECT * FROM $TABEL_PRF_CANDIDATE WHERE $IS_DELETED = 'false' AND $ID_FROM_PRF = $id"
+        val queryRead =
+//            "SELECT * FROM $TABEL_PRF_CANDIDATE WHERE $IS_DELETED = 'false' AND $ID_FROM_PRF = $id"
+            "SELECT a.*, b.$NAMA_EMPLOYEE_POSITION " +
+            "FROM $TABEL_PRF_CANDIDATE a, $TABEL_EMPLOYEE_POSITION b " +
+            "WHERE a.$POSITION = b.$ID_EMPLOYEE_POSITION " +
+            "AND a.$ID_FROM_PRF = $id"
 
         return db.rawQuery(queryRead, null)
     }
@@ -33,6 +40,8 @@ class PRFCandidateQueryHelper(val databaseHelper: DatabaseHelper)  {
             prfCandidate.notes = cursor.getString(10)
             prfCandidate.is_Deleted = cursor.getString(11)
 
+            prfCandidate.namaPosition = cursor.getString(12)
+
             listPRFCandidate.add(prfCandidate)
         }
 
@@ -50,7 +59,7 @@ class PRFCandidateQueryHelper(val databaseHelper: DatabaseHelper)  {
         return listPRFCandidate
     }
 
-    fun readNamaPRFCandidate (nama: String): List<PRFCandidate> {
+    fun readNamaPRFCandidate(nama: String): List<PRFCandidate> {
         var listPRFCandidate = ArrayList<PRFCandidate>()
 
         val db = databaseHelper.readableDatabase
@@ -65,15 +74,17 @@ class PRFCandidateQueryHelper(val databaseHelper: DatabaseHelper)  {
         return listPRFCandidate
     }
 
-    fun updatePRFCandidate(name: String,
-                           batch: String,
-                           position: String,
-                           placementDate: String,
-                           srfNumber: String,
-                           customAllowence: String,
-                           candidateStatus: String,
-                           signContractDate: String,
-                           notes: String): List<PRFCandidate> {
+    fun updatePRFCandidate(
+        name: String,
+        batch: String,
+        position: String,
+        placementDate: String,
+        srfNumber: String,
+        customAllowence: String,
+        candidateStatus: String,
+        signContractDate: String,
+        notes: String
+    ): List<PRFCandidate> {
         var listPRFCandidate = ArrayList<PRFCandidate>()
 
         val db = databaseHelper.writableDatabase
@@ -89,14 +100,14 @@ class PRFCandidateQueryHelper(val databaseHelper: DatabaseHelper)  {
         return listPRFCandidate
     }
 
-    fun readUpdate(id:Int, nama:String):List<PRFCandidate>{
+    fun readUpdate(id: Int, nama: String): List<PRFCandidate> {
         var listPRFCandidate = ArrayList<PRFCandidate>()
 
         val db = databaseHelper.writableDatabase
         val queryUpdate = "SELECT * FROM $TABEL_PRF_CANDIDATE " +
                 "WHERE $NAMA_PRF_CANDIDATE = '$nama' AND $ID_PRF_REQUEST != '$id'"
         val cursor = db.rawQuery(queryUpdate, null)
-        if (cursor.count > 0){
+        if (cursor.count > 0) {
             listPRFCandidate = konversiCursorKeListPRFCandidateModel(cursor)
         }
 
@@ -104,17 +115,19 @@ class PRFCandidateQueryHelper(val databaseHelper: DatabaseHelper)  {
         return listPRFCandidate
     }
 
-    fun updateDelete(id: Int,
-                     name: String,
-                     batch: String,
-                     position: String,
-                     placementDate: String,
-                     srfNumber: String,
-                     customAllowence: String,
-                     candidateStatus: String,
-                     signContractDate: String,
-                     notes: String):List<PRFCandidate>{
-        var listPRFCandidate= ArrayList<PRFCandidate>()
+    fun updateIsi(
+        id: Int,
+        name: String,
+        batch: String,
+        position: String,
+        placementDate: String,
+        srfNumber: String,
+        customAllowence: String,
+        candidateStatus: String,
+        signContractDate: String,
+        notes: String
+    ): List<PRFCandidate> {
+        var listPRFCandidate = ArrayList<PRFCandidate>()
 
         val db = databaseHelper.writableDatabase
         val queryUpdate = "UPDATE $TABEL_PRF_CANDIDATE " +
@@ -122,28 +135,66 @@ class PRFCandidateQueryHelper(val databaseHelper: DatabaseHelper)  {
                 "$ALLOWENCE_CANDIDATE = '$customAllowence', $STATUS_CANDIDATE = $candidateStatus, $SIGN_CONTRACT_DATE = '$signContractDate', $NOTES = '$notes', $IS_DELETED = 'false' " +
                 "WHERE $ID_PRF_CANDIDATE = $id"
         val cursor = db.rawQuery(queryUpdate, null)
-        if (cursor.count > 0){
+        if (cursor.count > 0) {
             listPRFCandidate = konversiCursorKeListPRFCandidateModel(cursor)
         }
         println(queryUpdate)
         return listPRFCandidate
     }
 
-    fun readEmployeePosition():List<String> {
-        val listEmployeePosition = ArrayList<String>()
+    fun tambahPRFCandidate(model: PRFCandidate): Long {
+        val db = databaseHelper.writableDatabase
+
+        val values = ContentValues()
+        values.put(ID_FROM_PRF, model.id_from_prf)
+        values.put(NAMA_PRF_CANDIDATE, model.nama_prf_candidate)
+        values.put(BATCH, model.batch)
+        values.put(POSITION, model.position)
+        values.put(PLACEMENT_DATE, model.placement_date)
+        values.put(SRF_NUMBER, model.srf_number)
+        values.put(ALLOWENCE_CANDIDATE, model.allowence_candidate)
+        values.put(STATUS_CANDIDATE, model.status_candidate)
+        values.put(SIGN_CONTRACT_DATE, model.sign_contract_date)
+        values.put(NOTES, model.notes)
+        values.put(IS_DELETED, "false")
+
+        return db.insert(TABEL_PRF_CANDIDATE, null, values)
+    }
+
+    fun readEmployeePosition(): List<EmployeePosition> {
+        val listEmployeePosition = ArrayList<EmployeePosition>()
         val db = databaseHelper.readableDatabase
-        val queryReadPosition = "SELECT $NAMA_POSITION FROM $TABEL_EMPLOYEE_POSITION WHERE $IS_DELETED = 'false'"
+        val queryReadPosition =
+            "SELECT * FROM $TABEL_EMPLOYEE_POSITION"
         val cursor = db.rawQuery(queryReadPosition, null)
-        if (cursor.count > 0) {
-            for (i in 0 until cursor.count) {
-                cursor.moveToPosition(i)
-                listEmployeePosition.add(cursor.getString(0))
-            }
+        println("$queryReadPosition")
+        for (i in 0 until cursor.count) {
+            cursor.moveToPosition(i)
+            val employeePosition = EmployeePosition()
+            employeePosition.id_employee_position = cursor.getInt(0)
+            employeePosition.nama_employee_position = cursor.getString(1)
+            employeePosition.deskripsi_employee_position = cursor.getString(2)
+            employeePosition.is_deleted = cursor.getString(3)
+
+            listEmployeePosition.add(employeePosition)
         }
+
         return listEmployeePosition
     }
 
-    fun readSrfNumber():List<String> {
+    fun cariEmployeePosition(position: String): Int {
+        var pilihPosition = 0
+        val db = databaseHelper.readableDatabase
+        val queryCari = "SELECT $ID_EMPLOYEE_POSITION FROM $TABEL_EMPLOYEE_POSITION " +
+                "WHERE $NAMA_EMPLOYEE_POSITION = '$position' "
+        val cursor = db.rawQuery(queryCari, null)
+        cursor.moveToFirst()
+        pilihPosition = cursor.getInt(0)
+
+        return pilihPosition
+    }
+
+    fun readSrfNumber(): List<String> {
         val listSrfNumber = ArrayList<String>()
         val db = databaseHelper.readableDatabase
         val queryReadPosition = "SELECT $ID_SRF FROM $TABEL_SRF WHERE $IS_DELETED = 'false'"

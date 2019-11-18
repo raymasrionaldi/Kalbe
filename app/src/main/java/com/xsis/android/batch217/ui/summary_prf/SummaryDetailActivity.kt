@@ -9,14 +9,16 @@ import com.xsis.android.batch217.R
 import com.xsis.android.batch217.adapters.expandablelist.SummaryPRFExpandableListAdapter
 import com.xsis.android.batch217.databases.DatabaseHelper
 import com.xsis.android.batch217.databases.PRFRequestQueryHelper
+import com.xsis.android.batch217.models.PIDByPlacement
 import com.xsis.android.batch217.models.PRFRequest
 import com.xsis.android.batch217.models.TypeNama
 import com.xsis.android.batch217.utils.ID_PRF_REQUEST
+import com.xsis.android.batch217.utils.PLACEMENT
 import kotlinx.android.synthetic.main.activity_summary_detail.*
 
 class SummaryDetailActivity : AppCompatActivity() {
     val context = this
-    var dataPID = PRFRequest()
+    var dataPID = ArrayList<PIDByPlacement>()
     var dataListTypeNama = ArrayList<TypeNama>()
     internal lateinit var menuAdapter: SummaryPRFExpandableListAdapter
     internal lateinit var listDataGroup: MutableList<String>
@@ -24,6 +26,7 @@ class SummaryDetailActivity : AppCompatActivity() {
     internal lateinit var databaseQueryHelper: PRFRequestQueryHelper
     var listSummaryDetail: ExpandableListView? = null
     var ID_PRF_Request = 0
+    var placement_PRF: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,6 +44,7 @@ class SummaryDetailActivity : AppCompatActivity() {
         val bundle: Bundle? = intent.extras
         bundle?.let {
             ID_PRF_Request = bundle!!.getInt(ID_PRF_REQUEST)
+            placement_PRF = bundle!!.getString(PLACEMENT)
         }
 
         val databaseHelper = DatabaseHelper(context!!)
@@ -57,8 +61,8 @@ class SummaryDetailActivity : AppCompatActivity() {
 
 
     fun viewDetail() {
-        dataPID = databaseQueryHelper.getPRFRequestByID(ID_PRF_Request)
-       dataListTypeNama = databaseQueryHelper.getListTypeNama(ID_PRF_Request)
+        dataPID = databaseQueryHelper.getPidByPlacement(placement_PRF!!)
+       dataListTypeNama = databaseQueryHelper.getListTypeNama(placement_PRF!!)
 
         prepareData()
         menuAdapter = SummaryPRFExpandableListAdapter(context!!, listDataGroup, listDataChild)
@@ -73,8 +77,9 @@ class SummaryDetailActivity : AppCompatActivity() {
         listDataGroup.add(group0)
 
         val childPIDs = ArrayList<String>()
-        val childPID0 = dataPID.pid
-        childPIDs.add(childPID0!!)
+        dataPID.forEach { pid ->
+            childPIDs.add("${pid.pid}")
+        }
         listDataChild[listDataGroup[0]] = childPIDs
 
         val group1 = "PRF"
@@ -85,11 +90,6 @@ class SummaryDetailActivity : AppCompatActivity() {
                 childPRFs.add("${typeNama.type} \t-\t ${typeNama.namaCandidate}")
         }
         listDataChild[listDataGroup[1]] = childPRFs
-        /*val childPRFs = ArrayList<String>()
-        for( dataPRF in data2){
-            childPRFs.add("$dataPRF.tipe\t-\t$dataPRF.nama")
-        }
-        listDataChild[listDataGroup[1]] = childPRFs*/
 
     }
 }

@@ -16,4 +16,7 @@ class PRFRequest {
     var bast: String? = null
     var billing: String? = null
     var is_Deleted:String?=null
+
+    var namaType: String? = null
+    var namaPid: String? = null
 }
