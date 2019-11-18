@@ -15,6 +15,7 @@ import com.xsis.android.batch217.models.TypeNama
 import com.xsis.android.batch217.utils.ID_PRF_REQUEST
 import com.xsis.android.batch217.utils.PLACEMENT
 import kotlinx.android.synthetic.main.activity_summary_detail.*
+import android.widget.ExpandableListView.OnGroupExpandListener
 
 class SummaryDetailActivity : AppCompatActivity() {
     val context = this
@@ -57,6 +58,15 @@ class SummaryDetailActivity : AppCompatActivity() {
 
         viewDetail()
 
+        listSummaryDetail!!.setOnGroupExpandListener(object : OnGroupExpandListener {
+            internal var previousItem = -1
+
+            override fun onGroupExpand(groupPosition: Int) {
+                if (groupPosition != previousItem)
+                    listSummaryDetail!!.collapseGroup(previousItem)
+                previousItem = groupPosition
+            }
+        })
     }
 
 
@@ -65,6 +75,7 @@ class SummaryDetailActivity : AppCompatActivity() {
        dataListTypeNama = databaseQueryHelper.getListTypeNama(placement_PRF!!)
 
         prepareData()
+
         menuAdapter = SummaryPRFExpandableListAdapter(context!!, listDataGroup, listDataChild)
         listSummaryDetail!!.setAdapter(menuAdapter)
     }
@@ -92,4 +103,6 @@ class SummaryDetailActivity : AppCompatActivity() {
         listDataChild[listDataGroup[1]] = childPRFs
 
     }
+
+
 }
