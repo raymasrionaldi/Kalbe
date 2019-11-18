@@ -14,5 +14,4 @@ class SRF {
     var is_deleted:String?=null
 
     var nama_company:String? = null
-    var nama_grade:String? = null
 }

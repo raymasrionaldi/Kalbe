@@ -52,6 +52,7 @@ class SRFFragmentForm(context: Context, val fm: FragmentManager) : Fragment() {
     var data = SRF()
     var listClient: List<String>? = null
     var listGrade: List<String>? = null
+    var indexGrade = 0
 
 
     var databaseQueryHelper: SRFQueryHelper? = null
@@ -153,7 +154,13 @@ class SRFFragmentForm(context: Context, val fm: FragmentManager) : Fragment() {
         println(jumKebutuhan)
         val indexClient = listClient!!.indexOf(srf.nama_company)
         spinnerClient!!.setSelection(indexClient)
-        val indexGrade = listGrade!!.indexOf(srf.nama_grade)
+        //cari nama grade dari id grade
+        if(srf.id_grade != ""){
+            println("SRF ID = ${srf.id_grade!!.toInt()}")
+            println("Ambil database : ${databaseQueryHelper!!.pilihGrade(srf.id_grade!!.toInt())}")
+            println("Ini nilainya : ${listGrade!!.indexOf(databaseQueryHelper!!.pilihGrade(srf.id_grade!!.toInt()))}")
+            indexGrade = listGrade!!.indexOf(databaseQueryHelper!!.pilihGrade(srf.id_grade!!.toInt()))
+        }
         spinnerGrade!!.setSelection(indexGrade)
         namaUser!!.setText(srf.nama_user)
         println(namaUser)
@@ -180,6 +187,8 @@ class SRFFragmentForm(context: Context, val fm: FragmentManager) : Fragment() {
             //buttonDelete!!.show()
         }
 
+        spinnerClientSRF.errorText = null
+        spinnerJenisSRF.errorText = null
         requiredNumberSRF!!.visibility = View.INVISIBLE
         requiredJumKebutuhan!!.visibility = View.INVISIBLE
         requiredNamaUser!!.visibility = View.INVISIBLE
@@ -251,13 +260,18 @@ class SRFFragmentForm(context: Context, val fm: FragmentManager) : Fragment() {
 
     fun simpanSRF(){
         val idSRFTeks = srfNumber!!.text.toString().trim()
+        val jenisSRFTeks = spinnerJenis!!.selectedItemPosition
         val jumKebutuhanText = jumKebutuhan!!.text.toString().trim()
+        val clientSRFTeks = spinnerClient!!.selectedItemPosition
+        val gradeSRFTeks = spinnerGrade!!.selectedItemPosition
         val namaUserTeks = namaUser!!.text.toString().trim()
         val emailUserTeks = emailUser!!.text.toString().trim()
         val salesPriceTeks = salesPrice!!.text.toString().trim()
         val lokasiTeks = lokasi!!.text.toString().trim()
         val catatanText = catatan!!.text.toString().trim()
 
+        spinnerJenisSRF.errorText = null
+        spinnerClientSRF.errorText = null
         requiredNumberSRF!!.visibility = View.INVISIBLE
         requiredJumKebutuhan!!.visibility = View.INVISIBLE
         requiredNamaUser!!.visibility = View.INVISIBLE
@@ -268,9 +282,15 @@ class SRFFragmentForm(context: Context, val fm: FragmentManager) : Fragment() {
             srfNumber!!.setHintTextColor(Color.RED)
             requiredNumberSRF!!.visibility = View.VISIBLE
         }
+        if(jenisSRFTeks == 0){
+            spinnerJenisSRF.errorText = "Required"
+        }
         if (jumKebutuhanText.isEmpty()) {
             jumKebutuhan!!.setHintTextColor(Color.RED)
             requiredJumKebutuhan!!.visibility = View.VISIBLE
+        }
+        if(clientSRFTeks == 0){
+            spinnerClientSRF.errorText = "Required"
         }
         if (namaUserTeks.isEmpty()) {
             namaUser!!.setHintTextColor(Color.RED)
@@ -284,18 +304,24 @@ class SRFFragmentForm(context: Context, val fm: FragmentManager) : Fragment() {
             salesPrice!!.setHintTextColor(Color.RED)
             requiredSalesPrice!!.visibility = View.VISIBLE
         }
-        if (idSRFTeks.isNotEmpty() && jumKebutuhanText.isNotEmpty() && namaUserTeks.isNotEmpty() && emailUserTeks.isNotEmpty() && salesPriceTeks.isNotEmpty()) {
+        if (idSRFTeks.isNotEmpty() && jenisSRFTeks != 0 && jumKebutuhanText.isNotEmpty() && clientSRFTeks != 0 && namaUserTeks.isNotEmpty()
+            && emailUserTeks.isNotEmpty() && salesPriceTeks.isNotEmpty()) {
             val model = SRF()
-            model.id_srf = data.id_srf
+            model.id_srf = idSRFTeks
             model.jenis_srf = spinnerJenis!!.selectedItem.toString()
             //spinner jenis
+            model.jenis_srf = spinnerJenis!!.selectedItem.toString()
             model.jumlah_kebutuhan = jumKebutuhanText.toInt()
             //spinner grade dan company
             println(listClient!![spinnerClient!!.selectedItemPosition])
             var pilihClient = databaseQueryHelper!!.cariClient(listClient!![spinnerClient!!.selectedItemPosition])
             model.id_company = pilihClient
-            var pilihGrade = databaseQueryHelper!!.cariGrade(listGrade!![spinnerGrade!!.selectedItemPosition])
-            model.id_grade = pilihGrade
+            if(gradeSRFTeks == 0){
+                model.id_grade = ""
+            } else {
+                var pilihGrade = databaseQueryHelper!!.cariGrade(listGrade!![spinnerGrade!!.selectedItemPosition])
+                model.id_grade = pilihGrade
+            }
             model.nama_user = namaUserTeks
             model.email_user = emailUserTeks
             model.sales_price = salesPriceTeks
@@ -329,10 +355,9 @@ class SRFFragmentForm(context: Context, val fm: FragmentManager) : Fragment() {
                 } else {
                     Toast.makeText(context, EDIT_DATA_BERHASIL, Toast.LENGTH_SHORT)
                         .show()
-                    pindah()
                 }
             }
-
+            pindah()
         }
     }
 

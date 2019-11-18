@@ -61,7 +61,6 @@ class SRFQueryHelper(val databaseHelper: DatabaseHelper) {
             srf.catatan = cursor.getString(9)
             srf.is_deleted = cursor.getString(10)
             srf.nama_company = cursor.getString(11)
-            srf.nama_grade = cursor.getString(12)
             listSRF.add(srf)
         }
 
@@ -81,30 +80,32 @@ class SRFQueryHelper(val databaseHelper: DatabaseHelper) {
 
     fun readListClient(): List<String> {
         val listClientPosition = ArrayList<String>()
+        listClientPosition.add("-- Pilih Client --")
         val db = databaseHelper.readableDatabase
         val queryReadPosition = "SELECT $NAMA_COMPANY FROM $TABEL_COMPANY WHERE $IS_DELETED = 'false'"
         val cursor = db.rawQuery(queryReadPosition, null)
         if (cursor.count > 0) {
             for (i in 0 until cursor.count) {
                 cursor.moveToPosition(i)
-                listClientPosition.add(cursor.getString(0))
+                listClientPosition.add(i+1, cursor.getString(0))
             }
         }
         return listClientPosition
     }
 
     fun readListGrade(): List<String> {
-        val listClientPosition = ArrayList<String>()
+        val listClientGrade = ArrayList<String>()
+        listClientGrade.add("-- Pilih Grade --")
         val db = databaseHelper.readableDatabase
         val queryReadPosition = "SELECT $NAMA_GRADE FROM $TABEL_GRADE WHERE $IS_DELETED = 'false'"
         val cursor = db.rawQuery(queryReadPosition, null)
         if (cursor.count > 0) {
             for (i in 0 until cursor.count) {
                 cursor.moveToPosition(i)
-                listClientPosition.add(cursor.getString(0))
+                listClientGrade.add(i+1, cursor.getString(0))
             }
         }
-        return listClientPosition
+        return listClientGrade
     }
 
     fun cariSRFModels(keyword: String): List<SRF> {
@@ -112,10 +113,9 @@ class SRFQueryHelper(val databaseHelper: DatabaseHelper) {
         if (keyword.isNotBlank()) {
             val db = databaseHelper.readableDatabase
             val queryCari =
-                "SELECT $TABEL_SRF.*, $TABEL_COMPANY.$NAMA_COMPANY, $TABEL_GRADE.$NAMA_GRADE " +
-                        "FROM $TABEL_SRF,$TABEL_COMPANY,$TABEL_GRADE " +
+                "SELECT $TABEL_SRF.*, $TABEL_COMPANY.$NAMA_COMPANY " +
+                        "FROM $TABEL_SRF,$TABEL_COMPANY " +
                         "WHERE $TABEL_SRF.$ID_COMPANY = $TABEL_COMPANY.$ID_COMPANY " +
-                        "AND $TABEL_SRF.$ID_GRADE = $TABEL_GRADE.$ID_GRADE " +
                         "AND $TABEL_COMPANY.$NAMA_COMPANY LIKE '%$keyword%' " +
                         "AND $TABEL_SRF.$ID_SRF != 'SRF Number *' " +
                         "AND $TABEL_SRF.$IS_DELETED = 'false'"
@@ -159,11 +159,24 @@ class SRFQueryHelper(val databaseHelper: DatabaseHelper) {
         return pilihGrade
     }
 
+    fun pilihGrade(id:Int) : String {
+        var pilihGrade = ""
+        val db = databaseHelper.readableDatabase
+        val queryCari = "SELECT $TABEL_GRADE.$NAMA_GRADE FROM $TABEL_GRADE " +
+                "WHERE $TABEL_GRADE.$ID_GRADE = '$id' "
+        println(queryCari)
+        val cursor = db.rawQuery(queryCari, null)
+        cursor.moveToFirst()
+        pilihGrade = cursor.getString(0)
+        return pilihGrade
+    }
+
     fun tambahSRF(model: SRF): Long {
         val db = databaseHelper.writableDatabase
 
         val values = ContentValues()
         values.put(ID_SRF, model.id_srf)
+        println("ID : ${model.id_srf}")
         values.put(JENIS_SRF, model.jenis_srf)
         values.put(JUM_KEBUTUHAN, model.jumlah_kebutuhan)
         values.put(ID_COMPANY, model.id_company)
@@ -174,7 +187,6 @@ class SRFQueryHelper(val databaseHelper: DatabaseHelper) {
         values.put(LOKASI, model.lokasi)
         values.put(CATATAN, model.catatan)
         values.put(IS_DELETED, "false")
-
         return db.insert(TABEL_SRF, null, values)
     }
 
