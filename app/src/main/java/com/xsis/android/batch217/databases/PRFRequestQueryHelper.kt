@@ -21,7 +21,8 @@ class PRFRequestQueryHelper (val databaseHelper: DatabaseHelper) {
         val queryGetTypeNama = "SELECT DISTINCT a.$PID_CREATE " +
                 "FROM $TABEL_PROJECT_CREATE a, $TABEL_PRF_REQUEST b " +
                 "WHERE a.$ID_PROJECT_CREATE = b.$PID " +
-                "AND b.$PLACEMENT LIKE '%$placement%'"
+                "AND b.$PLACEMENT LIKE '%$placement%' " +
+                "AND b.$IS_DELETED = 'false'"
         val cursor =  db.rawQuery(queryGetTypeNama, null)
         if (cursor.count  > 0) {
             listPID = konversiCursorKeListPIDModel(cursor)
@@ -110,7 +111,8 @@ class PRFRequestQueryHelper (val databaseHelper: DatabaseHelper) {
             val queryCari = "SELECT a.*, b.$NAMA_TYPE_PRF, c.$PID_CREATE FROM $TABEL_PRF_REQUEST a, $TABEL_TYPE_PRF b, $TABEL_PROJECT_CREATE c " +
                     "WHERE a.$PLACEMENT LIKE '%$keyword%' AND a.$IS_DELETED = 'false' " +
                     "AND a.$TYPE = b.$ID_TYPE_PRF " +
-                    "AND a.$PID = c.$ID_PROJECT_CREATE"
+                    "AND a.$PID = c.$ID_PROJECT_CREATE " +
+                    "AND a.$IS_DELETED = 'false'"
 
             val cursor = db.rawQuery(queryCari, null)
             if (cursor.count > 0) {
@@ -125,7 +127,7 @@ class PRFRequestQueryHelper (val databaseHelper: DatabaseHelper) {
         var listPRFRequest = ArrayList<PRFRequest>()
         if (keyword.isNotBlank()) {
             val db = databaseHelper.readableDatabase
-            val queryCari = "SELECT DISTINCT $PLACEMENT FROM $TABEL_PRF_REQUEST WHERE $PLACEMENT LIKE '%$keyword%'"
+            val queryCari = "SELECT DISTINCT $PLACEMENT FROM $TABEL_PRF_REQUEST WHERE $PLACEMENT LIKE '%$keyword%' AND $IS_DELETED = 'false'"
 
             val cursor = db.rawQuery(queryCari, null)
             for (c in 0 until cursor.count) {
