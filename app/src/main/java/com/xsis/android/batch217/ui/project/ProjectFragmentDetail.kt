@@ -144,7 +144,7 @@ class ProjectFragmentDetail(context: Context, val fm: FragmentManager) : Fragmen
         listDataGroup.add(group3)
 
         val child3 = ArrayList<List<String>>()
-        val info31 = arrayListOf("", data.techProject!!)
+        val info31 = arrayListOf("", data.taskProject!!)
         child3.add(info31)
         listDataChild[listDataGroup[3]] = child3
     }
