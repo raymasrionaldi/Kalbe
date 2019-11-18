@@ -82,8 +82,8 @@ class SRFFragmentForm(context: Context, val fm: FragmentManager) : Fragment() {
         spinnerJenis = customView.findViewById(R.id.spinnerJenisSRF) as SmartMaterialSpinner<String>
         jumKebutuhan = customView.findViewById(R.id.inputJumlahKebutuhan) as EditText
         requiredJumKebutuhan = customView.findViewById(R.id.requiredJumlahKebutuhan) as TextView
-        spinnerClient = customView.findViewById(R.id.spinnerClient) as SmartMaterialSpinner<String>
-        spinnerGrade = customView.findViewById(R.id.spinnerGrade) as SmartMaterialSpinner<String>
+        spinnerClient = customView.findViewById(R.id.spinnerClientSRF) as SmartMaterialSpinner<String>
+        spinnerGrade = customView.findViewById(R.id.spinnerGradeSRF) as SmartMaterialSpinner<String>
         namaUser = customView.findViewById(R.id.inputNamaUser) as EditText
         requiredNamaUser = customView.findViewById(R.id.requiredNamaUser) as TextView
         emailUser = customView.findViewById(R.id.inputEmailUser) as EditText
