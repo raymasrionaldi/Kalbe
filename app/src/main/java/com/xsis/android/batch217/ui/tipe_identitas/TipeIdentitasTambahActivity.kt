@@ -100,7 +100,7 @@ class TipeIdentitasTambahActivity : AppCompatActivity() {
                 //Enable tombol simpan ketika user sudah mulai mengisi form
                 simpan!!.setBackgroundResource(R.drawable.button_simpan_on)
                 simpan!!.setTextColor(Color.WHITE)
-                simpan!!.isClickable = true
+                simpan!!.isEnabled = true
 
                 val Nama = nama!!.text.toString().trim()
                 clearNama!!.isVisible = !Nama.isEmpty()
@@ -118,7 +118,7 @@ class TipeIdentitasTambahActivity : AppCompatActivity() {
                 //Enable tombol simpan ketika user sudah mulai mengisi form
                 simpan!!.setBackgroundResource(R.drawable.button_simpan_on)
                 simpan!!.setTextColor(Color.WHITE)
-                simpan!!.isClickable = true
+                simpan!!.isEnabled = true
 
                 val Des = des!!.text.toString().trim()
                 clearDes!!.isVisible = !Des.isEmpty()
@@ -128,75 +128,44 @@ class TipeIdentitasTambahActivity : AppCompatActivity() {
 
     fun simpan(id:Int) {
         simpan!!.setOnClickListener {
+            val Nama = nama!!.text.toString().trim()
+            val Des = des!!.text.toString().trim()
 
-            if (id == 0){
-                insertKeDatabase()
+            if (Nama.isEmpty()){
+                Toast.makeText(this, DATA_BELUM_LENGKAP, Toast.LENGTH_SHORT).show()
             } else{
-                update(id)
+                if (id == 0){
+                    insertKeDatabase(Nama, Des)
+                } else{
+                    update(id, Nama, Des)
+                }
             }
         }
     }
 
-    fun insertKeDatabase(){
-        val Nama = nama!!.text.toString().trim()
-        val Des = des!!.text.toString().trim()
+    fun insertKeDatabase(Nama:String, Des:String){
+        val sudahAda = databaseQueryHelper.readNamaTipeIdentitas(Nama)
+        println(sudahAda)
 
-        //read
-        if(Nama.isEmpty()){
-            Toast.makeText(this, DATA_BELUM_LENGKAP, Toast.LENGTH_SHORT).show()
+        if (sudahAda.size > 0){
+            Toast.makeText(this, DATA_SUDAH_ADA, Toast.LENGTH_SHORT).show()
         } else {
-            val sudahAda = databaseQueryHelper.readNamaTipeIdentitas(Nama)
-            println(sudahAda)
-
-            if (!sudahAda.isEmpty()){
-                //cek id_deleted
-                if(sudahAda[0].is_deleted == "true"){
-                    println(sudahAda[0])
-                    //update true jadi false
-                    databaseQueryHelper.updatePernahAda(Nama,Des)
-                    Toast.makeText(this, SIMPAN_DATA_BERHASIL, Toast.LENGTH_SHORT).show()
-                    finish()
-                } else {
-                    Toast.makeText(this, DATA_SUDAH_ADA, Toast.LENGTH_SHORT).show()
-                }
-            } else {
-                //jika tidak maka insert
-                //cek nama
-                val content = ContentValues()
-                content.put(NAMA_IDENTITAS, Nama)
-                content.put(DES_IDENTITAS, Des)
-                content.put(IS_DELETED, "false")
-                val db = DatabaseHelper(this).writableDatabase
-                db.insert(TABEL_TIPE_IDENTITAS, null, content)
-                Toast.makeText(this, SIMPAN_DATA_BERHASIL, Toast.LENGTH_SHORT).show()
-                finish()
-            }
+            databaseQueryHelper.insertTipeIdentitas(Nama, Des)
+            Toast.makeText(this, SIMPAN_DATA_BERHASIL, Toast.LENGTH_SHORT).show()
+            finish()
         }
     }
 
-    fun update(id:Int){
-        val Nama = nama!!.text.toString().trim()
-        val Des = des!!.text.toString().trim()
-        val lain = databaseQueryHelper.readDataLain(id)
+    fun update(id:Int, Nama:String, Des:String){
+        val lain = databaseQueryHelper.readIdIdentitasLain(id, Nama)
+        println(lain)
 
-        //read
-        if(Nama.isEmpty()){
-            Toast.makeText(this, DATA_BELUM_LENGKAP, Toast.LENGTH_SHORT).show()
-        } else {
-            var lainAda = false
-            lain.forEach{
-                if(it.nama_TipeIdentitas == Nama){
-                    lainAda = true
-                }
-            }
-
-            if (lainAda == true){
-                Toast.makeText(this, DATA_SUDAH_ADA, Toast.LENGTH_SHORT).show()
-            } else{
-                databaseQueryHelper.updateTipeIdentitas(Nama, Des, id)
-                Toast.makeText(this, SIMPAN_DATA_BERHASIL, Toast.LENGTH_SHORT).show()
-                finish()
-            }
+        if (lain.size > 0){
+            Toast.makeText(this, DATA_SUDAH_ADA, Toast.LENGTH_SHORT).show()
+        } else{
+            databaseQueryHelper.updateTipeIdentitas(Nama, Des, id)
+            Toast.makeText(this, SIMPAN_DATA_BERHASIL, Toast.LENGTH_SHORT).show()
+            finish()
         }
     }
 
@@ -208,7 +177,6 @@ class TipeIdentitasTambahActivity : AppCompatActivity() {
     fun Activity.hideKeyboard() {
         hideKeyboard(currentFocus ?: View(this))
     }
-
     fun Context.hideKeyboard(view: View) {
         val inputMethodManager = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
         inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)

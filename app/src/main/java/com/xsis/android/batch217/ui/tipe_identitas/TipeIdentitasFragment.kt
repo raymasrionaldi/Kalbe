@@ -62,11 +62,6 @@ class TipeIdentitasFragment:Fragment() {
         getActivity()!!.invalidateOptionsMenu()
     }
 
-    fun getSemuaTipeIdentitas(recyclerView: RecyclerView, queryHelper:TipeIdentitasQueryHelper){
-        val listTipeIdentitas = queryHelper.readSemuaTipeIdentitasModels()
-        tampilkanListTipeIdentitas(listTipeIdentitas, recyclerView)
-    }
-
     fun tampilkanListTipeIdentitas(listTipeIdentitas:List<TipeIdentitas>,recyclerView: RecyclerView){
         val adapter = ListTipeIdentitasAdapter(context!!, this, listTipeIdentitas)
         recyclerView.adapter = adapter

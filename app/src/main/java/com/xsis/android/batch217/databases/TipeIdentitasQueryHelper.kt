@@ -1,27 +1,31 @@
 package com.xsis.android.batch217.databases
 
+import android.content.ContentValues
 import android.database.Cursor
 import com.xsis.android.batch217.models.TipeIdentitas
 import com.xsis.android.batch217.utils.*
 
 class TipeIdentitasQueryHelper(val databasehelper:DatabaseHelper) {
+    fun konversiCursorKeListTipeIdentitasModel(cursor: Cursor):ArrayList<TipeIdentitas>{
+        val listTipeIdentitas = ArrayList<TipeIdentitas>()
 
-    private fun getSemuaTipeIdentitas():Cursor{
-        val db = databasehelper.readableDatabase
-        val queryRead = "SELECT * FROM $TABEL_TIPE_IDENTITAS where $IS_DELETED='false' "
-        return db.rawQuery(queryRead,null)
-    }
-
-    fun readSemuaTipeIdentitasModels(): List<TipeIdentitas>{
-        var listTipeIdentitas = ArrayList<TipeIdentitas>()
-
-        val cursor = getSemuaTipeIdentitas()
         if (cursor.count > 0){
-            listTipeIdentitas = konversiCursorKeListTipeIdentitasModel(cursor)
+            for (i in 0 until cursor.count){
+                cursor.moveToPosition(i)
+
+                val tipeIdentitas = TipeIdentitas()
+                tipeIdentitas.id_TipeIdentitas = cursor.getInt(0)
+                tipeIdentitas.nama_TipeIdentitas = cursor.getString(1)
+                tipeIdentitas.des_TipeIdentitas = cursor.getString(2)
+                tipeIdentitas.is_deleted = cursor.getString(3)
+
+                listTipeIdentitas.add(tipeIdentitas)
+            }
         }
         return listTipeIdentitas
     }
 
+    //Untuk form edit
     fun loadTipeIdentitas(id:Int):TipeIdentitas{
         var listTipeIdentitas = ArrayList<TipeIdentitas>()
 
@@ -35,23 +39,7 @@ class TipeIdentitasQueryHelper(val databasehelper:DatabaseHelper) {
 
     }
 
-    fun konversiCursorKeListTipeIdentitasModel(cursor: Cursor):ArrayList<TipeIdentitas>{
-        val listTipeIdentitas = ArrayList<TipeIdentitas>()
-
-        for (i in 0 until cursor.count){
-            cursor.moveToPosition(i)
-
-            val tipeIdentitas = TipeIdentitas()
-            tipeIdentitas.id_TipeIdentitas = cursor.getInt(0)
-            tipeIdentitas.nama_TipeIdentitas = cursor.getString(1)
-            tipeIdentitas.des_TipeIdentitas = cursor.getString(2)
-            tipeIdentitas.is_deleted = cursor.getString(3)
-
-            listTipeIdentitas.add(tipeIdentitas)
-        }
-        return listTipeIdentitas
-    }
-
+    //Untuk search
     fun cariTipeIdentitasModels(keyword:String): List<TipeIdentitas>{
         var listTipeIdentitas = ArrayList<TipeIdentitas>()
 
@@ -68,6 +56,15 @@ class TipeIdentitasQueryHelper(val databasehelper:DatabaseHelper) {
         return listTipeIdentitas
     }
 
+    fun insertTipeIdentitas(nama:String, des: String){
+        val db = databasehelper.writableDatabase
+
+        val content = ContentValues()
+        content.put(NAMA_IDENTITAS, nama)
+        content.put(DES_IDENTITAS, des)
+        content.put(IS_DELETED, "false")
+        db.insert(TABEL_TIPE_IDENTITAS, null, content)
+    }
     fun updateTipeIdentitas(nama:String, des:String, id:Int):List<TipeIdentitas> {
         var listTipeIdentitas = ArrayList<TipeIdentitas>()
 
@@ -83,80 +80,32 @@ class TipeIdentitasQueryHelper(val databasehelper:DatabaseHelper) {
         return listTipeIdentitas
     }
 
-    fun updatePernahAda(nama:String, des:String):List<TipeIdentitas>{
-        var listTipeIdentitas = ArrayList<TipeIdentitas>()
 
-        val db = databasehelper.writableDatabase
-        val queryUpdate = "UPDATE $TABEL_TIPE_IDENTITAS " +
-                "SET $DES_IDENTITAS = '$des', $IS_DELETED = 'false' " +
-                "WHERE $NAMA_IDENTITAS = '$nama' "
-        val cursor = db.rawQuery(queryUpdate, null)
-        if (cursor.count > 0) {
-            listTipeIdentitas = konversiCursorKeListTipeIdentitasModel(cursor)
-        }
-        println(queryUpdate)
-        return listTipeIdentitas
+    fun readNamaTipeIdentitas(nama:String):List<String>{
+        val db = databasehelper.readableDatabase
+        val queryCari = "SELECT * FROM $TABEL_TIPE_IDENTITAS " +
+                "WHERE $NAMA_IDENTITAS = '$nama' AND $IS_DELETED = 'false'"
+        val cursor = db.rawQuery(queryCari, null)
+
+        val listTipeIdentitas = konversiCursorKeListTipeIdentitasModel(cursor)
+        val listNamaIdentitas = ArrayList<String>()
+        listTipeIdentitas.forEach { listNamaIdentitas.add(it.nama_TipeIdentitas) }
+
+        return listNamaIdentitas
     }
 
-    fun updateTipeIdentitas_0 (nama:String, des:String, id:Int): Boolean{//: List<TipeIdentitas>{
-        var listTipeIdentitas = ArrayList<TipeIdentitas>()
-        val listTipeIdentitasAll = readSemuaTipeIdentitasModels()
-
-        val names = ArrayList<String>()
-        listTipeIdentitasAll.forEach{
-            if (it.id_TipeIdentitas != id){
-                names.add(it.nama_TipeIdentitas)
-            }
-        }
-
-//        var listTipeIdentitas = ArrayList<TipeIdentitas>()
-        var ada = false
-        if (names.contains(nama)){
-            ada = true
-        }
-
-        if (ada){
-            //Toast
-            println("adaaaaa")
-        } else{
-            val db = databasehelper.writableDatabase
-            val queryUpdate = "UPDATE $TABEL_TIPE_IDENTITAS SET $NAMA_IDENTITAS='$nama', $DES_IDENTITAS='$des' WHERE $ID_IDENTITAS=$id"
-            println("UPDATE $TABEL_TIPE_IDENTITAS SET $NAMA_IDENTITAS='$nama', $DES_IDENTITAS='$des' WHERE $ID_IDENTITAS=$id")
-            val cursor = db.rawQuery(queryUpdate,null)
-            if (cursor.count > 0){
-                listTipeIdentitas = konversiCursorKeListTipeIdentitasModel(cursor)
-            }
-        }
-        return ada
-    }
-
-    fun readNamaTipeIdentitas(nama:String):List<TipeIdentitas>{
-        var listTipeIdentitas = ArrayList<TipeIdentitas>()
+    fun readIdIdentitasLain(id:Int, Nama:String):List<String>{
 
         val db = databasehelper.readableDatabase
         val queryCari = "SELECT * FROM $TABEL_TIPE_IDENTITAS " +
-                "WHERE $NAMA_IDENTITAS = '$nama' "
+                "WHERE $ID_IDENTITAS != '$id' AND $NAMA_IDENTITAS = '$Nama' " +
+                "AND $IS_DELETED = 'false'"
         val cursor = db.rawQuery(queryCari, null)
 
-        if (cursor.count > 0){
-            listTipeIdentitas = konversiCursorKeListTipeIdentitasModel(cursor)
-        }
+        val listTipeIdentitas = konversiCursorKeListTipeIdentitasModel(cursor)
+        val listNamaIdentitas = ArrayList<String>()
+        listTipeIdentitas.forEach { listNamaIdentitas.add(it.nama_TipeIdentitas) }
 
-        return listTipeIdentitas
-    }
-
-    fun readDataLain(id:Int):List<TipeIdentitas>{
-        var listTipeIdentitas = ArrayList<TipeIdentitas>()
-
-        val db = databasehelper.readableDatabase
-        val queryCari = "SELECT * FROM $TABEL_TIPE_IDENTITAS " +
-                "WHERE $ID_IDENTITAS != '$id' "
-        val cursor = db.rawQuery(queryCari, null)
-
-        if (cursor.count > 0){
-            listTipeIdentitas = konversiCursorKeListTipeIdentitasModel(cursor)
-        }
-
-        return listTipeIdentitas
+        return listNamaIdentitas
     }
 }
