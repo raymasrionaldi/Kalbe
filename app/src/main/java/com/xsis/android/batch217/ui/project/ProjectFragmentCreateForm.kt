@@ -147,7 +147,6 @@ class ProjectFragmentCreateForm(context: Context, val fm: FragmentManager):Fragm
     }
     fun simpan(){
         save!!.setOnClickListener {
-            ID = 0
 
             val data = ProjectCreate()
             data.idProjectCreate = ID
@@ -170,6 +169,9 @@ class ProjectFragmentCreateForm(context: Context, val fm: FragmentManager):Fragm
                 Toast.makeText(context, SIMPAN_DATA_BERHASIL, Toast.LENGTH_SHORT).show()
             } else{
                 //update
+                ID = 0
+                delete!!.isVisible = false
+
                 databaseQueryHelper.updateProjectCreate(data)
                 Toast.makeText(context, "Data berhasil diupdate", Toast.LENGTH_SHORT).show()
             }
