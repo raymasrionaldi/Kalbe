@@ -60,33 +60,35 @@ class EmployeeTrainingEditActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_employee_training_edit)
 
+        try {
+            this.supportActionBar!!.hide()
+        } catch (e: NullPointerException) {
+        }
+
         isiSpinnerNamaTraining()
         isiSpinnerTrainingOrganizer()
         isiSpinnerTrainingType()
         isiSpinnerCertificationType()
 
 
-        try {
-            this.supportActionBar!!.hide()
-        } catch (e: NullPointerException){
-        }
-
         employeeNameTraineeText = findViewById(R.id.editNamaTrainee)
         employeeDateTrainingText = findViewById(R.id.editTanggalEmployeeTraining)
         employeeTrainingNameSpinner = findViewById(R.id.spinnerEditNamaEmployeeTraining)
-        employeeTrainingOrganizerSpinner = findViewById(R.id.spinnerEditNamaEmployeeTrainingOrganizer)
+        employeeTrainingOrganizerSpinner =
+            findViewById(R.id.spinnerEditNamaEmployeeTrainingOrganizer)
         employeeTrainingTypeSpinner = findViewById(R.id.spinnerEditTypeEmployeeTraining)
-        employeeCertificationTypeSpinner = findViewById(R.id.spinnerEditCertificationEmployeeTraining)
+        employeeCertificationTypeSpinner =
+            findViewById(R.id.spinnerEditCertificationEmployeeTraining)
 
         ubahButtonResetSpinner()
 
-        buttonBackEditEmployeeTraining.setOnClickListener{
+        buttonBackEditEmployeeTraining.setOnClickListener {
             finish()
         }
 
         setReportDateEmployeeTrainingPicker()
 
-        buttonResetEmployeeTraining.setOnClickListener{
+        buttonResetEmployeeTraining.setOnClickListener {
             resetForm()
         }
 
@@ -107,54 +109,82 @@ class EmployeeTrainingEditActivity : AppCompatActivity() {
 
     fun ubahButtonResetSpinner() {
         buttonReset = buttonResetEmployeeTraining
-        employeeTrainingNameSpinner!!.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                buttonReset = buttonResetEmployeeTraining
-                if (position != 0) {
-                    buttonResetEmployeeTraining.isEnabled = true
-                    ubahResetButton(context, true, buttonReset!!)
-                } else {
-                    ubahResetButton(context, false, buttonReset!!)
+        employeeTrainingNameSpinner!!.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>?,
+                    view: View?,
+                    position: Int,
+                    id: Long
+                ) {
+                    buttonReset = buttonResetEmployeeTraining
+                    if (position != 0) {
+                        buttonResetEmployeeTraining.isEnabled = true
+                        ubahResetButton(context, true, buttonReset!!)
+                    } else {
+                        ubahResetButton(context, false, buttonReset!!)
+                    }
                 }
+
+                override fun onNothingSelected(arg0: AdapterView<*>) {}
             }
-            override fun onNothingSelected(arg0: AdapterView<*>) {}
-        }
-        employeeTrainingOrganizerSpinner!!.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                buttonReset = buttonResetEmployeeTraining
-                if (position != 0) {
-                    buttonResetEmployeeTraining.isEnabled = true
-                    ubahResetButton(context, true, buttonReset!!)
-                } else {
-                    ubahResetButton(context, false, buttonReset!!)
+        employeeTrainingOrganizerSpinner!!.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>?,
+                    view: View?,
+                    position: Int,
+                    id: Long
+                ) {
+                    buttonReset = buttonResetEmployeeTraining
+                    if (position != 0) {
+                        buttonResetEmployeeTraining.isEnabled = true
+                        ubahResetButton(context, true, buttonReset!!)
+                    } else {
+                        ubahResetButton(context, false, buttonReset!!)
+                    }
                 }
+
+                override fun onNothingSelected(arg0: AdapterView<*>) {}
             }
-            override fun onNothingSelected(arg0: AdapterView<*>) {}
-        }
-        employeeTrainingTypeSpinner!!.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                buttonReset = buttonResetEmployeeTraining
-                if (position != 0) {
-                    buttonResetEmployeeTraining.isEnabled = true
-                    ubahResetButton(context, true, buttonReset!!)
-                } else {
-                    ubahResetButton(context, false, buttonReset!!)
+        employeeTrainingTypeSpinner!!.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>?,
+                    view: View?,
+                    position: Int,
+                    id: Long
+                ) {
+                    buttonReset = buttonResetEmployeeTraining
+                    if (position != 0) {
+                        buttonResetEmployeeTraining.isEnabled = true
+                        ubahResetButton(context, true, buttonReset!!)
+                    } else {
+                        ubahResetButton(context, false, buttonReset!!)
+                    }
                 }
+
+                override fun onNothingSelected(arg0: AdapterView<*>) {}
             }
-            override fun onNothingSelected(arg0: AdapterView<*>) {}
-        }
-        employeeCertificationTypeSpinner!!.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                buttonReset = buttonResetEmployeeTraining
-                if (position != 0) {
-                    buttonResetEmployeeTraining.isEnabled = true
-                    ubahResetButton(context, true, buttonReset!!)
-                } else {
-                    ubahResetButton(context, false, buttonReset!!)
+        employeeCertificationTypeSpinner!!.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>?,
+                    view: View?,
+                    position: Int,
+                    id: Long
+                ) {
+                    buttonReset = buttonResetEmployeeTraining
+                    if (position != 0) {
+                        buttonResetEmployeeTraining.isEnabled = true
+                        ubahResetButton(context, true, buttonReset!!)
+                    } else {
+                        ubahResetButton(context, false, buttonReset!!)
+                    }
                 }
+
+                override fun onNothingSelected(arg0: AdapterView<*>) {}
             }
-            override fun onNothingSelected(arg0: AdapterView<*>) {}
-        }
     }
 
     fun validasiEdit() {
@@ -162,10 +192,13 @@ class EmployeeTrainingEditActivity : AppCompatActivity() {
         val employeeNameTraineeText = editNamaTrainee!!.text.toString().trim()
         val employeeTrainingNameSpinner = spinnerEditNamaEmployeeTraining.selectedItem.toString()
         val positionEmployeeTrainingSpinner = spinnerEditNamaEmployeeTraining.selectedItemPosition
-        val employeeTrainingOrganizerSpinner = spinnerEditNamaEmployeeTrainingOrganizer.selectedItem.toString()
-        val positionEmployeeTrainingOrganizerSpinner = spinnerEditNamaEmployeeTrainingOrganizer.selectedItemPosition
+        val employeeTrainingOrganizerSpinner =
+            spinnerEditNamaEmployeeTrainingOrganizer.selectedItem.toString()
+        val positionEmployeeTrainingOrganizerSpinner =
+            spinnerEditNamaEmployeeTrainingOrganizer.selectedItemPosition
         val employeeTrainingTypeSpinner = spinnerEditTypeEmployeeTraining.selectedItem.toString()
-        val employeeCertificationTypeSpinner = spinnerEditCertificationEmployeeTraining.selectedItem.toString()
+        val employeeCertificationTypeSpinner =
+            spinnerEditCertificationEmployeeTraining.selectedItem.toString()
 
         var isValid = true
 
@@ -193,6 +226,24 @@ class EmployeeTrainingEditActivity : AppCompatActivity() {
             isValid = false
         }
 
+        val currentDate = Calendar.getInstance()
+        currentDate.set(Calendar.HOUR_OF_DAY, 0)
+        currentDate.set(Calendar.MINUTE, 0)
+        currentDate.set(Calendar.SECOND, 0)
+        currentDate.set(Calendar.MILLISECOND, 0)
+
+        val formatDate = SimpleDateFormat("MMMM dd, yyyy")
+        val trainingTime = formatDate.parse(employeeTrainingDate)
+        val trainingDate = Calendar.getInstance()
+        trainingDate.time = trainingTime
+
+        if (trainingDate.before(currentDate)) {
+            editTanggalEmployeeTraining.setHintTextColor(Color.RED)
+            isValid = false
+            Toast.makeText(context, "Tidak boleh memilih tanggal kemarin", Toast.LENGTH_SHORT)
+                .show()
+        }
+
         if (isValid) {
             val model = EmployeeTraining()
             model.idEmployeeTraining = data.idEmployeeTraining
@@ -205,8 +256,17 @@ class EmployeeTrainingEditActivity : AppCompatActivity() {
 
 
             val cekEmployeeTrainee =
-                databaseQueryHelper!!.cekEmployeeTrainingSudahTraining(model.namaTrainee!!, model.dateEmployeeTraining!!)
+                databaseQueryHelper!!.cekEmployeeTrainingSudahTraining(
+                    model.namaTrainee!!,
+                    model.dateEmployeeTraining!!
+                )
 
+            if ((cekEmployeeTrainee != 1 && model.namaTrainee == data.namaTrainee && model.dateEmployeeTraining == data.dateEmployeeTraining) ||
+                (cekEmployeeTrainee != 0 && model.dateEmployeeTraining != data.dateEmployeeTraining) ||
+                (cekEmployeeTrainee != 0 && model.namaTrainee != data.namaTrainee && model.dateEmployeeTraining == data.dateEmployeeTraining)
+            ) {
+                Toast.makeText(context, CEK_TRAINEE, Toast.LENGTH_SHORT).show()
+            }
             if (databaseQueryHelper!!.editEmployeeTraining(model) == 0) {
                 Toast.makeText(context, EDIT_DATA_GAGAL, Toast.LENGTH_SHORT)
                     .show()
@@ -220,7 +280,7 @@ class EmployeeTrainingEditActivity : AppCompatActivity() {
     }
 
 
-    fun resetForm(){
+    fun resetForm() {
         editTanggalEmployeeTraining.setText("")
         editNamaTrainee.setText("")
         spinnerEditNamaEmployeeTraining.setSelection(0)
@@ -230,24 +290,31 @@ class EmployeeTrainingEditActivity : AppCompatActivity() {
     }
 
 
-    fun setReportDateEmployeeTrainingPicker(){
+    fun setReportDateEmployeeTrainingPicker() {
         val today = Calendar.getInstance()
         val yearNow = today.get(Calendar.YEAR)
         val monthNow = today.get(Calendar.MONTH)
         val dayNow = today.get(Calendar.DATE)
 
         iconEditTanggalEmployeeTraining.setOnClickListener {
-            val datePickerDialog = DatePickerDialog(context, R.style.CustomDatePicker, DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
-                val selectedDate = Calendar.getInstance()
-                selectedDate.set(year, month, dayOfMonth)
+            val datePickerDialog = DatePickerDialog(
+                context,
+                R.style.CustomDatePicker,
+                DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
+                    val selectedDate = Calendar.getInstance()
+                    selectedDate.set(year, month, dayOfMonth)
 
-                //konversi ke string
-                val formatDate = SimpleDateFormat("MMMM dd, yyyy")
-                val tanggal = formatDate.format(selectedDate.time)
+                    //konversi ke string
+                    val formatDate = SimpleDateFormat("MMMM dd, yyyy")
+                    val tanggal = formatDate.format(selectedDate.time)
 
-                //set tampilan
-                editTanggalEmployeeTraining.setText(tanggal)
-            }, yearNow,monthNow,dayNow )
+                    //set tampilan
+                    editTanggalEmployeeTraining.setText(tanggal)
+                },
+                yearNow,
+                monthNow,
+                dayNow
+            )
             datePickerDialog.show()
 //            buttonResetEmployeeTraining.isEnabled = true
 //            buttonResetEmployeeTraining.setBackgroundResource(R.drawable.button_reset_on)
@@ -258,7 +325,7 @@ class EmployeeTrainingEditActivity : AppCompatActivity() {
 
 
     private val textWatcher = object : TextWatcher {
-        override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) { }
+        override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
         override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
             buttonReset = buttonResetEmployeeTraining
 
@@ -270,7 +337,8 @@ class EmployeeTrainingEditActivity : AppCompatActivity() {
             buttonResetEmployeeTraining.isEnabled = true
             ubahResetButton(context, kondisi, buttonReset!!)
         }
-        override fun afterTextChanged(s: Editable) { }
+
+        override fun afterTextChanged(s: Editable) {}
     }
 
     fun isiSpinnerNamaTraining(): List<String?> {
@@ -338,12 +406,27 @@ class EmployeeTrainingEditActivity : AppCompatActivity() {
         val namaTraining = databaseQueryHelper.tampilkanNamaTraining()
 
         val projection = arrayOf<String>(
-            ID_EMPLOYEE_TRAINING, NAMA_TRAINEE, NAMA_EMPLOYEE_TRAINING, NAMA_EMPLOYEE_TRAINING_ORG, DATE_EMPLOYEE_TRAINING, TYPE_EMPLOYEE_TRAINING, TYPE_EMPLOYEE_CERTIFICATION, IS_DELETED
+            ID_EMPLOYEE_TRAINING,
+            NAMA_TRAINEE,
+            NAMA_EMPLOYEE_TRAINING,
+            NAMA_EMPLOYEE_TRAINING_ORG,
+            DATE_EMPLOYEE_TRAINING,
+            TYPE_EMPLOYEE_TRAINING,
+            TYPE_EMPLOYEE_CERTIFICATION,
+            IS_DELETED
         )
         val selection = ID_EMPLOYEE_TRAINING + "=?"
         val selectionArgs = arrayOf(ID_EmployeeTraining.toString())
         val cursor =
-            db.query(TABEL_EMPLOYEE_TRAINING, projection, selection, selectionArgs, null, null, null)
+            db.query(
+                TABEL_EMPLOYEE_TRAINING,
+                projection,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                null
+            )
 
         if (cursor.count == 1) {
             cursor.moveToFirst()
@@ -353,22 +436,26 @@ class EmployeeTrainingEditActivity : AppCompatActivity() {
             editNamaTrainee.setText(data.namaTrainee)
 
             val dataNamaEmployeeTraining = cursor.getString(2)
-            val indexNamaEmployeeTraining = isiSpinnerNamaTraining().indexOf(dataNamaEmployeeTraining)
+            val indexNamaEmployeeTraining =
+                isiSpinnerNamaTraining().indexOf(dataNamaEmployeeTraining)
             spinnerEditNamaEmployeeTraining.setSelection(indexNamaEmployeeTraining)
 
             val dataNamaEmployeeTrainingOrganizer = cursor.getString(3)
-            val indexNamaEmployeeTrainingOrganizer = isiSpinnerTrainingOrganizer().indexOf(dataNamaEmployeeTrainingOrganizer)
+            val indexNamaEmployeeTrainingOrganizer =
+                isiSpinnerTrainingOrganizer().indexOf(dataNamaEmployeeTrainingOrganizer)
             spinnerEditNamaEmployeeTrainingOrganizer.setSelection(indexNamaEmployeeTrainingOrganizer)
 
             data.dateEmployeeTraining = cursor.getString(4)
             editTanggalEmployeeTraining.setText(data.dateEmployeeTraining)
 
             val dataTypeEmployeeTraining = cursor.getString(5)
-            val indexTypeEmployeeTraining = isiSpinnerTrainingType().indexOf(dataTypeEmployeeTraining)
+            val indexTypeEmployeeTraining =
+                isiSpinnerTrainingType().indexOf(dataTypeEmployeeTraining)
             spinnerEditTypeEmployeeTraining.setSelection(indexTypeEmployeeTraining)
 
             val dataCertificationType = cursor.getString(6)
-            val indexCertificationType = isiSpinnerCertificationType().indexOf(dataCertificationType)
+            val indexCertificationType =
+                isiSpinnerCertificationType().indexOf(dataCertificationType)
             spinnerEditCertificationEmployeeTraining.setSelection(indexCertificationType)
 
             data.isDeleted = cursor.getString(7)

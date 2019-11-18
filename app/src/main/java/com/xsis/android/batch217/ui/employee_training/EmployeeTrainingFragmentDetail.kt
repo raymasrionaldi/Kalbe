@@ -87,18 +87,8 @@ class EmployeeTrainingFragmentDetail(context: Context, val fm: FragmentManager) 
         employeeTrainingNameText!!.setText(employeeTraining.namaEmployeeTraining)
         employeeTrainingDateText!!.setText(employeeTraining.dateEmployeeTraining)
         employeeTrainingOrganizerText!!.setText(employeeTraining.namaEmployeeTO)
-        if (employeeTraining.typeEmployeeTraining == "Training Type"){
-            employeeTrainingTypeText!!.setText("")
-        }
-        else{
-            employeeTrainingTypeText!!.setText(employeeTraining.typeEmployeeTraining)
-        }
-        if (employeeTraining.typeEmployeeCertification == "Certification Type"){
-            employeeCertificationTypeText!!.setText("")
-        }
-        else{
-            employeeCertificationTypeText!!.setText(employeeTraining.typeEmployeeCertification)
-        }
+        employeeTrainingTypeText!!.setText(employeeTraining.typeEmployeeTraining)
+        employeeCertificationTypeText!!.setText(employeeTraining.typeEmployeeCertification)
         data = employeeTraining
     }
 

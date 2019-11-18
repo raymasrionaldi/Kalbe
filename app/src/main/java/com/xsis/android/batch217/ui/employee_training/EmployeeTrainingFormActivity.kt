@@ -16,7 +16,13 @@ import com.xsis.android.batch217.databases.DatabaseHelper
 import com.xsis.android.batch217.databases.EmployeeTrainingQueryHelper
 import com.xsis.android.batch217.models.*
 import com.xsis.android.batch217.utils.*
+import kotlinx.android.synthetic.main.activity_employee_training_edit.*
 import kotlinx.android.synthetic.main.activity_employee_training_form.*
+import kotlinx.android.synthetic.main.activity_employee_training_form.buttonResetEmployeeTraining
+import kotlinx.android.synthetic.main.activity_employee_training_form.buttonSubmitEmployeeTraining
+import kotlinx.android.synthetic.main.activity_employee_training_form.requiredNamaEmployeeTraining
+import kotlinx.android.synthetic.main.activity_employee_training_form.requiredNamaEmployeeTrainingOrganizer
+import kotlinx.android.synthetic.main.activity_employee_training_form.requiredTanggalEmployeeTraining
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -153,9 +159,9 @@ class EmployeeTrainingFormActivity : AppCompatActivity() {
         val employeeTrainingOrganizerSpinner = spinnerInputNamaEmployeeTrainingOrganizer.selectedItem.toString()
         val positionEmployeeTrainingOrganizerSpinner = spinnerInputNamaEmployeeTrainingOrganizer.selectedItemPosition
         val employeeTrainingTypeSpinner = spinnerInputTypeEmployeeTraining.selectedItem.toString()
-        //val positionEmployeeTrainingTypeSpinner = spinnerInputTypeEmployeeTraining.selectedItemPosition
+        val positionEmployeeTrainingTypeSpinner = spinnerInputTypeEmployeeTraining.selectedItemPosition
         val employeeCertificationTypeSpinner = spinnerInputCertificationEmployeeTraining.selectedItem.toString()
-       // val positionEmployeeCertificationTypeSpinner = spinnerInputCertificationEmployeeTraining.selectedItemPosition
+        val positionEmployeeCertificationTypeSpinner = spinnerInputCertificationEmployeeTraining.selectedItemPosition
 
 
         var isValid = true
@@ -184,6 +190,24 @@ class EmployeeTrainingFormActivity : AppCompatActivity() {
             isValid = false
         }
 
+        val currentDate = Calendar.getInstance()
+        currentDate.set(Calendar.HOUR_OF_DAY, 0)
+        currentDate.set(Calendar.MINUTE, 0)
+        currentDate.set(Calendar.SECOND, 0)
+        currentDate.set(Calendar.MILLISECOND, 0)
+
+        val formatDate = SimpleDateFormat("MMMM dd, yyyy")
+        val trainingTime = formatDate.parse(employeeTrainingDate)
+        val trainingDate = Calendar.getInstance()
+        trainingDate.time = trainingTime!!
+
+        if (trainingDate.before(currentDate)) {
+            inputTanggalEmployeeTraining.setHintTextColor(Color.RED)
+            isValid = false
+            Toast.makeText(context, "Tidak boleh memilih tanggal kemarin", Toast.LENGTH_SHORT)
+                .show()
+        }
+
         if (isValid) {
             val model = EmployeeTraining()
             model.idEmployeeTraining = data.idEmployeeTraining
@@ -191,8 +215,19 @@ class EmployeeTrainingFormActivity : AppCompatActivity() {
             model.namaEmployeeTraining = employeeTrainingNameSpinner
             model.namaEmployeeTO = employeeTrainingOrganizerSpinner
             model.dateEmployeeTraining = employeeTrainingDate
-            model.typeEmployeeTraining = employeeTrainingTypeSpinner
-            model.typeEmployeeCertification = employeeCertificationTypeSpinner
+            if (positionEmployeeTrainingTypeSpinner == 0){
+                model.typeEmployeeTraining == ""
+            }
+            else{
+                model.typeEmployeeTraining = employeeTrainingTypeSpinner
+            }
+
+            if (positionEmployeeCertificationTypeSpinner == 0){
+                model.typeEmployeeCertification == ""
+            }
+            else{
+                model.typeEmployeeCertification = employeeCertificationTypeSpinner
+            }
 
             val cekEmployeeTrainee =
                 databaseQueryHelper!!.cekEmployeeTrainingSudahTraining(model.namaTrainee!!, model.dateEmployeeTraining!!)
