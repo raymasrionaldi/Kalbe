@@ -20,6 +20,7 @@ import com.xsis.android.batch217.models.*
 import com.xsis.android.batch217.utils.*
 import kotlinx.android.synthetic.main.activity_edit_prfrequest.*
 import kotlinx.android.synthetic.main.activity_employee_training_edit.*
+import kotlinx.android.synthetic.main.activity_employee_training_form.*
 import kotlinx.android.synthetic.main.activity_employee_training_form.buttonResetEmployeeTraining
 import kotlinx.android.synthetic.main.activity_employee_training_form.buttonSubmitEmployeeTraining
 import kotlinx.android.synthetic.main.activity_employee_training_form.requiredNamaEmployeeTraining
@@ -36,6 +37,7 @@ class EmployeeTrainingEditActivity : AppCompatActivity() {
 
     var buttonReset: Button? = null
     var employeeNameTraineeText: EditText? = null
+    var employeeDateTrainingText: EditText? = null
     var employeeTrainingNameSpinner: Spinner? = null
     var employeeTrainingOrganizerSpinner: Spinner? = null
     var employeeTrainingTypeSpinner: Spinner? = null
@@ -70,11 +72,11 @@ class EmployeeTrainingEditActivity : AppCompatActivity() {
         }
 
         employeeNameTraineeText = findViewById(R.id.editNamaTrainee)
+        employeeDateTrainingText = findViewById(R.id.editTanggalEmployeeTraining)
         employeeTrainingNameSpinner = findViewById(R.id.spinnerEditNamaEmployeeTraining)
         employeeTrainingOrganizerSpinner = findViewById(R.id.spinnerEditNamaEmployeeTrainingOrganizer)
         employeeTrainingTypeSpinner = findViewById(R.id.spinnerEditTypeEmployeeTraining)
         employeeCertificationTypeSpinner = findViewById(R.id.spinnerEditCertificationEmployeeTraining)
-
 
         ubahButtonResetSpinner()
 
@@ -93,6 +95,7 @@ class EmployeeTrainingEditActivity : AppCompatActivity() {
         }
 
         employeeNameTraineeText!!.addTextChangedListener(textWatcher)
+        employeeDateTrainingText!!.addTextChangedListener(textWatcher)
 
         val bundle: Bundle? = intent.extras
         bundle?.let {
@@ -165,6 +168,12 @@ class EmployeeTrainingEditActivity : AppCompatActivity() {
         val employeeCertificationTypeSpinner = spinnerEditCertificationEmployeeTraining.selectedItem.toString()
 
         var isValid = true
+
+        if (employeeNameTraineeText.isEmpty()) {
+            editNamaTrainee.setHintTextColor(Color.RED)
+            requiredNamaTraineeEdit.visibility = View.VISIBLE
+            isValid = false
+        }
 
         if (positionEmployeeTrainingSpinner == 0) {
             editNamaEmployeeTraining.setHintTextColor(Color.RED)
@@ -240,9 +249,9 @@ class EmployeeTrainingEditActivity : AppCompatActivity() {
                 editTanggalEmployeeTraining.setText(tanggal)
             }, yearNow,monthNow,dayNow )
             datePickerDialog.show()
-            buttonResetEmployeeTraining.isEnabled = true
-            buttonResetEmployeeTraining.setBackgroundResource(R.drawable.button_reset_on)
-            buttonResetEmployeeTraining.setTextColor(Color.WHITE)
+//            buttonResetEmployeeTraining.isEnabled = true
+//            buttonResetEmployeeTraining.setBackgroundResource(R.drawable.button_reset_on)
+//            buttonResetEmployeeTraining.setTextColor(Color.WHITE)
         }
 
     }
@@ -253,9 +262,10 @@ class EmployeeTrainingEditActivity : AppCompatActivity() {
         override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
             buttonReset = buttonResetEmployeeTraining
 
+            val employeeDateTrainingTeks = editTanggalEmployeeTraining!!.text.toString().trim()
             val employeeNameTraineeTeks = editNamaTrainee!!.text.toString().trim()
 
-            val kondisi = !employeeNameTraineeTeks.isEmpty()
+            val kondisi = !employeeNameTraineeTeks.isEmpty() || !employeeDateTrainingTeks.isEmpty()
 
             buttonResetEmployeeTraining.isEnabled = true
             ubahResetButton(context, kondisi, buttonReset!!)

@@ -100,7 +100,7 @@ class EmployeeStatusQueryHelper (val databaseHelper: DatabaseHelper) {
     fun cekEmployeeStatusSudahAda(nama: String): Int {
         val db = databaseHelper.readableDatabase
         val queryCari =
-            "SELECT * FROM $TABEL_EMPLOYEE_STATUS WHERE $NAMA_EMP = '$nama' AND " +
+            "SELECT * FROM $TABEL_EMPLOYEE_STATUS WHERE $NAMA_EMP LIKE '$nama' AND " +
                     "$IS_DELETED = 'false'"
 
         val cursor = db.rawQuery(queryCari, null)

@@ -101,7 +101,7 @@ class JenisCatatanQueryHelper(val databaseHelper: DatabaseHelper) {
     fun cekJenisCatatanSudahAda(nama: String): Int {
         val db = databaseHelper.readableDatabase
         val queryCari =
-            "SELECT * FROM $TABEL_CATATAN WHERE $NAMA_CATATAN = '$nama' AND " +
+            "SELECT * FROM $TABEL_CATATAN WHERE $NAMA_CATATAN LIKE '$nama' AND " +
                     "$IS_DELETED = 'false'"
 
         val cursor = db.rawQuery(queryCari, null)

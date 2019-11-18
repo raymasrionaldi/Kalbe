@@ -27,6 +27,7 @@ class EmployeeTrainingFormActivity : AppCompatActivity() {
 
     var buttonReset: Button? = null
     var employeeNameTraineeText: EditText? = null
+    var employeeDateTrainingText: EditText? = null
     var employeeTrainingNameSpinner: Spinner? = null
     var employeeTrainingOrganizerSpinner: Spinner? = null
     var employeeTrainingTypeSpinner: Spinner? = null
@@ -64,6 +65,7 @@ class EmployeeTrainingFormActivity : AppCompatActivity() {
         }
 
         employeeNameTraineeText = inputNamaTrainee
+        employeeDateTrainingText = inputTanggalEmployeeTraining
         employeeTrainingNameSpinner = spinnerInputNamaEmployeeTraining
         employeeTrainingOrganizerSpinner = spinnerInputNamaEmployeeTrainingOrganizer
         employeeTrainingTypeSpinner = spinnerInputTypeEmployeeTraining
@@ -87,6 +89,7 @@ class EmployeeTrainingFormActivity : AppCompatActivity() {
         }
 
         employeeNameTraineeText!!.addTextChangedListener(textWatcher)
+        employeeDateTrainingText!!.addTextChangedListener(textWatcher)
 
     }
 
@@ -150,7 +153,10 @@ class EmployeeTrainingFormActivity : AppCompatActivity() {
         val employeeTrainingOrganizerSpinner = spinnerInputNamaEmployeeTrainingOrganizer.selectedItem.toString()
         val positionEmployeeTrainingOrganizerSpinner = spinnerInputNamaEmployeeTrainingOrganizer.selectedItemPosition
         val employeeTrainingTypeSpinner = spinnerInputTypeEmployeeTraining.selectedItem.toString()
+        //val positionEmployeeTrainingTypeSpinner = spinnerInputTypeEmployeeTraining.selectedItemPosition
         val employeeCertificationTypeSpinner = spinnerInputCertificationEmployeeTraining.selectedItem.toString()
+       // val positionEmployeeCertificationTypeSpinner = spinnerInputCertificationEmployeeTraining.selectedItemPosition
+
 
         var isValid = true
 
@@ -187,7 +193,6 @@ class EmployeeTrainingFormActivity : AppCompatActivity() {
             model.dateEmployeeTraining = employeeTrainingDate
             model.typeEmployeeTraining = employeeTrainingTypeSpinner
             model.typeEmployeeCertification = employeeCertificationTypeSpinner
-
 
             val cekEmployeeTrainee =
                 databaseQueryHelper!!.cekEmployeeTrainingSudahTraining(model.namaTrainee!!, model.dateEmployeeTraining!!)
@@ -237,9 +242,9 @@ class EmployeeTrainingFormActivity : AppCompatActivity() {
                 inputTanggalEmployeeTraining.setText(tanggal)
             }, yearNow,monthNow,dayNow )
             datePickerDialog.show()
-            buttonResetEmployeeTraining.isEnabled = true
-            buttonResetEmployeeTraining.setBackgroundResource(R.drawable.button_reset_on)
-            buttonResetEmployeeTraining.setTextColor(Color.WHITE)
+//            buttonResetEmployeeTraining.isEnabled = true
+//            buttonResetEmployeeTraining.setBackgroundResource(R.drawable.button_reset_on)
+//            buttonResetEmployeeTraining.setTextColor(Color.WHITE)
         }
 
     }
@@ -250,9 +255,10 @@ class EmployeeTrainingFormActivity : AppCompatActivity() {
         override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
             buttonReset = buttonResetEmployeeTraining
 
+            val employeeDateTrainingTeks = inputTanggalEmployeeTraining!!.text.toString().trim()
             val employeeNameTraineeTeks = inputNamaTrainee!!.text.toString().trim()
 
-            val kondisi = !employeeNameTraineeTeks.isEmpty()
+            val kondisi = !employeeNameTraineeTeks.isEmpty() || !employeeDateTrainingTeks.isEmpty()
 
             buttonResetEmployeeTraining.isEnabled = true
             ubahResetButton(context, kondisi, buttonReset!!)

@@ -150,7 +150,9 @@ class EmployeeTrainingQueryHelper(val databaseHelper: DatabaseHelper) {
         val db = databaseHelper.readableDatabase
         val queryCari =
             "SELECT * FROM $TABEL_EMPLOYEE_TRAINING WHERE $NAMA_TRAINEE LIKE '$nama' AND " +
-                    " $DATE_EMPLOYEE_TRAINING LIKE '$tanggal' AND $IS_DELETED = 'false'"
+                    " $DATE_EMPLOYEE_TRAINING == '$tanggal' AND $IS_DELETED = 'false'"
+
+        println("$queryCari")
 
         val cursor = db.rawQuery(queryCari, null)
 
