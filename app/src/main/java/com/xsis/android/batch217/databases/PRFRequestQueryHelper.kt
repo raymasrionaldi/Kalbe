@@ -18,7 +18,7 @@ class PRFRequestQueryHelper (val databaseHelper: DatabaseHelper) {
     fun getPidByPlacement(placement : String): ArrayList<PIDByPlacement> {
         var listPID = ArrayList<PIDByPlacement>()
         val db = databaseHelper.readableDatabase
-        val queryGetTypeNama = "SELECT a.$PID_CREATE " +
+        val queryGetTypeNama = "SELECT DISTINCT a.$PID_CREATE " +
                 "FROM $TABEL_PROJECT_CREATE a, $TABEL_PRF_REQUEST b " +
                 "WHERE a.$ID_PROJECT_CREATE = b.$PID " +
                 "AND b.$PLACEMENT LIKE '%$placement%'"
@@ -127,8 +127,6 @@ class PRFRequestQueryHelper (val databaseHelper: DatabaseHelper) {
             val db = databaseHelper.readableDatabase
             val queryCari = "SELECT a.*, b.$NAMA_TYPE_PRF, c.$PID_CREATE FROM $TABEL_PRF_REQUEST a, $TABEL_TYPE_PRF b, $TABEL_PROJECT_CREATE c " +
                     "WHERE a.$PLACEMENT LIKE '%$keyword%' AND a.$IS_DELETED = 'false' " +
-                    "AND a.$TYPE = b.$ID_TYPE_PRF " +
-                    "AND a.$PID = c.$ID_PROJECT_CREATE " +
                     "ORDER BY $PLACEMENT " +
                     "LIMIT 1"
 
