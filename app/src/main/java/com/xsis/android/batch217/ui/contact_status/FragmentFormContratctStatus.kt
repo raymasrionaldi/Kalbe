@@ -40,7 +40,7 @@ class FragmentFormContratctStatus(context:Context,val fm: FragmentManager) : Fra
     var databaseQueryHelper: ContractStatusQueryHelper? = null
 
     companion object {
-        const val TITLE_ADD = ""
+        const val TITLE_ADD = "Add New Contract Status"
         const val TITLE_EDIT = "Edit Contract Status"
         const val MODE_ADD = 0
         const val MODE_EDIT = 1
@@ -71,6 +71,8 @@ class FragmentFormContratctStatus(context:Context,val fm: FragmentManager) : Fra
         }
         nama!!.addTextChangedListener(textWatcher)
         notes!!.addTextChangedListener(textWatcher)
+
+        title!!.text = TITLE_ADD
 
 
         return customView
@@ -119,8 +121,8 @@ class FragmentFormContratctStatus(context:Context,val fm: FragmentManager) : Fra
                         .show()
                 }
             } else if (modeForm == MODE_EDIT){
-                if ((cekKontrakStatus != 1 && model.namaContract == data!!.namaContract)||
-                    (cekKontrakStatus != 0 && model.namaContract != data!!.namaContract) ){
+                if ((cekKontrakStatus != 1 && model.namaContract.equals(data.namaContract,true))||
+                    (cekKontrakStatus != 0 && !model.namaContract.equals(data.namaContract,true)) ){
                     Toast.makeText(context, DATA_SUDAH_ADA, Toast.LENGTH_SHORT).show()
                     return
                 }
@@ -167,7 +169,6 @@ class FragmentFormContratctStatus(context:Context,val fm: FragmentManager) : Fra
 
             }
             .setNegativeButton("CANCEL") { dialog, which ->
-                null
             }
             .create()
             .show()
@@ -190,15 +191,16 @@ class FragmentFormContratctStatus(context:Context,val fm: FragmentManager) : Fra
     }
     fun changeMode() {
         if (modeForm == MODE_ADD) {
-            titleFromContractStatus.isVisible =true
-
+            title!!.text = TITLE_ADD
             buttonDeleteContractStatus!!.hide()
         } else if (modeForm == MODE_EDIT) {
-            titleFromContractStatus!!.text = TITLE_EDIT
+            title!!.text = TITLE_EDIT
             buttonDeleteContractStatus!!.show()
         }
         nama!!.setHintTextColor(defaultColor)
         requiredContract!!.visibility =View.INVISIBLE
+
+
     }
     private val textWatcher = object : TextWatcher {
         override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {

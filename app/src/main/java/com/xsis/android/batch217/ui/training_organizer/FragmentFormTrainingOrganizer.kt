@@ -39,7 +39,7 @@ class FragmentFormTrainingOrganizer(context: Context, val fm: FragmentManager) :
     var databaseQueryHelper: TrainingOrganizerQueryHelper? = null
 
     companion object {
-        const val TITLE_ADD = ""
+        const val TITLE_ADD = "Add New Training Organizer"
         const val TITLE_EDIT = "Edit Training Organizer"
         const val MODE_ADD = 0
         const val MODE_EDIT = 1
@@ -67,6 +67,8 @@ class FragmentFormTrainingOrganizer(context: Context, val fm: FragmentManager) :
         }
         nama!!.addTextChangedListener(textWatcher)
         notes!!.addTextChangedListener(textWatcher)
+
+        title!!.text = TITLE_ADD
 
         return customView
     }
@@ -113,8 +115,8 @@ class FragmentFormTrainingOrganizer(context: Context, val fm: FragmentManager) :
                         .show()
                 }
             } else if (modeForm == MODE_EDIT) {
-                if ((cekTrainingStatus != 1 && model.namaTrainingOrganizer == data!!.namaTrainingOrganizer) ||
-                    (cekTrainingStatus != 0 && model.namaTrainingOrganizer != data!!.namaTrainingOrganizer)
+                if ((cekTrainingStatus != 1 && model.namaTrainingOrganizer.equals(data.namaTrainingOrganizer,true)) ||
+                    (cekTrainingStatus != 0 && !model.namaTrainingOrganizer.equals(data.namaTrainingOrganizer,true))
                 ) {
                     Toast.makeText(context, DATA_SUDAH_ADA, Toast.LENGTH_SHORT).show()
                     return
@@ -183,11 +185,11 @@ class FragmentFormTrainingOrganizer(context: Context, val fm: FragmentManager) :
     }
     fun changeMode() {
         if (modeForm == MODE_ADD) {
-            titleFromTrainingOrganizer.isVisible = true
+            title!!.text = TITLE_ADD
 
             buttonDeleteTrainingOrganizer!!.hide()
         } else if (modeForm == MODE_EDIT) {
-            titleFromTrainingOrganizer!!.text = TITLE_EDIT
+            title!!.text = TITLE_EDIT
             buttonDeleteTrainingOrganizer!!.show()
         }
         nama!!.setHintTextColor(defaultColor)

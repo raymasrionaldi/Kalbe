@@ -42,7 +42,6 @@ class FragmentDataContractStatus(context:Context, val fm: FragmentManager): Frag
         val myFab = customView.findViewById(R.id.fab) as FloatingActionButton
         myFab.setOnClickListener {
             var viewPager=view!!.parent as ViewPager
-                    viewPager.setCurrentItem(1,true)
             val adapter = viewPager.adapter!! as ContractStatusFragmentAdapter
             val fragment = fm.fragments[1] as FragmentFormContratctStatus
             fragment.modeAdd()

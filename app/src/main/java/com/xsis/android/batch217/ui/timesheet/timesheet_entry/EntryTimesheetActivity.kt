@@ -203,11 +203,19 @@ class EntryTimesheetActivity : AppCompatActivity() {
 
             }
 
+
         buttonSaveEntryFormTimesheet.setOnClickListener {
             validasiInputFormEntry()
         }
         buttonResetEntryFormTimesheet.setOnClickListener {
             resetTimesheet()
+        }
+        if (inputReportDateEntryTimesheet.text.equals("")){
+            inputStarDatetEntryTimesheet!!.isEnabled = false
+            inputEndDateEntryTimesheet!!.isEnabled = false
+        }else{
+            inputStarDatetEntryTimesheet!!.isEnabled = true
+            inputEndDateEntryTimesheet!!.isEnabled = true
         }
 
     }
@@ -278,7 +286,6 @@ class EntryTimesheetActivity : AppCompatActivity() {
             } else {
                 inputReportDateEntryTimesheet.setHintTextColor(Color.BLACK)
                 requiredReportDateTimesheet.isVisible = false
-
             }
             if (startReportDateTimesheet.equals("")) {
                 inputStarDatetEntryTimesheet.setHintTextColor(Color.RED)
@@ -297,7 +304,7 @@ class EntryTimesheetActivity : AppCompatActivity() {
                 inputEndDateEntryTimesheet.setHintTextColor(Color.BLACK)
                 requiredEndEntryTimesheet.isVisible = false
 
-            }// tambah required utk overtime
+            }
             if (positionOvertimeTimesheet == 0) {
                 requiredOvertimeEntryTimesheet.isVisible = true
                 isValid = false
@@ -435,6 +442,7 @@ class EntryTimesheetActivity : AppCompatActivity() {
             )
             datePickerDialog.show()
         }
+
     }
 
     fun setStartReportDateTimesheetPicker() {
