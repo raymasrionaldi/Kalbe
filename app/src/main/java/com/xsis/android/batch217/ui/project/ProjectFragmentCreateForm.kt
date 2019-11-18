@@ -181,28 +181,17 @@ class ProjectFragmentCreateForm(context: Context, val fm: FragmentManager):Fragm
     }
     fun pindahKeFragmentData(){
         fm.fragments.forEach { println(it) }
-        val fragment = fm.fragments[0] as ProjectFragmentCreateData
+        val fragment = fm.fragments[0]
         val viewPager = fragment.view!!.parent as ViewPager
         val adapter = viewPager.adapter!! as ProjectCreateFragmentAdapter
 
-        fragment.search2()
         adapter.notifyDataSetChanged()
         viewPager.setCurrentItem(0, true)
     }
 
     fun setTanggalClickListener(){
-        startDate!!.setOnClickListener {
-            setTanggal(startDate)
-            /*if (endDate!!.text.isNotEmpty()){
-                val start_date = SimpleDateFormat(DATE_PATTERN).parse(startDate!!.text.toString()).time
-                val end_date = SimpleDateFormat(DATE_PATTERN).parse(endDate!!.text.toString()).time
-                val selisih = end_date - start_date
-                println(selisih/1000/60/60/24+1)
-            }*/
-        }
-        endDate!!.setOnClickListener {
-            setTanggal(endDate)
-        }
+        startDate!!.setOnClickListener {setTanggal(startDate)}
+        endDate!!.setOnClickListener {setTanggal(endDate)}
         tanggalBAST!!.setOnClickListener { setTanggal(tanggalBAST) }
     }
 
