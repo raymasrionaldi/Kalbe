@@ -1,6 +1,7 @@
 package com.xsis.android.batch217.utils
 
 val ARRAY_JENIS_SRF = arrayOf(
+    "-- Pilih Jenis SRF --",
     "Baru",
     "Perpanjangan",
     "Replacement"
