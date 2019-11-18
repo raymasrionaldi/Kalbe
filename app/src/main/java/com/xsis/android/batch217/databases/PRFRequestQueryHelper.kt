@@ -241,6 +241,11 @@ class PRFRequestQueryHelper (val databaseHelper: DatabaseHelper) {
         values.put(BAST, model.bast)
         values.put(BILLING, model.billing)
         values.put(IS_DELETED, "false")
+        values.put(TAHAP1_STATUS, "false")
+        values.put(TAHAP2_STATUS, "false")
+        values.put(TAHAP3_STATUS, "false")
+        values.put(TAHAP4_STATUS, "false")
+        values.put(WIN_STATUS, "false")
 
         return db.insert(TABEL_PRF_REQUEST, null, values)
     }

@@ -113,7 +113,7 @@ class CreateERFActivity : AppCompatActivity() {
         if (tglTerima.isEmpty()) {
             requiredTglTerima!!.visibility = View.VISIBLE
         }
-        if(resource.isNotEmpty() && keahlian.isNotEmpty() && tglTerakhir.isNotEmpty() && alasan.isNotEmpty()
+        if(resource.isNotEmpty() && keahlian.isNotEmpty() && tglTerakhir.isNotEmpty()
             && userKembali.isNotEmpty() && tglKembali.isNotEmpty() && namaTerima.isNotEmpty() && tglTerima.isNotEmpty()){
             val model = ERF()
             model.id_prf_request =  idPRFReg

@@ -16,6 +16,11 @@ class PRFRequest {
     var bast: String? = null
     var billing: String? = null
     var is_Deleted:String?=null
+    var tahap_1:String? = null
+    var tahap_2:String? = null
+    var tahap_3:String? = null
+    var tahap_4:String? = null
+    var win_status:String? = null
 
     var namaType: String? = null
     var namaPid: String? = null
