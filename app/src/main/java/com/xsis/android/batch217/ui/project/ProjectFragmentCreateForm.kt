@@ -97,7 +97,6 @@ class ProjectFragmentCreateForm(context: Context, val fm: FragmentManager):Fragm
     fun bawaID(id:Int){
         ID = id
         setIsi()
-        println("-------$ID")
     }
     fun hapus(){
         delete!!.setOnClickListener {
@@ -204,6 +203,7 @@ class ProjectFragmentCreateForm(context: Context, val fm: FragmentManager):Fragm
         val datePickerDialog = DatePickerDialog(context!!, R.style.CustomDatePicker, DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
             val selectedDate = Calendar.getInstance()
             selectedDate.set(year, month, dayOfMonth)
+            println("year, month, dayofmonth = $year, $month, $dayOfMonth")
 
             //konversi ke string
             val formatDate = SimpleDateFormat(DATE_PATTERN)
