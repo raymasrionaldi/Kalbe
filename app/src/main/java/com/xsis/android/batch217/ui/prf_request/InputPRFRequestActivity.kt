@@ -91,6 +91,7 @@ class InputPRFRequestActivity : AppCompatActivity() {
         }
 
         buttonSubmitPRFRequest.setOnClickListener {
+            println("klik button")
             validasiInput()
         }
 
@@ -230,9 +231,6 @@ class InputPRFRequestActivity : AppCompatActivity() {
         if (notebook == 0) {
             requiredEmailPRFRequest.isVisible = true
         }
-        if (BAST == 0) {
-
-        }
 
         else {
             insertKeDatabase(
@@ -250,6 +248,7 @@ class InputPRFRequestActivity : AppCompatActivity() {
                 ARRAY_BAST[BAST],
                 billing
             )
+            println("inssert database")
         }
     }
 

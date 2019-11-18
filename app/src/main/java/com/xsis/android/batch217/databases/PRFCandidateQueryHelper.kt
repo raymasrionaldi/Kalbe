@@ -16,7 +16,8 @@ class PRFCandidateQueryHelper(val databaseHelper: DatabaseHelper) {
             "SELECT a.*, b.$NAMA_EMPLOYEE_POSITION " +
             "FROM $TABEL_PRF_CANDIDATE a, $TABEL_EMPLOYEE_POSITION b " +
             "WHERE a.$POSITION = b.$ID_EMPLOYEE_POSITION " +
-            "AND a.$ID_FROM_PRF = $id"
+            "AND a.$ID_FROM_PRF = $id " +
+            "AND a.$IS_DELETED = 'false'"
 
         return db.rawQuery(queryRead, null)
     }
@@ -132,8 +133,8 @@ class PRFCandidateQueryHelper(val databaseHelper: DatabaseHelper) {
 
         val db = databaseHelper.writableDatabase
         val queryUpdate = "UPDATE $TABEL_PRF_CANDIDATE " +
-                "SET $NAMA_PRF_CANDIDATE = $name, $BATCH = '$batch', $POSITION = '$position', $PLACEMENT_DATE = '$placementDate', $SRF_NUMBER = '$srfNumber', " +
-                "$ALLOWENCE_CANDIDATE = '$customAllowence', $STATUS_CANDIDATE = $candidateStatus, $SIGN_CONTRACT_DATE = '$signContractDate', $NOTES = '$notes', $IS_DELETED = 'false' " +
+                "SET $NAMA_PRF_CANDIDATE = '$name', $BATCH = '$batch', $POSITION = '$position', $PLACEMENT_DATE = '$placementDate', $SRF_NUMBER = '$srfNumber', " +
+                "$ALLOWENCE_CANDIDATE = '$customAllowence', $STATUS_CANDIDATE = '$candidateStatus', $SIGN_CONTRACT_DATE = '$signContractDate', $NOTES = '$notes', $IS_DELETED = 'false' " +
                 "WHERE $ID_PRF_CANDIDATE = $id"
         val cursor = db.rawQuery(queryUpdate, null)
         if (cursor.count > 0) {

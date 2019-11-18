@@ -20,7 +20,6 @@ import com.xsis.android.batch217.models.PRFCandidate
 import com.xsis.android.batch217.models.SRF
 import com.xsis.android.batch217.utils.*
 import kotlinx.android.synthetic.main.activity_edit_prfcandidate.*
-import kotlinx.android.synthetic.main.activity_input_prfcandidate.*
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -149,10 +148,10 @@ class EditPRFCandidateActivity : AppCompatActivity() {
         val name = inputNamaPRFCandidateEdit.text.toString().trim()
         val batch = inputBatchBootcampPRFCandidateEdit.text.toString().trim()
         val position = spinnerInputPositionPRFCandidateEdit.selectedItemPosition
-        val positionItem = spinnerInputPositionPRFCandidate.selectedItem.toString()
+        val positionItem = spinnerInputPositionPRFCandidateEdit.selectedItem.toString()
         val placementDate = inputPlacementDatePRFCandidateEdit.text.toString()
         val srfNumber = spinnerSRFNumberPRFCandidateEdit.selectedItemPosition
-        val srfNumberItem = spinnerSRFNumberPRFCandidate.selectedItem.toString()
+        val srfNumberItem = spinnerSRFNumberPRFCandidateEdit.selectedItem.toString()
         val customAllowence = inputCustomeAllowencePRFCandidateEdit.text.toString()
         val candidateStatus = spinnerInputCandidateStatusPRFCandidateEdit.selectedItemPosition
         val signContractDate = inputSignContractDateEdit.text.toString().trim()
@@ -160,7 +159,7 @@ class EditPRFCandidateActivity : AppCompatActivity() {
 
         if (name.isEmpty()) {
             inputNamaPRFCandidateEdit.setHintTextColor(Color.RED)
-            requiredNamePRFCandidate.isVisible = true
+            requiredNamePRFCandidateEdit.isVisible = true
         }
         if (position == 0) {
             requiredPositionPRFCandidateEdit.isVisible = true
