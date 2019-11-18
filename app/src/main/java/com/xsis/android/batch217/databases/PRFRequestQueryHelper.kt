@@ -263,7 +263,8 @@ class PRFRequestQueryHelper (val databaseHelper: DatabaseHelper) {
                 "FROM $TABEL_PRF_REQUEST a, $TABEL_PRF_CANDIDATE b, $TABEL_TYPE_PRF c " +
                 "WHERE a.$ID_PRF_REQUEST = b.$ID_FROM_PRF " +
                 "AND a.$TYPE = c.$ID_TYPE_PRF " +
-                "AND a.$PLACEMENT LIKE '%$placement%'"
+                "AND a.$PLACEMENT LIKE '%$placement%' " +
+                "AND b.$IS_DELETED = 'false'"
         val cursor =  db.rawQuery(queryGetTypeNama, null)
         if (cursor.count  > 0) {
             listTypeNama = konversiCursorKeListTypeNamaModel(cursor)
