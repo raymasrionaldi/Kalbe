@@ -44,6 +44,12 @@ class EntryTimesheetActivity : AppCompatActivity() {
     var clientSpinner: Spinner? = null
     var statusSpinner: Spinner? = null
     var reportDate: TextView? = null
+    var modeForm = 0
+    companion object {
+        const val MODE_ADD = 0
+        const val MODE_EDIT = 1
+    }
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -320,6 +326,14 @@ class EntryTimesheetActivity : AppCompatActivity() {
             }
 
         }
+        //cek dupilcate data
+        val periksaTimesheet = databaseQueryHelper!!.cekTimesheet(reportDateTimesheet)
+
+        if(periksaTimesheet != 0){
+            Toast.makeText(context, DATA_SUDAH_ADA, Toast.LENGTH_SHORT).show()
+            isValid = false
+        }
+
         if (isValid) {
             val model = Timesheet()
             model.id_timesheet = idTimesheet
@@ -338,15 +352,11 @@ class EntryTimesheetActivity : AppCompatActivity() {
             model.progress_timesheet = CREATED
             model.is_Deleted = "false"
 
-            val periksaTimesheet = databaseQueryHelper!!.cekTimesheet(reportDateTimesheet)
 
             //add
             if (idTimesheet == 0) {
-                if (periksaTimesheet>1){
-                    Toast.makeText(context, DATA_SUDAH_ADA, Toast.LENGTH_SHORT).show()
-                    return
-                }
-                else if (databaseQueryHelper!!.tambahTimesheet(model) == -1L) {
+
+                if(databaseQueryHelper!!.tambahTimesheet(model) == -1L) {
                     Toast.makeText(context, SIMPAN_DATA_GAGAL, Toast.LENGTH_SHORT).show()
                 } else {
                     Toast.makeText(context, SIMPAN_DATA_BERHASIL, Toast.LENGTH_SHORT)
@@ -361,7 +371,6 @@ class EntryTimesheetActivity : AppCompatActivity() {
                     Toast.makeText(context, EDIT_DATA_BERHASIL, Toast.LENGTH_SHORT)
                         .show()
                 }
-                //tolak duplikate date
             }
             setResult(Activity.RESULT_OK, intent)
             finish()
