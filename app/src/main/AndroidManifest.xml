@@ -44,6 +44,7 @@
         <activity
             android:name=".ui.leave_request.LeaveRequestEditActivity" />
         <activity
+            android:configChanges="orientation|screenSize|keyboardHidden"
             android:name=".ui.project.ProjectFormActivity" />
         <activity
             android:name=".ui.tipe_identitas.TipeIdentitasTambahActivity"

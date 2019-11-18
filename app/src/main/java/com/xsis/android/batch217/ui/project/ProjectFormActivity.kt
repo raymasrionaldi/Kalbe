@@ -263,10 +263,10 @@ class ProjectFormActivity : AppCompatActivity() {
 
         if (index < 0) {
             isValid = false
-            spinnerClientNameProject.errorText = "Required"
+            spinnerClientNameProject.isEnableErrorLabel = true
         } else {
             idCompany = listCompany[index].idCompany
-            spinnerClientNameProject.errorText = null
+            spinnerClientNameProject.isEnableErrorLabel = false
         }
 
         if (inputProjectName.isEmpty()) {
