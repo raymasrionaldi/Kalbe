@@ -154,8 +154,8 @@ class TimesheetSubmissionFragment : Fragment() {
         val years = ArrayList<String>()
         years.add("-- Choose Year --")
         val thisYear = Calendar.getInstance().get(Calendar.YEAR)
-        for (i in 1990..thisYear) {
-            years.add(Integer.toString(i))
+        for (i in thisYear downTo  1990) {
+            years.add(i.toString())
         }
         val adapterTahun = ArrayAdapter<String>(
             context!!,
