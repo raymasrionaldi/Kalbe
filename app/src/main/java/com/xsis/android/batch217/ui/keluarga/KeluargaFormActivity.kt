@@ -4,10 +4,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.widget.Button
-import android.widget.LinearLayout
-import android.widget.TextView
-import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -23,6 +19,7 @@ import android.app.Activity
 import android.content.Context
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import android.widget.*
 import androidx.fragment.app.Fragment
 
 
@@ -33,7 +30,7 @@ class KeluargaFormActivity : AppCompatActivity() {
 
     var id = 0
     var judul:TextView? = null
-    var jenisKeluarga:TextInputEditText? = null
+    var jenisKeluarga: TextInputEditText? = null
     var errorJenis:TextView? = null
     var tambah:Button? = null
     var anggotaRecycler:RecyclerView? = null

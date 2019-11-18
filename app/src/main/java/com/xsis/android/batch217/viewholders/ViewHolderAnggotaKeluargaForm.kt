@@ -38,7 +38,7 @@ class ViewHolderAnggotaKeluargaForm(itemView:View):RecyclerView.ViewHolder(itemV
         teksTidakEdit.text = namaAnggota
     }
 
-    fun setModelKonfirm(listAnggota:ArrayList<String>){
+    fun setModelKonfirm(listAnggota:ArrayList<String>, position:Int){
         val anggotaBaru = teksEdit.text.toString().trim()
 
         if (listAnggota.contains(anggotaBaru) && anggotaBaru.isEmpty() && listAnggota.size==1){
@@ -49,12 +49,12 @@ class ViewHolderAnggotaKeluargaForm(itemView:View):RecyclerView.ViewHolder(itemV
             println("konfirm (sudah ada !) : $listAnggota")
 
         } else if (anggotaBaru.isEmpty() && listAnggota.size != 1){
-            listAnggota.removeAt(listAnggota.size-1)
+            listAnggota.removeAt(position)
         } else {
             layoutEdit.isVisible = false
             layoutTidakEdit.isVisible = true
             teksTidakEdit.text = anggotaBaru
-            listAnggota.set(listAnggota.size-1, anggotaBaru)
+            listAnggota.set(position, anggotaBaru)
         }
     }
 
