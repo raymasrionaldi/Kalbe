@@ -338,9 +338,15 @@ class EntryTimesheetActivity : AppCompatActivity() {
             model.progress_timesheet = CREATED
             model.is_Deleted = "false"
 
+            val periksaTimesheet = databaseQueryHelper!!.cekTimesheet(reportDateTimesheet)
+
             //add
             if (idTimesheet == 0) {
-                if (databaseQueryHelper!!.tambahTimesheet(model) == -1L) {
+                if (periksaTimesheet>1){
+                    Toast.makeText(context, DATA_SUDAH_ADA, Toast.LENGTH_SHORT).show()
+                    return
+                }
+                else if (databaseQueryHelper!!.tambahTimesheet(model) == -1L) {
                     Toast.makeText(context, SIMPAN_DATA_GAGAL, Toast.LENGTH_SHORT).show()
                 } else {
                     Toast.makeText(context, SIMPAN_DATA_BERHASIL, Toast.LENGTH_SHORT)
@@ -355,6 +361,7 @@ class EntryTimesheetActivity : AppCompatActivity() {
                     Toast.makeText(context, EDIT_DATA_BERHASIL, Toast.LENGTH_SHORT)
                         .show()
                 }
+                //tolak duplikate date
             }
             setResult(Activity.RESULT_OK, intent)
             finish()
@@ -387,7 +394,7 @@ class EntryTimesheetActivity : AppCompatActivity() {
     fun isiSpinnerClientTimesheet(){
         val clientTimesheet = databaseQueryHelper.tampilkanClientTimesheet()
 
-        listCompany.add("client*")
+        listCompany.add("Client *")
         clientTimesheet.forEach {
             listCompany.add(it.namaCompany!!)
         }
@@ -428,7 +435,7 @@ class EntryTimesheetActivity : AppCompatActivity() {
                     val tanggal = formatDate.format(selectedDate.time)
 
                     //set tampilan
-                    inputReportDateEntryTimesheet.text = tanggal
+                    inputReportDateEntryTimesheet.setText(tanggal)
                 },
                 yearNow,
                 monthNow,
