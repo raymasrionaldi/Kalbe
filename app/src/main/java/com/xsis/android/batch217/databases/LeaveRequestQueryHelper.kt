@@ -88,6 +88,7 @@ class LeaveRequestQueryHelper(val databaseHelper: DatabaseHelper) {
             var cutiKhusus = LeaveRequest()
             cutiKhusus.idCutiKhusus = cursor.getInt(0)
             cutiKhusus.leaveName = cursor.getString(1)
+            cutiKhusus.quotaCutiKhusus=cursor.getInt(2)
             listCutiKhusus.add(cutiKhusus)
         }
         return listCutiKhusus

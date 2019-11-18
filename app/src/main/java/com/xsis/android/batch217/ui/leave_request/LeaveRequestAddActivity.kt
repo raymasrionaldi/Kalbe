@@ -17,6 +17,7 @@ import com.xsis.android.batch217.models.LeaveRequest
 import com.xsis.android.batch217.utils.*
 import kotlinx.android.synthetic.main.activity_leave_request_add.*
 import java.text.SimpleDateFormat
+import java.time.LocalDate
 import java.util.*
 
 class LeaveRequestAddActivity : AppCompatActivity() {
@@ -30,7 +31,7 @@ class LeaveRequestAddActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_leave_request_add)
-        context.title=getString(R.string.menu_leave_request)
+        context.title = getString(R.string.menu_leave_request)
 
         supportActionBar?.let {
             //menampilkan icon di toolbar
@@ -76,17 +77,27 @@ class LeaveRequestAddActivity : AppCompatActivity() {
                     position: Int,
                     id: Long
                 ) {
-                    if(spinner.item[position]=="Cuti Khusus"){
-                        spinnerLeaveName.visibility=View.VISIBLE
-                    }else{
-                        spinnerLeaveName.visibility=View.GONE
+                    if (spinner.item[position] == "Cuti Khusus") {
+                        spinnerLeaveName.visibility = View.VISIBLE
+
+                        /*val startLeave=inputStartLeave.text.toString()
+                        val dateStartLeave= LocalDate.parse(startLeave)
+                        val year=
+                        if(startLeave!=""){
+                            //inputStartLeave.performClick()
+//                            hitungEndDateCutiKhusus(year, month, dayOfMonth)
+                        }*/
+                        // layoutEndLeave.setEnabled(false)
+                    } else {
+                        spinnerLeaveName.visibility = View.GONE
+                        // layoutEndLeave.setEnabled(true)
                     }
                     //spinner.errorText = ""
                     ubahResetButton(context, true, buttonResetLeave)
                 }
 
                 override fun onNothingSelected(adapterView: AdapterView<*>) {
-                //spinner.errorText = "Required"
+                    //spinner.errorText = "Required"
                 }
             }
         }
@@ -99,6 +110,58 @@ class LeaveRequestAddActivity : AppCompatActivity() {
             return true
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun initDatePickerStartLeave() {
+        inputStartLeave.setOnClickListener {
+            // val startLeave = inputStartLeave.text.toString()
+            val calendar = Calendar.getInstance()
+            val formatter = SimpleDateFormat(DATE_PATTERN)
+
+            /*if (!startLeave.isBlank()) {
+                calendar.time = formatter.parse(startLeave)
+            }*/
+
+            val yearStart = calendar.get(Calendar.YEAR)
+            val monthStart = calendar.get(Calendar.MONTH)
+            val dayStart = calendar.get(Calendar.DATE)
+
+            val datePicker = DatePickerDialog(
+                context,
+                DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
+                    val selectedDate = Calendar.getInstance()
+                    selectedDate.set(year, month, dayOfMonth)
+                    val tanggal = formatter.format(selectedDate.time)
+
+                    //set tampilan
+                    inputStartLeave.setText(tanggal)
+
+                    //set end tanggal cuti khusus otomatis
+                    if (cekIsCutiKhusus()) {
+                        hitungEndDateCutiKhusus(year, month, dayOfMonth)
+                    }
+                }, yearStart, monthStart, dayStart
+            )
+            datePicker.show()
+        }
+    }
+
+    fun cekIsCutiKhusus(): Boolean {
+        var isCutiKhusus = false
+        if (spinnerLeaveType.item[spinnerLeaveType.selectedItemPosition] == "Cuti Khusus") {
+            isCutiKhusus = true
+        }
+        return isCutiKhusus
+    }
+
+    fun hitungEndDateCutiKhusus(year: Int, month: Int, dayOfMonth: Int) {
+        val quotaCutiKhusus = listCutiKhusus[spinnerLeaveName.selectedItemPosition].quotaCutiKhusus
+
+        val formatter = SimpleDateFormat(DATE_PATTERN)
+        val defaultDateEnd = Calendar.getInstance()
+        defaultDateEnd.set(year, month, dayOfMonth + (quotaCutiKhusus - 1))
+        val tanggalEnd = formatter.format(defaultDateEnd.time)
+        inputEndLeave.setText(tanggalEnd)
     }
 
     private fun initDatePickerEndLeave() {
@@ -132,36 +195,6 @@ class LeaveRequestAddActivity : AppCompatActivity() {
         }
     }
 
-    private fun initDatePickerStartLeave() {
-        inputStartLeave.setOnClickListener {
-            val startLeave = inputStartLeave.text.toString()
-            val calendar = Calendar.getInstance()
-            val formatter = SimpleDateFormat(DATE_PATTERN)
-
-            if (!startLeave.isBlank()) {
-                calendar.time = formatter.parse(startLeave)
-            }
-
-            val yearStart = calendar.get(Calendar.YEAR)
-            val monthStart = calendar.get(Calendar.MONTH)
-            val dayStart = calendar.get(Calendar.DATE)
-
-            val datePicker = DatePickerDialog(
-                context,
-                DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
-                    val selectedDate = Calendar.getInstance()
-                    selectedDate.set(year, month, dayOfMonth)
-
-                    val tanggal = formatter.format(selectedDate.time)
-
-                    //set tampilan
-                    inputStartLeave.setText(tanggal)
-                }, yearStart, monthStart, dayStart
-            )
-            datePicker.show()
-        }
-    }
-
     private fun resetForm() {
         spinnerLeaveType.clearSelection()
         spinnerLeaveName.clearSelection()
@@ -175,7 +208,7 @@ class LeaveRequestAddActivity : AppCompatActivity() {
     fun submitLeaveRequest() {
 
         val indexLeaveType = spinnerLeaveType.selectedItemPosition
-        val leaveType= spinnerLeaveType.item[indexLeaveType]
+
         val indexCutiKhusus = spinnerLeaveName.selectedItemPosition
 
         var inputIdLeaveType = 0
@@ -195,7 +228,8 @@ class LeaveRequestAddActivity : AppCompatActivity() {
             inputIdLeaveType = listLeaveType[indexLeaveType].idLeaveType
             spinnerLeaveType.errorText = null
 
-            if(leaveType=="Cuti Khusus"){
+            val leaveType = spinnerLeaveType.item[indexLeaveType]
+            if (leaveType == "Cuti Khusus") {
                 if (indexCutiKhusus < 0) {
                     isValid = false
                     spinnerLeaveName.errorText = "Required"
@@ -208,7 +242,6 @@ class LeaveRequestAddActivity : AppCompatActivity() {
 
         if (inputStart.isEmpty()) {
             isValid = false
-            inputStartLeave.setHintTextColor(Color.RED)
             layoutStartLeave.error = "Required"
         } else {
             inputStartLeave.setHintTextColor(defaultColor)

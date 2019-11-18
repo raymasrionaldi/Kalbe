@@ -27,7 +27,9 @@
                 android:layout_height="wrap_content"
                 style="@style/spinnerStyle"
                 app:smsp_hint="Leave Type"
-                app:smsp_multilineError="false" />
+                app:smsp_multilineError="false"
+                app:smsp_underlineSize="0.5dp"
+                app:smsp_underlineColor="#333333"/>
 
             <com.chivorn.smartmaterialspinner.SmartMaterialSpinner
                 android:id="@+id/spinnerLeaveName"
@@ -36,7 +38,9 @@
                 style="@style/spinnerStyle"
                 app:smsp_hint="Leave Name"
                 app:smsp_multilineError="false"
-                android:visibility="gone"/>
+                android:visibility="gone"
+                app:smsp_underlineSize="0.5dp"
+                app:smsp_underlineColor="#333333"/>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/layoutStartLeave"
