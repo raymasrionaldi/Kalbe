@@ -230,6 +230,9 @@ class InputPRFRequestActivity : AppCompatActivity() {
         if (notebook == 0) {
             requiredEmailPRFRequest.isVisible = true
         }
+        if (BAST == 0) {
+
+        }
 
         else {
             insertKeDatabase(

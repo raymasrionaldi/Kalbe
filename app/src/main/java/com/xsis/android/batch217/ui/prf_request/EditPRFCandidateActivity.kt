@@ -17,6 +17,7 @@ import com.xsis.android.batch217.databases.DatabaseHelper
 import com.xsis.android.batch217.databases.PRFCandidateQueryHelper
 import com.xsis.android.batch217.models.EmployeePosition
 import com.xsis.android.batch217.models.PRFCandidate
+import com.xsis.android.batch217.models.SRF
 import com.xsis.android.batch217.utils.*
 import kotlinx.android.synthetic.main.activity_edit_prfcandidate.*
 import kotlinx.android.synthetic.main.activity_input_prfcandidate.*
@@ -40,7 +41,7 @@ class EditPRFCandidateActivity : AppCompatActivity() {
     var notes: EditText? = null
     var ID_prf_candidate = 0
     lateinit var listPosition: List<EmployeePosition>
-    var listSrf: List<String>? = null
+    lateinit var listSrf: List<SRF>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -151,6 +152,7 @@ class EditPRFCandidateActivity : AppCompatActivity() {
         val positionItem = spinnerInputPositionPRFCandidate.selectedItem.toString()
         val placementDate = inputPlacementDatePRFCandidateEdit.text.toString()
         val srfNumber = spinnerSRFNumberPRFCandidateEdit.selectedItemPosition
+        val srfNumberItem = spinnerSRFNumberPRFCandidate.selectedItem.toString()
         val customAllowence = inputCustomeAllowencePRFCandidateEdit.text.toString()
         val candidateStatus = spinnerInputCandidateStatusPRFCandidateEdit.selectedItemPosition
         val signContractDate = inputSignContractDateEdit.text.toString().trim()
@@ -177,7 +179,7 @@ class EditPRFCandidateActivity : AppCompatActivity() {
                 batch,
                 positionItem,
                 placementDate,
-                listSrf!![srfNumber],
+                srfNumberItem,
                 customAllowence,
                 ARRAY_CANDIDATE_STATUS[candidateStatus],
                 signContractDate,
@@ -315,15 +317,20 @@ class EditPRFCandidateActivity : AppCompatActivity() {
         return isilistPosition
     }
 
-    fun isiSpinnerSRFNumber() {
+    fun isiSpinnerSRFNumber():  MutableList<String?>  {
         listSrf = databaseQueryHelper.readSrfNumber()
+        val isilistSrf = listSrf.map{
+            it.id_srf
+        }.toMutableList()
+        isilistSrf.add(0, "SRF Number *")
         val adapterSRFNumber = ArrayAdapter<String>(
             context,
             android.R.layout.simple_spinner_item,
-            listSrf!!
+            isilistSrf
         )
         adapterSRFNumber.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinnerSRFNumberPRFCandidateEdit.adapter = adapterSRFNumber
+        return isilistSrf
     }
 
     fun isiSpinnerCandidateStatus() {
@@ -401,14 +408,14 @@ class EditPRFCandidateActivity : AppCompatActivity() {
             inputPlacementDatePRFCandidateEdit.setText(data.placement_date)
 
             val dataSrfNumber = cursor.getString(6)
-            val indexSrfNumber = listSrf!!.indexOf(dataSrfNumber)
+            val indexSrfNumber = isiSpinnerSRFNumber().indexOf(dataSrfNumber)
             spinnerSRFNumberPRFCandidateEdit.setSelection(indexSrfNumber)
 
             data.allowence_candidate = cursor.getString(7)
             inputCustomeAllowencePRFCandidateEdit.setText(data.allowence_candidate)
 
             val dataCandidateStatus = cursor.getString(8)
-            val indexCandidateStatus = ARRAY_NOTEBOOK.indexOf(dataCandidateStatus)
+            val indexCandidateStatus = ARRAY_CANDIDATE_STATUS.indexOf(dataCandidateStatus)
             spinnerInputCandidateStatusPRFCandidateEdit.setSelection(indexCandidateStatus)
 
             data.sign_contract_date = cursor.getString(9)

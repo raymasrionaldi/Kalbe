@@ -4,6 +4,7 @@ import android.content.ContentValues
 import android.database.Cursor
 import com.xsis.android.batch217.models.EmployeePosition
 import com.xsis.android.batch217.models.PRFCandidate
+import com.xsis.android.batch217.models.SRF
 import com.xsis.android.batch217.utils.*
 
 class PRFCandidateQueryHelper(val databaseHelper: DatabaseHelper) {
@@ -194,16 +195,17 @@ class PRFCandidateQueryHelper(val databaseHelper: DatabaseHelper) {
         return pilihPosition
     }
 
-    fun readSrfNumber(): List<String> {
-        val listSrfNumber = ArrayList<String>()
+    fun readSrfNumber(): List<SRF> {
+        val listSrfNumber = ArrayList<SRF>()
         val db = databaseHelper.readableDatabase
-        val queryReadPosition = "SELECT $ID_SRF FROM $TABEL_SRF WHERE $IS_DELETED = 'false'"
+        val queryReadPosition = "SELECT $ID_SRF FROM $TABEL_SRF"
         val cursor = db.rawQuery(queryReadPosition, null)
-        if (cursor.count > 0) {
-            for (i in 0 until cursor.count) {
-                cursor.moveToPosition(i)
-                listSrfNumber.add(cursor.getString(0))
-            }
+        for (i in 0 until cursor.count ) {
+            cursor.moveToPosition(i)
+            val srfNumber = SRF()
+            srfNumber.id_srf = cursor.getString(0)
+
+            listSrfNumber.add(srfNumber)
         }
         return listSrfNumber
     }
