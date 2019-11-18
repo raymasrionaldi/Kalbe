@@ -314,10 +314,6 @@ class PRFRequestQueryHelper (val databaseHelper: DatabaseHelper) {
         val values = ContentValues()
         values.put(WIN_STATUS, "true")
         db.update(TABEL_PRF_REQUEST, values, "$ID_PRF_REQUEST = ?", arrayOf(id.toString()))
-
-
-//        val queryUpdate = "UPDATE $TABEL_PRF_REQUEST SET $WIN_STATUS = 'true' WHERE $ID_PRF_REQUEST = $id"
-//        val cursor = db.rawQuery(queryUpdate, null)
         println("UPDATE $TABEL_PRF_REQUEST SET $WIN_STATUS = 'true' WHERE $ID_PRF_REQUEST = $id")
     }
 

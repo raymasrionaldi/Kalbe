@@ -19,6 +19,8 @@ import com.xsis.android.batch217.adapters.fragments.PRFWinFragmentAdapter
 import com.xsis.android.batch217.databases.DatabaseHelper
 import com.xsis.android.batch217.databases.PRFRequestQueryHelper
 import com.xsis.android.batch217.models.PRFRequest
+import com.xsis.android.batch217.models.ProjectCreate
+import com.xsis.android.batch217.models.TypePRF
 import com.xsis.android.batch217.utils.*
 import kotlinx.android.synthetic.main.activity_edit_prfrequest.*
 import java.text.SimpleDateFormat
@@ -48,7 +50,8 @@ class WinPRFDetail(context: Context, val fm:FragmentManager):Fragment() {
     var bast: Spinner? = null
     var billing: EditText? = null
     var ID_prf_request = 0
-    var listTypePRF: List<String>? = null
+    lateinit var listTypePRF: List<TypePRF>
+    lateinit var listPID: List<ProjectCreate>
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -78,12 +81,12 @@ class WinPRFDetail(context: Context, val fm:FragmentManager):Fragment() {
         toolbar!!.isVisible = false
         judulForm!!.isVisible = false
 
+        buttonReset!!.setOnClickListener{ pindahKeFragmentData() }
+        buttonSubmit!!.setOnClickListener { konfirmasiWin() }
 
-        isiSpinnerType()
-        isiSpinnerPID()
+        setDisable()
         isiSpinnerNotebook()
         isiSpinnerBAST()
-        setDisable()
 
         return customView
     }
@@ -94,19 +97,22 @@ class WinPRFDetail(context: Context, val fm:FragmentManager):Fragment() {
     }
 
     fun setDisable(){
-        tanggal!!.isEnabled = false
-        type!!.isEnabled = false
-        placement!!.isEnabled = false
-        pid!!.isEnabled = false
-        location!!.isEnabled = false
-        period!!.isEnabled = false
-        userName!!.isEnabled = false
-        telpMobilePhone!!.isEnabled = false
-        email!!.isEnabled = false
-        notebook!!.isEnabled = false
-        overtime!!.isEnabled = false
+        tanggal!!.isFocusable = false
+        placement!!.isFocusable = false
+        location!!.isFocusable = false
+        period!!.isFocusable = false
+        userName!!.isFocusable = false
+        telpMobilePhone!!.isFocusable = false
+        email!!.isFocusable = false
+        overtime!!.isFocusable = false
+        billing!!.isFocusable = false
+
+        type!!.isFocusable = false
+        type!!.isClickable = false
+        pid!!.isFocusableInTouchMode = false
+        
         bast!!.isEnabled = false
-        billing!!.isEnabled = false
+        notebook!!.isEnabled = false
 
         buttonReset!!.text = "Back"
         buttonReset!!.isEnabled = true
@@ -137,17 +143,17 @@ class WinPRFDetail(context: Context, val fm:FragmentManager):Fragment() {
             println("-------------------------------------${data.tanggal}")
 
             val dataType = cursor.getString(2)
-            val indexType = listTypePRF!!.indexOf(dataType)
+            val indexType = isiSpinnerType().indexOf(dataType)
             println("index type = $indexType")
-            spinnerInputTypePRFEdit.setSelection(indexType)
+            spinnerInputTypePRFEdit.setSelection(dataType.toInt())
             println("data type = $dataType")
 
             data.placement = cursor.getString(3)
             inputPlacementPRFEdit.setText(data.placement)
 
             val dataPID = cursor.getString(4)
-            val indexPID = ARRAY_PID.indexOf(dataPID)
-            spinnerInputPIDPRFEdit.setSelection(indexPID)
+            val indexPID = isiSpinnerPID().indexOf(dataPID)
+            spinnerInputPIDPRFEdit.setSelection(dataPID.toInt())
 
             data.location = cursor.getString(5)
             inputLocationPRFEdit.setText(data.location)
@@ -165,15 +171,15 @@ class WinPRFDetail(context: Context, val fm:FragmentManager):Fragment() {
             inputEmailPRFEdit.setText(data.email)
 
             val dataNotebook = cursor.getString(10)
-            val indexnotebook = ARRAY_NOTEBOOK.indexOf(dataNotebook)
-            spinnerInputNotebookPRFEdit.setSelection(indexnotebook)
+//            val indexnotebook = ARRAY_NOTEBOOK.indexOf(dataNotebook)
+            spinnerInputNotebookPRFEdit.setSelection(dataNotebook.toInt())
 
             data.overtime = cursor.getString(11)
             inputOvertimePRFEdit.setText(data.overtime)
 
             val dataBast = cursor.getString(12)
-            val indexBast  = ARRAY_BAST.indexOf(dataBast)
-            spinnerInputBastPRFEdit.setSelection(indexBast)
+            val indexBast = ARRAY_BAST.indexOf(dataBast)
+            spinnerInputBastPRFEdit.setSelection(dataBast.toInt())
 
             data.billing = cursor.getString(13)
             inputBillingPRFEdit.setText(data.billing)
@@ -181,12 +187,6 @@ class WinPRFDetail(context: Context, val fm:FragmentManager):Fragment() {
             data.is_Deleted = cursor.getString(14)
         }
 
-        buttonResetPRFRequestEdit.setOnClickListener{
-            pindahKeFragmentData()
-        }
-        buttonSubmitPRFRequestEdit.setOnClickListener {
-            konfirmasiWin()
-        }
     }
 
     fun konfirmasiWin(){
@@ -216,21 +216,35 @@ class WinPRFDetail(context: Context, val fm:FragmentManager):Fragment() {
         viewPager.setCurrentItem(0, true)
     }
 
-    fun isiSpinnerType(){
-        listTypePRF = databaseQueryHelper.readTypePRF()
-        val adapterType =context?.let {
-            ArrayAdapter<String>(it, android.R.layout.simple_spinner_item, listTypePRF!!)
-        }
-        adapterType!!.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        type!!.adapter = adapterType
-    }
-    fun isiSpinnerPID(){
-        val adapterPID = context?.let { ArrayAdapter<String>(it,
+    fun isiSpinnerType(): MutableList<String?> {
+        listTypePRF = databaseQueryHelper.readTypePRFNew()
+        val isilistType = listTypePRF.map {
+            it.nama_type_prf
+        }.toMutableList()
+        isilistType.add(0, "Type *")
+        val adapterType = ArrayAdapter<String>(
+            context!!,
             android.R.layout.simple_spinner_item,
-            ARRAY_PID
-        ) }
-        adapterPID!!.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        pid!!.adapter = adapterPID
+            isilistType
+        )
+        adapterType.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinnerInputTypePRFEdit.adapter = adapterType
+        return isilistType
+    }
+    fun isiSpinnerPID(): List<String> {
+        listPID = databaseQueryHelper.readPIDPRFNew()
+        val isilistPID = listPID.map {
+            it.PID
+        }.toMutableList()
+        isilistPID.add(0, "PID *")
+        val adapterPID = ArrayAdapter<String>(
+            context!!,
+            android.R.layout.simple_spinner_item,
+            isilistPID
+        )
+        adapterPID.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinnerInputPIDPRFEdit.adapter = adapterPID
+        return isilistPID
     }
     fun isiSpinnerNotebook(){
         val adapterNotebook = context?.let{ArrayAdapter<String>(it,
