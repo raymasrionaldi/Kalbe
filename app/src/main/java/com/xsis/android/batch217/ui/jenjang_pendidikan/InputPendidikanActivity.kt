@@ -106,7 +106,7 @@ class InputPendidikanActivity : AppCompatActivity() {
         val nama = teksPendidikan.text.toString().trim()
         val des = teksDesPendidikan.text.toString().trim()
         //read
-        if(nama.isNullOrEmpty() || des.isNullOrEmpty()){
+        if(nama.isNullOrEmpty()){
             Toast.makeText(context, DATA_BELUM_LENGKAP, Toast.LENGTH_SHORT).show()
         } else {
             val databaseHelper = DatabaseHelper(context!!)

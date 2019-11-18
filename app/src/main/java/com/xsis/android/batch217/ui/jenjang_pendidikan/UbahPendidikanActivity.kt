@@ -129,7 +129,7 @@ class UbahPendidikanActivity : AppCompatActivity() {
     fun insertKeDatabase(id:Int){
         val nama = teksPendidikan.text.toString().trim()
         val des = teksDesPendidikan.text.toString().trim()
-        if(nama.isNullOrEmpty() || des.isNullOrEmpty()){
+        if(nama.isNullOrEmpty()){
             Toast.makeText(context, DATA_BELUM_LENGKAP, Toast.LENGTH_SHORT).show()
         } else {
             val databaseQueryHelper = PendidikanQueryHelper(databaseHelper)
