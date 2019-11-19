@@ -110,7 +110,7 @@ class WinPRFDetail(context: Context, val fm:FragmentManager):Fragment() {
         type!!.isFocusable = false
         type!!.isClickable = false
         pid!!.isFocusableInTouchMode = false
-        
+
         bast!!.isEnabled = false
         notebook!!.isEnabled = false
 

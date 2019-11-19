@@ -89,6 +89,7 @@ class ProjectFragmentCreateForm(context: Context, val fm: FragmentManager):Fragm
         centang()
         simpan()
         hapus()
+        setIsi()
         setTanggalClickListener()
 
         return customView
@@ -96,8 +97,10 @@ class ProjectFragmentCreateForm(context: Context, val fm: FragmentManager):Fragm
 
     fun bawaID(id:Int){
         ID = id
+        println("ID = $ID")
         setIsi()
     }
+
     fun hapus(){
         delete!!.setOnClickListener {
             val konfirmasiWin = AlertDialog.Builder(context)
@@ -117,11 +120,15 @@ class ProjectFragmentCreateForm(context: Context, val fm: FragmentManager):Fragm
         }
     }
     fun setIsi(){
+        if (ID == 0){
+            delete!!.isVisible = false
+        }
         if (ID > 0){
             delete!!.isVisible = true
             delete!!.isClickable = true
             startDate!!.isEnabled = true
             endDate!!.isEnabled = true
+
             //Ambil data dari database berdasarkan id
             val data = databaseQueryHelper.loadDataProjectCreate(ID)
 

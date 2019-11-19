@@ -10,6 +10,7 @@ import com.google.android.material.tabs.TabLayout
 import com.xsis.android.batch217.R
 import com.xsis.android.batch217.adapters.fragments.ProjectCreateFragmentAdapter
 import com.xsis.android.batch217.utils.CustomViewPager
+import com.xsis.android.batch217.utils.MODE_TAB
 import com.xsis.android.batch217.utils.OnBackPressedListener
 import kotlinx.android.synthetic.main.fragment_project_create.*
 
@@ -57,6 +58,7 @@ class ProjectFragmentCreate:Fragment(), OnBackPressedListener {
         //Dipanggil di HomeActivity
         //Untuk pindah tab. Nilainya hanya 0 (tab DATA) atau 1 (tab FORM).
         modeTab = tabIndex
+        MODE_TAB = tabIndex
 //        viewPager0!!.setCurrentItem(modeTab)
     }
 

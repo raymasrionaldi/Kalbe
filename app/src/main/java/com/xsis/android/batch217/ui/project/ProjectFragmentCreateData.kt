@@ -18,6 +18,7 @@ import com.xsis.android.batch217.databases.DatabaseHelper
 import com.xsis.android.batch217.databases.KeluargaQueryHelper
 import com.xsis.android.batch217.databases.ProjectCreateQueryHelper
 import com.xsis.android.batch217.models.ProjectCreate
+import com.xsis.android.batch217.utils.MODE_TAB
 import java.util.*
 import kotlin.concurrent.schedule
 
@@ -56,16 +57,18 @@ class ProjectFragmentCreateData(context: Context, val fm: FragmentManager): Frag
         return customView
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-    }
-
     fun pindahKeFragmentForm(){
-        val fragment = fm.fragments[1] as ProjectFragmentCreateForm
+        if (MODE_TAB == 0){
+            val fragment0 = fm.fragments[1] as ProjectFragmentCreateForm
+            fragment0.bawaID(ID)
+        } else if (MODE_TAB == 1){
+            val fragment0 = fm.fragments[0] as ProjectFragmentCreateForm
+            fragment0.bawaID(ID)
+        }
+
+        val fragment = fm.fragments[1]
         val viewPager = fragment.view!!.parent as ViewPager
         val adapter = viewPager.adapter!! as ProjectCreateFragmentAdapter
-
-        fragment.bawaID(ID)
         adapter.notifyDataSetChanged()
         viewPager.setCurrentItem(1, true)
     }
