@@ -100,6 +100,8 @@ class HomeActivity : AppCompatActivity() {
         expandableList.setOnChildClickListener(childListener)
         expandableList.setOnGroupClickListener(groupListener)
 
+        expandableList.setOnGroupExpandListener(groupExpandListener)
+
         //set default home fragment
         val fragment = HomeFragment()
         val fragmentTransaction = supportFragmentManager.beginTransaction()
@@ -768,6 +770,16 @@ class HomeActivity : AppCompatActivity() {
                 }
             }
             return false
+        }
+    }
+
+    private val groupExpandListener = object : ExpandableListView.OnGroupExpandListener {
+        var previousItem = -1
+
+        override fun onGroupExpand(groupPosition: Int) {
+            if (groupPosition != previousItem)
+                expandableList.collapseGroup(previousItem)
+            previousItem = groupPosition
         }
     }
 

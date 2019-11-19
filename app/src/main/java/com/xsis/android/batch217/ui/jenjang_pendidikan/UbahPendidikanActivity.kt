@@ -127,8 +127,8 @@ class UbahPendidikanActivity : AppCompatActivity() {
     }
 
     fun insertKeDatabase(id:Int){
-        val nama = teksPendidikan.text.toString().trim()
-        val des = teksDesPendidikan.text.toString().trim()
+        val nama = teksPendidikan.text.toString().trim().toUpperCase()
+        val des = teksDesPendidikan.text.toString().trim().toUpperCase()
         if(nama.isNullOrEmpty()){
             Toast.makeText(context, DATA_BELUM_LENGKAP, Toast.LENGTH_SHORT).show()
         } else {

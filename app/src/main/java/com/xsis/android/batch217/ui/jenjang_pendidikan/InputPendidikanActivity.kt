@@ -103,7 +103,7 @@ class InputPendidikanActivity : AppCompatActivity() {
     }
 
     fun insertKeDatabase(){
-        val nama = teksPendidikan.text.toString().trim()
+        val nama = teksPendidikan.text.toString().trim().toUpperCase()
         val des = teksDesPendidikan.text.toString().trim()
         //read
         if(nama.isNullOrEmpty()){
@@ -113,18 +113,8 @@ class InputPendidikanActivity : AppCompatActivity() {
             val databaseQueryHelper = PendidikanQueryHelper(databaseHelper)
             val listPendidikan = databaseQueryHelper.readNamaPendidikan(nama)
             if (!listPendidikan.isEmpty()){
-                //cek id_deleted
-                if(listPendidikan[0].is_Deleted == "true"){
-                    //update tru jadi false
-                    databaseQueryHelper.updatePendidikan(nama,des)
-                    Toast.makeText(context, SIMPAN_DATA_BERHASIL, Toast.LENGTH_SHORT).show()
-                    finish()
-                } else {
-                    Toast.makeText(context, DATA_SUDAH_ADA, Toast.LENGTH_SHORT).show()
-                }
+                Toast.makeText(context, DATA_SUDAH_ADA, Toast.LENGTH_SHORT).show()
             } else {
-                //jika tidak maka insert
-                //cek nama
                 val content = ContentValues()
                 content.put(NAMA_PENDIDIKAN, nama)
                 content.put(DES_PENDIDIKAN, des)
