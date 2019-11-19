@@ -66,6 +66,11 @@ class EditPRFCandidateActivity : AppCompatActivity() {
         signContractDate = inputSignContractDateEdit
         notes = inputNotesPRFCandidateEdit
 
+        ubahButtonResetSpinner()
+        isiSpinnerPosition()
+        isiSpinnerSRFNumber()
+        isiSpinnerCandidateStatus()
+
         name!!.addTextChangedListener(textWatcher)
         batch!!.addTextChangedListener(textWatcher)
         placementDate!!.addTextChangedListener(textWatcher)
@@ -73,11 +78,6 @@ class EditPRFCandidateActivity : AppCompatActivity() {
         signContractDate!!.addTextChangedListener(textWatcher)
         notes!!.addTextChangedListener(textWatcher)
 
-        ubahButtonResetSpinner()
-        requiredOff()
-        isiSpinnerPosition()
-        isiSpinnerSRFNumber()
-        isiSpinnerCandidateStatus()
 
         val bundle: Bundle? = intent.extras
         bundle?.let {
@@ -157,22 +157,45 @@ class EditPRFCandidateActivity : AppCompatActivity() {
         val signContractDate = inputSignContractDateEdit.text.toString().trim()
         val notes = inputNotesPRFCandidateEdit.text.toString().trim()
 
+        var isValid = true
+
         if (name.isEmpty()) {
+            isValid = false
             inputNamaPRFCandidateEdit.setHintTextColor(Color.RED)
             requiredNamePRFCandidateEdit.isVisible = true
-        }
-        if (position == 0) {
-            requiredPositionPRFCandidateEdit.isVisible = true
-        }
-        if (placementDate.isEmpty()) {
-            requiredPlacementDatePRFCandidateEdit.isVisible = true
-        }
-        if (srfNumber == 0) {
-            requiredSRFNumberPRFCandidateEdit.isVisible = true
-        }
-        if (candidateStatus == 0) {
-            requiredCandidateStatusPRFCandidateEdit.isVisible = true
         } else {
+            requiredNamePRFCandidateEdit.isVisible = false
+        }
+
+        if (position == 0) {
+            isValid = false
+            requiredPositionPRFCandidateEdit.isVisible = true
+        }else {
+            requiredPositionPRFCandidateEdit.isVisible = false
+        }
+
+        if (placementDate.isEmpty()) {
+            isValid = false
+            requiredPlacementDatePRFCandidateEdit.isVisible = true
+        }else {
+            requiredPlacementDatePRFCandidateEdit.isVisible = false
+        }
+
+        if (srfNumber == 0) {
+            isValid = false
+            requiredSRFNumberPRFCandidateEdit.isVisible = true
+        } else {
+            requiredSRFNumberPRFCandidateEdit.isVisible = false
+        }
+
+        if (candidateStatus == 0) {
+            isValid = false
+            requiredCandidateStatusPRFCandidateEdit.isVisible = true
+        }else {
+            requiredCandidateStatusPRFCandidateEdit.isVisible = false
+        }
+
+        if (isValid == true) {
             insertKeDatabase(
                 id, name,
                 batch,

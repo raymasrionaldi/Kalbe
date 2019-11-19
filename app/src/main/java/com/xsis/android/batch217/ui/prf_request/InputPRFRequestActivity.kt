@@ -1,12 +1,12 @@
 package com.xsis.android.batch217.ui.prf_request
 
 import android.app.DatePickerDialog
-import android.content.ContentValues
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Patterns
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
@@ -19,10 +19,11 @@ import com.xsis.android.batch217.models.PRFRequest
 import com.xsis.android.batch217.models.ProjectCreate
 import com.xsis.android.batch217.models.TypePRF
 import com.xsis.android.batch217.utils.*
-import kotlinx.android.synthetic.main.activity_edit_prfrequest.*
 import kotlinx.android.synthetic.main.activity_input_prfrequest.*
 import java.text.SimpleDateFormat
 import java.util.*
+
+
 
 class InputPRFRequestActivity : AppCompatActivity() {
     val context = this
@@ -200,39 +201,67 @@ class InputPRFRequestActivity : AppCompatActivity() {
         val BAST = spinnerInputBastPRF.selectedItemPosition
         val billing = billing!!.text.toString().trim()
 
+        var isValid = true
         val emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z.]+"
 
         if (typePosition == 0) {
+            isValid = false
             requiredTypePRFRequest.isVisible = true
+        } else {
+            requiredTypePRFRequest.isVisible = false
         }
         if ( placement.isEmpty()) {
+            isValid = false
             inputPlacementPRF.setHintTextColor(Color.RED)
             requiredPlacementPRFRequest.isVisible = true
+        } else {
+            requiredPlacementPRFRequest.isVisible = false
         }
         if (pidPosition == 0) {
+            isValid = false
             requiredPIDPRFRequest.isVisible = true
-        }
-        if (period.isEmpty()) {
-            inputPeriodPRF.setHintTextColor(Color.RED)
-            requiredPeriodPRFRequest.isVisible = true
-        }
-        if (userName.isEmpty()) {
-            inputUserNamePRF.setHintTextColor(Color.RED)
-            requiredUsernamePRFRequest.isVisible = true
-        }
-        if (telpMobilePhone.isEmpty()) {
-            inputTelpPRF.setHintTextColor(Color.RED)
-            requiredTelpPRFRequest.isVisible = true
-        }
-        if (email.isEmpty() || !email.matches(emailPattern.toRegex())) {
-            inputEmailPRF.setHintTextColor(Color.RED)
-            requiredEmailPRFRequest.isVisible = true
-        }
-        if (notebook == 0) {
-            requiredEmailPRFRequest.isVisible = true
+        } else {
+            requiredPIDPRFRequest.isVisible = false
         }
 
-        else {
+        if (period.isEmpty()) {
+            isValid = false
+            inputPeriodPRF.setHintTextColor(Color.RED)
+            requiredPeriodPRFRequest.isVisible = true
+        } else {
+            requiredPeriodPRFRequest.isVisible = false
+        }
+        if (userName.isEmpty()) {
+            isValid = false
+            inputUserNamePRF.setHintTextColor(Color.RED)
+            requiredUsernamePRFRequest.isVisible = true
+        } else {
+            requiredUsernamePRFRequest.isVisible = false
+        }
+        if (telpMobilePhone.isEmpty()) {
+            isValid = false
+            inputTelpPRF.setHintTextColor(Color.RED)
+            requiredTelpPRFRequest.isVisible = true
+        } else {
+            requiredTelpPRFRequest.isVisible = false
+        }
+
+        if (email.isEmpty() || !email.matches(emailPattern.toRegex())) {
+            isValid = false
+            inputEmailPRF.setHintTextColor(Color.RED)
+            requiredEmailPRFRequest.isVisible = true
+        } else {
+            requiredEmailPRFRequest.isVisible = false
+        }
+
+        if (notebook == 0) {
+            isValid = false
+            requiredNotebookPRFRequest.isVisible = true
+        } else {
+            requiredNotebookPRFRequest.isVisible = false
+        }
+
+        if (isValid == true ) {
             if (BAST == 0) {
                 val isiBast = ""
                 insertKeDatabase(
