@@ -4,6 +4,8 @@ import android.app.DatePickerDialog
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.EditText
@@ -25,6 +27,7 @@ class CreateERFActivity : AppCompatActivity() {
     val databaseQueryHelper = CreateERFQueryHelper(databaseHelper)
     var idPRFReg = 0
     var listKeahlian: List<String>? = null
+    var tgl = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,9 +37,13 @@ class CreateERFActivity : AppCompatActivity() {
 
         val bundle: Bundle? = intent.extras
         bundle?.let {
-            idPRFReg = bundle!!.getInt(ID_PRF_REQUEST)
+            idPRFReg = bundle.getInt(ID_PRF_REQUEST)
+            tgl = bundle.getString(TANGGAL)!!
             loadDataERF(idPRFReg)
+
         }
+
+        cekDate(tgl)
 
         buttonCancelERF.setOnClickListener {
             println("test1")
@@ -60,6 +67,71 @@ class CreateERFActivity : AppCompatActivity() {
             setDatePicker(inputTglTerima)
         }
 
+
+    }
+
+    fun cekDate(tgl : String){
+        val tglLimit = SimpleDateFormat(DATE_PATTERN).parse(tgl).time
+        inputTglTerakhir.addTextChangedListener(object : TextWatcher{
+            override fun afterTextChanged(s: Editable?) {}
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                val tglTerakhirCek  = inputTglTerakhir.text.toString()
+                if (tglTerakhirCek.isNotEmpty()){
+                    val tglTerakhir = SimpleDateFormat(DATE_PATTERN).parse(tglTerakhirCek).time
+                    val selisih = tglTerakhir - tglLimit
+                    if (selisih < 0){
+                        inputTglTerakhir.setText("")
+                        requiredTglTerakhir.isVisible = true
+                        requiredTglTerakhir.text = "Tanggal terakhir tidak boleh kurang dari $tgl"
+                    } else {
+                        requiredTglTerakhir.isVisible = false
+                    }
+                } else {
+                    requiredTglTerakhir.text = "Required"
+                }
+            }
+        })
+        inputTglTerima.addTextChangedListener(object :TextWatcher {
+            override fun afterTextChanged(s: Editable?) {}
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                val tglTerimaCek  = inputTglTerima.text.toString()
+                if (tglTerimaCek.isNotEmpty()){
+                    val tglTerima = SimpleDateFormat(DATE_PATTERN).parse(tglTerimaCek).time
+                    val selisih = tglTerima - tglLimit
+                    if (selisih < 0){
+                        inputTglTerima.setText("")
+                        requiredTglTerima.isVisible = true
+                        requiredTglTerima.text = "Tanggal terima tidak boleh kurang dari $tgl"
+                    } else {
+                        requiredTglTerima.isVisible = false
+                    }
+                } else {
+                    requiredTglTerima.text = "Required"
+                }
+            }
+        })
+        inputTglKembali.addTextChangedListener(object:TextWatcher{
+            override fun afterTextChanged(s: Editable?) {}
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                val tglKembaliCek  = inputTglKembali.text.toString()
+                if (tglKembaliCek.isNotEmpty()){
+                    val tglKembali = SimpleDateFormat(DATE_PATTERN).parse(tglKembaliCek).time
+                    val selisih = tglKembali - tglLimit
+                    if (selisih < 0){
+                        inputTglKembali.setText("")
+                        requiredTglKembali.isVisible = true
+                        requiredTglKembali.text = "Tanggal kembali tidak boleh kurang dari $tgl"
+                    } else {
+                        requiredTglKembali.isVisible = false
+                    }
+                } else {
+                    requiredTglKembali.text = "Required"
+                }
+            }
+        })
     }
 
     fun resetForm(){
