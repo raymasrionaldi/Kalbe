@@ -170,24 +170,45 @@ class InputPRFCandidateActivity : AppCompatActivity() {
         val signContractDate = inputSignContractDate.text.toString().trim()
         val notes = notes!!.text.toString().trim()
 
+        var isValid = true
+
         if (name.isEmpty()) {
+            isValid = false
             inputNamaPRFCandidate.setHintTextColor(Color.RED)
             requiredNamePRFCandidate.isVisible = true
-        }
-        if (position == 0) {
-            requiredPositionPRFCandidate.isVisible = true
-        }
-        if (placementDate.isEmpty()) {
-            requiredPlacementDatePRFCandidate.isVisible = true
-        }
-        if (srfNumber == 0) {
-            requiredSRFNumberPRFCandidate.isVisible = true
-        }
-        if (candidateStatus == 0) {
-            requiredCandidateStatusPRFCandidate.isVisible = true
+        } else {
+            requiredNamePRFCandidate.isVisible = false
         }
 
-        else {
+        if (position == 0) {
+            isValid = false
+            requiredPositionPRFCandidate.isVisible = true
+        }else {
+            requiredPositionPRFCandidate.isVisible = false
+        }
+
+        if (placementDate.isEmpty()) {
+            isValid = false
+            requiredPlacementDatePRFCandidate.isVisible = true
+        }else {
+            requiredPlacementDatePRFCandidate.isVisible = false
+        }
+
+        if (srfNumber == 0) {
+            isValid = false
+            requiredSRFNumberPRFCandidate.isVisible = true
+        } else {
+            requiredSRFNumberPRFCandidate.isVisible = false
+        }
+
+        if (candidateStatus == 0) {
+            isValid = false
+            requiredCandidateStatusPRFCandidate.isVisible = true
+        }else {
+            requiredCandidateStatusPRFCandidate.isVisible = false
+        }
+
+        if (isValid == true){
             insertKeDatabase(
                 name,
                 batch,
