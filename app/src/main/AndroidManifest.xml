@@ -56,7 +56,8 @@
         <activity
             android:name=".ui.keluarga.KeluargaFormActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-            android:windowSoftInputMode="stateAlwaysHidden" />
+            android:windowSoftInputMode="stateAlwaysHidden"
+            android:configChanges="orientation|screenSize|keyboardHidden"/>
         <activity
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:name=".ui.timesheet.timesheet_entry.EntryTimesheetActivity" />
