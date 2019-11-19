@@ -18,6 +18,7 @@ import com.xsis.android.batch217.databases.TimesheetQueryHelper
 import com.xsis.android.batch217.models.Timesheet
 import com.xsis.android.batch217.utils.*
 import kotlinx.android.synthetic.main.activity_data_collected.*
+import kotlinx.android.synthetic.main.activity_data_submit.*
 
 class DataCollectedActivity : AppCompatActivity() {
 
@@ -66,6 +67,7 @@ class DataCollectedActivity : AppCompatActivity() {
         if (listTimesheet.isEmpty() || year.isEmpty() || month.isEmpty() || client.isEmpty()) {
             dataNotFoundTimesheetCollection.visibility = View.VISIBLE
             listTimesheetCollectionRecycler.visibility = View.GONE
+            buttonCheckCollection.visibility = View.INVISIBLE
         }
         else {
 

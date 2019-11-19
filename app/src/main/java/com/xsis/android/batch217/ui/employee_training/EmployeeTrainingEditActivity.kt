@@ -226,25 +226,22 @@ class EmployeeTrainingEditActivity : AppCompatActivity() {
             isValid = false
         }
 
-        val currentDate = Calendar.getInstance()
-        currentDate.set(Calendar.HOUR_OF_DAY, 0)
-        currentDate.set(Calendar.MINUTE, 0)
-        currentDate.set(Calendar.SECOND, 0)
-        currentDate.set(Calendar.MILLISECOND, 0)
-
-        val formatDate = SimpleDateFormat("MMMM dd, yyyy")
-        val trainingTime = formatDate.parse(employeeTrainingDate)
-        val trainingDate = Calendar.getInstance()
-        trainingDate.time = trainingTime
-
-        if (trainingDate.before(currentDate)) {
-            editTanggalEmployeeTraining.setHintTextColor(Color.RED)
-            isValid = false
-            Toast.makeText(context, "Tidak boleh memilih tanggal kemarin", Toast.LENGTH_SHORT)
-                .show()
-        }
 
         if (isValid) {
+
+            val currentDate = Calendar.getInstance()
+            currentDate.set(Calendar.HOUR_OF_DAY, 0)
+            currentDate.set(Calendar.MINUTE, 0)
+            currentDate.set(Calendar.SECOND, 0)
+            currentDate.set(Calendar.MILLISECOND, 0)
+
+            var isValid2 = true
+
+            val formatDate = SimpleDateFormat("MMMM dd, yyyy")
+            val trainingTime = formatDate.parse(employeeTrainingDate)
+            val trainingDate = Calendar.getInstance()
+            trainingDate.time = trainingTime!!
+
             val model = EmployeeTraining()
             model.idEmployeeTraining = data.idEmployeeTraining
             model.namaTrainee = employeeNameTraineeText
@@ -254,28 +251,56 @@ class EmployeeTrainingEditActivity : AppCompatActivity() {
             model.typeEmployeeTraining = employeeTrainingTypeSpinner
             model.typeEmployeeCertification = employeeCertificationTypeSpinner
 
-
             val cekEmployeeTrainee =
                 databaseQueryHelper!!.cekEmployeeTrainingSudahTraining(
                     model.namaTrainee!!,
                     model.dateEmployeeTraining!!
                 )
 
-            if ((cekEmployeeTrainee != 1 && model.namaTrainee == data.namaTrainee && model.dateEmployeeTraining == data.dateEmployeeTraining) ||
-                (cekEmployeeTrainee != 0 && model.dateEmployeeTraining != data.dateEmployeeTraining) ||
-                (cekEmployeeTrainee != 0 && model.namaTrainee != data.namaTrainee && model.dateEmployeeTraining == data.dateEmployeeTraining)
-            ) {
-                Toast.makeText(context, CEK_TRAINEE, Toast.LENGTH_SHORT).show()
-            }
-            if (databaseQueryHelper!!.editEmployeeTraining(model) == 0) {
-                Toast.makeText(context, EDIT_DATA_GAGAL, Toast.LENGTH_SHORT)
-                    .show()
-            } else {
-                Toast.makeText(context, EDIT_DATA_BERHASIL, Toast.LENGTH_SHORT)
-                    .show()
+            if (cekEmployeeTrainee > 0) {
+                if (trainingDate.before(currentDate)) {
+                    editTanggalEmployeeTraining.setHintTextColor(Color.RED)
+                    isValid2 = false
+                    Toast.makeText(context, "Tidak boleh memilih tanggal kemarin", Toast.LENGTH_SHORT)
+                        .show()
+                }
             }
 
-            finish()
+            if(isValid2){
+                val model = EmployeeTraining()
+                model.idEmployeeTraining = data.idEmployeeTraining
+                model.namaTrainee = employeeNameTraineeText
+                model.namaEmployeeTraining = employeeTrainingNameSpinner
+                model.namaEmployeeTO = employeeTrainingOrganizerSpinner
+                model.dateEmployeeTraining = employeeTrainingDate
+                model.typeEmployeeTraining = employeeTrainingTypeSpinner
+                model.typeEmployeeCertification = employeeCertificationTypeSpinner
+
+
+                val cekEmployeeTrainee =
+                    databaseQueryHelper!!.cekEmployeeTrainingSudahTraining(
+                        model.namaTrainee!!,
+                        model.dateEmployeeTraining!!
+                    )
+
+                if ((cekEmployeeTrainee != 1 && model.namaTrainee.equals(data.namaTrainee, true) && model.dateEmployeeTraining.equals(data.dateEmployeeTraining, true)) ||
+                    (cekEmployeeTrainee != 0 && !model.dateEmployeeTraining.equals(data.dateEmployeeTraining, true)) ||
+                    (cekEmployeeTrainee != 0 && !model.namaTrainee.equals(data.namaTrainee, true) && model.dateEmployeeTraining.equals(data.dateEmployeeTraining, true))
+                ) {
+                    Toast.makeText(context, CEK_TRAINEE, Toast.LENGTH_SHORT).show()
+                    return
+                }
+                if (databaseQueryHelper!!.editEmployeeTraining(model) == 0) {
+                    Toast.makeText(context, EDIT_DATA_GAGAL, Toast.LENGTH_SHORT)
+                        .show()
+                } else {
+                    Toast.makeText(context, EDIT_DATA_BERHASIL, Toast.LENGTH_SHORT)
+                        .show()
+                }
+
+                finish()
+            }
+
         }
     }
 

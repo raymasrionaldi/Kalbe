@@ -208,8 +208,8 @@ class JenisCatatanFragmentForm(context: Context, val fm: FragmentManager) : Frag
                         .show()
                 }
             } else if (modeForm == JenisCatatanFragmentForm.MODE_EDIT) {
-                if ((cekJenisCatatan != 1 && model.nama_catatan!!.toUpperCase() == data.nama_catatan!!.toUpperCase()) ||
-                    (cekJenisCatatan != 0 && model.nama_catatan!!.toUpperCase() != data.nama_catatan!!.toUpperCase())
+                if ((cekJenisCatatan != 1 && model.nama_catatan.equals(data.nama_catatan, true)) ||
+                    (cekJenisCatatan != 0 && !model.nama_catatan.equals(data.nama_catatan, true))
                 ) {
                     Toast.makeText(context, DATA_SUDAH_ADA, Toast.LENGTH_SHORT).show()
                     return

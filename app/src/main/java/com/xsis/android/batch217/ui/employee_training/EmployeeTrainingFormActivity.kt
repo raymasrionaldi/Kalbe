@@ -190,60 +190,66 @@ class EmployeeTrainingFormActivity : AppCompatActivity() {
             isValid = false
         }
 
-        val currentDate = Calendar.getInstance()
-        currentDate.set(Calendar.HOUR_OF_DAY, 0)
-        currentDate.set(Calendar.MINUTE, 0)
-        currentDate.set(Calendar.SECOND, 0)
-        currentDate.set(Calendar.MILLISECOND, 0)
-
-        val formatDate = SimpleDateFormat("MMMM dd, yyyy")
-        val trainingTime = formatDate.parse(employeeTrainingDate)
-        val trainingDate = Calendar.getInstance()
-        trainingDate.time = trainingTime!!
-
-        if (trainingDate.before(currentDate)) {
-            inputTanggalEmployeeTraining.setHintTextColor(Color.RED)
-            isValid = false
-            Toast.makeText(context, "Tidak boleh memilih tanggal kemarin", Toast.LENGTH_SHORT)
-                .show()
-        }
 
         if (isValid) {
-            val model = EmployeeTraining()
-            model.idEmployeeTraining = data.idEmployeeTraining
-            model.namaTrainee = employeeNameTraineeText
-            model.namaEmployeeTraining = employeeTrainingNameSpinner
-            model.namaEmployeeTO = employeeTrainingOrganizerSpinner
-            model.dateEmployeeTraining = employeeTrainingDate
-            if (positionEmployeeTrainingTypeSpinner == 0){
-                model.typeEmployeeTraining == ""
-            }
-            else{
-                model.typeEmployeeTraining = employeeTrainingTypeSpinner
-            }
 
-            if (positionEmployeeCertificationTypeSpinner == 0){
-                model.typeEmployeeCertification == ""
-            }
-            else{
-                model.typeEmployeeCertification = employeeCertificationTypeSpinner
-            }
+            val currentDate = Calendar.getInstance()
+            currentDate.set(Calendar.HOUR_OF_DAY, 0)
+            currentDate.set(Calendar.MINUTE, 0)
+            currentDate.set(Calendar.SECOND, 0)
+            currentDate.set(Calendar.MILLISECOND, 0)
 
-            val cekEmployeeTrainee =
-                databaseQueryHelper!!.cekEmployeeTrainingSudahTraining(model.namaTrainee!!, model.dateEmployeeTraining!!)
+            var isValid2 = true
 
-            if (cekEmployeeTrainee > 0) {
-                Toast.makeText(context, CEK_TRAINEE, Toast.LENGTH_SHORT).show()
-                return
-            }
-            if (databaseQueryHelper!!.tambahEmployeeTraining(model) == -1L) {
-                Toast.makeText(context, SIMPAN_DATA_GAGAL, Toast.LENGTH_SHORT).show()
-            } else {
-                Toast.makeText(context, SIMPAN_DATA_BERHASIL, Toast.LENGTH_SHORT)
+            val formatDate = SimpleDateFormat("MMMM dd, yyyy")
+            val trainingTime = formatDate.parse(employeeTrainingDate)
+            val trainingDate = Calendar.getInstance()
+            trainingDate.time = trainingTime!!
+
+            if (trainingDate.before(currentDate)) {
+                inputTanggalEmployeeTraining.setHintTextColor(Color.RED)
+                isValid2 = false
+                Toast.makeText(context, "Tidak boleh memilih tanggal kemarin", Toast.LENGTH_SHORT)
                     .show()
             }
 
-            finish()
+            if(isValid2){
+                val model = EmployeeTraining()
+                model.idEmployeeTraining = data.idEmployeeTraining
+                model.namaTrainee = employeeNameTraineeText
+                model.namaEmployeeTraining = employeeTrainingNameSpinner
+                model.namaEmployeeTO = employeeTrainingOrganizerSpinner
+                model.dateEmployeeTraining = employeeTrainingDate
+                if (positionEmployeeTrainingTypeSpinner == 0){
+                    model.typeEmployeeTraining == ""
+                }
+                else{
+                    model.typeEmployeeTraining = employeeTrainingTypeSpinner
+                }
+
+                if (positionEmployeeCertificationTypeSpinner == 0){
+                    model.typeEmployeeCertification == ""
+                }
+                else{
+                    model.typeEmployeeCertification = employeeCertificationTypeSpinner
+                }
+
+                val cekEmployeeTrainee =
+                    databaseQueryHelper!!.cekEmployeeTrainingSudahTraining(model.namaTrainee!!, model.dateEmployeeTraining!!)
+
+                if (cekEmployeeTrainee > 0) {
+                    Toast.makeText(context, CEK_TRAINEE, Toast.LENGTH_SHORT).show()
+                    return
+                }
+                if (databaseQueryHelper!!.tambahEmployeeTraining(model) == -1L) {
+                    Toast.makeText(context, SIMPAN_DATA_GAGAL, Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(context, SIMPAN_DATA_BERHASIL, Toast.LENGTH_SHORT)
+                        .show()
+                }
+
+                finish()
+            }
         }
     }
 

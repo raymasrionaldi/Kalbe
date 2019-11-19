@@ -23,9 +23,11 @@
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:name=".ui.timesheet.timesheet_approval.TimesheetApprovalProcessActivity" />
         <activity
-            android:name=".ui.timesheet.timesheet_collection.DataCollectedActivity" />
+            android:name=".ui.timesheet.timesheet_collection.DataCollectedActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"/>
         <activity
-            android:name=".ui.timesheet.timesheet_collection.TimesheetCollectionDetailActivity" />
+            android:name=".ui.timesheet.timesheet_collection.TimesheetCollectionDetailActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"/>
         <activity
             android:name=".ui.prf_request.EditPRFCandidateActivity" />
         <activity

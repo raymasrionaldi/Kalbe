@@ -205,8 +205,8 @@ class EmployeeStatusFragmentForm(context: Context, val fm: FragmentManager) : Fr
                         .show()
                 }
             } else if (modeForm == EmployeeStatusFragmentForm.MODE_EDIT) {
-                if ((cekEmployeeStatus != 1 && model.nama_employee_status!!.toUpperCase() == data.nama_employee_status!!.toUpperCase()) ||
-                    (cekEmployeeStatus != 0 && model.nama_employee_status!!.toUpperCase() != data.nama_employee_status!!.toUpperCase())
+                if ((cekEmployeeStatus != 1 && model.nama_employee_status.equals(data.nama_employee_status, true)) ||
+                    (cekEmployeeStatus != 0 && !model.nama_employee_status.equals(data.nama_employee_status, true))
                 ) {
                     Toast.makeText(context, DATA_SUDAH_ADA, Toast.LENGTH_SHORT).show()
                     return
