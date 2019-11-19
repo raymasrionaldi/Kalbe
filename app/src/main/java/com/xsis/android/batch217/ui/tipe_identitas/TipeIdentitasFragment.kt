@@ -100,7 +100,6 @@ class TipeIdentitasFragment:Fragment() {
 
     override fun onResume() {
         super.onResume()
-//        refreshList()
         search2()
     }
 

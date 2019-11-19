@@ -128,8 +128,8 @@ class TipeIdentitasTambahActivity : AppCompatActivity() {
 
     fun simpan(id:Int) {
         simpan!!.setOnClickListener {
-            val Nama = nama!!.text.toString().trim()
-            val Des = des!!.text.toString().trim()
+            val Nama = nama!!.text.toString().trim().toUpperCase()
+            val Des = des!!.text.toString().trim().toUpperCase()
 
             if (Nama.isEmpty()){
                 Toast.makeText(this, DATA_BELUM_LENGKAP, Toast.LENGTH_SHORT).show()
