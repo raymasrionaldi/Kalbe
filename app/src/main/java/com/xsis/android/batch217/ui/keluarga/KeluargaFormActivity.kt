@@ -62,6 +62,8 @@ class KeluargaFormActivity : AppCompatActivity() {
             val teks_jenisKeluarga = databaseQueryHelper.readJenisKeluarga(id)
 
             jenisKeluarga!!.setText(teks_jenisKeluarga)
+            simpan!!.setBackgroundResource(R.drawable.button_simpan_on)
+            simpan!!.setTextColor(Color.WHITE)
             simpan!!.isEnabled = true
         }
 
