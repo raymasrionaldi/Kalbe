@@ -218,14 +218,14 @@ class SRFQueryHelper(val databaseHelper: DatabaseHelper) {
         return db.update(TABEL_SRF, values, "$ID_SRF = ?", arrayOf(id.toString()))
     }
 
-/*    fun cekEmpTypeSudahAda(nama: String): Int {
+    fun readAvailSRF(nama: String): Int {
         val db = databaseHelper.readableDatabase
         val queryCari =
-            "SELECT * FROM $TABEL_EMPLOYEE_TYPE WHERE $NAMA_EMP_TYPE LIKE '$nama' AND " +
+            "SELECT * FROM $TABEL_SRF WHERE $ID_SRF = '$nama' AND " +
                     "$IS_DELETED = 'false'"
 
         val cursor = db.rawQuery(queryCari, null)
 
         return cursor.count
-    }*/
+    }
 }

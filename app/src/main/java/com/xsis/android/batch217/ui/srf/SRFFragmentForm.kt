@@ -259,16 +259,16 @@ class SRFFragmentForm(context: Context, val fm: FragmentManager) : Fragment() {
     }
 
     fun simpanSRF(){
-        val idSRFTeks = srfNumber!!.text.toString().trim()
+        val idSRFTeks = srfNumber!!.text.toString().trim().toUpperCase()
         val jenisSRFTeks = spinnerJenis!!.selectedItemPosition
         val jumKebutuhanText = jumKebutuhan!!.text.toString().trim()
         val clientSRFTeks = spinnerClient!!.selectedItemPosition
         val gradeSRFTeks = spinnerGrade!!.selectedItemPosition
-        val namaUserTeks = namaUser!!.text.toString().trim()
-        val emailUserTeks = emailUser!!.text.toString().trim()
-        val salesPriceTeks = salesPrice!!.text.toString().trim()
-        val lokasiTeks = lokasi!!.text.toString().trim()
-        val catatanText = catatan!!.text.toString().trim()
+        val namaUserTeks = namaUser!!.text.toString().trim().toUpperCase()
+        val emailUserTeks = emailUser!!.text.toString().trim().toUpperCase()
+        val salesPriceTeks = salesPrice!!.text.toString().trim().toUpperCase()
+        val lokasiTeks = lokasi!!.text.toString().trim().toUpperCase()
+        val catatanText = catatan!!.text.toString().trim().toUpperCase()
 
         spinnerJenisSRF.errorText = null
         spinnerClientSRF.errorText = null
@@ -328,27 +328,20 @@ class SRFFragmentForm(context: Context, val fm: FragmentManager) : Fragment() {
             model.lokasi = lokasiTeks
             model.catatan = catatanText
 
-            //val cekSRF = databaseQueryHelper!!.cekSRF(model.namaCompany!!)
+            val cekSRF = databaseQueryHelper!!.readAvailSRF(model.id_srf!!)
 
             if (modeForm == MODE_ADD) {
-                /*if (cekSRF > 0) {
+                if (cekSRF > 0) {
                     Toast.makeText(context, DATA_SUDAH_ADA, Toast.LENGTH_SHORT).show()
                     return
-                }*/
+                }
                 if (databaseQueryHelper!!.tambahSRF(model) == -1L) {
                     Toast.makeText(context, SIMPAN_DATA_GAGAL, Toast.LENGTH_SHORT).show()
                 } else {
                     Toast.makeText(context, SIMPAN_DATA_BERHASIL, Toast.LENGTH_SHORT)
                         .show()
-                    pindah()
                 }
             } else if (modeForm == MODE_EDIT) {
-                /*if ((cekCompany != 1 && model.namaCompany == data.namaCompany) ||
-                    (cekCompany != 0 && model.namaCompany != data.namaCompany)
-                ) {
-                    Toast.makeText(context, DATA_SUDAH_ADA, Toast.LENGTH_SHORT).show()
-                    return
-                }*/
                 if (databaseQueryHelper!!.editSRF(model) == 0) {
                     Toast.makeText(context, EDIT_DATA_GAGAL, Toast.LENGTH_SHORT)
                         .show()
