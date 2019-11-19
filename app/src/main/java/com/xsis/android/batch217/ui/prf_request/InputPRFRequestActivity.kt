@@ -234,23 +234,40 @@ class InputPRFRequestActivity : AppCompatActivity() {
 
         else {
             if (BAST == 0) {
-                ARRAY_BAST[0] == ""
+                val isiBast = ""
+                insertKeDatabase(
+                    tanggal,
+                    typeItem,
+                    placement,
+                    pidItem,
+                    location,
+                    period,
+                    userName,
+                    telpMobilePhone,
+                    email,
+                    ARRAY_NOTEBOOK[notebook],
+                    overtime,
+                    isiBast,
+                    billing
+                )
             }
-            insertKeDatabase(
-                tanggal,
-                typeItem,
-                placement,
-                pidItem,
-                location,
-                period,
-                userName,
-                telpMobilePhone,
-                email,
-                ARRAY_NOTEBOOK[notebook],
-                overtime,
-                ARRAY_BAST[BAST],
-                billing
-            )
+            else {
+                insertKeDatabase(
+                    tanggal,
+                    typeItem,
+                    placement,
+                    pidItem,
+                    location,
+                    period,
+                    userName,
+                    telpMobilePhone,
+                    email,
+                    ARRAY_NOTEBOOK[notebook],
+                    overtime,
+                    ARRAY_BAST[BAST],
+                    billing
+                )
+            }
             println("inssert database")
         }
     }

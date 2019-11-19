@@ -230,21 +230,43 @@ class EditPRFRequestActivity : AppCompatActivity() {
 
 
         else {
-            insertKeDatabase(
-                id, tanggal,
-                typeItem,
-                placement,
-                pidItem,
-                location,
-                period,
-                userName,
-                telpMobilePhone,
-                email,
-                ARRAY_NOTEBOOK[notebook],
-                overtime,
-                ARRAY_BAST[BAST],
-                billing
-            )
+            if (BAST == 0) {
+                val isiBast = ""
+                insertKeDatabase(
+                    id,
+                    tanggal,
+                    typeItem,
+                    placement,
+                    pidItem,
+                    location,
+                    period,
+                    userName,
+                    telpMobilePhone,
+                    email,
+                    ARRAY_NOTEBOOK[notebook],
+                    overtime,
+                    isiBast,
+                    billing
+                )
+            }
+            else {
+                insertKeDatabase(
+                    id,
+                    tanggal,
+                    typeItem,
+                    placement,
+                    pidItem,
+                    location,
+                    period,
+                    userName,
+                    telpMobilePhone,
+                    email,
+                    ARRAY_NOTEBOOK[notebook],
+                    overtime,
+                    ARRAY_BAST[BAST],
+                    billing
+                )
+            }
         }
 
     }
