@@ -281,11 +281,28 @@ class LeaveRequestQueryHelper(val databaseHelper: DatabaseHelper) {
         return db.update(TABEL_LEAVE_REQUEST, values, "$ID_LEAVE = ?", arrayOf(id.toString()))
     }
 
+    /*GET YEAR*/
+    /*fun getRegisteredDate(year: Int): List<LeaveRequest>{
+        var listLeaveDate = ArrayList<LeaveRequest>()
+
+        val db = databaseHelper.readableDatabase
+        val queryCari = "SELECT " +
+                "start,end " +
+                "FROM $TABEL_LEAVE_REQUEST " +
+                "WHERE start LIKE '%$year' OR end LIKE '%$year'"
+
+        val cursor = db.rawQuery(queryCari, null)
+        if (cursor.count > 0) {
+            listLeaveDate = konversiCursorKeListDateRangeModel(cursor)
+        }
+
+        return listLeaveDate
+    }*/
+
 
     /*GET PREV YEAR LEAVE QUOTA*/
 
     fun getLeaveDateRangeByYear(year:Int): List<LeaveRequest> {
-//        val prevYear= currentYear-1
         var listLeaveDate = ArrayList<LeaveRequest>()
 
         val db = databaseHelper.readableDatabase

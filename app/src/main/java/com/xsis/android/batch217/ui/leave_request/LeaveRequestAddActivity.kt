@@ -16,17 +16,22 @@ import com.xsis.android.batch217.databases.LeaveRequestQueryHelper
 import com.xsis.android.batch217.models.LeaveRequest
 import com.xsis.android.batch217.utils.*
 import kotlinx.android.synthetic.main.activity_leave_request_add.*
+import kotlinx.android.synthetic.main.activity_leave_request_edit.*
+import kotlinx.android.synthetic.main.form_anggota_keluarga.view.*
 import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.util.*
+import kotlin.collections.ArrayList
 
 class LeaveRequestAddActivity : AppCompatActivity() {
     val context = this
     lateinit var listLeaveType: List<LeaveRequest>
     lateinit var listCutiKhusus: List<LeaveRequest>
     var databaseQueryHelper: LeaveRequestQueryHelper? = null
+    val currentYear = Calendar.getInstance().get(Calendar.YEAR)
 
     var defaultColor = 0
+    var curLeaveNameItem = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,12 +52,13 @@ class LeaveRequestAddActivity : AppCompatActivity() {
         listLeaveType = databaseQueryHelper!!.getLeaveTypeModels()
         val listLeaveType = listLeaveType.map { leave -> leave.leaveType }.toList()
         spinnerLeaveType.item = listLeaveType
-        setOnItemSelectedListener(spinnerLeaveType)
+        //setOnItemSelectedListener(spinnerLeaveType)
 
         listCutiKhusus = databaseQueryHelper!!.getCutiKhususModels()
         val listCutiKhusus = listCutiKhusus.map { leave -> leave.leaveName }.toList()
         spinnerLeaveName.item = listCutiKhusus
-        setOnItemSelectedListener(spinnerLeaveType)
+        //setOnItemSelectedListener(spinnerLeaveType)
+        setOnItemSelectedListener(spinnerLeaveType, spinnerLeaveName)
 
         initDatePickerStartLeave()
         initDatePickerEndLeave()
@@ -77,22 +83,40 @@ class LeaveRequestAddActivity : AppCompatActivity() {
                     position: Int,
                     id: Long
                 ) {
-                    if (spinner.item[position] == "Cuti Khusus") {
+                    /*if (spinner.item[position] == "Cuti Khusus") {
                         spinnerLeaveName.visibility = View.VISIBLE
-
-                        /*val startLeave=inputStartLeave.text.toString()
-                        val dateStartLeave= LocalDate.parse(startLeave)
-                        val year=
-                        if(startLeave!=""){
-                            //inputStartLeave.performClick()
-//                            hitungEndDateCutiKhusus(year, month, dayOfMonth)
-                        }*/
-                        // layoutEndLeave.setEnabled(false)
                     } else {
                         spinnerLeaveName.visibility = View.GONE
                         // layoutEndLeave.setEnabled(true)
+                    }*/
+
+                    println("BULAN# onChange: $spinner")
+
+                    if (spinners[0] == spinner) {
+                        if (spinner.item[position] == "Cuti Khusus") {
+                            spinnerLeaveName.visibility = View.VISIBLE
+                            clearCalendar()
+                        } else {
+                            //TODO check spinner is visible
+                            spinnerLeaveName.visibility = View.GONE
+                            spinnerLeaveName.clearSelection()
+                            clearCalendar()
+                        }
+                    } else if (spinners[1] == spinner) {
+                        if (cekIsCutiKhusus()) {
+                            val startLeave = inputStartLeave.text.toString()
+                            println("BULAN# startLeave: $startLeave")
+
+                            if (startLeave.isNotBlank() || startLeave.isNotEmpty()) {
+                                val format = SimpleDateFormat(DATE_PATTERN)
+                                val date = format.parse(startLeave)
+                                val calendar = Calendar.getInstance()
+                                calendar.time = date
+
+                                hitungEndDateCutiKhusus(calendar)
+                            }
+                        }
                     }
-                    //spinner.errorText = ""
                     ubahResetButton(context, true, buttonResetLeave)
                 }
 
@@ -138,12 +162,22 @@ class LeaveRequestAddActivity : AppCompatActivity() {
 
                     //set end tanggal cuti khusus otomatis
                     if (cekIsCutiKhusus()) {
-                        hitungEndDateCutiKhusus(year, month, dayOfMonth)
+                        val format = SimpleDateFormat(DATE_PATTERN)
+                        val date = format.parse(tanggal)
+                        val calendar = Calendar.getInstance()
+                        calendar.time = date
+
+                        hitungEndDateCutiKhusus(calendar)
                     }
                 }, yearStart, monthStart, dayStart
             )
             datePicker.show()
         }
+    }
+
+    fun clearCalendar(){
+        inputStartLeave.text = null
+        inputEndLeave.text = null
     }
 
     fun cekIsCutiKhusus(): Boolean {
@@ -154,7 +188,21 @@ class LeaveRequestAddActivity : AppCompatActivity() {
         return isCutiKhusus
     }
 
-    fun hitungEndDateCutiKhusus(year: Int, month: Int, dayOfMonth: Int) {
+    fun hitungEndDateCutiKhusus(calendar: Calendar) {
+        val quotaCutiKhusus = listCutiKhusus[spinnerLeaveName.selectedItemPosition].quotaCutiKhusus
+        val formatter = SimpleDateFormat(DATE_PATTERN)
+
+        val dateEnd = calendar
+        dateEnd.add(Calendar.DATE, quotaCutiKhusus - 1)
+        val tanggalEnd = formatter.format(dateEnd.time)
+        inputEndLeave.setText(tanggalEnd)
+    }
+
+    /*fun hitungEndDateCutiKhusus(year: Int, month: Int, dayOfMonth: Int) {
+        println("hitungEndDateCutiKhusus year: $year")
+        println("hitungEndDateCutiKhusus month: $month")
+        println("hitungEndDateCutiKhusus dayOfMonth: $dayOfMonth")
+
         val quotaCutiKhusus = listCutiKhusus[spinnerLeaveName.selectedItemPosition].quotaCutiKhusus
 
         val formatter = SimpleDateFormat(DATE_PATTERN)
@@ -162,7 +210,7 @@ class LeaveRequestAddActivity : AppCompatActivity() {
         defaultDateEnd.set(year, month, dayOfMonth + (quotaCutiKhusus - 1))
         val tanggalEnd = formatter.format(defaultDateEnd.time)
         inputEndLeave.setText(tanggalEnd)
-    }
+    }*/
 
     private fun initDatePickerEndLeave() {
         inputEndLeave.setOnClickListener {
@@ -205,10 +253,25 @@ class LeaveRequestAddActivity : AppCompatActivity() {
         inputReasonLeave.text = null
     }
 
+    /*fun isDateAlreadyRegistered(startDate:Calendar, endDate:Calendar):Boolean{
+        val isExist=false
+        //loop through given date
+        val dateList:ArrayList<Date>?=null
+        while ()
+
+        //startDate.get(Calendar.MONTH) -> GET MONTH FROM CALENDAR
+        val listRangeDate = databaseQueryHelper!!.getLeaveDateRangeByYear(startDate.get(Calendar.YEAR))
+        val listSize= listRangeDate.size
+
+        for(i in 0 until listSize){
+
+        }
+        return isExist
+    }*/
+
     fun submitLeaveRequest() {
 
         val indexLeaveType = spinnerLeaveType.selectedItemPosition
-
         val indexCutiKhusus = spinnerLeaveName.selectedItemPosition
 
         var inputIdLeaveType = 0
@@ -285,20 +348,27 @@ class LeaveRequestAddActivity : AppCompatActivity() {
         }
 
         // check valid duration
+        val startDate = Calendar.getInstance()
+        val endDate = Calendar.getInstance()
         if (inputStart.isNotEmpty() && inputEnd.isNotEmpty()) {
-
-            val startDate = Calendar.getInstance()
-            val endDate = Calendar.getInstance()
             val formatter = SimpleDateFormat(DATE_PATTERN)
 
             startDate.time = formatter.parse(inputStart)
             endDate.time = formatter.parse(inputEnd)
 
-            if (!startDate.before(endDate)) {
-                Toast.makeText(context, "Input Start dan End salah", Toast.LENGTH_SHORT).show()
-                isValid = false
+            if (!startDate.equals(endDate)) {
+                if(!startDate.before(endDate)){
+                    Toast.makeText(context, "Input Start dan End salah", Toast.LENGTH_SHORT).show()
+                    isValid = false
+                }
             }
         }
+
+        // check date already exist
+       /* if(isDateAlreadyRegistered(startDate,endDate)){
+            Toast.makeText(context, "Anda sedang cuti", Toast.LENGTH_SHORT).show()
+            isValid = false
+        }*/
 
         if (isValid) {
             val model = LeaveRequest()

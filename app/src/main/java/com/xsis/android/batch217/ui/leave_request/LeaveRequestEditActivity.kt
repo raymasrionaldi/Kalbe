@@ -94,9 +94,22 @@ class LeaveRequestEditActivity : AppCompatActivity() {
                         if (spinner.item[position] == "Cuti Khusus") {
                             spinnerEditLeaveName.visibility = View.VISIBLE
                         } else {
-                            //TODO check spinner is visible
                             spinnerEditLeaveName.visibility = View.GONE
                             spinnerEditLeaveName.clearSelection()
+                        }
+                    }else if (spinners[1] == spinner) {
+                        if (cekIsCutiKhusus()) {
+                            val startLeave = inputEditStartLeave.text.toString()
+                            println("BULAN# startLeave: $startLeave")
+
+                            if (startLeave.isNotBlank() || startLeave.isNotEmpty()) {
+                                val format = SimpleDateFormat(DATE_PATTERN)
+                                val date = format.parse(startLeave)
+                                val calendar = Calendar.getInstance()
+                                calendar.time = date
+
+                                hitungEndDateCutiKhusus(calendar)
+                            }
                         }
                     }
                     //spinner.errorText = ""
@@ -236,10 +249,37 @@ class LeaveRequestEditActivity : AppCompatActivity() {
 
                     //set tampilan
                     inputEditStartLeave.setText(tanggal)
+
+                    if (cekIsCutiKhusus()) {
+                        val format = SimpleDateFormat(DATE_PATTERN)
+                        val date = format.parse(tanggal)
+                        val calendar = Calendar.getInstance()
+                        calendar.time = date
+
+                        hitungEndDateCutiKhusus(calendar)
+                    }
                 }, yearStart, monthStart, dayStart
             )
             datePicker.show()
         }
+    }
+
+    fun cekIsCutiKhusus(): Boolean {
+        var isCutiKhusus = false
+        if (spinnerEditLeaveType.item[spinnerEditLeaveType.selectedItemPosition] == "Cuti Khusus") {
+            isCutiKhusus = true
+        }
+        return isCutiKhusus
+    }
+
+    fun hitungEndDateCutiKhusus(calendar: Calendar) {
+        val quotaCutiKhusus = listCutiKhusus[spinnerEditLeaveName.selectedItemPosition].quotaCutiKhusus
+        val formatter = SimpleDateFormat(DATE_PATTERN)
+
+        val dateEnd = calendar
+        dateEnd.add(Calendar.DATE, quotaCutiKhusus - 1)
+        val tanggalEnd = formatter.format(dateEnd.time)
+        inputEditEndLeave.setText(tanggalEnd)
     }
 
     private fun resetForm() {
