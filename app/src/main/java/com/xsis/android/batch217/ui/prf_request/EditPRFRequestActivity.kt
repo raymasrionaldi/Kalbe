@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Patterns
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
@@ -60,6 +61,7 @@ class EditPRFRequestActivity : AppCompatActivity() {
         } catch (e: NullPointerException) {
         }
 
+
         tanggal = inputTanggalPRFEdit
         type = spinnerInputTypePRFEdit
         placement = inputPlacementPRFEdit
@@ -74,8 +76,8 @@ class EditPRFRequestActivity : AppCompatActivity() {
         bast = spinnerInputBastPRFEdit
         billing = inputBillingPRFEdit
 
+
         ubahButtonResetSpinner()
-        requiredOff()
         isiSpinnerType()
         isiSpinnerPID()
         isiSpinnerNotebook()
@@ -196,40 +198,68 @@ class EditPRFRequestActivity : AppCompatActivity() {
         val BAST = spinnerInputBastPRFEdit.selectedItemPosition
         val billing = billing!!.text.toString().trim()
 
+        var isValid = true
         val emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z.]+"
 
         if (typePosition == 0) {
+            isValid = false
             requiredTypePRFRequestEdit.isVisible = true
+        } else {
+            requiredTypePRFRequestEdit.isVisible = false
         }
         if ( placement.isEmpty()) {
+            isValid = false
             inputPlacementPRFEdit.setHintTextColor(Color.RED)
             requiredPlacementPRFRequestEdit.isVisible = true
+        } else {
+            requiredPlacementPRFRequestEdit.isVisible = false
         }
         if (pidPosition == 0) {
+            isValid = false
             requiredPIDPRFRequestEdit.isVisible = true
+        } else {
+            requiredPIDPRFRequestEdit.isVisible = false
         }
+
         if (period.isEmpty()) {
+            isValid = false
             inputPeriodPRFEdit.setHintTextColor(Color.RED)
             requiredPeriodPRFRequestEdit.isVisible = true
+        } else {
+            requiredPeriodPRFRequestEdit.isVisible = false
         }
         if (userName.isEmpty()) {
+            isValid = false
             inputUserNamePRFEdit.setHintTextColor(Color.RED)
             requiredUsernamePRFRequestEdit.isVisible = true
+        } else {
+            requiredUsernamePRFRequestEdit.isVisible = false
         }
         if (telpMobilePhone.isEmpty()) {
+            isValid = false
             inputTelpPRFEdit.setHintTextColor(Color.RED)
             requiredTelpPRFRequestEdit.isVisible = true
+        } else {
+            requiredTelpPRFRequestEdit.isVisible = false
         }
+
         if (email.isEmpty() || !email.matches(emailPattern.toRegex())) {
+            isValid = false
             inputEmailPRFEdit.setHintTextColor(Color.RED)
             requiredEmailPRFRequestEdit.isVisible = true
+        } else {
+            requiredEmailPRFRequestEdit.isVisible = false
         }
+
         if (notebook == 0) {
-            requiredEmailPRFRequestEdit.isVisible = true
+            isValid = false
+            requiredNotebookPRFRequestEdit.isVisible = true
+        } else {
+            requiredNotebookPRFRequestEdit.isVisible = false
         }
 
 
-        else {
+        if (isValid == true) {
             if (BAST == 0) {
                 val isiBast = ""
                 insertKeDatabase(
