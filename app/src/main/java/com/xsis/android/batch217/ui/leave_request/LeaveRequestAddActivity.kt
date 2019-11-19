@@ -9,6 +9,7 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.AdapterView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import com.chivorn.smartmaterialspinner.SmartMaterialSpinner
 import com.xsis.android.batch217.R
 import com.xsis.android.batch217.databases.DatabaseHelper
@@ -253,21 +254,49 @@ class LeaveRequestAddActivity : AppCompatActivity() {
         inputReasonLeave.text = null
     }
 
-    /*fun isDateAlreadyRegistered(startDate:Calendar, endDate:Calendar):Boolean{
-        val isExist=false
-        //loop through given date
-        val dateList:ArrayList<Date>?=null
-        while ()
+    fun isDateAlreadyRegistered(startDate:Calendar, endDate:Calendar):Boolean{
+        var isExist=false
 
         //startDate.get(Calendar.MONTH) -> GET MONTH FROM CALENDAR
         val listRangeDate = databaseQueryHelper!!.getLeaveDateRangeByYear(startDate.get(Calendar.YEAR))
         val listSize= listRangeDate.size
+        val formatter = SimpleDateFormat(DATE_PATTERN)
+        val dbStart= Calendar.getInstance()
+        val dbEnd= Calendar.getInstance()
+        var dateRangeStart:Date? =null
+        var dateRangeEnd:Date? =null
+        var overlapStart=""
+        var overlapEnd=""
 
-        for(i in 0 until listSize){
+        listRangeDate.forEach {dateRange->
+            dateRangeStart= formatter.parse(dateRange.start)
+            dateRangeEnd=formatter.parse(dateRange.end)
 
+            dbStart.time = dateRangeStart
+            dbEnd.time = dateRangeEnd
+
+            if(dbStart<=endDate && dbEnd>=startDate){
+                isExist=true
+                println("BULAN# startDate: $startDate")
+                overlapStart=  formatter.format(dbStart.time)
+                overlapEnd=  formatter.format(dbEnd.time)
+                showAlertOverlapDate(overlapStart,overlapEnd)
+            }
         }
+
         return isExist
-    }*/
+    }
+
+    fun showAlertOverlapDate(overlapStart:String,overlapEnd:String){
+        AlertDialog.Builder(context!!, R.style.AlertDialogTheme)
+            .setMessage("Anda sedang cuti pada $overlapStart - $overlapEnd")
+            .setCancelable(false)
+            .setNegativeButton("OK") { dialog, which ->
+            }
+            .create()
+            .show()
+
+    }
 
     fun submitLeaveRequest() {
 
@@ -365,10 +394,10 @@ class LeaveRequestAddActivity : AppCompatActivity() {
         }
 
         // check date already exist
-       /* if(isDateAlreadyRegistered(startDate,endDate)){
+        if(isDateAlreadyRegistered(startDate,endDate)){
             Toast.makeText(context, "Anda sedang cuti", Toast.LENGTH_SHORT).show()
             isValid = false
-        }*/
+        }
 
         if (isValid) {
             val model = LeaveRequest()
