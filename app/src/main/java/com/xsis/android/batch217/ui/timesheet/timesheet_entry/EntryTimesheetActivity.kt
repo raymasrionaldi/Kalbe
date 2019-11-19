@@ -115,10 +115,10 @@ class EntryTimesheetActivity : AppCompatActivity() {
                     inputEndtOvertimeEntryTimesheet!!.visibility = View.GONE
                     inputNotesEntryTimesheet!!.visibility = View.GONE
                     requiredStatusTimesheet!!.visibility = View.GONE
-                    requiredClientTimesheet!!.visibility = View.GONE
                     requiredStartEntryTimesheet!!.visibility = View.GONE
                     requiredEndEntryTimesheet!!.visibility = View.GONE
                     requiredNotesEntryTimesheet!!.visibility = View.GONE
+                    requiredOvertimeEntryTimesheet!!.visibility = View.GONE
 
 //                    inputStarDatetEntryTimesheet.isEnabled = false
 //                    inputEndDateEntryTimesheet.isEnabled = false
@@ -573,6 +573,9 @@ class EntryTimesheetActivity : AppCompatActivity() {
             val kondisi = !reportDateTimesheet.isEmpty() || !startReportDateTimesheet.isEmpty() ||
                     !endReportDateTimesheet.isEmpty()
                     || !startOvertimeTimesheet.isEmpty() || !endOvertimeTimesheet.isEmpty() || !notesTimesheet.isEmpty()
+                    || inputStatusTimesheet.selectedItemPosition > 0 || inputClientTimesheet.selectedItemPosition>0
+                    || inputOvertimeTimesheet.selectedItemPosition > 0
+
             if (reportDateTimesheet.isEmpty()){
                 inputStarDatetEntryTimesheet.isEnabled = false
                 inputEndDateEntryTimesheet.isEnabled = false
