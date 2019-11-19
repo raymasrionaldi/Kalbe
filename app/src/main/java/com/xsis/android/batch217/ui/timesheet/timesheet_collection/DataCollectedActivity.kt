@@ -18,7 +18,9 @@ import com.xsis.android.batch217.databases.TimesheetQueryHelper
 import com.xsis.android.batch217.models.Timesheet
 import com.xsis.android.batch217.utils.*
 import kotlinx.android.synthetic.main.activity_data_collected.*
+import kotlinx.android.synthetic.main.activity_data_collected.buttonBackCollection
 import kotlinx.android.synthetic.main.activity_data_submit.*
+import kotlinx.android.synthetic.main.activity_timesheet_collection_detail.*
 
 class DataCollectedActivity : AppCompatActivity() {
 
@@ -110,6 +112,9 @@ class DataCollectedActivity : AppCompatActivity() {
 
         }
 
+        buttonBackCollection.setOnClickListener{
+            finish()
+        }
     }
 
     fun collected() {

@@ -57,12 +57,6 @@ class EmployeeTrainingFormActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_employee_training_form)
 
-        isiSpinnerNamaTraining()
-        isiSpinnerTrainingOrganizer()
-        isiSpinnerTrainingType()
-        isiSpinnerCertificationType()
-
-
         databaseQueryHelper = EmployeeTrainingQueryHelper(databaseHelper)
 
         try {
@@ -77,8 +71,11 @@ class EmployeeTrainingFormActivity : AppCompatActivity() {
         employeeTrainingTypeSpinner = spinnerInputTypeEmployeeTraining
         employeeCertificationTypeSpinner = spinnerInputCertificationEmployeeTraining
 
-
         ubahButtonResetSpinner()
+        isiSpinnerNamaTraining()
+        isiSpinnerTrainingOrganizer()
+        isiSpinnerTrainingType()
+        isiSpinnerCertificationType()
 
         buttonBackInputEmployeeTraining.setOnClickListener{
             finish()
@@ -211,6 +208,7 @@ class EmployeeTrainingFormActivity : AppCompatActivity() {
                 isValid2 = false
                 Toast.makeText(context, "Tidak boleh memilih tanggal kemarin", Toast.LENGTH_SHORT)
                     .show()
+                inputTanggalEmployeeTraining!!.setText("")
             }
 
             if(isValid2){
