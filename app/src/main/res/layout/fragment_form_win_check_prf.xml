@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/scrollviewPRFWinCheck">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/inputTanggalPRFWinCheck"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:focusable="false"
+                    android:longClickable="false"/>
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_margin="15dp"
+                    android:layout_gravity="right|center_vertical"
+                    android:src="@drawable/ic_arrow_drop_down_grey" />
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/inputTypePRFWinCheck"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:clickable="false"
+                    android:focusable="false"
+                    android:longClickable="false"/>
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_margin="15dp"
+                    android:layout_gravity="right|center_vertical"
+                    android:src="@drawable/ic_arrow_drop_down_grey" />
+            </FrameLayout>
+
+            <EditText
+                android:id="@+id/inputPlacementPRFWinCheck"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:maxLines="1"
+                android:hint="Placement In *"
+                android:focusable="false"
+                android:clickable="false"
+                android:longClickable="false"/>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/inputPIDPRFWinCheck"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:clickable="false"
+                    android:focusable="false"
+                    android:longClickable="false"/>
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_margin="15dp"
+                    android:layout_gravity="right|center_vertical"
+                    android:src="@drawable/ic_arrow_drop_down_grey" />
+            </FrameLayout>
+
+            <EditText
+                android:id="@+id/inputLocationPRFWinCheck"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:maxLines="1"
+                android:hint="Location"
+                android:focusable="false"
+                android:clickable="false"
+                android:longClickable="false"/>
+
+            <EditText
+                android:id="@+id/inputPeriodPRFWinCheck"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:maxLines="1"
+                android:hint="Period *"
+                android:focusable="false"
+                android:clickable="false"
+                android:longClickable="false"/>
+
+            <EditText
+                android:id="@+id/inputUserNamePRFWinCheck"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:maxLines="1"
+                android:hint="User Name *"
+                android:focusable="false"
+                android:clickable="false"
+                android:longClickable="false" />
+
+            <EditText
+                android:id="@+id/inputTelpPRFWinCheck"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:focusable="false"
+                android:clickable="false"
+                android:longClickable="false"
+                android:hint="Telp/Mobile Phone *"
+                android:inputType="number"
+                android:maxLines="1" />
+
+            <EditText
+                android:id="@+id/inputEmailPRFWinCheck"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:maxLines="1"
+                android:hint="Email *"
+                android:focusable="false"
+                android:clickable="false"
+                android:longClickable="false"/>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/inputNotebookPRFWinCheck"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:clickable="false"
+                    android:focusable="false"
+                    android:longClickable="false"/>
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_margin="15dp"
+                    android:layout_gravity="right|center_vertical"
+                    android:src="@drawable/ic_arrow_drop_down_grey" />
+            </FrameLayout>
+
+            <EditText
+                android:id="@+id/inputOvertimePRFWinCheck"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:maxLines="1"
+                android:hint="Overtime"
+                android:focusable="false"
+                android:longClickable="false"
+                android:clickable="false"/>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/inputBastPRFWinCheck"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:clickable="false"
+                    android:focusable="false"
+                    android:longClickable="false"/>
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_margin="15dp"
+                    android:layout_gravity="right|center_vertical"
+                    android:src="@drawable/ic_arrow_drop_down_grey" />
+            </FrameLayout>
+
+            <EditText
+                android:id="@+id/inputBillingPRFWinCheck"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:maxLines="1"
+                android:hint="Billing"
+                android:focusable="false"
+                android:longClickable="false"
+                android:clickable="false"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="20dp"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/buttonResetPRFRequestWinCheck"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_reset_on"
+                    android:text="Back"
+                    android:textColor="@color/colorWhite" />
+
+                <Button
+                    android:id="@+id/buttonSubmitPRFRequestWinCheck"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_save"
+                    android:text="Win"
+                    android:textColor="@color/colorWhite" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>
