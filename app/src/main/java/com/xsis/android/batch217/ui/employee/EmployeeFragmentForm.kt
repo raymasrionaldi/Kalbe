@@ -160,8 +160,8 @@ class EmployeeFragmentForm(context: Context, val fm: FragmentManager) : Fragment
         }
     }
     fun simpanEmpType() {
-        val namaEmpType = nama!!.text.toString().trim()
-        val desEmpType = des!!.text.toString().trim()
+        val namaEmpType = nama!!.text.toString().trim().toUpperCase()
+        val desEmpType = des!!.text.toString().trim().toUpperCase()
 
         val required = view!!.findViewById(R.id.requiredNamaEmployeeType) as TextView
 
