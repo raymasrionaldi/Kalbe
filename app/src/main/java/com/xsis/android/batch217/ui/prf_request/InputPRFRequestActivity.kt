@@ -233,6 +233,9 @@ class InputPRFRequestActivity : AppCompatActivity() {
         }
 
         else {
+            if (BAST == 0) {
+                ARRAY_BAST[0] == ""
+            }
             insertKeDatabase(
                 tanggal,
                 typeItem,
