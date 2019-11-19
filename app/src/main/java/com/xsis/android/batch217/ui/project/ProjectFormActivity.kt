@@ -26,6 +26,7 @@ class ProjectFormActivity : AppCompatActivity() {
     val context = this
     var idProject = 0
     lateinit var listCompany: List<Company>
+    var isSpinnerCompanySelected = false
     var databaseQueryHelper: ProjectQueryHelper? = null
     var defaultColor = 0
 
@@ -84,6 +85,7 @@ class ProjectFormActivity : AppCompatActivity() {
 
     private fun resetForm() {
         spinnerClientNameProject.clearSelection()
+        isSpinnerCompanySelected = false
         inputLocationProject.text = null
         inputDepartmentProject.text = null
         inputUserNameProject.text = null
@@ -199,12 +201,11 @@ class ProjectFormActivity : AppCompatActivity() {
                     position: Int,
                     id: Long
                 ) {
-//                    spinner.errorText = ""
+                    isSpinnerCompanySelected = true
                     ubahResetButton(context, true, buttonResetProject)
                 }
 
                 override fun onNothingSelected(adapterView: AdapterView<*>) {
-//                    spinner.errorText = "Required"
                 }
             }
         }
@@ -232,7 +233,7 @@ class ProjectFormActivity : AppCompatActivity() {
                 inputLocation.isNotEmpty() || inputDepartement.isNotEmpty() || inputUserName.isNotEmpty()
                         || inputProjectName.isNotEmpty() || inputStart.isNotEmpty() || inputEnd.isNotEmpty()
                         || inputRole.isNotEmpty() || inputPhase.isNotEmpty() || inputDes.isNotEmpty() || inputTech.isNotEmpty() ||
-                        inputTask.isNotEmpty()
+                        inputTask.isNotEmpty() || isSpinnerCompanySelected
 
             ubahResetButton(context, kondisi, buttonResetProject)
         }

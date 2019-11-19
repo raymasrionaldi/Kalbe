@@ -6,7 +6,7 @@ import kotlin.collections.ArrayList
 fun createListYear(oldestYear: Int): List<String> {
     val years = ArrayList<String>()
     val thisYear = Calendar.getInstance().get(Calendar.YEAR)
-    for (i in oldestYear..thisYear) {
+    for (i in thisYear downTo oldestYear) {
         years.add(i.toString())
     }
     return years
