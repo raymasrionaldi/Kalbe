@@ -15,6 +15,7 @@
         <activity
             android:name=".ui.summary_prf.SummaryDetailActivity"></activity>
         <activity
+            android:configChanges="orientation|screenSize|keyboardHidden"
             android:name=".ui.timesheet.timesheet_send.SendDataActivity" />
         <activity
             android:name=".ui.timesheet.timesheet_approval.TimesheetApprovalDetailActivity" />
@@ -55,6 +56,7 @@
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
+            android:configChanges="orientation|screenSize|keyboardHidden"
             android:name=".ui.timesheet.timesheet_entry.EntryTimesheetActivity" />
         <activity
             android:configChanges="orientation|screenSize|keyboardHidden"
