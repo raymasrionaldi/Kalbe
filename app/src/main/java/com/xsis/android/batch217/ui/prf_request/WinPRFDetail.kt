@@ -32,6 +32,7 @@ class WinPRFDetail(context: Context, val fm:FragmentManager):Fragment() {
     var databaseHelper = DatabaseHelper(context)
     var databaseQueryHelper = PRFRequestQueryHelper(databaseHelper)
     var data = PRFRequest()
+    var linearLayout:LinearLayout? = null
     var toolbar:LinearLayout? = null
     var judulForm:TextView? = null
     var buttonReset: Button? = null
@@ -60,6 +61,7 @@ class WinPRFDetail(context: Context, val fm:FragmentManager):Fragment() {
     ): View? {
         val customView = inflater.inflate(R.layout.activity_edit_prfrequest,container,false)
 
+        linearLayout = customView.findViewById(R.id.linearLayoutEditPRFRequest)
         toolbar = customView.findViewById(R.id.toolbarPRF)
         judulForm = customView.findViewById(R.id.judulFormUbahPRFRequest)
         tanggal = customView.findViewById(R.id.inputTanggalPRFEdit)
@@ -80,6 +82,7 @@ class WinPRFDetail(context: Context, val fm:FragmentManager):Fragment() {
 
         toolbar!!.isVisible = false
         judulForm!!.isVisible = false
+        linearLayout!!.setBackgroundColor(Color.WHITE)
 
         buttonReset!!.setOnClickListener{ pindahKeFragmentData() }
         buttonSubmit!!.setOnClickListener { konfirmasiWin() }
@@ -107,10 +110,8 @@ class WinPRFDetail(context: Context, val fm:FragmentManager):Fragment() {
         overtime!!.isFocusable = false
         billing!!.isFocusable = false
 
-        type!!.isFocusable = false
-        type!!.isClickable = false
-        pid!!.isFocusableInTouchMode = false
-
+        type!!.isEnabled = false
+        pid!!.isEnabled = false
         bast!!.isEnabled = false
         notebook!!.isEnabled = false
 
