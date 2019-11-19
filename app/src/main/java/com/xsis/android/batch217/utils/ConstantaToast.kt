@@ -14,5 +14,7 @@ val EDIT_DATA_GAGAL = "Data Gagal Diperbaharui"
 
 val CEK_TRAINEE = "1 Pegawai Tidak Boleh Melakukan Training Lebih Dari 1 di Hari Yang Sama"
 
+val TANGGAL_TIDAK_ADA = "Tidak bisa membuat ERF karena tidak ada tanggal di PRF Request"
+
 
 

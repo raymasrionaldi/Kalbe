@@ -340,14 +340,12 @@ class PRFRequestQueryHelper (val databaseHelper: DatabaseHelper) {
         } else if (t4 == "false"){
             check = TAHAP4_STATUS
         }
-        println("INI CHECK : $check")
         return check
 
     }
 
     fun updateCheckPRF(id:Int): String {
         val check = checkTahapPRF(id)
-        println("INI CHECK : $check")
         val db = databaseHelper.writableDatabase
         val values = ContentValues()
         values.put(check, "true")
@@ -355,4 +353,14 @@ class PRFRequestQueryHelper (val databaseHelper: DatabaseHelper) {
         return check
     }
 
+    fun cekTanggal(id: Int):String {
+        var tgl = ""
+        val db = databaseHelper.readableDatabase
+        val queryCari = "SELECT $TANGGAL FROM $TABEL_PRF_REQUEST " +
+                "WHERE $ID_PRF_REQUEST = '$id' "
+        val cursor = db.rawQuery(queryCari, null)
+        cursor.moveToFirst()
+        tgl = cursor.getString(0)
+        return tgl
+    }
 }

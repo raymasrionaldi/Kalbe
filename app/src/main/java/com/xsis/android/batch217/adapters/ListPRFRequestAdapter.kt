@@ -46,6 +46,7 @@ class ListPRFRequestAdapter(
         val databaseQueryHelper = PRFRequestQueryHelper(databaseHelper)
         val db = databaseHelper.writableDatabase
         val ID = model.id_prf_request
+        val tgl = model.tanggal
 
         holder.layoutList.setOnClickListener { view ->
             val fragment = fm.fragments[1] as FragmentCandidatePRFRequest
@@ -92,10 +93,16 @@ class ListPRFRequestAdapter(
                     2 -> {
                         window.dismiss()
                         //pindah ke create ERF
-                        val intentEdit = Intent(context, CreateERFActivity::class.java)
-                        intentEdit.putExtra(ID_PRF_REQUEST, ID )
-                        context.startActivity(intentEdit)
-                        window.dismiss()
+                        var cekTgl = databaseQueryHelper.cekTanggal(ID)
+                        if (cekTgl.isNotEmpty()) {
+                            val intentEdit = Intent(context, CreateERFActivity::class.java)
+                            intentEdit.putExtra(ID_PRF_REQUEST, ID)
+                            intentEdit.putExtra(TANGGAL, tgl)
+                            context.startActivity(intentEdit)
+                            window.dismiss()
+                        } else {
+                            Toast.makeText(context, TANGGAL_TIDAK_ADA, Toast.LENGTH_LONG).show()
+                        }
                     }
                 }
             }
