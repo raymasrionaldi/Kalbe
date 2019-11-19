@@ -7,6 +7,7 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
@@ -39,6 +40,10 @@ class ListTipeIdentitasAdapter(val context:Context, val fragment: TipeIdentitasF
         holder.setModel(listTipeIdentitas[position], position+1)
         val ID = listTipeIdentitas[position].id_TipeIdentitas
         val model = listTipeIdentitas[position]
+
+        if (position == listTipeIdentitas.size - 1){
+            holder.setPaddingList()
+        }
 
         holder.bukaMenu.setOnClickListener {view ->
             val window = showPopupMenuUbahHapus(context, view)
