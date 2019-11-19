@@ -169,12 +169,13 @@ class EditPRFRequestActivity : AppCompatActivity() {
                 id: Long
             ) {
                 buttonReset = buttonResetPRFRequestEdit
-                if (position != 0) {
+                if (position >= 0) {
                     buttonResetPRFRequestEdit.isEnabled = true
                     ubahResetButton(context, true, buttonReset!!)
-                } else {
-                    ubahResetButton(context, false, buttonReset!!)
                 }
+//                else {
+//                    ubahResetButton(context, false, buttonReset!!)
+//                }
             }
 
             override fun onNothingSelected(arg0: AdapterView<*>) {}

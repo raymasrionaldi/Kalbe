@@ -175,7 +175,8 @@ class InputPRFRequestActivity : AppCompatActivity() {
                 if (position != 0) {
                     buttonResetPRFRequest.isEnabled = true
                     ubahResetButton(context, true, buttonReset!!)
-                } else {
+                }
+                else {
                     ubahResetButton(context, false, buttonReset!!)
                 }
             }
