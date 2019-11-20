@@ -604,10 +604,16 @@ class EntryTimesheetActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         //untuk kembali ke home activity
         if (item.itemId == android.R.id.home) {
+            setResult(Activity.RESULT_OK, intent)
             super.onBackPressed()
             return true
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onBackPressed() {
+        setResult(Activity.RESULT_OK, intent)
+        super.onBackPressed()
     }
 
     private fun loadDataTimesheet(ID_Timesheet: Int) {
