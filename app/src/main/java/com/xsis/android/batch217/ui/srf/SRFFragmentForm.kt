@@ -265,7 +265,7 @@ class SRFFragmentForm(context: Context, val fm: FragmentManager) : Fragment() {
         val clientSRFTeks = spinnerClient!!.selectedItemPosition
         val gradeSRFTeks = spinnerGrade!!.selectedItemPosition
         val namaUserTeks = namaUser!!.text.toString().trim().toUpperCase()
-        val emailUserTeks = emailUser!!.text.toString().trim().toUpperCase()
+        val emailUserTeks = emailUser!!.text.toString().trim()
         val salesPriceTeks = salesPrice!!.text.toString().trim().toUpperCase()
         val lokasiTeks = lokasi!!.text.toString().trim().toUpperCase()
         val catatanText = catatan!!.text.toString().trim().toUpperCase()
@@ -277,6 +277,9 @@ class SRFFragmentForm(context: Context, val fm: FragmentManager) : Fragment() {
         requiredNamaUser!!.visibility = View.INVISIBLE
         requiredEmailUser!!.visibility = View.INVISIBLE
         requiredSalesPrice!!.visibility = View.INVISIBLE
+
+        val emailPattern = "[a-z0-9._-]+@[a-z]+\\.+[a-z]+\\.+[a-z]+"
+        val emailPattern2 = "[a-z0-9._-]+@[a-z]+\\.+[a-z]+"
 
         if (idSRFTeks.isEmpty()) {
             srfNumber!!.setHintTextColor(Color.RED)
@@ -295,6 +298,9 @@ class SRFFragmentForm(context: Context, val fm: FragmentManager) : Fragment() {
         if (namaUserTeks.isEmpty()) {
             namaUser!!.setHintTextColor(Color.RED)
             requiredNamaUser!!.visibility = View.VISIBLE
+        }
+        if (!emailUserTeks.matches(emailPattern.toRegex()) && !emailUserTeks.matches(emailPattern2.toRegex())){
+            Toast.makeText(context, "E-mail tidak valid", Toast.LENGTH_SHORT).show()
         }
         if (emailUserTeks.isEmpty()) {
             emailUser!!.setHintTextColor(Color.RED)
