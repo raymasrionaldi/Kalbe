@@ -205,7 +205,8 @@ class InputPRFRequestActivity : AppCompatActivity() {
         var isValid = true
         val emailPattern = "[a-z0-9._-]+@[a-z]+\\.+[a-z]+\\.+[a-z]+"
         val emailPattern2 = "[a-z0-9._-]+@[a-z]+\\.+[a-z]+"
-        val userNamePatterns = "[a-zA-Z0-9._]"
+        val userNamePattern = "[a-zA-Z0-9._]+"
+        println("username = $userName")
 
         if (typePosition == 0) {
             isValid = false
@@ -235,7 +236,8 @@ class InputPRFRequestActivity : AppCompatActivity() {
             requiredPeriodPRFRequest.isVisible = false
         }
 
-        if (!userName.matches(userNamePatterns.toRegex())) {
+        if (!userName.matches(userNamePattern.toRegex())) {
+            println("username = $userName")
             isValid = false
             Toast.makeText(context, "Username tidak valid", Toast.LENGTH_SHORT).show()
         }

@@ -202,7 +202,7 @@ class EditPRFRequestActivity : AppCompatActivity() {
         var isValid = true
         val emailPattern = "[a-z0-9._-]+@[a-z]+\\.+[a-z]+\\.+[a-z]+"
         val emailPattern2 = "[a-z0-9._-]+@[a-z]+\\.+[a-z]+"
-        val userNamePatterns = "[a-zA-Z0-9._]"
+        val userNamePatterns = "[a-zA-Z0-9._]+"
 
 //        var getUsernameToInt = ""
 //        for (i in userName) {
@@ -260,7 +260,7 @@ class EditPRFRequestActivity : AppCompatActivity() {
             isValid = false
             Toast.makeText(context, "E-mail tidak valid", Toast.LENGTH_SHORT).show()
         }
-        if (email.isEmpty() || !email.matches(emailPattern.toRegex())) {
+        if (email.isEmpty()) {
             isValid = false
             inputEmailPRFEdit.setHintTextColor(Color.RED)
             requiredEmailPRFRequestEdit.isVisible = true
