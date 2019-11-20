@@ -24,7 +24,7 @@
             android:paddingTop="10dp">
 
             <EditText
-                android:id="@+id/inputNamaKaryawan"
+                android:id="@+id/inputNamaPegawai"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Nama*"
@@ -62,6 +62,7 @@
                     android:focusable="false"
                     android:longClickable="false"
                     android:textSize="16sp"
+                    android:enabled="false"
                     />
 
                 <ImageView
@@ -87,6 +88,7 @@
                     android:focusable="false"
                     android:longClickable="false"
                     android:textSize="16sp"
+                    android:enabled="false"
                     />
 
                 <ImageView
@@ -222,7 +224,7 @@
                     android:buttonTint="@color/warnaCheckBoxAbu"/>
 
                 <EditText
-                    android:id="@+id/hintDLL"
+                    android:id="@+id/inputDLL"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="..."
@@ -239,7 +241,7 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="15dp">
                 <Button
-                    android:id="@+id/resetProjectCreate"
+                    android:id="@+id/buttonResetPermission"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -249,7 +251,7 @@
                     android:textColor="@color/warnaTeksSimpanOff"
                     android:layout_marginRight="1dp"/>
                 <Button
-                    android:id="@+id/saveProjectCreate"
+                    android:id="@+id/buttonSubmitPermission"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
