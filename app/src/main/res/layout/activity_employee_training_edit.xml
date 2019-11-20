@@ -270,7 +270,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="@drawable/button_reset_off"
-                    android:enabled="false"
+                    android:enabled="true"
                     android:clickable="false"
                     android:text="@string/reset"
                     android:layout_marginLeft="15dp"

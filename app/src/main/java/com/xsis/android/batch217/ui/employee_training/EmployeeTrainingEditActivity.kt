@@ -68,7 +68,7 @@ class EmployeeTrainingEditActivity : AppCompatActivity() {
         employeeTrainingTypeSpinner = findViewById(R.id.spinnerEditTypeEmployeeTraining)
         employeeCertificationTypeSpinner =
             findViewById(R.id.spinnerEditCertificationEmployeeTraining)
-
+        buttonReset = findViewById(R.id.buttonResetEmployeeTraining)
         ubahButtonResetSpinner()
         isiSpinnerNamaTraining()
         isiSpinnerTrainingOrganizer()
@@ -81,7 +81,7 @@ class EmployeeTrainingEditActivity : AppCompatActivity() {
 
         setReportDateEmployeeTrainingPicker()
 
-        buttonResetEmployeeTraining.setOnClickListener {
+        buttonReset!!.setOnClickListener {
             resetForm()
         }
 
@@ -101,7 +101,6 @@ class EmployeeTrainingEditActivity : AppCompatActivity() {
     }
 
     fun ubahButtonResetSpinner() {
-        buttonReset = buttonResetEmployeeTraining
         employeeTrainingNameSpinner!!.onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(
@@ -110,12 +109,11 @@ class EmployeeTrainingEditActivity : AppCompatActivity() {
                     position: Int,
                     id: Long
                 ) {
-                    buttonReset = buttonResetEmployeeTraining
+                    val kondisi = cekKondisi()
                     if (position != 0) {
-                        buttonResetEmployeeTraining.isEnabled = true
-                        ubahResetButton(context, true, buttonReset!!)
+                        ubahResetButton(context, kondisi, buttonReset!!)
                     } else {
-                        ubahResetButton(context, false, buttonReset!!)
+                        ubahResetButton(context, kondisi, buttonReset!!)
                     }
                 }
 
@@ -129,12 +127,11 @@ class EmployeeTrainingEditActivity : AppCompatActivity() {
                     position: Int,
                     id: Long
                 ) {
-                    buttonReset = buttonResetEmployeeTraining
+                    val kondisi = cekKondisi()
                     if (position != 0) {
-                        buttonResetEmployeeTraining.isEnabled = true
-                        ubahResetButton(context, true, buttonReset!!)
+                        ubahResetButton(context, kondisi, buttonReset!!)
                     } else {
-                        ubahResetButton(context, false, buttonReset!!)
+                        ubahResetButton(context, kondisi, buttonReset!!)
                     }
                 }
 
@@ -148,12 +145,11 @@ class EmployeeTrainingEditActivity : AppCompatActivity() {
                     position: Int,
                     id: Long
                 ) {
-                    buttonReset = buttonResetEmployeeTraining
+                    val kondisi = cekKondisi()
                     if (position != 0) {
-                        buttonResetEmployeeTraining.isEnabled = true
-                        ubahResetButton(context, true, buttonReset!!)
+                        ubahResetButton(context, kondisi, buttonReset!!)
                     } else {
-                        ubahResetButton(context, false, buttonReset!!)
+                        ubahResetButton(context, kondisi, buttonReset!!)
                     }
                 }
 
@@ -167,12 +163,12 @@ class EmployeeTrainingEditActivity : AppCompatActivity() {
                     position: Int,
                     id: Long
                 ) {
-                    buttonReset = buttonResetEmployeeTraining
+                    val kondisi = cekKondisi()
+
                     if (position != 0) {
-                        buttonResetEmployeeTraining.isEnabled = true
-                        ubahResetButton(context, true, buttonReset!!)
+                        ubahResetButton(context, kondisi, buttonReset!!)
                     } else {
-                        ubahResetButton(context, false, buttonReset!!)
+                        ubahResetButton(context, kondisi, buttonReset!!)
                     }
                 }
 
@@ -303,7 +299,6 @@ class EmployeeTrainingEditActivity : AppCompatActivity() {
         spinnerEditCertificationEmployeeTraining.setSelection(0)
     }
 
-
     fun setReportDateEmployeeTrainingPicker() {
         val today = Calendar.getInstance()
         val yearNow = today.get(Calendar.YEAR)
@@ -336,14 +331,13 @@ class EmployeeTrainingEditActivity : AppCompatActivity() {
     private val textWatcher = object : TextWatcher {
         override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
         override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-            buttonReset = buttonResetEmployeeTraining
 
-            val employeeDateTrainingTeks = editTanggalEmployeeTraining!!.text.toString().trim()
-            val employeeNameTraineeTeks = editNamaTrainee!!.text.toString().trim()
-
-            val kondisi = !employeeNameTraineeTeks.isEmpty() || !employeeDateTrainingTeks.isEmpty()
-
-            buttonResetEmployeeTraining.isEnabled = true
+//            val employeeDateTrainingTeks = employeeDateTrainingText!!.text.toString().trim()
+//            val employeeNameTraineeTeks = employeeNameTraineeText!!.text.toString().trim()
+//
+//            val kondisi = !employeeNameTraineeTeks.isEmpty() || !employeeDateTrainingTeks.isEmpty()
+//
+            val kondisi = cekKondisi()
             ubahResetButton(context, kondisi, buttonReset!!)
         }
 
@@ -470,6 +464,18 @@ class EmployeeTrainingEditActivity : AppCompatActivity() {
             data.isDeleted = cursor.getString(7)
 
         }
+    }
+
+    fun cekKondisi(): Boolean{
+        val employeeDateTrainingTeks = employeeDateTrainingText!!.text.toString().trim()
+        val employeeNameTraineeTeks = employeeNameTraineeText!!.text.toString().trim()
+
+
+        return !employeeNameTraineeTeks.isEmpty() || !employeeDateTrainingTeks.isEmpty() || employeeTrainingNameSpinner!!.selectedItemPosition != 0 ||
+                employeeTrainingOrganizerSpinner!!.selectedItemPosition != 0 ||
+                employeeTrainingTypeSpinner!!.selectedItemPosition != 0 ||
+                employeeCertificationTypeSpinner!!.selectedItemPosition != 0
+
     }
 
 
