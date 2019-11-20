@@ -114,7 +114,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
-                    android:layout_marginTop="13dp"
                     android:clickable="false"
                     android:focusable="false"
                     android:longClickable="false"/>
@@ -183,6 +182,7 @@
                     android:layout_marginRight="15dp"
                     android:textColor="@android:color/black"
                     android:hint="Training Date *"
+                    android:textColorHint="@color/warnaBlack"
                     android:clickable="false"
                     android:focusable="false"
                     android:longClickable="false"
@@ -191,11 +191,11 @@
 
                 <ImageView
                     android:id="@+id/iconEditTanggalEmployeeTraining"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
                     android:layout_gravity="right|center_vertical"
                     android:layout_marginRight="21dp"
-                    android:src="@android:drawable/ic_menu_my_calendar" />
+                    android:src="@drawable/ic_arrow_drop_down_grey" />
             </FrameLayout>
 
             <TextView

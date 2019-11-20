@@ -8,10 +8,8 @@ import com.xsis.android.batch217.R
 import com.xsis.android.batch217.databases.DatabaseHelper
 import com.xsis.android.batch217.databases.TimesheetQueryHelper
 import com.xsis.android.batch217.utils.ID_TIMESHEET
-import kotlinx.android.synthetic.main.activity_data_collected.*
 import kotlinx.android.synthetic.main.activity_timesheet_collection_detail.*
 import kotlinx.android.synthetic.main.activity_timesheet_collection_detail.buttonBackCollection
-import kotlinx.android.synthetic.main.list_layout.*
 
 class TimesheetCollectionDetailActivity : AppCompatActivity() {
 

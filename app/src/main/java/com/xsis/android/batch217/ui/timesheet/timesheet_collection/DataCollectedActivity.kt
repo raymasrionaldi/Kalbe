@@ -4,11 +4,9 @@ import android.app.AlertDialog
 import android.content.DialogInterface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.MenuItem
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
-import android.widget.Toast
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.xsis.android.batch217.R
@@ -19,8 +17,6 @@ import com.xsis.android.batch217.models.Timesheet
 import com.xsis.android.batch217.utils.*
 import kotlinx.android.synthetic.main.activity_data_collected.*
 import kotlinx.android.synthetic.main.activity_data_collected.buttonBackCollection
-import kotlinx.android.synthetic.main.activity_data_submit.*
-import kotlinx.android.synthetic.main.activity_timesheet_collection_detail.*
 
 class DataCollectedActivity : AppCompatActivity() {
 

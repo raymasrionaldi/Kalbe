@@ -1,6 +1,5 @@
 package com.xsis.android.batch217.ui.employee_training
 
-import android.app.Activity
 import android.app.DatePickerDialog
 import android.graphics.Color
 import android.os.Bundle
@@ -11,14 +10,12 @@ import android.view.Window
 import android.view.WindowManager
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.get
 import androidx.core.view.isVisible
 import com.xsis.android.batch217.R
 import com.xsis.android.batch217.databases.DatabaseHelper
 import com.xsis.android.batch217.databases.EmployeeTrainingQueryHelper
 import com.xsis.android.batch217.models.*
 import com.xsis.android.batch217.utils.*
-import kotlinx.android.synthetic.main.activity_edit_prfrequest.*
 import kotlinx.android.synthetic.main.activity_employee_training_edit.*
 import kotlinx.android.synthetic.main.activity_employee_training_form.*
 import kotlinx.android.synthetic.main.activity_employee_training_form.buttonResetEmployeeTraining
@@ -26,7 +23,6 @@ import kotlinx.android.synthetic.main.activity_employee_training_form.buttonSubm
 import kotlinx.android.synthetic.main.activity_employee_training_form.requiredNamaEmployeeTraining
 import kotlinx.android.synthetic.main.activity_employee_training_form.requiredNamaEmployeeTrainingOrganizer
 import kotlinx.android.synthetic.main.activity_employee_training_form.requiredTanggalEmployeeTraining
-import kotlinx.android.synthetic.main.activity_project_form.*
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -34,7 +30,6 @@ class EmployeeTrainingEditActivity : AppCompatActivity() {
     val context = this
     var databaseHelper = DatabaseHelper(context)
     var databaseQueryHelper = EmployeeTrainingQueryHelper(databaseHelper)
-
     var buttonReset: Button? = null
     var employeeNameTraineeText: EditText? = null
     var employeeDateTrainingText: EditText? = null
@@ -190,13 +185,12 @@ class EmployeeTrainingEditActivity : AppCompatActivity() {
         val employeeNameTraineeText = editNamaTrainee!!.text.toString().trim()
         val employeeTrainingNameSpinner = spinnerEditNamaEmployeeTraining.selectedItem.toString()
         val positionEmployeeTrainingSpinner = spinnerEditNamaEmployeeTraining.selectedItemPosition
-        val employeeTrainingOrganizerSpinner =
-            spinnerEditNamaEmployeeTrainingOrganizer.selectedItem.toString()
-        val positionEmployeeTrainingOrganizerSpinner =
-            spinnerEditNamaEmployeeTrainingOrganizer.selectedItemPosition
+        val employeeTrainingOrganizerSpinner = spinnerEditNamaEmployeeTrainingOrganizer.selectedItem.toString()
+        val positionEmployeeTrainingOrganizerSpinner = spinnerEditNamaEmployeeTrainingOrganizer.selectedItemPosition
         val employeeTrainingTypeSpinner = spinnerEditTypeEmployeeTraining.selectedItem.toString()
-        val employeeCertificationTypeSpinner =
-            spinnerEditCertificationEmployeeTraining.selectedItem.toString()
+        val positionEmployeeTrainingTypeSpinner = spinnerEditTypeEmployeeTraining.selectedItemPosition
+        val employeeCertificationTypeSpinner = spinnerEditCertificationEmployeeTraining.selectedItem.toString()
+        val positionEmployeeCertificationTypeSpinner = spinnerEditCertificationEmployeeTraining.selectedItemPosition
 
         var isValid = true
 
@@ -246,8 +240,19 @@ class EmployeeTrainingEditActivity : AppCompatActivity() {
                 model.namaEmployeeTraining = employeeTrainingNameSpinner
                 model.namaEmployeeTO = employeeTrainingOrganizerSpinner
                 model.dateEmployeeTraining = employeeTrainingDate
-                model.typeEmployeeTraining = employeeTrainingTypeSpinner
-                model.typeEmployeeCertification = employeeCertificationTypeSpinner
+                if (positionEmployeeTrainingTypeSpinner == 0){
+                    model.typeEmployeeTraining == ""
+                }
+                else{
+                    model.typeEmployeeTraining = employeeTrainingTypeSpinner
+                }
+
+                if (positionEmployeeCertificationTypeSpinner == 0){
+                    model.typeEmployeeCertification == ""
+                }
+                else{
+                    model.typeEmployeeCertification = employeeCertificationTypeSpinner
+                }
 
                 val cekEmployeeTrainee =
                     databaseQueryHelper!!.cekEmployeeTrainingSudahTraining(
@@ -286,7 +291,6 @@ class EmployeeTrainingEditActivity : AppCompatActivity() {
                     finish()
                 }
             }
-
         }
     }
 
@@ -306,7 +310,7 @@ class EmployeeTrainingEditActivity : AppCompatActivity() {
         val monthNow = today.get(Calendar.MONTH)
         val dayNow = today.get(Calendar.DATE)
 
-        iconEditTanggalEmployeeTraining.setOnClickListener {
+        editTanggalEmployeeTraining.setOnClickListener {
             val datePickerDialog = DatePickerDialog(
                 context,
                 R.style.CustomDatePicker,
@@ -326,13 +330,8 @@ class EmployeeTrainingEditActivity : AppCompatActivity() {
                 dayNow
             )
             datePickerDialog.show()
-//            buttonResetEmployeeTraining.isEnabled = true
-//            buttonResetEmployeeTraining.setBackgroundResource(R.drawable.button_reset_on)
-//            buttonResetEmployeeTraining.setTextColor(Color.WHITE)
         }
-
     }
-
 
     private val textWatcher = object : TextWatcher {
         override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}

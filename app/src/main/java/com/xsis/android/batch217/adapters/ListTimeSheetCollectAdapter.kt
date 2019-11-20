@@ -2,11 +2,8 @@ package com.xsis.android.batch217.adapters
 
 import android.content.Context
 import android.content.Intent
-import android.content.res.ColorStateList
 import android.graphics.Color
 import android.view.*
-import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.view.ActionMode
 import androidx.recyclerview.widget.RecyclerView
 import com.xsis.android.batch217.R

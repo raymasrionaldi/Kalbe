@@ -1,8 +1,6 @@
 package com.xsis.android.batch217.viewholders
 
-import android.media.Image
 import android.view.View
-import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView

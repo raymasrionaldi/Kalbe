@@ -8,14 +8,7 @@ import androidx.fragment.app.Fragment
 import com.xsis.android.batch217.R
 import com.xsis.android.batch217.databases.DatabaseHelper
 import com.xsis.android.batch217.databases.TimesheetQueryHelper
-import com.xsis.android.batch217.models.Company
-import com.xsis.android.batch217.models.Training
-import com.xsis.android.batch217.ui.timesheet.timesheet_approval.TimesheetApprovalProcessActivity
-import com.xsis.android.batch217.ui.timesheet.timesheet_submission.DataSubmitActivity
 import com.xsis.android.batch217.utils.*
-import kotlinx.android.synthetic.main.activity_employee_training_edit.*
-import kotlinx.android.synthetic.main.activity_entry_timesheet.*
-import kotlinx.android.synthetic.main.fragment_timesheet_approval.*
 import kotlinx.android.synthetic.main.fragment_timesheet_collection.*
 import java.util.*
 import kotlin.collections.ArrayList

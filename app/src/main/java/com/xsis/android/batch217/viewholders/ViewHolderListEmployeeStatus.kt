@@ -6,7 +6,6 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.github.ramiz.nameinitialscircleimageview.NameInitialsCircleImageView
 import com.xsis.android.batch217.R
-import com.xsis.android.batch217.models.Company
 import com.xsis.android.batch217.models.EmployeeStatus
 import com.xsis.android.batch217.utils.ambilDuaInisial
 

@@ -2,9 +2,7 @@ package com.xsis.android.batch217.databases
 
 import android.content.ContentValues
 import android.database.Cursor
-import com.xsis.android.batch217.models.Company
 import com.xsis.android.batch217.models.EmployeeStatus
-import com.xsis.android.batch217.models.JenisCatatan
 import com.xsis.android.batch217.utils.*
 
 class EmployeeStatusQueryHelper (val databaseHelper: DatabaseHelper) {

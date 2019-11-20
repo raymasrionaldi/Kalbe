@@ -16,7 +16,6 @@ import com.xsis.android.batch217.databases.DatabaseHelper
 import com.xsis.android.batch217.databases.EmployeeTrainingQueryHelper
 import com.xsis.android.batch217.models.*
 import com.xsis.android.batch217.utils.*
-import kotlinx.android.synthetic.main.activity_employee_training_edit.*
 import kotlinx.android.synthetic.main.activity_employee_training_form.*
 import kotlinx.android.synthetic.main.activity_employee_training_form.buttonResetEmployeeTraining
 import kotlinx.android.synthetic.main.activity_employee_training_form.buttonSubmitEmployeeTraining
@@ -268,7 +267,7 @@ class EmployeeTrainingFormActivity : AppCompatActivity() {
         val monthNow = today.get(Calendar.MONTH)
         val dayNow = today.get(Calendar.DATE)
 
-        iconInputTanggalEmployeeTraining.setOnClickListener {
+        inputTanggalEmployeeTraining.setOnClickListener {
             val datePickerDialog = DatePickerDialog(context, R.style.CustomDatePicker, DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
                 val selectedDate = Calendar.getInstance()
                 selectedDate.set(year, month, dayOfMonth)
@@ -281,11 +280,7 @@ class EmployeeTrainingFormActivity : AppCompatActivity() {
                 inputTanggalEmployeeTraining.setText(tanggal)
             }, yearNow,monthNow,dayNow )
             datePickerDialog.show()
-//            buttonResetEmployeeTraining.isEnabled = true
-//            buttonResetEmployeeTraining.setBackgroundResource(R.drawable.button_reset_on)
-//            buttonResetEmployeeTraining.setTextColor(Color.WHITE)
         }
-
     }
 
 
