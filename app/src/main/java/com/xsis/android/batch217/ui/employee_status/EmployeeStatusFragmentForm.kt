@@ -37,7 +37,6 @@ class EmployeeStatusFragmentForm(context: Context, val fm: FragmentManager) : Fr
     var modeForm = 0
     var idData = 0
     var data = EmployeeStatus()
-
     var databaseQueryHelper: EmployeeStatusQueryHelper? = null
 
     companion object {
@@ -124,7 +123,6 @@ class EmployeeStatusFragmentForm(context: Context, val fm: FragmentManager) : Fr
         employeeStatusText!!.setHintTextColor(defaultColor)
         required.visibility = View.INVISIBLE
     }
-
 
     fun showDeleteDialog() {
         AlertDialog.Builder(context!!, R.style.AlertDialogTheme)

@@ -36,7 +36,6 @@ class ListJenisCatatanAdapter(
         val databaseHelper = DatabaseHelper(context!!)
         val databaseQueryHelper = JenisCatatanQueryHelper(databaseHelper)
 
-
         val model = listJenisCatatan[position]
         holder.setModel(model)
 
@@ -84,7 +83,6 @@ class ListJenisCatatanAdapter(
                             .show()
                     }
                 }
-                //Toast.makeText(context, "$position || $id", Toast.LENGTH_SHORT).show()
             }
 
             window.show()

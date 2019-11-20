@@ -15,7 +15,6 @@ import com.xsis.android.batch217.R
 import com.xsis.android.batch217.adapters.ListJenisCatatanAdapter
 import com.xsis.android.batch217.adapters.fragments.JenisCatatanFragmentAdapter
 import com.xsis.android.batch217.databases.DatabaseHelper
-import com.xsis.android.batch217.databases.EmployeeStatusQueryHelper
 import com.xsis.android.batch217.databases.JenisCatatanQueryHelper
 import com.xsis.android.batch217.models.JenisCatatan
 
@@ -44,8 +43,7 @@ class JenisCatatanFragmentData(context: Context, val fm: FragmentManager) : Frag
         val dividerItemDecoration = DividerItemDecoration(context, layoutManager.orientation)
         recyclerView!!.addItemDecoration(dividerItemDecoration)
 
-        val buttonAdd =
-            customView.findViewById(R.id.buttonAddJenisCatatan) as FloatingActionButton
+        val buttonAdd = customView.findViewById(R.id.buttonAddJenisCatatan) as FloatingActionButton
         buttonAdd.setOnClickListener {
             addData()
         }

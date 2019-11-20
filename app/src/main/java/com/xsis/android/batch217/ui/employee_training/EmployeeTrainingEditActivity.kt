@@ -17,8 +17,6 @@ import com.xsis.android.batch217.databases.EmployeeTrainingQueryHelper
 import com.xsis.android.batch217.models.*
 import com.xsis.android.batch217.utils.*
 import kotlinx.android.synthetic.main.activity_employee_training_edit.*
-import kotlinx.android.synthetic.main.activity_employee_training_form.*
-import kotlinx.android.synthetic.main.activity_employee_training_form.buttonResetEmployeeTraining
 import kotlinx.android.synthetic.main.activity_employee_training_form.buttonSubmitEmployeeTraining
 import kotlinx.android.synthetic.main.activity_employee_training_form.requiredNamaEmployeeTraining
 import kotlinx.android.synthetic.main.activity_employee_training_form.requiredNamaEmployeeTrainingOrganizer
@@ -63,23 +61,22 @@ class EmployeeTrainingEditActivity : AppCompatActivity() {
         employeeNameTraineeText = findViewById(R.id.editNamaTrainee)
         employeeDateTrainingText = findViewById(R.id.editTanggalEmployeeTraining)
         employeeTrainingNameSpinner = findViewById(R.id.spinnerEditNamaEmployeeTraining)
-        employeeTrainingOrganizerSpinner =
-            findViewById(R.id.spinnerEditNamaEmployeeTrainingOrganizer)
+        employeeTrainingOrganizerSpinner = findViewById(R.id.spinnerEditNamaEmployeeTrainingOrganizer)
         employeeTrainingTypeSpinner = findViewById(R.id.spinnerEditTypeEmployeeTraining)
-        employeeCertificationTypeSpinner =
-            findViewById(R.id.spinnerEditCertificationEmployeeTraining)
+        employeeCertificationTypeSpinner = findViewById(R.id.spinnerEditCertificationEmployeeTraining)
         buttonReset = findViewById(R.id.buttonResetEmployeeTraining)
+
         ubahButtonResetSpinner()
         isiSpinnerNamaTraining()
         isiSpinnerTrainingOrganizer()
         isiSpinnerTrainingType()
         isiSpinnerCertificationType()
 
+        setReportDateEmployeeTrainingPicker()
+
         buttonBackEditEmployeeTraining.setOnClickListener {
             finish()
         }
-
-        setReportDateEmployeeTrainingPicker()
 
         buttonReset!!.setOnClickListener {
             resetForm()
@@ -332,11 +329,6 @@ class EmployeeTrainingEditActivity : AppCompatActivity() {
         override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
         override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
 
-//            val employeeDateTrainingTeks = employeeDateTrainingText!!.text.toString().trim()
-//            val employeeNameTraineeTeks = employeeNameTraineeText!!.text.toString().trim()
-//
-//            val kondisi = !employeeNameTraineeTeks.isEmpty() || !employeeDateTrainingTeks.isEmpty()
-//
             val kondisi = cekKondisi()
             ubahResetButton(context, kondisi, buttonReset!!)
         }
@@ -477,6 +469,4 @@ class EmployeeTrainingEditActivity : AppCompatActivity() {
                 employeeCertificationTypeSpinner!!.selectedItemPosition != 0
 
     }
-
-
 }

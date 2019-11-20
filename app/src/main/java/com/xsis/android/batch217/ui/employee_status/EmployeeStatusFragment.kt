@@ -27,7 +27,6 @@ class EmployeeStatusFragment : Fragment(), OnBackPressedListener {
 
         activity!!.title = getString(R.string.menu_employe_status)
 
-
         val fragmentAdapter = EmployeeStatusFragmentAdapter(context!!, childFragmentManager)
         val viewPager = root.findViewById(R.id.viewPagerEmployeeStatus) as CustomViewPager
 

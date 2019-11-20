@@ -29,7 +29,6 @@ class EmployeeTrainingFormActivity : AppCompatActivity() {
     val context = this
     var databaseHelper = DatabaseHelper(context)
     var databaseQueryHelper = EmployeeTrainingQueryHelper(databaseHelper)
-
     var buttonReset: Button? = null
     var employeeNameTraineeText: EditText? = null
     var employeeDateTrainingText: EditText? = null
@@ -38,12 +37,10 @@ class EmployeeTrainingFormActivity : AppCompatActivity() {
     var employeeTrainingTypeSpinner: Spinner? = null
     var employeeCertificationTypeSpinner: Spinner? = null
     var data = EmployeeTraining()
-
     lateinit var listNamaTraining: List<Training>
     lateinit var listNamaTrainingOrganizer: List<TrainingOrganizer>
     lateinit var listTypeTraining: List<TypeTraining>
     lateinit var listCertificationType: List<CertificationType>
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -76,11 +73,11 @@ class EmployeeTrainingFormActivity : AppCompatActivity() {
         isiSpinnerTrainingType()
         isiSpinnerCertificationType()
 
+        setReportDateEmployeeTrainingPicker()
+
         buttonBackInputEmployeeTraining.setOnClickListener{
             finish()
         }
-
-        setReportDateEmployeeTrainingPicker()
 
         buttonResetEmployeeTraining.setOnClickListener{
             resetForm()
@@ -159,7 +156,6 @@ class EmployeeTrainingFormActivity : AppCompatActivity() {
         val employeeCertificationTypeSpinner = spinnerInputCertificationEmployeeTraining.selectedItem.toString()
         val positionEmployeeCertificationTypeSpinner = spinnerInputCertificationEmployeeTraining.selectedItemPosition
 
-
         var isValid = true
 
         if (employeeNameTraineeText.isEmpty()) {
@@ -185,7 +181,6 @@ class EmployeeTrainingFormActivity : AppCompatActivity() {
             requiredTanggalEmployeeTraining.isVisible = true
             isValid = false
         }
-
 
         if (isValid) {
 
@@ -282,7 +277,6 @@ class EmployeeTrainingFormActivity : AppCompatActivity() {
             datePickerDialog.show()
         }
     }
-
 
     private val textWatcher = object : TextWatcher {
         override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) { }

@@ -12,7 +12,6 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
-import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.viewpager.widget.ViewPager
@@ -21,7 +20,6 @@ import com.xsis.android.batch217.adapters.fragments.JenisCatatanFragmentAdapter
 import com.xsis.android.batch217.databases.DatabaseHelper
 import com.xsis.android.batch217.databases.JenisCatatanQueryHelper
 import com.xsis.android.batch217.models.JenisCatatan
-import com.xsis.android.batch217.ui.company.CompanyFragmentData
 import com.xsis.android.batch217.utils.*
 
 class JenisCatatanFragmentForm(context: Context, val fm: FragmentManager) : Fragment() {
@@ -36,7 +34,6 @@ class JenisCatatanFragmentForm(context: Context, val fm: FragmentManager) : Frag
     var modeForm = 0
     var idData = 0
     var data = JenisCatatan()
-
     var databaseQueryHelper: JenisCatatanQueryHelper? = null
 
     companion object {
@@ -55,7 +52,6 @@ class JenisCatatanFragmentForm(context: Context, val fm: FragmentManager) : Frag
 
         val databaseHelper = DatabaseHelper(context!!)
         databaseQueryHelper = JenisCatatanQueryHelper(databaseHelper)
-
 
         title = customView.findViewById(R.id.titleFormJenisCatatan) as TextView
         buttonSimpan = customView.findViewById(R.id.buttonSimpanJenisCatatan) as Button
@@ -80,17 +76,14 @@ class JenisCatatanFragmentForm(context: Context, val fm: FragmentManager) : Frag
 
         buttonBatal!!.setOnClickListener {
             resetForm()
-            //Toast.makeText(context!!, "batal", Toast.LENGTH_SHORT).show()
             val viewPager = view!!.parent as ViewPager
             val adapter = viewPager.adapter!! as JenisCatatanFragmentAdapter
             val fragment = fm.fragments[0] as JenisCatatanFragmentData
             fragment.updateContent()
             adapter.notifyDataSetChanged()
             viewPager.setCurrentItem(0, true)
-
             val required = view!!.findViewById(R.id.requiredNamaJenisCatatan) as TextView
             required.visibility = View.INVISIBLE
-
         }
 
         jenisCatatanText!!.addTextChangedListener(textWatcher)
@@ -109,13 +102,10 @@ class JenisCatatanFragmentForm(context: Context, val fm: FragmentManager) : Frag
     fun modeEdit(jenisCatatan: JenisCatatan) {
         modeForm = MODE_EDIT
         changeMode()
-
         idData = jenisCatatan.id_catatan
         jenisCatatanText!!.setText(jenisCatatan.nama_catatan)
         deskripsi!!.setText(jenisCatatan.des_catatan)
-
         data = jenisCatatan
-
         backInJenisCatatan()
     }
 
@@ -124,7 +114,6 @@ class JenisCatatanFragmentForm(context: Context, val fm: FragmentManager) : Frag
         changeMode()
         resetForm()
         data = JenisCatatan()
-
         backInJenisCatatan()
     }
 
@@ -173,9 +162,7 @@ class JenisCatatanFragmentForm(context: Context, val fm: FragmentManager) : Frag
     }
 
     fun simpanJenisCatatan() {
-
         val required = view!!.findViewById(R.id.requiredNamaJenisCatatan) as TextView
-
         val namaJenisCatatan = jenisCatatanText!!.text.toString().trim()
         val deskripsiJenisCatatan = deskripsi!!.text.toString().trim()
 
@@ -193,10 +180,9 @@ class JenisCatatanFragmentForm(context: Context, val fm: FragmentManager) : Frag
             model.nama_catatan = namaJenisCatatan
             model.des_catatan = deskripsiJenisCatatan
 
-
             val cekJenisCatatan = databaseQueryHelper!!.cekJenisCatatanSudahAda(model.nama_catatan!!)
 
-            if (modeForm == JenisCatatanFragmentForm.MODE_ADD) {
+            if (modeForm == MODE_ADD) {
                 if (cekJenisCatatan > 0) {
                     Toast.makeText(context, DATA_SUDAH_ADA, Toast.LENGTH_SHORT).show()
                     return
@@ -207,7 +193,7 @@ class JenisCatatanFragmentForm(context: Context, val fm: FragmentManager) : Frag
                     Toast.makeText(context, SIMPAN_DATA_BERHASIL, Toast.LENGTH_SHORT)
                         .show()
                 }
-            } else if (modeForm == JenisCatatanFragmentForm.MODE_EDIT) {
+            } else if (modeForm == MODE_EDIT) {
                 if ((cekJenisCatatan != 1 && model.nama_catatan.equals(data.nama_catatan, true)) ||
                     (cekJenisCatatan != 0 && !model.nama_catatan.equals(data.nama_catatan, true))
                 ) {

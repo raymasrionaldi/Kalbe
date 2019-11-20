@@ -42,8 +42,7 @@ class EmployeeStatusFragmentData(context: Context, val fm: FragmentManager) : Fr
         val dividerItemDecoration = DividerItemDecoration(context, layoutManager.orientation)
         recyclerView!!.addItemDecoration(dividerItemDecoration)
 
-        val buttonAdd =
-            customView.findViewById(R.id.buttonAddEmployeeStatus) as FloatingActionButton
+        val buttonAdd = customView.findViewById(R.id.buttonAddEmployeeStatus) as FloatingActionButton
         buttonAdd.setOnClickListener {
             addData()
         }

@@ -39,13 +39,6 @@ class DataCollectedActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_data_collected)
 
-//        title = ""
-//
-//        supportActionBar?.let {
-//            supportActionBar!!.setHomeButtonEnabled(true)
-//            supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-//        }
-
         var year = ""
         var month = ""
         var client = ""
@@ -70,7 +63,6 @@ class DataCollectedActivity : AppCompatActivity() {
         else {
 
             val layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-
             listTimesheetCollectionRecycler.layoutManager = layoutManager
 
             val dividerItemDecoration = DividerItemDecoration(context, layoutManager.orientation)
@@ -81,7 +73,6 @@ class DataCollectedActivity : AppCompatActivity() {
             adapterTimesheetCollection.notifyDataSetChanged()
 
             buttonCheckCollection.setOnClickListener {
-
 
                 var listSelected= adapterTimesheetCollection.getSelectedList()
 
@@ -147,14 +138,6 @@ class DataCollectedActivity : AppCompatActivity() {
 
         konfirmasiCollected.create().show()
     }
-
-//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-//        if (item.itemId == android.R.id.home) {
-//            super.onBackPressed()
-//            return true
-//        }
-//        return super.onOptionsItemSelected(item)
-//    }
 
     private fun changeProgress(progress: String, list: ArrayList<Int>) {
         val ids = ArrayList<Int>()

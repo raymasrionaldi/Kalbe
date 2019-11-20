@@ -32,7 +32,6 @@ class EmployeeTrainingFragmentDetail(context: Context, val fm: FragmentManager) 
     var buttonDelete: FloatingActionButton? = null
     var idData: Int = 0
     var data = EmployeeTraining()
-
     var databaseQueryHelper: EmployeeTrainingQueryHelper? = null
 
     override fun onCreateView(
@@ -51,8 +50,6 @@ class EmployeeTrainingFragmentDetail(context: Context, val fm: FragmentManager) 
         employeeTrainingDateText = customView.findViewById(R.id.EmployeeTrainingDate) as TextView
         employeeTrainingTypeText = customView.findViewById(R.id.EmployeeTrainingType) as TextView
         employeeCertificationTypeText = customView.findViewById(R.id.EmployeeCertificationType) as TextView
-
-
         buttonDelete = customView.findViewById(R.id.buttonDeleteEmployeeTraining) as FloatingActionButton
 
         buttonDelete!!.setOnClickListener {
@@ -111,6 +108,5 @@ class EmployeeTrainingFragmentDetail(context: Context, val fm: FragmentManager) 
             .create()
             .show()
     }
-
 
 }

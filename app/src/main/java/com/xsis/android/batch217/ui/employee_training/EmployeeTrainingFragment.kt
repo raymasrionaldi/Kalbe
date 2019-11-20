@@ -21,12 +21,10 @@ class EmployeeTrainingFragment: Fragment(), OnBackPressedListener {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        employeeTrainingViewModel =
-            ViewModelProviders.of(this).get(EmployeeTrainingViewModel::class.java)
+        employeeTrainingViewModel = ViewModelProviders.of(this).get(EmployeeTrainingViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_employee_training, container, false)
 
         activity!!.title = getString(R.string.menu_employee_training)
-
 
         val fragmentAdapter = EmployeeTrainingFragmentAdapter(context!!, childFragmentManager)
         val viewPager = root.findViewById(R.id.viewPagerEmployeeTraining) as CustomViewPager

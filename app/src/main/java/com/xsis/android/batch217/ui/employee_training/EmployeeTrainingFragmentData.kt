@@ -43,7 +43,7 @@ class EmployeeTrainingFragmentData(context: Context, val fm: FragmentManager) : 
 
         val buttonAdd =customView.findViewById(R.id.buttonAddEmployeeTraining) as FloatingActionButton
         buttonAdd.setOnClickListener {
-            addData() //Belum
+            addData()
         }
 
         val databaseHelper = DatabaseHelper(context!!)
