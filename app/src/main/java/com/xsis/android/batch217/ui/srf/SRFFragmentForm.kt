@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.viewpager.widget.ViewPager
@@ -299,19 +300,28 @@ class SRFFragmentForm(context: Context, val fm: FragmentManager) : Fragment() {
             namaUser!!.setHintTextColor(Color.RED)
             requiredNamaUser!!.visibility = View.VISIBLE
         }
-        if (!emailUserTeks.matches(emailPattern.toRegex()) && !emailUserTeks.matches(emailPattern2.toRegex())){
-            Toast.makeText(context, "E-mail tidak valid", Toast.LENGTH_SHORT).show()
-        }
+        var statusEmail = false
         if (emailUserTeks.isEmpty()) {
             emailUser!!.setHintTextColor(Color.RED)
             requiredEmailUser!!.visibility = View.VISIBLE
+            requiredEmailUser!!.text = "Required"
+            statusEmail = false
+        } else {
+            if (!emailUserTeks.matches(emailPattern.toRegex()) && !emailUserTeks.matches(emailPattern2.toRegex())){
+                requiredEmailUser!!.isVisible = true
+                requiredEmailUser!!.text = "e-mail tidak valid"
+                statusEmail = false
+            } else {
+                requiredEmailUser!!.isVisible = false
+                statusEmail = true
+            }
         }
         if (salesPriceTeks.isEmpty()) {
             salesPrice!!.setHintTextColor(Color.RED)
             requiredSalesPrice!!.visibility = View.VISIBLE
         }
         if (idSRFTeks.isNotEmpty() && jenisSRFTeks != 0 && jumKebutuhanText.isNotEmpty() && clientSRFTeks != 0 && namaUserTeks.isNotEmpty()
-            && emailUserTeks.isNotEmpty() && salesPriceTeks.isNotEmpty()) {
+            && statusEmail && salesPriceTeks.isNotEmpty()) {
             val model = SRF()
             model.id_srf = idSRFTeks
             model.jenis_srf = spinnerJenis!!.selectedItem.toString()
