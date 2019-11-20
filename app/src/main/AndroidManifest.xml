@@ -41,6 +41,7 @@
         <activity
             android:name=".ui.employee_training.EmployeeTrainingEditActivity" />
         <activity
+            android:configChanges="orientation|screenSize|keyboardHidden"
             android:name=".ui.leave_request.LeaveRequestDetailActivity" />
         <activity
             android:name=".ui.leave_request.LeaveRequestAddActivity" />
