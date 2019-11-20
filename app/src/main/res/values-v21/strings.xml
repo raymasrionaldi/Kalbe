@@ -70,6 +70,10 @@
     <string name="summary_prf">Summary PRF</string>
     <string name="timesheet_report">Timesheet</string>
     <string name="title_report_timesheet">Timesheet Report</string>
+    <string name="menu_permission_form">Permission Form</string>
+    <string name="permission_form_create">Create</string>
+    <string name="permission_form_history">History</string>
+    <string name="permission_form_approval">Approval</string>
 
     <string name="ubah_agama">Ubah Agama</string>
 

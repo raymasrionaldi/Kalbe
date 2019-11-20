@@ -12,66 +12,55 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".ui.permission.PermissionCreateFormActivity"></activity>
+        <activity android:name=".ui.summary_prf.SummaryDetailActivity" />
         <activity
-            android:name=".ui.summary_prf.SummaryDetailActivity"></activity>
+            android:name=".ui.timesheet.timesheet_send.SendDataActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden" />
+        <activity android:name=".ui.timesheet.timesheet_approval.TimesheetApprovalDetailActivity" />
         <activity
-            android:configChanges="orientation|screenSize|keyboardHidden"
-            android:name=".ui.timesheet.timesheet_send.SendDataActivity" />
-        <activity
-            android:name=".ui.timesheet.timesheet_approval.TimesheetApprovalDetailActivity" />
-        <activity
-            android:configChanges="orientation|screenSize|keyboardHidden"
-            android:name=".ui.timesheet.timesheet_approval.TimesheetApprovalProcessActivity" />
+            android:name=".ui.timesheet.timesheet_approval.TimesheetApprovalProcessActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden" />
         <activity
             android:name=".ui.timesheet.timesheet_collection.DataCollectedActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden"/>
+            android:configChanges="orientation|screenSize|keyboardHidden" />
         <activity
             android:name=".ui.timesheet.timesheet_collection.TimesheetCollectionDetailActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden"/>
+            android:configChanges="orientation|screenSize|keyboardHidden" />
+        <activity android:name=".ui.prf_request.EditPRFCandidateActivity" />
+        <activity android:name=".ui.prf_request.InputPRFCandidateActivity" />
+        <activity android:name=".ui.prf_request.EditPRFRequestActivity" />
+        <activity android:name=".ui.prf_request.InputPRFRequestActivity" />
+        <activity android:name=".ui.employee_training.EmployeeTrainingFormActivity" />
+        <activity android:name=".ui.employee_training.EmployeeTrainingEditActivity" />
         <activity
-            android:name=".ui.prf_request.EditPRFCandidateActivity" />
+            android:name=".ui.leave_request.LeaveRequestDetailActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden" />
+        <activity android:name=".ui.leave_request.LeaveRequestAddActivity" />
+        <activity android:name=".ui.leave_request.LeaveRequestEditActivity" />
         <activity
-            android:name=".ui.prf_request.InputPRFCandidateActivity" />
-        <activity
-            android:name=".ui.prf_request.EditPRFRequestActivity" />
-        <activity
-            android:name=".ui.prf_request.InputPRFRequestActivity" />
-        <activity
-            android:name=".ui.employee_training.EmployeeTrainingFormActivity" />
-        <activity
-            android:name=".ui.employee_training.EmployeeTrainingEditActivity" />
-        <activity
-            android:configChanges="orientation|screenSize|keyboardHidden"
-            android:name=".ui.leave_request.LeaveRequestDetailActivity" />
-        <activity
-            android:name=".ui.leave_request.LeaveRequestAddActivity" />
-        <activity
-            android:name=".ui.leave_request.LeaveRequestEditActivity" />
-        <activity
-            android:configChanges="orientation|screenSize|keyboardHidden"
-            android:name=".ui.project.ProjectFormActivity" />
+            android:name=".ui.project.ProjectFormActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden" />
         <activity
             android:name=".ui.tipe_identitas.TipeIdentitasTambahActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".ui.keluarga.KeluargaFormActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-            android:windowSoftInputMode="stateAlwaysHidden"
-            android:configChanges="orientation|screenSize|keyboardHidden"/>
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:configChanges="orientation|screenSize|keyboardHidden"
-            android:name=".ui.timesheet.timesheet_entry.EntryTimesheetActivity" />
+            android:name=".ui.timesheet.timesheet_entry.EntryTimesheetActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden" />
         <activity
-            android:configChanges="orientation|screenSize|keyboardHidden"
-            android:name=".ui.timesheet.timesheet_submission.DataSubmitActivity" />
+            android:name=".ui.timesheet.timesheet_submission.DataSubmitActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden" />
         <activity
             android:name=".ui.jenjang_pendidikan.UbahPendidikanActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <activity
-            android:name=".ui.keahlian.UbahDataKeahlianActivity" />
-        <activity
-            android:name=".ui.keahlian.InputDataKeahlianActivity" />
+        <activity android:name=".ui.keahlian.UbahDataKeahlianActivity" />
+        <activity android:name=".ui.keahlian.InputDataKeahlianActivity" />
         <activity
             android:name=".ui.jenjang_pendidikan.InputPendidikanActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
@@ -79,13 +68,14 @@
             android:name=".ui.prf_request.CreateERFActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
-            android:configChanges="orientation|screenSize|keyboardHidden"
             android:name=".HomeActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

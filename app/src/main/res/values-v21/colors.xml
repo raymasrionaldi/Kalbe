@@ -21,4 +21,5 @@
     <color name="warnaTransparent">#00000000</color>
     <color name="warnaDetailBackground">#D7D7D7</color>
     <color name="warnaDetailText">#B2B2B2</color>
+    <color name="warnaCheckBoxAbu">#3A3A3A</color>
 </resources>

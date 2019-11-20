@@ -30,6 +30,7 @@ import com.xsis.android.batch217.ui.jenjang_pendidikan.JenjangPendidikanFragment
 import com.xsis.android.batch217.ui.keahlian.KeahlianFragment
 import com.xsis.android.batch217.ui.keluarga.KeluargaFragment
 import com.xsis.android.batch217.ui.leave_request.LeaveRequestFragment
+import com.xsis.android.batch217.ui.permission.PermissionCreateFormActivity
 import com.xsis.android.batch217.ui.position_level.PositionLevelFragment
 import com.xsis.android.batch217.ui.prf_request.CheckPRFFragment
 import com.xsis.android.batch217.ui.prf_request.InputPRFRequestActivity
@@ -363,11 +364,23 @@ class HomeActivity : AppCompatActivity() {
         heading23.add(getString(R.string.timesheet_report))
         listDataChild[listDataHeader[23]] = heading23
 
-//Jadwal natuza
+        //Timesheet
         val item24 = ExpandedMenuModel()
-        item24.name = getString(R.string.menu_jadwal)
-        // Adding data header
+        item24.name = getString(R.string.menu_permission_form)
         listDataHeader.add(item24)
+
+        val heading24 = ArrayList<String>()
+        heading24.add(getString(R.string.permission_form_create))
+        heading24.add(getString(R.string.permission_form_history))
+        heading24.add(getString(R.string.permission_form_approval))
+// Header, Child data
+        listDataChild[listDataHeader[24]] = heading24
+
+//Jadwal natuza
+        val item25 = ExpandedMenuModel()
+        item25.name = getString(R.string.menu_jadwal)
+        // Adding data header
+        listDataHeader.add(item25)
     }
 
 
@@ -571,6 +584,19 @@ class HomeActivity : AppCompatActivity() {
                 )
                 fragmentTransaction.commit()
                 closeNavDrawer()
+
+            }else if (groupIndex == 24 && childIndex == 0) {
+                val intent = Intent(context, PermissionCreateFormActivity::class.java)
+                startActivity(intent)
+                closeNavDrawer()
+            }else if (groupIndex == 24 && childIndex == 1) {
+//                val intent = Intent(context, InputPRFRequestActivity::class.java)
+//                startActivity(intent)
+//                closeNavDrawer()
+            }else if (groupIndex == 24 && childIndex == 2) {
+//                val intent = Intent(context, InputPRFRequestActivity::class.java)
+//                startActivity(intent)
+//                closeNavDrawer()
             }
             return true
         }
@@ -779,7 +805,7 @@ class HomeActivity : AppCompatActivity() {
                     closeNavDrawer()
                 }
                 //punya natuza
-                24 -> {
+                25 -> {
                     val fragment = JadwalFragment()
                     val fragmentTransaction = supportFragmentManager.beginTransaction()
                     fragmentTransaction.replace(
