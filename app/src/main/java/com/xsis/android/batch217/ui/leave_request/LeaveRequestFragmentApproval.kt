@@ -46,21 +46,17 @@ class LeaveRequestFragmentApproval(context: Context, val fm: FragmentManager, va
     }
 
     fun getDetailApproval(idDetail: Int) {
-        println("BULAN# getDetailApproval")
         val model = databaseQueryHelper!!.getApprovalById(idDetail)
         viewDetail(model)
     }
 
     fun viewDetail(listModel: List<LeaveRequest>) {
-        println("BULAN# viewDetail")
-
         prepareData(listModel)
         menuAdapter = LeaveRequestExpandableListAdapter(context!!, listDataGroup, listDataChild)
         listLeaveRequestApproval!!.setAdapter(menuAdapter)
     }
 
     private fun prepareData(listModel: List<LeaveRequest>) {
-        println("BULAN# prepareData")
         listDataGroup = ArrayList()
         listDataChild = HashMap()
         var i=1

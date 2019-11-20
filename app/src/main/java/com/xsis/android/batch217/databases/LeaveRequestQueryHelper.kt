@@ -10,8 +10,8 @@ import kotlin.collections.ArrayList
 
 class LeaveRequestQueryHelper(val databaseHelper: DatabaseHelper) {
     val currentYear = Calendar.getInstance().get(Calendar.YEAR)
-    val annualLeaveQuota = 4
-    val regularLeaveQuota = 16
+    /*val annualLeaveQuota = 4
+    val regularLeaveQuota = 16*/
 
     fun getSemuaLeaveRequest(): Cursor {
         val db = databaseHelper.readableDatabase
@@ -110,7 +110,6 @@ class LeaveRequestQueryHelper(val databaseHelper: DatabaseHelper) {
                     "a.$START LIKE '%$keyword%' " +
                     "AND a.$START LIKE '%$currentYear' " +
                     "AND a.$IS_DELETED ='false'"
-            println("BULAN# $queryCari")
 
             val cursor = db.rawQuery(queryCari, null)
             if (cursor.count > 0) {

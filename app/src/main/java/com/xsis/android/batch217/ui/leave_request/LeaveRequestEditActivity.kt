@@ -9,6 +9,7 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.AdapterView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.chivorn.smartmaterialspinner.SmartMaterialSpinner
 import com.xsis.android.batch217.R
@@ -16,8 +17,8 @@ import com.xsis.android.batch217.databases.DatabaseHelper
 import com.xsis.android.batch217.databases.LeaveRequestQueryHelper
 import com.xsis.android.batch217.models.LeaveRequest
 import com.xsis.android.batch217.utils.*
-import kotlinx.android.synthetic.main.activity_leave_request_add.*
 import kotlinx.android.synthetic.main.activity_leave_request_edit.*
+import kotlinx.android.synthetic.main.fragment_data_leave_request.*
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -26,9 +27,13 @@ class LeaveRequestEditActivity : AppCompatActivity() {
     var ID_DETAIL: Int? = null
     lateinit var listLeaveType: List<LeaveRequest>
     lateinit var listCutiKhusus: List<LeaveRequest>
-    var databaseQueryHelper: LeaveRequestQueryHelper? = null
+    internal lateinit var databaseQueryHelper: LeaveRequestQueryHelper
 
     var defaultColor = 0
+
+    var remainingQuota:Int=0
+    var prevLeaveVal:Int=0
+    var leaveAlreadyTakenVal:Int=0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,11 +59,11 @@ class LeaveRequestEditActivity : AppCompatActivity() {
             ID_DETAIL = bundle!!.getInt(ID_LEAVE)
         }
 
-        listLeaveType = databaseQueryHelper!!.getLeaveTypeModels()
+        listLeaveType = databaseQueryHelper.getLeaveTypeModels()
         val listLeaveType = listLeaveType.map { leave -> leave.leaveType }.toList()
         spinnerEditLeaveType.item = listLeaveType
 
-        listCutiKhusus = databaseQueryHelper!!.getCutiKhususModels()
+        listCutiKhusus = databaseQueryHelper.getCutiKhususModels()
         val listCutiKhusus = listCutiKhusus.map { leave -> leave.leaveName }.toList()
         spinnerEditLeaveName.item = listCutiKhusus
 
@@ -76,13 +81,14 @@ class LeaveRequestEditActivity : AppCompatActivity() {
         }
 
         tampilkanDetail(ID_DETAIL!!)
+
+        prevLeaveVal = hitungSisaPrevYearLeave(databaseQueryHelper)
+        leaveAlreadyTakenVal = hitungLeaveAlreadyTaken(databaseQueryHelper)
+        remainingQuota = prevLeaveVal + regularLeaveQuota - (leaveAlreadyTakenVal + annualLeaveQuota)
     }
 
     private fun setOnItemSelectedListener(vararg spinners: SmartMaterialSpinner<*>) {
-      /*  println("BULAN# SPINNERS- ${spinners[0]}")
-        println("BULAN# SPINNERS- ${spinners[1]}")*/
         for (spinner in spinners) {
-        //println("BULAN#SPINNER $spinner")
             spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(
                     adapterView: AdapterView<*>,
@@ -100,7 +106,6 @@ class LeaveRequestEditActivity : AppCompatActivity() {
                     }else if (spinners[1] == spinner) {
                         if (cekIsCutiKhusus()) {
                             val startLeave = inputEditStartLeave.text.toString()
-                            println("BULAN# startLeave: $startLeave")
 
                             if (startLeave.isNotBlank() || startLeave.isNotEmpty()) {
                                 val format = SimpleDateFormat(DATE_PATTERN)
@@ -132,32 +137,6 @@ class LeaveRequestEditActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-
-    /*private fun setOnItemSelectedListener(vararg spinners: SmartMaterialSpinner<*>) {
-        //        for (spinner in spinners) {
-        var spinner = spinners[0]
-        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                adapterView: AdapterView<*>,
-                view: View,
-                position: Int,
-                id: Long
-            ) {
-                if (spinner.item[position] == "Cuti Khusus") {
-                    spinners[1].visibility = View.VISIBLE
-                } else {
-            //                        TODO check spinner is visible
-                    spinners[1].visibility = View.GONE
-                }
-                //spinner.errorText = ""
-                ubahResetButton(context, true, buttonEditResetLeave)
-            }
-            override fun onNothingSelected(adapterView: AdapterView<*>) {
-                //spinner.errorText = "Required"
-            }
-        }
-
-    }*/
 
     fun tampilkanDetail(id_detail: Int) {
         val data = databaseQueryHelper!!.getLeaveRequestDetailById(id_detail)
@@ -203,7 +182,6 @@ class LeaveRequestEditActivity : AppCompatActivity() {
 
             if (!endLeave.isBlank()) {
                 calendar.time = formatter.parse(endLeave)
-                Toast.makeText(context, endLeave, Toast.LENGTH_SHORT).show()
             }
             val yearEnd = calendar.get(Calendar.YEAR)
             val monthEnd = calendar.get(Calendar.MONTH)
@@ -292,6 +270,59 @@ class LeaveRequestEditActivity : AppCompatActivity() {
         inputEditReasonLeave.text = null
     }
 
+    fun isDateAlreadyRegistered(startDate:Calendar, endDate:Calendar):Boolean{
+        var isExist=false
+
+        //startDate.get(Calendar.MONTH) -> GET MONTH FROM CALENDAR
+        val listRangeDate = databaseQueryHelper!!.getLeaveDateRangeByYear(startDate.get(Calendar.YEAR))
+        val listSize= listRangeDate.size
+        val formatter = SimpleDateFormat(DATE_PATTERN)
+        val dbStart= Calendar.getInstance()
+        val dbEnd= Calendar.getInstance()
+        var dateRangeStart:Date? =null
+        var dateRangeEnd:Date? =null
+        var overlapStart=""
+        var overlapEnd=""
+
+        listRangeDate.forEach {dateRange->
+            dateRangeStart= formatter.parse(dateRange.start)
+            dateRangeEnd=formatter.parse(dateRange.end)
+
+            dbStart.time = dateRangeStart
+            dbEnd.time = dateRangeEnd
+
+            if(dbStart<=endDate && dbEnd>=startDate){
+                isExist=true
+                overlapStart=  formatter.format(dbStart.time)
+                overlapEnd=  formatter.format(dbEnd.time)
+                showAlertInfoDialog("Anda sedang cuti $overlapStart - $overlapEnd")
+            }
+        }
+
+        return isExist
+    }
+
+    /*fun showAlertOverlapDate(overlapStart:String,overlapEnd:String){
+        AlertDialog.Builder(context!!, R.style.AlertDialogTheme)
+            .setMessage("Anda sedang cuti $overlapStart - $overlapEnd")
+            .setCancelable(false)
+            .setNegativeButton("OK") { dialog, which ->
+            }
+            .create()
+            .show()
+
+    }*/
+
+    fun showAlertInfoDialog(message:String){
+        AlertDialog.Builder(context!!, R.style.AlertDialogTheme)
+            .setMessage(message)
+            .setCancelable(false)
+            .setNegativeButton("OK") { dialog, which ->
+            }
+            .create()
+            .show()
+    }
+
     fun submitLeaveRequest() {
 
         val indexLeaveType = spinnerEditLeaveType.selectedItemPosition
@@ -374,10 +405,9 @@ class LeaveRequestEditActivity : AppCompatActivity() {
         }
 
         // check valid duration
+        val startDate = Calendar.getInstance()
+        val endDate = Calendar.getInstance()
         if (inputStart.isNotEmpty() && inputEnd.isNotEmpty()) {
-
-            val startDate = Calendar.getInstance()
-            val endDate = Calendar.getInstance()
             val formatter = SimpleDateFormat(DATE_PATTERN)
 
             startDate.time = formatter.parse(inputStart)
@@ -388,6 +418,17 @@ class LeaveRequestEditActivity : AppCompatActivity() {
                 isValid = false
             }
         }
+
+        // check date already exist
+        /*if(isDateAlreadyRegistered(startDate,endDate)){
+            isValid = false
+        }*/
+
+        /*var sisaCuti=remainingQuota-countDaysInRange(inputStart,inputEnd)
+        if(sisaCuti<0){
+            showAlertInfoDialog("Sisa cuti anda = $sisaCuti")
+            isValid = false
+        }*/
 
         if (isValid) {
             val model = LeaveRequest()

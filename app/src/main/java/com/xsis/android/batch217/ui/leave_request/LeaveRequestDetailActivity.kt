@@ -130,7 +130,6 @@ class LeaveRequestDetailActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        println("BULAN# onActivityResult $requestCode lEAVE_REQUEST_ACTIVITY")
         /*if (resultCode == Activity.RESULT_OK) {
             println("BULAN# onActivityResult")
             val fragment = LeaveRequestFragment()

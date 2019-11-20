@@ -17,22 +17,20 @@ import com.xsis.android.batch217.databases.LeaveRequestQueryHelper
 import com.xsis.android.batch217.models.LeaveRequest
 import com.xsis.android.batch217.utils.*
 import kotlinx.android.synthetic.main.activity_leave_request_add.*
-import kotlinx.android.synthetic.main.activity_leave_request_edit.*
-import kotlinx.android.synthetic.main.form_anggota_keluarga.view.*
 import java.text.SimpleDateFormat
-import java.time.LocalDate
 import java.util.*
-import kotlin.collections.ArrayList
 
 class LeaveRequestAddActivity : AppCompatActivity() {
     val context = this
+    var defaultColor = 0
+
     lateinit var listLeaveType: List<LeaveRequest>
     lateinit var listCutiKhusus: List<LeaveRequest>
-    var databaseQueryHelper: LeaveRequestQueryHelper? = null
-    val currentYear = Calendar.getInstance().get(Calendar.YEAR)
+    internal lateinit var databaseQueryHelper: LeaveRequestQueryHelper
 
-    var defaultColor = 0
-    var curLeaveNameItem = ""
+    var remainingQuota:Int=0
+    var prevLeaveVal:Int=0
+    var leaveAlreadyTakenVal:Int=0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -73,6 +71,10 @@ class LeaveRequestAddActivity : AppCompatActivity() {
         buttonSubmitLeave.setOnClickListener {
             submitLeaveRequest()
         }
+
+        prevLeaveVal = hitungSisaPrevYearLeave(databaseQueryHelper)
+        leaveAlreadyTakenVal = hitungLeaveAlreadyTaken(databaseQueryHelper)
+        remainingQuota = prevLeaveVal + regularLeaveQuota - (leaveAlreadyTakenVal + annualLeaveQuota)
     }
 
     private fun setOnItemSelectedListener(vararg spinners: SmartMaterialSpinner<*>) {
@@ -91,8 +93,6 @@ class LeaveRequestAddActivity : AppCompatActivity() {
                         // layoutEndLeave.setEnabled(true)
                     }*/
 
-                    println("BULAN# onChange: $spinner")
-
                     if (spinners[0] == spinner) {
                         if (spinner.item[position] == "Cuti Khusus") {
                             spinnerLeaveName.visibility = View.VISIBLE
@@ -106,7 +106,6 @@ class LeaveRequestAddActivity : AppCompatActivity() {
                     } else if (spinners[1] == spinner) {
                         if (cekIsCutiKhusus()) {
                             val startLeave = inputStartLeave.text.toString()
-                            println("BULAN# startLeave: $startLeave")
 
                             if (startLeave.isNotBlank() || startLeave.isNotEmpty()) {
                                 val format = SimpleDateFormat(DATE_PATTERN)
@@ -199,20 +198,6 @@ class LeaveRequestAddActivity : AppCompatActivity() {
         inputEndLeave.setText(tanggalEnd)
     }
 
-    /*fun hitungEndDateCutiKhusus(year: Int, month: Int, dayOfMonth: Int) {
-        println("hitungEndDateCutiKhusus year: $year")
-        println("hitungEndDateCutiKhusus month: $month")
-        println("hitungEndDateCutiKhusus dayOfMonth: $dayOfMonth")
-
-        val quotaCutiKhusus = listCutiKhusus[spinnerLeaveName.selectedItemPosition].quotaCutiKhusus
-
-        val formatter = SimpleDateFormat(DATE_PATTERN)
-        val defaultDateEnd = Calendar.getInstance()
-        defaultDateEnd.set(year, month, dayOfMonth + (quotaCutiKhusus - 1))
-        val tanggalEnd = formatter.format(defaultDateEnd.time)
-        inputEndLeave.setText(tanggalEnd)
-    }*/
-
     private fun initDatePickerEndLeave() {
         inputEndLeave.setOnClickListener {
 
@@ -222,7 +207,6 @@ class LeaveRequestAddActivity : AppCompatActivity() {
 
             if (!endLeave.isBlank()) {
                 calendar.time = formatter.parse(endLeave)
-                Toast.makeText(context, endLeave, Toast.LENGTH_SHORT).show()
             }
             val yearEnd = calendar.get(Calendar.YEAR)
             val monthEnd = calendar.get(Calendar.MONTH)
@@ -277,25 +261,34 @@ class LeaveRequestAddActivity : AppCompatActivity() {
 
             if(dbStart<=endDate && dbEnd>=startDate){
                 isExist=true
-                println("BULAN# startDate: $startDate")
                 overlapStart=  formatter.format(dbStart.time)
                 overlapEnd=  formatter.format(dbEnd.time)
-                showAlertOverlapDate(overlapStart,overlapEnd)
+                showAlertInfoDialog("Anda sedang cuti $overlapStart - $overlapEnd")
             }
         }
 
         return isExist
     }
 
-    fun showAlertOverlapDate(overlapStart:String,overlapEnd:String){
+    /*fun showAlertOverlapDate(overlapStart:String,overlapEnd:String){
         AlertDialog.Builder(context!!, R.style.AlertDialogTheme)
-            .setMessage("Anda sedang cuti pada $overlapStart - $overlapEnd")
+            .setMessage("Anda sedang cuti $overlapStart - $overlapEnd")
             .setCancelable(false)
             .setNegativeButton("OK") { dialog, which ->
             }
             .create()
             .show()
 
+    }*/
+
+    fun showAlertInfoDialog(message:String){
+        AlertDialog.Builder(context!!, R.style.AlertDialogTheme)
+            .setMessage(message)
+            .setCancelable(false)
+            .setNegativeButton("OK") { dialog, which ->
+            }
+            .create()
+            .show()
     }
 
     fun submitLeaveRequest() {
@@ -395,7 +388,13 @@ class LeaveRequestAddActivity : AppCompatActivity() {
 
         // check date already exist
         if(isDateAlreadyRegistered(startDate,endDate)){
-            Toast.makeText(context, "Anda sedang cuti", Toast.LENGTH_SHORT).show()
+            isValid = false
+        }
+
+        //check remaining quota not < 0
+        var sisaCuti=remainingQuota-countDaysInRange(inputStart,inputEnd)
+        if(sisaCuti<0){
+            showAlertInfoDialog("Sisa cuti anda = $sisaCuti")
             isValid = false
         }
 
