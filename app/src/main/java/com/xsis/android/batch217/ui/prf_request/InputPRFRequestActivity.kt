@@ -73,6 +73,7 @@ class InputPRFRequestActivity : AppCompatActivity() {
         overtime = inputOvertimePRF
         bast = spinnerInputBastPRF
         billing = inputBillingPRF
+        buttonReset = buttonResetPRFRequest
 
         ubahButtonResetSpinner()
         requiredOff()
@@ -87,7 +88,7 @@ class InputPRFRequestActivity : AppCompatActivity() {
         isiSpinnerNotebook()
         isiSpinnerBAST()
 
-        buttonResetPRFRequest.setOnClickListener {
+        buttonReset!!.setOnClickListener {
             resetForm()
         }
 
@@ -109,7 +110,6 @@ class InputPRFRequestActivity : AppCompatActivity() {
     }
 
     fun ubahButtonResetSpinner() {
-        buttonReset = buttonResetPRFRequest
         type!!.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>?,
@@ -117,7 +117,6 @@ class InputPRFRequestActivity : AppCompatActivity() {
                 position: Int,
                 id: Long
             ) {
-                buttonReset = buttonResetPRFRequest
                 if (position != 0) {
                     buttonResetPRFRequest.isEnabled = true
                     ubahResetButton(context, true, buttonReset!!)
@@ -135,7 +134,6 @@ class InputPRFRequestActivity : AppCompatActivity() {
                 position: Int,
                 id: Long
             ) {
-                buttonReset = buttonResetPRFRequest
                 if (position != 0) {
                     buttonResetPRFRequest.isEnabled = true
                     ubahResetButton(context, true, buttonReset!!)
@@ -153,7 +151,6 @@ class InputPRFRequestActivity : AppCompatActivity() {
                 position: Int,
                 id: Long
             ) {
-                buttonReset = buttonResetPRFRequest
                 if (position != 0) {
                     buttonResetPRFRequest.isEnabled = true
                     ubahResetButton(context, true, buttonReset!!)
@@ -171,7 +168,6 @@ class InputPRFRequestActivity : AppCompatActivity() {
                 position: Int,
                 id: Long
             ) {
-                buttonReset = buttonResetPRFRequest
                 if (position != 0) {
                     buttonResetPRFRequest.isEnabled = true
                     ubahResetButton(context, true, buttonReset!!)
@@ -456,7 +452,6 @@ class InputPRFRequestActivity : AppCompatActivity() {
     private val textWatcher = object : TextWatcher {
         override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
         override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-            buttonReset = buttonResetPRFRequest
             val tanggal = tanggal!!.text.toString().trim()
             val placementTeks = placement!!.text.toString().trim()
             val locationTeks = location!!.text.toString().trim()
@@ -493,4 +488,5 @@ class InputPRFRequestActivity : AppCompatActivity() {
         inputTelpPRF.setHintTextColor(Color.GRAY)
         requiredNotebookPRFRequest.isVisible = false
     }
+    
 }
