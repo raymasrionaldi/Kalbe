@@ -286,6 +286,10 @@ class EntryTimesheetActivity : AppCompatActivity() {
             } else {
                 inputReportDateEntryTimesheet.setHintTextColor(Color.BLACK)
                 requiredReportDateTimesheet.isVisible = false
+                if(startReportDateTimesheet.equals("") || endReportDateTimesheet.equals("")){
+                    Toast.makeText(context,"jam report date harus diisi", Toast.LENGTH_SHORT).show()
+                    isValid = false
+                }
             }
             if (startReportDateTimesheet.equals("")) {
                 inputStarDatetEntryTimesheet.setHintTextColor(Color.RED)
@@ -308,6 +312,11 @@ class EntryTimesheetActivity : AppCompatActivity() {
             if (positionOvertimeTimesheet == 0) {
                 requiredOvertimeEntryTimesheet.isVisible = true
                 isValid = false
+            }else if (positionOvertimeTimesheet == 1){
+                if (startOvertimeTimesheet.equals("")||endOvertimeTimesheet.equals("")){
+                    Toast.makeText(context,"jam Overtime harus diisi", Toast.LENGTH_SHORT).show()
+                    isValid = false
+                }
             }
             if (notesTimesheet.equals("")) {
                 inputNotesEntryTimesheet.setHintTextColor(Color.RED)

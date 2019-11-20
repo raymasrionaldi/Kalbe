@@ -32,11 +32,11 @@ import java.text.SimpleDateFormat
 class SendDataActivity : AppCompatActivity() {
     val context = this
     lateinit var listTimesheet : List<Timesheet>
-    val user = "satriahanif4@gmail.com"
-    val tos = arrayOf("satriahanif4@gmail.com")
+    val user = "difaraymas82@gmail.com"
+    val tos = arrayOf("difaraymas82@gmail.com")
     val ccs = arrayOf<String>()
     val title = "Data Terkirim"
-    val password = "hanifan94"
+    val password = "hanifan49"
 
 
 
