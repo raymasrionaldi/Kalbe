@@ -45,6 +45,7 @@ class EntryTimesheetActivity : AppCompatActivity() {
     var statusSpinner: Spinner? = null
     var reportDate: TextView? = null
     var modeForm = 0
+    var defaultColor = 0
     companion object {
         const val MODE_ADD = 0
         const val MODE_EDIT = 1
@@ -73,6 +74,7 @@ class EntryTimesheetActivity : AppCompatActivity() {
             idTimesheet = bundle!!.getInt(ID_TIMESHEET, 0)
             loadDataTimesheet(idTimesheet)
         }
+        defaultColor = inputStarDatetEntryTimesheet.currentHintTextColor
 
         buttonReset = findViewById(R.id.buttonResetEntryFormTimesheet)
         clientSpinner = findViewById(R.id.inputClientTimesheet)
@@ -250,21 +252,33 @@ class EntryTimesheetActivity : AppCompatActivity() {
         if (positionStatusTimesheet <= 1) {
             val sdf = SimpleDateFormat(HOUR_PATTERN)
             val sdf2 = SimpleDateFormat(HOUR_PATTERN)
-            if (!startReportDateTimesheet.equals("") ||!endReportDateTimesheet.equals("") ){
+            if (!startReportDateTimesheet.equals("") && !endReportDateTimesheet.equals("") ){
                 val startTime = sdf.parse(startReportDateTimesheet)
                 val endTime = sdf.parse(endReportDateTimesheet)
 
                 if(startTime >= endTime){
                     isValid = false
                     Toast.makeText(context, "Save Invalid, End time Report Date must be greater then Start time Report Date", Toast.LENGTH_SHORT).show()
+                }else if(startTime.equals("")){
+                    requiredStartEntryTimesheet.isVisible = true
+                    isValid = false
+                } else if (endTime.equals("")){
+                    requiredEndEntryTimesheet.isVisible = true
+                    isValid = false
                 }
             }
-            if (!startOvertimeTimesheet.equals("")||!endOvertimeTimesheet.equals("")){
+            if (!startOvertimeTimesheet.equals("")&& !endOvertimeTimesheet.equals("")){
                 val startOvTime = sdf2.parse(startOvertimeTimesheet)
                 val endOvTime = sdf2.parse(endOvertimeTimesheet)
                 if (startOvTime >= endOvTime){
-                    isValid = false
                     Toast.makeText(context, "Save Invalid, End time Overtime must be greater then Start time Overtime Date", Toast.LENGTH_SHORT).show()
+                    isValid = false
+                } else if(startOvTime.equals("")){
+                    requiredStartOvertimeEntryTimesheet.isVisible = true
+                    isValid = false
+                } else if (endOvTime.equals("")){
+                    requiredEndOvertimeEntryTimesheet.isVisible = true
+                    isValid = false
                 }
             }
             if (startOvertimeTimesheet <= endReportDateTimesheet && positionOvertimeTimesheet == 1){
@@ -285,6 +299,8 @@ class EntryTimesheetActivity : AppCompatActivity() {
                 isValid = false
             } else {
                 inputReportDateEntryTimesheet.setHintTextColor(Color.BLACK)
+                inputStarDatetEntryTimesheet.setHintTextColor(Color.BLACK)
+                inputEndDateEntryTimesheet.setHintTextColor(Color.BLACK)
                 requiredReportDateTimesheet.isVisible = false
                 if(startReportDateTimesheet.equals("") || endReportDateTimesheet.equals("")){
                     Toast.makeText(context,"jam report date harus diisi", Toast.LENGTH_SHORT).show()
@@ -313,8 +329,12 @@ class EntryTimesheetActivity : AppCompatActivity() {
                 requiredOvertimeEntryTimesheet.isVisible = true
                 isValid = false
             }else if (positionOvertimeTimesheet == 1){
-                if (startOvertimeTimesheet.equals("")||endOvertimeTimesheet.equals("")){
-                    Toast.makeText(context,"jam Overtime harus diisi", Toast.LENGTH_SHORT).show()
+                if (startOvertimeTimesheet.equals("")){
+                    requiredStartOvertimeEntryTimesheet.isVisible = true
+                    isValid = false
+                }
+                if(endOvertimeTimesheet.equals("")){
+                    requiredEndOvertimeEntryTimesheet.isVisible = true
                     isValid = false
                 }
             }
@@ -398,6 +418,28 @@ class EntryTimesheetActivity : AppCompatActivity() {
         inputStartOvertimeEntryTimesheet!!.setText("")
         inputEndtOvertimeEntryTimesheet!!.setText("")
         inputNotesEntryTimesheet!!.setText("")
+
+        requiredStatusTimesheet!!.visibility = View.GONE
+        requiredClientTimesheet!!.visibility = View.GONE
+        requiredReportDateTimesheet!!.visibility = View.GONE
+        requiredStartEntryTimesheet!!.visibility = View.GONE
+        requiredEndEntryTimesheet!!.visibility = View.GONE
+        requiredOvertimeEntryTimesheet!!.visibility = View.GONE
+        requiredStartOvertimeEntryTimesheet!!.visibility = View.GONE
+        requiredEndOvertimeEntryTimesheet!!.visibility = View.GONE
+        requiredNotesEntryTimesheet!!.visibility = View.GONE
+
+        inputReportDateEntryTimesheet.setHintTextColor(Color.BLACK)
+        inputStarDatetEntryTimesheet.isEnabled = false
+        inputStarDatetEntryTimesheet.setHintTextColor(defaultColor)
+        inputEndDateEntryTimesheet.isEnabled = false
+        inputEndDateEntryTimesheet.setHintTextColor(defaultColor)
+        inputStartOvertimeEntryTimesheet.isEnabled = false
+        inputStartOvertimeEntryTimesheet.setHintTextColor(defaultColor)
+        inputEndtOvertimeEntryTimesheet.isEnabled = false
+        inputEndtOvertimeEntryTimesheet.setHintTextColor(defaultColor)
+        inputNotesEntryTimesheet.isEnabled = false
+        inputNotesEntryTimesheet.setHintTextColor(Color.BLACK)
     }
 
     fun isiSpinnerStatusTimesheet() {

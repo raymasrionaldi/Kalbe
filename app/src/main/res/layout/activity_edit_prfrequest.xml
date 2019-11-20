@@ -346,7 +346,7 @@
                     android:layout_weight="1"
                     android:background="@drawable/button_reset_off"
                     android:clickable="false"
-                    android:enabled="false"
+                    android:enabled="true"
                     android:text="@string/reset"
                     android:textColor="@color/warnaTeksResetOff" />
 

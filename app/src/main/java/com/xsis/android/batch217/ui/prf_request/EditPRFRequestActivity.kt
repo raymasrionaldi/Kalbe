@@ -75,6 +75,7 @@ class EditPRFRequestActivity : AppCompatActivity() {
         overtime = inputOvertimePRFEdit
         bast = spinnerInputBastPRFEdit
         billing = inputBillingPRFEdit
+        buttonReset = buttonResetPRFRequestEdit
 
 
         ubahButtonResetSpinner()
@@ -106,7 +107,6 @@ class EditPRFRequestActivity : AppCompatActivity() {
     }
 
     fun ubahButtonResetSpinner() {
-        buttonReset = buttonResetPRFRequestEdit
         type!!.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>?,
@@ -114,13 +114,8 @@ class EditPRFRequestActivity : AppCompatActivity() {
                 position: Int,
                 id: Long
             ) {
-                buttonReset = buttonResetPRFRequestEdit
-                if (position != 0) {
-                    buttonResetPRFRequestEdit.isEnabled = true
-                    ubahResetButton(context, true, buttonReset!!)
-                } else {
-                    ubahResetButton(context, false, buttonReset!!)
-                }
+                val kondisi = cekKondisi()
+                ubahResetButton(context, kondisi, buttonReset!!)
             }
 
             override fun onNothingSelected(arg0: AdapterView<*>) {}
@@ -132,13 +127,8 @@ class EditPRFRequestActivity : AppCompatActivity() {
                 position: Int,
                 id: Long
             ) {
-                buttonReset = buttonResetPRFRequestEdit
-                if (position != 0) {
-                    buttonResetPRFRequestEdit.isEnabled = true
-                    ubahResetButton(context, true, buttonReset!!)
-                } else {
-                    ubahResetButton(context, false, buttonReset!!)
-                }
+                val kondisi = cekKondisi()
+                ubahResetButton(context, kondisi, buttonReset!!)
             }
 
             override fun onNothingSelected(arg0: AdapterView<*>) {}
@@ -150,13 +140,8 @@ class EditPRFRequestActivity : AppCompatActivity() {
                 position: Int,
                 id: Long
             ) {
-                buttonReset = buttonResetPRFRequestEdit
-                if (position != 0) {
-                    buttonResetPRFRequestEdit.isEnabled = true
-                    ubahResetButton(context, true, buttonReset!!)
-                } else {
-                    ubahResetButton(context, false, buttonReset!!)
-                }
+                val kondisi = cekKondisi()
+                ubahResetButton(context, kondisi, buttonReset!!)
             }
 
             override fun onNothingSelected(arg0: AdapterView<*>) {}
@@ -168,14 +153,8 @@ class EditPRFRequestActivity : AppCompatActivity() {
                 position: Int,
                 id: Long
             ) {
-                buttonReset = buttonResetPRFRequestEdit
-                if (position >= 0) {
-                    buttonResetPRFRequestEdit.isEnabled = true
-                    ubahResetButton(context, true, buttonReset!!)
-                }
-//                else {
-//                    ubahResetButton(context, false, buttonReset!!)
-//                }
+                val kondisi = cekKondisi()
+                ubahResetButton(context, kondisi, buttonReset!!)
             }
 
             override fun onNothingSelected(arg0: AdapterView<*>) {}
@@ -204,18 +183,13 @@ class EditPRFRequestActivity : AppCompatActivity() {
         val emailPattern2 = "[a-z0-9._-]+@[a-z]+\\.+[a-z]+"
         val userNamePatterns = "[a-zA-Z0-9._]+"
 
-//        var getUsernameToInt = ""
-//        for (i in userName) {
-//            getUsernameToInt += i
-//        }
-
         if (typePosition == 0) {
             isValid = false
             requiredTypePRFRequestEdit.isVisible = true
         } else {
             requiredTypePRFRequestEdit.isVisible = false
         }
-        if ( placement.isEmpty()) {
+        if (placement.isEmpty()) {
             isValid = false
             inputPlacementPRFEdit.setHintTextColor(Color.RED)
             requiredPlacementPRFRequestEdit.isVisible = true
@@ -256,7 +230,7 @@ class EditPRFRequestActivity : AppCompatActivity() {
             requiredTelpPRFRequestEdit.isVisible = false
         }
 
-        if (!email.matches(emailPattern.toRegex()) && !email.matches(emailPattern2.toRegex())){
+        if (!email.matches(emailPattern.toRegex()) && !email.matches(emailPattern2.toRegex())) {
             isValid = false
             Toast.makeText(context, "E-mail tidak valid", Toast.LENGTH_SHORT).show()
         }
@@ -295,8 +269,7 @@ class EditPRFRequestActivity : AppCompatActivity() {
                     isiBast,
                     billing
                 )
-            }
-            else {
+            } else {
                 insertKeDatabase(
                     id,
                     tanggal,
@@ -466,21 +439,8 @@ class EditPRFRequestActivity : AppCompatActivity() {
         }
 
         override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-            buttonReset = buttonResetPRFRequestEdit
-            val tanggalTeks = tanggal!!.text.toString().trim()
-            val placementTeks = placement!!.text.toString().trim()
-            val locationTeks = location!!.text.toString().trim()
-            val periodTeks = period!!.text.toString().trim()
-            val userNameTeks = userName!!.text.toString().trim()
-            val telpMobilePhoneTeks = telpMobilePhone!!.text.toString().trim()
-            val emailTeks = email!!.text.toString().trim()
-            val overtimeTeks = overtime!!.text.toString().trim()
-            val billingTeks = billing!!.text.toString().trim()
 
-            val kondisi =
-                tanggalTeks!!.isNotEmpty() || !placementTeks.isEmpty() || !locationTeks.isEmpty() || !periodTeks.isEmpty()
-                        || !userNameTeks.isEmpty() || !telpMobilePhoneTeks.isEmpty() || !emailTeks.isEmpty()
-                        || !overtimeTeks.isEmpty() || !billingTeks.isEmpty()
+            val kondisi = cekKondisi()
 
             ubahResetButton(context, kondisi, buttonReset!!)
         }
@@ -576,5 +536,23 @@ class EditPRFRequestActivity : AppCompatActivity() {
         requiredTelpPRFRequestEdit.isVisible = false
         inputEmailPRFEdit.setHintTextColor(Color.GRAY)
         requiredNotebookPRFRequestEdit.isVisible = false
+    }
+
+    fun cekKondisi(): Boolean {
+        val tanggalTeks = tanggal!!.text.toString().trim()
+        val placementTeks = placement!!.text.toString().trim()
+        val locationTeks = location!!.text.toString().trim()
+        val periodTeks = period!!.text.toString().trim()
+        val userNameTeks = userName!!.text.toString().trim()
+        val telpMobilePhoneTeks = telpMobilePhone!!.text.toString().trim()
+        val emailTeks = email!!.text.toString().trim()
+        val overtimeTeks = overtime!!.text.toString().trim()
+        val billingTeks = billing!!.text.toString().trim()
+
+        return tanggalTeks!!.isNotEmpty() || !placementTeks.isEmpty() || !locationTeks.isEmpty() || !periodTeks.isEmpty()
+                || !userNameTeks.isEmpty() || !telpMobilePhoneTeks.isEmpty() || !emailTeks.isEmpty()
+                || !overtimeTeks.isEmpty() || !billingTeks.isEmpty() || type!!.selectedItemPosition != 0
+                || pid!!.selectedItemPosition != 0 || notebook!!.selectedItemPosition != 0 || bast!!.selectedItemPosition != 0
+
     }
 }

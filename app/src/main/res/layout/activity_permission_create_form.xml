@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.permission.PermissionCreateFormActivity"
+    android:orientation="vertical">
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintTop_toTopOf="parent"
+        android:paddingBottom="45dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_marginRight="15dp"
+            android:layout_marginLeft="15dp"
+            android:paddingTop="10dp">
+
+            <EditText
+                android:id="@+id/inputNamaPegawai"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Nama*"
+                android:inputType="text"
+                android:textSize="15dp"
+                android:textColorHint="@color/warnaBlack"/>
+            <EditText
+                android:id="@+id/inputDevartement"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Devartement / Divisi"
+                android:inputType="text"
+                android:textSize="15dp"
+                android:textColorHint="@color/warnaBlack"/>
+            <EditText
+                android:id="@+id/inputJabatan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Jabatan"
+                android:inputType="text"
+                android:textSize="15dp"
+                android:textColorHint="@color/warnaBlack"/>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/inputTanggalPermission"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/black"
+                    android:hint="Tanggal *"
+                    android:clickable="false"
+                    android:focusable="false"
+                    android:longClickable="false"
+                    android:textSize="16sp"
+                    android:enabled="false"
+                    />
+
+                <ImageView
+                    android:id="@+id/iconInputTanggalPermission"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="right|center_vertical"
+                    android:layout_marginRight="21dp"
+                    android:src="@drawable/ic_calender_permission" />
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/inputJamPermission"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/black"
+                    android:hint="Pukul *"
+                    android:clickable="false"
+                    android:focusable="false"
+                    android:longClickable="false"
+                    android:textSize="16sp"
+                    android:enabled="false"
+                    />
+
+                <ImageView
+                    android:id="@+id/iconInputJamPermission"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="right|center_vertical"
+                    android:layout_marginRight="21dp"
+                    android:src="@drawable/ic_time_permission" />
+            </FrameLayout>
+
+            <EditText
+                android:id="@+id/Keterangan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Keterangan *"
+                android:inputType="text"
+                android:textSize="15dp"
+                android:textColorHint="@color/warnaBlack"
+                android:clickable="false"
+                android:focusable="false"
+                android:longClickable="false"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="5dp">
+
+                <androidx.appcompat.widget.AppCompatCheckBox
+                    android:id="@+id/cekTidakMasuk"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/warnaCheckBoxAbu"/>
+
+                <EditText
+                    android:id="@+id/hintTidakMasuk"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Tidak Masuk"
+                    android:enabled="false"
+                    android:inputType="text"
+                    android:focusable="false"
+                    android:longClickable="false"
+                    android:textSize="15dp"/>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="5dp">
+
+                <androidx.appcompat.widget.AppCompatCheckBox
+                    android:id="@+id/cekSakit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/warnaCheckBoxAbu"/>
+
+                <EditText
+                    android:id="@+id/hintSakit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Sakit"
+                    android:enabled="false"
+                    android:inputType="text"
+                    android:focusable="false"
+                    android:longClickable="false"
+                    android:textSize="15dp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="5dp">
+
+                <androidx.appcompat.widget.AppCompatCheckBox
+                    android:id="@+id/cekDatangTerlambat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/warnaCheckBoxAbu"/>
+
+                <EditText
+                    android:id="@+id/hintDatangTerlambat"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Datang Terlambat"
+                    android:enabled="false"
+                    android:inputType="text"
+                    android:focusable="false"
+                    android:longClickable="false"
+                    android:textSize="15dp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="5dp">
+
+                <androidx.appcompat.widget.AppCompatCheckBox
+                    android:id="@+id/cekPulangAwal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/warnaCheckBoxAbu"/>
+
+                <EditText
+                    android:id="@+id/hintPulangAwal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Pulang Awal"
+                    android:enabled="false"
+                    android:inputType="text"
+                    android:focusable="false"
+                    android:longClickable="false"
+                    android:textSize="15dp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="5dp">
+
+                <androidx.appcompat.widget.AppCompatCheckBox
+                    android:id="@+id/cekDLL"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/warnaCheckBoxAbu"/>
+
+                <EditText
+                    android:id="@+id/inputDLL"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="..."
+                    android:enabled="false"
+                    android:inputType="text"
+                    android:textSize="15dp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="15dp">
+                <Button
+                    android:id="@+id/buttonResetPermission"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="RESET"
+                    android:enabled="false"
+                    android:background="@drawable/button_simpan_off"
+                    android:textColor="@color/warnaTeksSimpanOff"
+                    android:layout_marginRight="1dp"/>
+                <Button
+                    android:id="@+id/buttonSubmitPermission"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="SUBMIT"
+                    android:enabled="false"
+                    android:background="@drawable/button_simpan_off"
+                    android:textColor="@color/warnaTeksSimpanOff"/>
+
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>
