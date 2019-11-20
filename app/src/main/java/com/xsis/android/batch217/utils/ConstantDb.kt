@@ -95,6 +95,11 @@ val ID_IDENTITAS="id_identitas"
 val NAMA_IDENTITAS="nama_identitas"
 val DES_IDENTITAS="des_identitas"
 
+val TABEL_JADWAL= "jadwal"
+val ID_JADWAL= "id_jadwal"
+val NAMA_JADWAL= "nama_jadwal"
+val DES_JADWAL= "des_jadwal"
+
 val TABEL_TIPE_TES="tipe_tes"
 val ID_TES="id_tes"
 val NAMA_TES="nama_tes"

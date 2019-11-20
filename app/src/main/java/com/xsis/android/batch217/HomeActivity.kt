@@ -24,6 +24,7 @@ import com.xsis.android.batch217.ui.employee_status.EmployeeStatusFragment
 import com.xsis.android.batch217.ui.employee_training.EmployeeTrainingFragment
 import com.xsis.android.batch217.ui.grade.GradeFragment
 import com.xsis.android.batch217.ui.home.HomeFragment
+import com.xsis.android.batch217.ui.jadwal.JadwalFragment
 import com.xsis.android.batch217.ui.jenis_catatan.JenisCatatanFragment
 import com.xsis.android.batch217.ui.jenjang_pendidikan.JenjangPendidikanFragment
 import com.xsis.android.batch217.ui.keahlian.KeahlianFragment
@@ -232,6 +233,7 @@ class HomeActivity : AppCompatActivity() {
 //Tipe Tes natuza
         val item11 = ExpandedMenuModel()
         item11.name = getString(R.string.menu_tipe_tes)
+
 // Adding data header
         listDataHeader.add(item11)
 
@@ -360,7 +362,15 @@ class HomeActivity : AppCompatActivity() {
         heading23.add(getString(R.string.summary_prf))
         heading23.add(getString(R.string.timesheet_report))
         listDataChild[listDataHeader[23]] = heading23
+
+//Jadwal natuza
+        val item24 = ExpandedMenuModel()
+        item24.name = getString(R.string.menu_jadwal)
+        // Adding data header
+        listDataHeader.add(item24)
     }
+
+
 
     fun closeNavDrawer() {
         val drawer = findViewById(R.id.drawer_layout) as DrawerLayout
@@ -764,6 +774,18 @@ class HomeActivity : AppCompatActivity() {
                         R.id.nav_host_fragment,
                         fragment,
                         getString(R.string.menu_provider_tools)
+                    )
+                    fragmentTransaction.commit()
+                    closeNavDrawer()
+                }
+                //punya natuza
+                24 -> {
+                    val fragment = JadwalFragment()
+                    val fragmentTransaction = supportFragmentManager.beginTransaction()
+                    fragmentTransaction.replace(
+                        R.id.nav_host_fragment,
+                        fragment,
+                        getString(R.string.menu_jadwal)
                     )
                     fragmentTransaction.commit()
                     closeNavDrawer()
