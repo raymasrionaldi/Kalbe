@@ -249,7 +249,8 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:maxLines="1"
-                android:hint="Email *" />
+                android:hint="Email *"
+                android:inputType="textEmailAddress"/>
 
             <TextView
                 android:id="@+id/requiredEmailPRFRequestEdit"

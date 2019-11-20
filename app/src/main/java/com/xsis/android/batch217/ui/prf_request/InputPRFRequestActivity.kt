@@ -203,7 +203,9 @@ class InputPRFRequestActivity : AppCompatActivity() {
         val billing = billing!!.text.toString().trim()
 
         var isValid = true
-        val emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z.]+"
+        val emailPattern = "[a-z0-9._-]+@[a-z]+\\.+[a-z]+\\.+[a-z]+"
+        val emailPattern2 = "[a-z0-9._-]+@[a-z]+\\.+[a-z]+"
+        val userNamePatterns = "[a-zA-Z0-9._]"
 
         if (typePosition == 0) {
             isValid = false
@@ -232,6 +234,11 @@ class InputPRFRequestActivity : AppCompatActivity() {
         } else {
             requiredPeriodPRFRequest.isVisible = false
         }
+
+        if (!userName.matches(userNamePatterns.toRegex())) {
+            isValid = false
+            Toast.makeText(context, "Username tidak valid", Toast.LENGTH_SHORT).show()
+        }
         if (userName.isEmpty()) {
             isValid = false
             inputUserNamePRF.setHintTextColor(Color.RED)
@@ -247,7 +254,11 @@ class InputPRFRequestActivity : AppCompatActivity() {
             requiredTelpPRFRequest.isVisible = false
         }
 
-        if (email.isEmpty() || !email.matches(emailPattern.toRegex())) {
+        if (!email.matches(emailPattern.toRegex()) && !email.matches(emailPattern2.toRegex())){
+            isValid = false
+            Toast.makeText(context, "E-mail tidak valid", Toast.LENGTH_SHORT).show()
+        }
+        if (email.isEmpty()) {
             isValid = false
             inputEmailPRF.setHintTextColor(Color.RED)
             requiredEmailPRFRequest.isVisible = true
