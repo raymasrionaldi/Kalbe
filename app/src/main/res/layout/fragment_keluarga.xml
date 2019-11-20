@@ -20,7 +20,8 @@
             app:tabIndicatorColor="@color/warnaBiru"
             app:tabSelectedTextColor="@color/warnaBiru"
             app:tabTextColor="@color/warnaBiruUnselected"
-            app:tabGravity="fill"/>
+            app:tabGravity="fill"
+            app:tabMaxWidth="0dp"/>
 
         <com.xsis.android.batch217.utils.CustomViewPager
             android:id="@+id/viewPagerKeluarga"
