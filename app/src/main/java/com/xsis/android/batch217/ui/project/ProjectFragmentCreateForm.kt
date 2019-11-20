@@ -209,7 +209,13 @@ class ProjectFragmentCreateForm(context: Context, val fm: FragmentManager):Fragm
     }
 
     fun setTanggal(editText: EditText?){
+        val teks = editText!!.text.toString()
+
+        val formatDate = SimpleDateFormat(DATE_PATTERN)
         val calendar = Calendar.getInstance()
+        if (teks.isNotEmpty()){
+            calendar.time = formatDate.parse(teks)
+        }
         val yearNow = calendar.get(Calendar.YEAR)
         val monthNow = calendar.get(Calendar.MONTH)
         val dayNow = calendar.get(Calendar.DATE)
@@ -220,7 +226,6 @@ class ProjectFragmentCreateForm(context: Context, val fm: FragmentManager):Fragm
             println("year, month, dayofmonth = $year, $month, $dayOfMonth")
 
             //konversi ke string
-            val formatDate = SimpleDateFormat(DATE_PATTERN)
             val tanggal = formatDate.format(selectedDate.time)
 
             //set tampilan
