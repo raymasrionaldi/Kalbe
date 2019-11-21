@@ -26,7 +26,7 @@ class PeriodeQueryHelper(val databaseHelper:DatabaseHelper) {
 
         val db = databaseHelper.readableDatabase
         val queryCari = "SELECT * FROM $TABEL_PERIODE " +
-                "WHERE $NAMA_PERIODE = '$nama' "
+                "WHERE $NAMA_PERIODE = '$nama' AND $IS_DELETED = 'false'"
         val cursor = db.rawQuery(queryCari, null)
 
         if (cursor.count > 0){

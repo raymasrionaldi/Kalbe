@@ -50,7 +50,7 @@ class PendidikanQueryHelper(val databaseHelper:DatabaseHelper) {
 
         val db = databaseHelper.readableDatabase
         val queryCari = "SELECT * FROM $TABEL_PENDIDIKAN " +
-                "WHERE $NAMA_PENDIDIKAN = '$nama' "
+                "WHERE $NAMA_PENDIDIKAN = '$nama' AND $IS_DELETED = 'false' "
         val cursor = db.rawQuery(queryCari, null)
 
         if (cursor.count > 0){
