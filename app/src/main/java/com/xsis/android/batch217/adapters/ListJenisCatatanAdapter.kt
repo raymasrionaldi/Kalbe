@@ -64,7 +64,7 @@ class ListJenisCatatanAdapter(
                         androidx.appcompat.app.AlertDialog.Builder(context!!, R.style.AlertDialogTheme)
                             .setMessage("Hapus data ${model.nama_catatan} ?")
                             .setCancelable(false)
-                            .setPositiveButton("DELETE") { dialog, which ->
+                            .setPositiveButton("HAPUS") { dialog, which ->
                                 if (databaseQueryHelper!!.hapusJenisCatatan(model.id_catatan) != 0) {
                                     Toast.makeText(context!!, HAPUS_DATA_BERHASIL, Toast.LENGTH_SHORT).show()
                                     val fragment = fm.fragments[0] as JenisCatatanFragmentData
@@ -77,7 +77,7 @@ class ListJenisCatatanAdapter(
                                     Toast.makeText(context!!, HAPUS_DATA_GAGAL, Toast.LENGTH_SHORT).show()
                                 }
                             }
-                            .setNegativeButton("CANCEL") { dialog, which ->
+                            .setNegativeButton("BATAL") { dialog, which ->
                             }
                             .create()
                             .show()
