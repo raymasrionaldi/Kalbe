@@ -42,7 +42,8 @@ class ListTipeIdentitasAdapter(val context:Context, val fragment: TipeIdentitasF
         val model = listTipeIdentitas[position]
 
         if (position == listTipeIdentitas.size - 1){
-            holder.setPaddingList()
+//            holder.setPaddingList()
+            holder.addLinearLayout()
         }
 
         holder.bukaMenu.setOnClickListener {view ->

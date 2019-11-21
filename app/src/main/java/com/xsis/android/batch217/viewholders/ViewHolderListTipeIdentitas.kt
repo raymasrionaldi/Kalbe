@@ -13,7 +13,6 @@ import com.xsis.android.batch217.models.TipeIdentitas
 
 class ViewHolderListTipeIdentitas(itemView:View): RecyclerView.ViewHolder(itemView) {
     val linearLayout = itemView.findViewById(R.id.linearLayoutListDotLayout) as LinearLayout
-    val linearLayoutParam = linearLayout.layoutParams
     val isiText = itemView.findViewById(R.id.isiTeks) as TextView
     val inisial = itemView.findViewById(R.id.gambarLingkaran) as NameInitialsCircleImageView
     val bukaMenu = itemView.findViewById(R.id.bukaMenu) as ImageView
@@ -30,5 +29,13 @@ class ViewHolderListTipeIdentitas(itemView:View): RecyclerView.ViewHolder(itemVi
 
     fun setPaddingList(){
         linearLayout.setPadding(0,0,0,40)
+    }
+
+    fun addLinearLayout(){
+        val linearLayoutCreate = LinearLayout(itemView.context)
+        val lp = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+        lp.setMargins(0,0,0,40)
+        linearLayoutCreate.layoutParams = lp
+        linearLayout.addView(linearLayoutCreate)
     }
 }

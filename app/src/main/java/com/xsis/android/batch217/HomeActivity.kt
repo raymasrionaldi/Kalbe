@@ -38,6 +38,7 @@ import com.xsis.android.batch217.ui.prf_request.InputPRFRequestActivity
 import com.xsis.android.batch217.ui.project.ProjectFragment
 import com.xsis.android.batch217.ui.prf_request.RequestHistoryFragment
 import com.xsis.android.batch217.ui.prf_request.WinPRFFragment
+import com.xsis.android.batch217.ui.prf_status.PRFStatusFragment
 import com.xsis.android.batch217.ui.project.ProjectFormActivity
 import com.xsis.android.batch217.ui.project.ProjectFragmentCreate
 import com.xsis.android.batch217.ui.provider_tools.ProviderToolsFragment
@@ -301,6 +302,7 @@ class HomeActivity : AppCompatActivity() {
         heading18.add(getString(R.string.request_history))
         heading18.add(getString(R.string.menu_prf_win))
         heading18.add(getString(R.string.menu_prf_check))
+        heading18.add(getString(R.string.prf_Status))
 // Header, Child data
         listDataChild[listDataHeader[18]] = heading18
 
@@ -500,6 +502,16 @@ class HomeActivity : AppCompatActivity() {
                 closeNavDrawer()
             } else if (groupIndex == 18 && childIndex == 3) {
                 val fragment = CheckPRFFragment()
+                val fragmentTransaction = supportFragmentManager.beginTransaction()
+                fragmentTransaction.replace(
+                    R.id.nav_host_fragment,
+                    fragment,
+                    getString(R.string.menu_prf_check)
+                )
+                fragmentTransaction.commit()
+                closeNavDrawer()
+            } else if (groupIndex == 18 && childIndex == 4) {
+                val fragment = PRFStatusFragment()
                 val fragmentTransaction = supportFragmentManager.beginTransaction()
                 fragmentTransaction.replace(
                     R.id.nav_host_fragment,
