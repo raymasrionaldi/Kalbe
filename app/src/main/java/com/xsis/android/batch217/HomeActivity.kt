@@ -31,6 +31,7 @@ import com.xsis.android.batch217.ui.jenjang_pendidikan.JenjangPendidikanFragment
 import com.xsis.android.batch217.ui.keahlian.KeahlianFragment
 import com.xsis.android.batch217.ui.keluarga.KeluargaFragment
 import com.xsis.android.batch217.ui.leave_request.LeaveRequestFragment
+import com.xsis.android.batch217.ui.periode.PeriodeFragment
 import com.xsis.android.batch217.ui.permission.PermissionCreateFormActivity
 import com.xsis.android.batch217.ui.position_level.PositionLevelFragment
 import com.xsis.android.batch217.ui.prf_request.CheckPRFFragment
@@ -388,6 +389,12 @@ class HomeActivity : AppCompatActivity() {
         item26.name = getString(R.string.menu_status_pernikahan)
         // Adding data header
         listDataHeader.add(item26)
+
+        val item27 = ExpandedMenuModel()
+        item27.name = getString(R.string.menu_periode)
+// Adding data header
+        listDataHeader.add(item27)
+
     }
 
     fun closeNavDrawer() {
@@ -832,6 +839,18 @@ class HomeActivity : AppCompatActivity() {
                     fragmentTransaction.commit()
                     closeNavDrawer()
                 }
+                27 -> {
+                    val fragment = PeriodeFragment()
+                    val fragmentTransaction = supportFragmentManager.beginTransaction()
+                    fragmentTransaction.replace(
+                        R.id.nav_host_fragment,
+                        fragment,
+                        getString(R.string.menu_periode)
+                    )
+                    fragmentTransaction.commit()
+                    closeNavDrawer()
+                }
+
             }
             return false
         }

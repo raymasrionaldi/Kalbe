@@ -35,12 +35,6 @@ class JenjangPendidikanFragment : Fragment() {
 
         activity!!.title = getString(R.string.menu_jenjang_pendidikan)
 
-//        if(arguments == null){
-//            setHasOptionsMenu(true)
-//        } else {
-//            setHasOptionsMenu(false)
-//        }
-
         val layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL,false)
         recyclerView = root.findViewById(R.id.listPendidikanRecycler) as RecyclerView
         recyclerView!!.layoutManager = layoutManager
