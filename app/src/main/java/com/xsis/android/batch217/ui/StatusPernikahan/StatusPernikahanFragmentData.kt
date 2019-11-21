@@ -1,4 +1,4 @@
-package com.xsis.android.batch217.ui.jenis_catatan
+package com.xsis.android.batch217.ui.StatusPernikahan
 
 import android.content.Context
 import android.os.Bundle
@@ -12,15 +12,15 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.xsis.android.batch217.R
-import com.xsis.android.batch217.adapters.ListJenisCatatanAdapter
-import com.xsis.android.batch217.adapters.fragments.JenisCatatanFragmentAdapter
+import com.xsis.android.batch217.adapters.ListStatusPernikahanAdapter
+import com.xsis.android.batch217.adapters.fragments.StatusPernikahanFragmentAdapter
 import com.xsis.android.batch217.databases.DatabaseHelper
-import com.xsis.android.batch217.databases.JenisCatatanQueryHelper
-import com.xsis.android.batch217.models.JenisCatatan
+import com.xsis.android.batch217.databases.StatusPernikahanQueryHelper
+import com.xsis.android.batch217.models.StatusPernikahan
 
-class JenisCatatanFragmentData(context: Context, val fm: FragmentManager) : Fragment() {
+class StatusPernikahanFragmentData(context: Context, val fm: FragmentManager) : Fragment() {
     var recyclerView: RecyclerView? = null
-    var databaseQueryHelper: JenisCatatanQueryHelper? = null
+    var databaseQueryHelper: StatusPernikahanQueryHelper? = null
     var SEARCH_KEYWORD :String =""
 
     override fun onCreateView(
@@ -29,7 +29,7 @@ class JenisCatatanFragmentData(context: Context, val fm: FragmentManager) : Frag
         savedInstanceState: Bundle?
     ): View? {
         val customView = inflater.inflate(
-            R.layout.fragment_data_jenis_catatan,
+            R.layout.fragment_data_status_pernikahan,
             container,
             false
         )
@@ -37,49 +37,47 @@ class JenisCatatanFragmentData(context: Context, val fm: FragmentManager) : Frag
 
         val layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
 
-        recyclerView = customView.findViewById(R.id.listJenisCatatanRecycler) as RecyclerView
+        recyclerView = customView.findViewById(R.id.listStatusPernikahanRecycler) as RecyclerView
         recyclerView!!.layoutManager = layoutManager
 
         val dividerItemDecoration = DividerItemDecoration(context, layoutManager.orientation)
         recyclerView!!.addItemDecoration(dividerItemDecoration)
 
-        val buttonAdd = customView.findViewById(R.id.buttonAddJenisCatatan) as FloatingActionButton
+        val buttonAdd = customView.findViewById(R.id.buttonAddStatusPernikahan) as FloatingActionButton
         buttonAdd.setOnClickListener {
             addData()
         }
 
         val databaseHelper = DatabaseHelper(context!!)
-        databaseQueryHelper = JenisCatatanQueryHelper(databaseHelper)
-
-        //getSemuaJenisCatatan(recyclerView!!, databaseQueryHelper!!)
+        databaseQueryHelper = StatusPernikahanQueryHelper(databaseHelper)
 
         return customView
     }
 
     fun addData() {
         val viewPager = view!!.parent as ViewPager
-        val adapter = viewPager.adapter!! as JenisCatatanFragmentAdapter
-        val fragment = fm.fragments[1] as JenisCatatanFragmentForm
+        val adapter = viewPager.adapter!! as StatusPernikahanFragmentAdapter
+        val fragment = fm.fragments[1] as StatusPernikahanFrgamentForm
         fragment.modeAdd()
         adapter.notifyDataSetChanged()
         viewPager.setCurrentItem(1, true)
     }
 
-    fun getSemuaJenisCatatan(
+    fun getSemuaStatusPernikahan(
         recyclerView: RecyclerView,
-        databaseQueryHelper: JenisCatatanQueryHelper
+        databaseQueryHelper: StatusPernikahanQueryHelper
     ) {
-        val listJenisCatatan = databaseQueryHelper.readSemuaJenisCatatanModels()
-        tampilkanListJenisCatatan(listJenisCatatan, recyclerView)
+        val listStatusPernikahan = databaseQueryHelper.readSemuaStatusPernikahanModels()
+        tampilkanListStatusPernikahan(listStatusPernikahan, recyclerView)
     }
 
-    fun tampilkanListJenisCatatan(
-        listJenisCatatan: List<JenisCatatan>,
+    fun tampilkanListStatusPernikahan(
+        listStatusPernikahan: List<StatusPernikahan>,
         recyclerView: RecyclerView
     ) {
-        val adapterJenisCatatan = ListJenisCatatanAdapter(context!!, listJenisCatatan, fm)
-        recyclerView.adapter = adapterJenisCatatan
-        adapterJenisCatatan.notifyDataSetChanged()
+        val adapterStatusPernikahan = ListStatusPernikahanAdapter(context!!, listStatusPernikahan, fm)
+        recyclerView.adapter = adapterStatusPernikahan
+        adapterStatusPernikahan.notifyDataSetChanged()
     }
 
     fun updateContent() {
@@ -105,8 +103,8 @@ class JenisCatatanFragmentData(context: Context, val fm: FragmentManager) : Frag
         })
     }
 
-    fun search(keyword: String, databaseQueryHelper: JenisCatatanQueryHelper) {
-        val listJenisCatatan = databaseQueryHelper.cariJenisCatatanModels(keyword)
-        tampilkanListJenisCatatan(listJenisCatatan, recyclerView!!)
+    fun search(keyword: String, databaseQueryHelper: StatusPernikahanQueryHelper) {
+        val listStatusPernikahan = databaseQueryHelper.cariStatusPernikahanModels(keyword)
+        tampilkanListStatusPernikahan(listStatusPernikahan, recyclerView!!)
     }
 }

@@ -26,6 +26,7 @@
     <string name="menu_grade">Grade</string>
     <string name="menu_jadwal">Jadwal</string>
     <string name="menu_jenis_catatan">Jenis Catatan</string>
+    <string name="menu_status_pernikahan">Status Pernikahan</string>
     <string name="menu_tipe_tes">Tipe Tes</string>
     <string name="menu_employee">Employee</string>
     <string name="menu_setTraining">Set Training</string>

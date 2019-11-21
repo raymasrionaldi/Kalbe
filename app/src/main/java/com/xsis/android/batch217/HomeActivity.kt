@@ -16,6 +16,7 @@ import com.google.android.material.navigation.NavigationView
 import com.xsis.android.batch217.adapters.expandablelist.ExpandableListAdapter
 import com.xsis.android.batch217.databases.DatabaseHelper
 import com.xsis.android.batch217.models.expandablelist.ExpandedMenuModel
+import com.xsis.android.batch217.ui.StatusPernikahan.StatusPernikahanFragment
 import com.xsis.android.batch217.ui.agama.AgamaFragment
 import com.xsis.android.batch217.ui.company.CompanyFragment
 import com.xsis.android.batch217.ui.contact_status.ContactStatusFragment
@@ -381,9 +382,13 @@ class HomeActivity : AppCompatActivity() {
         item25.name = getString(R.string.menu_jadwal)
         // Adding data header
         listDataHeader.add(item25)
+
+        //Status Pernikahan
+        val item26 = ExpandedMenuModel()
+        item26.name = getString(R.string.menu_status_pernikahan)
+        // Adding data header
+        listDataHeader.add(item26)
     }
-
-
 
     fun closeNavDrawer() {
         val drawer = findViewById(R.id.drawer_layout) as DrawerLayout
@@ -812,6 +817,17 @@ class HomeActivity : AppCompatActivity() {
                         R.id.nav_host_fragment,
                         fragment,
                         getString(R.string.menu_jadwal)
+                    )
+                    fragmentTransaction.commit()
+                    closeNavDrawer()
+                }
+                26 -> {
+                    val fragment = StatusPernikahanFragment()
+                    val fragmentTransaction = supportFragmentManager.beginTransaction()
+                    fragmentTransaction.replace(
+                        R.id.nav_host_fragment,
+                        fragment,
+                        getString(R.string.menu_status_pernikahan)
                     )
                     fragmentTransaction.commit()
                     closeNavDrawer()
