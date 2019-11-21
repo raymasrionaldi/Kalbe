@@ -190,11 +190,17 @@ class EntryTimesheetActivity : AppCompatActivity() {
 //                            inputEndtOvertimeEntryTimesheet!!.visibility = View.VISIBLE
                             inputStartOvertimeEntryTimesheet.isClickable = true
                             inputEndtOvertimeEntryTimesheet.isClickable = true
+                            inputStartOvertimeEntryTimesheet.setHintTextColor(Color.BLACK)
+                            inputEndtOvertimeEntryTimesheet.setHintTextColor(Color.BLACK)
                         }else if (position ==2){
 //                            inputStartOvertimeEntryTimesheet!!.visibility = View.GONE
 //                            inputEndtOvertimeEntryTimesheet!!.visibility = View.GONE
                             inputStartOvertimeEntryTimesheet.isClickable = false
                             inputEndtOvertimeEntryTimesheet.isClickable = false
+                            inputStartOvertimeEntryTimesheet.setHintTextColor(defaultColor)
+                            inputEndtOvertimeEntryTimesheet.setHintTextColor(defaultColor)
+                            inputStartOvertimeEntryTimesheet!!.setText("")
+                            inputEndtOvertimeEntryTimesheet!!.setText("")
                         }
 
                     } else {
@@ -299,8 +305,6 @@ class EntryTimesheetActivity : AppCompatActivity() {
                 isValid = false
             } else {
                 inputReportDateEntryTimesheet.setHintTextColor(Color.BLACK)
-                inputStarDatetEntryTimesheet.setHintTextColor(Color.BLACK)
-                inputEndDateEntryTimesheet.setHintTextColor(Color.BLACK)
                 requiredReportDateTimesheet.isVisible = false
                 if(startReportDateTimesheet.equals("") || endReportDateTimesheet.equals("")){
                     Toast.makeText(context,"jam report date harus diisi", Toast.LENGTH_SHORT).show()
@@ -312,7 +316,6 @@ class EntryTimesheetActivity : AppCompatActivity() {
                 requiredStartEntryTimesheet.isVisible = true
                 isValid = false
             } else {
-                inputStarDatetEntryTimesheet.setHintTextColor(Color.BLACK)
                 requiredStartEntryTimesheet.isVisible = false
 
             }
@@ -321,7 +324,6 @@ class EntryTimesheetActivity : AppCompatActivity() {
                 requiredEndEntryTimesheet.isVisible = true
                 isValid = false
             } else {
-                inputEndDateEntryTimesheet.setHintTextColor(Color.BLACK)
                 requiredEndEntryTimesheet.isVisible = false
 
             }
@@ -434,11 +436,10 @@ class EntryTimesheetActivity : AppCompatActivity() {
         inputStarDatetEntryTimesheet.setHintTextColor(defaultColor)
         inputEndDateEntryTimesheet.isEnabled = false
         inputEndDateEntryTimesheet.setHintTextColor(defaultColor)
-        inputStartOvertimeEntryTimesheet.isEnabled = false
+//        inputStartOvertimeEntryTimesheet.isEnabled = false
         inputStartOvertimeEntryTimesheet.setHintTextColor(defaultColor)
-        inputEndtOvertimeEntryTimesheet.isEnabled = false
+//        inputEndtOvertimeEntryTimesheet.isEnabled = false
         inputEndtOvertimeEntryTimesheet.setHintTextColor(defaultColor)
-        inputNotesEntryTimesheet.isEnabled = false
         inputNotesEntryTimesheet.setHintTextColor(Color.BLACK)
     }
 
@@ -633,6 +634,8 @@ class EntryTimesheetActivity : AppCompatActivity() {
             }else{
                 inputStarDatetEntryTimesheet.isEnabled = true
                 inputEndDateEntryTimesheet.isEnabled = true
+                inputStarDatetEntryTimesheet.setHintTextColor(Color.BLACK)
+                inputEndDateEntryTimesheet.setHintTextColor(Color.BLACK)
             }
 
             ubahResetButton(context!!, kondisi, buttonReset!!)
