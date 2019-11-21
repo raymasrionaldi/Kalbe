@@ -4,8 +4,8 @@ import android.content.Context
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
-import com.xsis.android.batch217.ui.StatusPernikahan.StatusPernikahanFragmentData
-import com.xsis.android.batch217.ui.StatusPernikahan.StatusPernikahanFrgamentForm
+import com.xsis.android.batch217.ui.status_pernikahan.StatusPernikahanFragmentData
+import com.xsis.android.batch217.ui.status_pernikahan.StatusPernikahanFrgamentForm
 
 class StatusPernikahanFragmentAdapter(val context: Context, val fm: FragmentManager) :
     FragmentPagerAdapter(fm) {
