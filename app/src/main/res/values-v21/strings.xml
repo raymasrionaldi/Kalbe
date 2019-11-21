@@ -85,5 +85,9 @@
     <string name="menu_srf">SRF</string>
     <string name="plotting">Plotting</string>
     <string name="title_srf">Sales Request Form</string>
+    <string name="menu_periode">Periode</string>
+    <string name="tambah_periode">Tambah Periode</string>
+    <string name="ubah_periode">Ubah Periode</string>
+    <string name="menu_periode_2">Periode *</string>
 
 </resources>
