@@ -17,6 +17,8 @@ import com.xsis.android.batch217.adapters.expandablelist.ExpandableListAdapter
 import com.xsis.android.batch217.databases.DatabaseHelper
 import com.xsis.android.batch217.models.expandablelist.ExpandedMenuModel
 import com.xsis.android.batch217.ui.agama.AgamaFragment
+import com.xsis.android.batch217.ui.back_office_position.BackOfficeFragmentData
+import com.xsis.android.batch217.ui.back_office_position.BackOfficePositionFragment
 import com.xsis.android.batch217.ui.company.CompanyFragment
 import com.xsis.android.batch217.ui.contact_status.ContactStatusFragment
 import com.xsis.android.batch217.ui.employee.EmployeeFragment
@@ -396,6 +398,11 @@ class HomeActivity : AppCompatActivity() {
         item27.name = getString(R.string.menu_periode)
 // Adding data header
         listDataHeader.add(item27)
+
+        val item28 = ExpandedMenuModel()
+        item28.name = getString(R.string.menu_back_office_position)
+        // Adding data header
+        listDataHeader.add(item28)
 
     }
 
@@ -862,6 +869,18 @@ class HomeActivity : AppCompatActivity() {
                     fragmentTransaction.commit()
                     closeNavDrawer()
                 }
+                28 -> {
+                    val fragment = BackOfficePositionFragment()
+                    val fragmentTransaction = supportFragmentManager.beginTransaction()
+                    fragmentTransaction.replace(
+                        R.id.nav_host_fragment,
+                        fragment,
+                        getString(R.string.menu_back_office_position)
+                    )
+                    fragmentTransaction.commit()
+                    closeNavDrawer()
+                }
+
 
             }
             return false

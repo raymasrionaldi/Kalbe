@@ -66,7 +66,7 @@ class ListStatusPernikahanAdapter(
                         androidx.appcompat.app.AlertDialog.Builder(context!!, R.style.AlertDialogTheme)
                             .setMessage("Hapus data ${model.namaStatusPernikahan} ?")
                             .setCancelable(false)
-                            .setPositiveButton("DELETE") { dialog, which ->
+                            .setPositiveButton("HAPUS") { dialog, which ->
                                 if (databaseQueryHelper!!.hapusStatusPernikahan(model.idStatusPernikahan) != 0) {
                                     Toast.makeText(context!!, HAPUS_DATA_BERHASIL, Toast.LENGTH_SHORT).show()
                                     val fragment = fm.fragments[0] as StatusPernikahanFragmentData
@@ -79,7 +79,7 @@ class ListStatusPernikahanAdapter(
                                     Toast.makeText(context!!, HAPUS_DATA_GAGAL, Toast.LENGTH_SHORT).show()
                                 }
                             }
-                            .setNegativeButton("CANCEL") { dialog, which ->
+                            .setNegativeButton("BATAL") { dialog, which ->
                             }
                             .create()
                             .show()
