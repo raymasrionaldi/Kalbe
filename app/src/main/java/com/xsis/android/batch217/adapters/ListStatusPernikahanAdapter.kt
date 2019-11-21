@@ -12,8 +12,8 @@ import com.xsis.android.batch217.adapters.fragments.StatusPernikahanFragmentAdap
 import com.xsis.android.batch217.databases.DatabaseHelper
 import com.xsis.android.batch217.databases.StatusPernikahanQueryHelper
 import com.xsis.android.batch217.models.StatusPernikahan
-import com.xsis.android.batch217.ui.StatusPernikahan.StatusPernikahanFragmentData
-import com.xsis.android.batch217.ui.StatusPernikahan.StatusPernikahanFrgamentForm
+import com.xsis.android.batch217.ui.status_pernikahan.StatusPernikahanFragmentData
+import com.xsis.android.batch217.ui.status_pernikahan.StatusPernikahanFrgamentForm
 import com.xsis.android.batch217.utils.HAPUS_DATA_BERHASIL
 import com.xsis.android.batch217.utils.HAPUS_DATA_GAGAL
 import com.xsis.android.batch217.utils.showPopupMenuUbahHapus

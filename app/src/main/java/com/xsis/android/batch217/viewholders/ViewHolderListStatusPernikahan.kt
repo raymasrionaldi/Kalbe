@@ -6,7 +6,6 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.github.ramiz.nameinitialscircleimageview.NameInitialsCircleImageView
 import com.xsis.android.batch217.R
-import com.xsis.android.batch217.models.JenisCatatan
 import com.xsis.android.batch217.models.StatusPernikahan
 
 class ViewHolderListStatusPernikahan(itemView: View) : RecyclerView.ViewHolder(itemView) {

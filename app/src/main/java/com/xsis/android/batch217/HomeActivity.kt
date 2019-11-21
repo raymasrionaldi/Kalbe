@@ -16,7 +16,6 @@ import com.google.android.material.navigation.NavigationView
 import com.xsis.android.batch217.adapters.expandablelist.ExpandableListAdapter
 import com.xsis.android.batch217.databases.DatabaseHelper
 import com.xsis.android.batch217.models.expandablelist.ExpandedMenuModel
-import com.xsis.android.batch217.ui.StatusPernikahan.StatusPernikahanFragment
 import com.xsis.android.batch217.ui.agama.AgamaFragment
 import com.xsis.android.batch217.ui.company.CompanyFragment
 import com.xsis.android.batch217.ui.contact_status.ContactStatusFragment
@@ -43,6 +42,7 @@ import com.xsis.android.batch217.ui.project.ProjectFormActivity
 import com.xsis.android.batch217.ui.project.ProjectFragmentCreate
 import com.xsis.android.batch217.ui.provider_tools.ProviderToolsFragment
 import com.xsis.android.batch217.ui.srf.SRFFragment
+import com.xsis.android.batch217.ui.status_pernikahan.StatusPernikahanFragment
 import com.xsis.android.batch217.ui.summary_prf.SummaryPRFFragment
 import com.xsis.android.batch217.ui.timesheet.timesheet_approval.TimesheetApprovalFragment
 import com.xsis.android.batch217.ui.timesheet.timesheet_collection.TimesheetCollectionFragment

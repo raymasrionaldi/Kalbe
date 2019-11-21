@@ -1,4 +1,4 @@
-package com.xsis.android.batch217.ui.StatusPernikahan
+package com.xsis.android.batch217.ui.status_pernikahan
 
 import android.content.Context
 import android.graphics.Color
