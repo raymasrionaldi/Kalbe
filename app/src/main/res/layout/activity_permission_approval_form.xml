@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.permission.PermissionCreateFormActivity"
+    android:orientation="vertical">
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintTop_toTopOf="parent"
+        android:paddingBottom="45dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_marginRight="15dp"
+            android:layout_marginLeft="15dp"
+            android:paddingTop="10dp">
+
+            <EditText
+                android:id="@+id/displayNamaPegawaiApprove"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Nama*"
+                android:inputType="text"
+                android:textSize="15dp"
+                android:enabled="false"/>
+            <EditText
+                android:id="@+id/displayDevartementApprove"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Devartement / Divisi"
+                android:inputType="text"
+                android:textSize="15dp"
+                android:enabled="false"/>
+            <EditText
+                android:id="@+id/displayJabatanApprove"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Jabatan"
+                android:inputType="text"
+                android:textSize="15dp"
+                android:enabled="false"/>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/displayTanggalApprove"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Tanggal *"
+                    android:clickable="false"
+                    android:focusable="false"
+                    android:longClickable="false"
+                    android:textSize="16sp"
+                    android:enabled="false"
+                    />
+
+                <ImageView
+                    android:id="@+id/iconInputTanggalPermissionApprove"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="right|center_vertical"
+                    android:layout_marginRight="21dp"
+                    android:src="@drawable/ic_calender_permission" />
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/displayJamApprove"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Pukul *"
+                    android:clickable="false"
+                    android:focusable="false"
+                    android:longClickable="false"
+                    android:textSize="16sp"
+                    android:enabled="false"
+                    />
+
+                <ImageView
+                    android:id="@+id/iconInputJamPermissionApprove"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="right|center_vertical"
+                    android:layout_marginRight="21dp"
+                    android:src="@drawable/ic_time_permission" />
+            </FrameLayout>
+
+            <EditText
+                android:id="@+id/KeteranganApprove"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Keterangan *"
+                android:inputType="text"
+                android:textSize="15dp"
+                android:enabled="false"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="5dp">
+
+                <androidx.appcompat.widget.AppCompatCheckBox
+                    android:id="@+id/cekTidakMasukApprove"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/warnaCheckBoxAbu"
+                    android:enabled="false"/>
+
+                <EditText
+                    android:id="@+id/hintTidakMasukApprove"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Tidak Masuk"
+                    android:enabled="false"
+                    android:inputType="text"
+                    android:focusable="false"
+                    android:longClickable="false"
+                    android:textSize="15dp"/>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="5dp">
+
+                <androidx.appcompat.widget.AppCompatCheckBox
+                    android:id="@+id/cekSakitApprove"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/warnaCheckBoxAbu"
+                    android:enabled="false"/>
+
+                <EditText
+                    android:id="@+id/hintSakitApprove"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Sakit"
+                    android:enabled="false"
+                    android:inputType="text"
+                    android:focusable="false"
+                    android:longClickable="false"
+                    android:textSize="15dp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="5dp">
+
+                <androidx.appcompat.widget.AppCompatCheckBox
+                    android:id="@+id/cekDatangTerlambatApprove"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/warnaCheckBoxAbu"
+                    android:enabled="false"/>
+
+                <EditText
+                    android:id="@+id/hintDatangTerlambatApprove"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Datang Terlambat"
+                    android:enabled="false"
+                    android:inputType="text"
+                    android:focusable="false"
+                    android:longClickable="false"
+                    android:textSize="15dp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="5dp">
+
+                <androidx.appcompat.widget.AppCompatCheckBox
+                    android:id="@+id/cekPulangAwalApprove"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/warnaCheckBoxAbu"
+                    android:enabled="false"/>
+
+                <EditText
+                    android:id="@+id/hintPulangAwalApprove"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Pulang Awal"
+                    android:enabled="false"
+                    android:inputType="text"
+                    android:focusable="false"
+                    android:longClickable="false"
+                    android:textSize="15dp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="5dp">
+
+                <androidx.appcompat.widget.AppCompatCheckBox
+                    android:id="@+id/cekDLLApprove"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/warnaCheckBoxAbu"
+                    android:enabled="false"/>
+
+                <EditText
+                    android:id="@+id/displayDLLApprove"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="..."
+                    android:enabled="false"
+                    android:inputType="text"
+                    android:textSize="15dp"
+                    android:clickable="false"
+                    android:longClickable="false"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="15dp">
+                <Button
+                    android:id="@+id/buttonRejectPermission"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="REJECT"
+                    android:background="@drawable/button_reject_on"
+                    android:textColor="#FFFFFF"
+                    android:layout_marginRight="1dp"/>
+                <Button
+                    android:id="@+id/buttonApprovalPermission"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="APPROVE"
+                    android:background="@drawable/button_approve_on"
+                    android:textColor="#FFFFFF"/>
+
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

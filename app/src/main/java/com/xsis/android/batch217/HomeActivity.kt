@@ -34,6 +34,7 @@ import com.xsis.android.batch217.ui.keluarga.KeluargaFragment
 import com.xsis.android.batch217.ui.leave_request.LeaveRequestFragment
 import com.xsis.android.batch217.ui.periode.PeriodeFragment
 import com.xsis.android.batch217.ui.permission.PermissionCreateFormActivity
+import com.xsis.android.batch217.ui.permission.permission_approval.PermissionApprovalFragment
 import com.xsis.android.batch217.ui.position_level.PositionLevelFragment
 import com.xsis.android.batch217.ui.prf_request.CheckPRFFragment
 import com.xsis.android.batch217.ui.prf_request.InputPRFRequestActivity
@@ -613,9 +614,15 @@ class HomeActivity : AppCompatActivity() {
 //                startActivity(intent)
 //                closeNavDrawer()
             }else if (groupIndex == 24 && childIndex == 2) {
-//                val intent = Intent(context, InputPRFRequestActivity::class.java)
-//                startActivity(intent)
-//                closeNavDrawer()
+                val fragment = PermissionApprovalFragment()
+                val fragmentTransaction = supportFragmentManager.beginTransaction()
+                fragmentTransaction.replace(
+                    R.id.nav_host_fragment,
+                    fragment,
+                    getString(R.string.request)
+                )
+                fragmentTransaction.commit()
+                closeNavDrawer()
             }
             return true
         }

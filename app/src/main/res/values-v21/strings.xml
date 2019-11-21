@@ -75,6 +75,7 @@
     <string name="permission_form_create">Create</string>
     <string name="permission_form_history">History</string>
     <string name="permission_form_approval">Approval</string>
+    <string name="permission_approval">Permission Approval</string>
 
     <string name="ubah_agama">Ubah Agama</string>
 

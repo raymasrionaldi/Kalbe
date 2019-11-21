@@ -17,6 +17,7 @@
         <activity android:name=".ui.periode.InputPeriodeActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity android:name=".ui.permission.PermissionCreateFormActivity" />
+        <activity android:name=".ui.permission.permission_approval.PermissionApprovalFormActivity"/>
         <activity android:name=".ui.summary_prf.SummaryDetailActivity" />
         <activity
             android:name=".ui.timesheet.timesheet_send.SendDataActivity"
