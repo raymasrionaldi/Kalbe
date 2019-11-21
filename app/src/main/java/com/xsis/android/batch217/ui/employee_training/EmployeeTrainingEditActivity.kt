@@ -257,11 +257,11 @@ class EmployeeTrainingEditActivity : AppCompatActivity() {
 
                 if(cekEmployeeTrainee == 0 && !model.dateEmployeeTraining.equals(data.dateEmployeeTraining, true))  {
                     if (trainingDate.before(currentDate)) {
-                        editTanggalEmployeeTraining.setHintTextColor(Color.RED)
-                        Toast.makeText(context, "Tidak boleh memilih tanggal kemarin", Toast.LENGTH_SHORT)
+                        //editTanggalEmployeeTraining.setHintTextColor(Color.RED)
+                        Toast.makeText(context, "Tidak Boleh Memilih Tanggal Kemarin", Toast.LENGTH_SHORT)
                             .show()
                         isValid3 = false
-                        editTanggalEmployeeTraining!!.setText("")
+                        editTanggalEmployeeTraining!!.setText(data.dateEmployeeTraining)
                     }
                 }
 

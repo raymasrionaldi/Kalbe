@@ -29,10 +29,10 @@ class CadanganDbHelper(val context: Context):
 
         query= "CREATE TABLE '$TABEL_BACKOFFICE_POSITION' (" +
                 "'$ID_BACKOFFICE' INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "'$CODE_BACKOFFICE' TEXT," +
                 "'$NAMA_BACKOFFICE' TEXT," +
                 "'$LEVEL_BACKOFFICE' TEXT," +
-                "'$ID_COMPANY' INTEGER," +
-                "'$ID_POSITION' INTEGER," +
+                "'$COMPANY_BACKOFFICE' TEXT," +
                 "'$NOTE_BACKOFFICE' TEXT," +
                 "'$IS_DELETED' TEXT" +
                 ");"

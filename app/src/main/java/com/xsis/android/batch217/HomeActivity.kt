@@ -17,6 +17,8 @@ import com.xsis.android.batch217.adapters.expandablelist.ExpandableListAdapter
 import com.xsis.android.batch217.databases.DatabaseHelper
 import com.xsis.android.batch217.models.expandablelist.ExpandedMenuModel
 import com.xsis.android.batch217.ui.agama.AgamaFragment
+import com.xsis.android.batch217.ui.back_office_position.BackOfficeFragmentData
+import com.xsis.android.batch217.ui.back_office_position.BackOfficePositionFragment
 import com.xsis.android.batch217.ui.company.CompanyFragment
 import com.xsis.android.batch217.ui.contact_status.ContactStatusFragment
 import com.xsis.android.batch217.ui.employee.EmployeeFragment
@@ -30,6 +32,7 @@ import com.xsis.android.batch217.ui.jenjang_pendidikan.JenjangPendidikanFragment
 import com.xsis.android.batch217.ui.keahlian.KeahlianFragment
 import com.xsis.android.batch217.ui.keluarga.KeluargaFragment
 import com.xsis.android.batch217.ui.leave_request.LeaveRequestFragment
+import com.xsis.android.batch217.ui.periode.PeriodeFragment
 import com.xsis.android.batch217.ui.permission.PermissionCreateFormActivity
 import com.xsis.android.batch217.ui.position_level.PositionLevelFragment
 import com.xsis.android.batch217.ui.prf_request.CheckPRFFragment
@@ -41,6 +44,7 @@ import com.xsis.android.batch217.ui.project.ProjectFormActivity
 import com.xsis.android.batch217.ui.project.ProjectFragmentCreate
 import com.xsis.android.batch217.ui.provider_tools.ProviderToolsFragment
 import com.xsis.android.batch217.ui.srf.SRFFragment
+import com.xsis.android.batch217.ui.status_pernikahan.StatusPernikahanFragment
 import com.xsis.android.batch217.ui.summary_prf.SummaryPRFFragment
 import com.xsis.android.batch217.ui.timesheet.timesheet_approval.TimesheetApprovalFragment
 import com.xsis.android.batch217.ui.timesheet.timesheet_collection.TimesheetCollectionFragment
@@ -381,9 +385,24 @@ class HomeActivity : AppCompatActivity() {
         item25.name = getString(R.string.menu_jadwal)
         // Adding data header
         listDataHeader.add(item25)
+
+        //Status Pernikahan
+        val item26 = ExpandedMenuModel()
+        item26.name = getString(R.string.menu_status_pernikahan)
+        // Adding data header
+        listDataHeader.add(item26)
+
+        val item27 = ExpandedMenuModel()
+        item27.name = getString(R.string.menu_periode)
+// Adding data header
+        listDataHeader.add(item27)
+
+        val item28 = ExpandedMenuModel()
+        item28.name = getString(R.string.menu_back_office_position)
+        // Adding data header
+        listDataHeader.add(item28)
+
     }
-
-
 
     fun closeNavDrawer() {
         val drawer = findViewById(R.id.drawer_layout) as DrawerLayout
@@ -816,6 +835,41 @@ class HomeActivity : AppCompatActivity() {
                     fragmentTransaction.commit()
                     closeNavDrawer()
                 }
+                26 -> {
+                    val fragment = StatusPernikahanFragment()
+                    val fragmentTransaction = supportFragmentManager.beginTransaction()
+                    fragmentTransaction.replace(
+                        R.id.nav_host_fragment,
+                        fragment,
+                        getString(R.string.menu_status_pernikahan)
+                    )
+                    fragmentTransaction.commit()
+                    closeNavDrawer()
+                }
+                27 -> {
+                    val fragment = PeriodeFragment()
+                    val fragmentTransaction = supportFragmentManager.beginTransaction()
+                    fragmentTransaction.replace(
+                        R.id.nav_host_fragment,
+                        fragment,
+                        getString(R.string.menu_periode)
+                    )
+                    fragmentTransaction.commit()
+                    closeNavDrawer()
+                }
+                28 -> {
+                    val fragment = BackOfficePositionFragment()
+                    val fragmentTransaction = supportFragmentManager.beginTransaction()
+                    fragmentTransaction.replace(
+                        R.id.nav_host_fragment,
+                        fragment,
+                        getString(R.string.menu_back_office_position)
+                    )
+                    fragmentTransaction.commit()
+                    closeNavDrawer()
+                }
+
+
             }
             return false
         }

@@ -10,8 +10,10 @@ val DES_AGAMA="des_agama"
 
 val TABEL_BACKOFFICE_POSITION ="backoffice_position"
 val ID_BACKOFFICE="id_backoffice"
+val CODE_BACKOFFICE="code_backoffice"
 val NAMA_BACKOFFICE="nama_backoffice"
 val LEVEL_BACKOFFICE="level_backoffice"
+val COMPANY_BACKOFFICE="company_backoffice"
 val NOTE_BACKOFFICE="note_backoffice"
 
 val TABEL_COMPANY ="company"
