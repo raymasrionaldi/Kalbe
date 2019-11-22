@@ -161,6 +161,8 @@ class SRFFragmentForm(context: Context, val fm: FragmentManager) : Fragment() {
             println("Ambil database : ${databaseQueryHelper!!.pilihGrade(srf.id_grade!!.toInt())}")
             println("Ini nilainya : ${listGrade!!.indexOf(databaseQueryHelper!!.pilihGrade(srf.id_grade!!.toInt()))}")
             indexGrade = listGrade!!.indexOf(databaseQueryHelper!!.pilihGrade(srf.id_grade!!.toInt()))
+        } else {
+            indexGrade = 0
         }
         spinnerGrade!!.setSelection(indexGrade)
         namaUser!!.setText(srf.nama_user)
@@ -265,11 +267,11 @@ class SRFFragmentForm(context: Context, val fm: FragmentManager) : Fragment() {
         val jumKebutuhanText = jumKebutuhan!!.text.toString().trim()
         val clientSRFTeks = spinnerClient!!.selectedItemPosition
         val gradeSRFTeks = spinnerGrade!!.selectedItemPosition
-        val namaUserTeks = namaUser!!.text.toString().trim().toUpperCase()
+        val namaUserTeks = namaUser!!.text.toString().trim()
         val emailUserTeks = emailUser!!.text.toString().trim()
-        val salesPriceTeks = salesPrice!!.text.toString().trim().toUpperCase()
-        val lokasiTeks = lokasi!!.text.toString().trim().toUpperCase()
-        val catatanText = catatan!!.text.toString().trim().toUpperCase()
+        val salesPriceTeks = salesPrice!!.text.toString().trim()
+        val lokasiTeks = lokasi!!.text.toString().trim()
+        val catatanText = catatan!!.text.toString().trim()
 
         spinnerJenisSRF.errorText = null
         spinnerClientSRF.errorText = null

@@ -204,9 +204,7 @@ class SRFQueryHelper(val databaseHelper: DatabaseHelper) {
         values.put(LOKASI, model.lokasi)
         values.put(CATATAN, model.catatan)
 
-        return db.update(
-            TABEL_SRF, values, "$ID_SRF = ?", arrayOf(model.id_srf.toString())
-        )
+        return db.update(TABEL_SRF, values, "$ID_SRF = ?", arrayOf(model.id_srf.toString()))
     }
 
     fun hapusSRF(id: String): Int {
