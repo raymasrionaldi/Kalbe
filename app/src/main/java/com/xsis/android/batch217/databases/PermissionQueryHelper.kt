@@ -100,13 +100,6 @@ class PermissionQueryHelper(val databaseHelper: DatabaseHelper) {
         return listPermission[0]
 
     }
-//    fun hapusPermission(id: Int): Int {
-//        val db = databaseHelper.writableDatabase
-//
-//        val values = ContentValues()
-//        values.put(IS_DELETED, "true")
-//        return db.update(TABEL_TIPE_TES, values, "$ID_TES = ?", arrayOf(id.toString()))
-//    }
 
     fun tambahPermission(model: Permission): Long {
         val db = databaseHelper.writableDatabase
@@ -117,39 +110,14 @@ class PermissionQueryHelper(val databaseHelper: DatabaseHelper) {
         values.put(JABATAN, model.jabatan)
         values.put(TANGGAL_PERMISSION, model.tanggal_permission)
         values.put(JAM_PERMISSION, model.jam_permission)
-        values.put(KET_SATU, "Tidak Masuk")
-        values.put(KET_DUA, "Sakit")
-        values.put(KET_TIGA, "Datang Terlambat")
-        values.put(KET_EMPAT, "Pulang Awal")
+        values.put(KET_SATU, model.ket_tidak_masuk)
+        values.put(KET_DUA, model.ket_sakit)
+        values.put(KET_TIGA, model.ket_datang_terlambat)
+        values.put(KET_EMPAT, model.ket_pulang_awal)
         values.put(KET_LIMA, model.ket_dll)
         values.put(STATUS_PERMISSION, "wait")
 
         return db.insert(TABEL_PERMISSION, null, values)
     }
-//
-//    fun editTipeTes(model: TipeTes): Int {
-//        val db = databaseHelper.writableDatabase
-//
-//        val values = ContentValues()
-//        values.put(NAMA_TES, model.nama_tipe_tes)
-//        values.put(DES_TES, model.deskripsi_tipe_tes)
-//
-//        return db.update(
-//            TABEL_TIPE_TES,
-//            values,
-//            "$ID_TES = ?",
-//            arrayOf(model.id_tipe_tes.toString())
-//        )
-//    }
 
-//    fun cekTipeTesSudahAda(nama: String): Int {
-//        val db = databaseHelper.readableDatabase
-//        val queryCari =
-//            "SELECT * FROM $TABEL_TIPE_TES WHERE $NAMA_TES LIKE '$nama' AND " +
-//                    "$IS_DELETED = 'false'"
-//
-//        val cursor = db.rawQuery(queryCari, null)
-//
-//        return cursor.count
-//    }
 }

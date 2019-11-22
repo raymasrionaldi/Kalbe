@@ -11,9 +11,10 @@ import android.widget.Button
 import android.widget.CompoundButton
 import android.widget.Toast
 import com.xsis.android.batch217.R
-import com.xsis.android.batch217.utils.HOUR_PATTERN
-import com.xsis.android.batch217.utils.ubahResetButton
-import com.xsis.android.batch217.utils.ubahSimpanButton
+import com.xsis.android.batch217.databases.DatabaseHelper
+import com.xsis.android.batch217.databases.PermissionQueryHelper
+import com.xsis.android.batch217.models.Permission
+import com.xsis.android.batch217.utils.*
 import kotlinx.android.synthetic.main.activity_entry_timesheet.*
 import kotlinx.android.synthetic.main.activity_permission_create_form.*
 import java.text.SimpleDateFormat
@@ -23,6 +24,9 @@ class PermissionCreateFormActivity : AppCompatActivity() {
     val context = this
 
     var buttonReset: Button? = null
+    var data = Permission()
+    var databaseHelper = DatabaseHelper(this)
+    var databaseQueryHelper = PermissionQueryHelper(databaseHelper)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,6 +47,10 @@ class PermissionCreateFormActivity : AppCompatActivity() {
 
         buttonResetPermission.setOnClickListener(){
             resetForm()
+        }
+
+        buttonSubmitPermission.setOnClickListener{
+            simpanData()
         }
 
         inputNamaPegawai.addTextChangedListener(textWatcher)
@@ -204,7 +212,54 @@ class PermissionCreateFormActivity : AppCompatActivity() {
         }
     }
 
+    fun simpanData() {
+        val namaTeks = inputNamaPegawai.text.toString().trim()
+        val divisiTeks = inputDevartement.text.toString().trim()
+        val jabatanTeks = inputJabatan.text.toString().trim()
+        val tanggalTeks = inputTanggalPermission.text.toString().trim()
+        val pukulTeks = inputJamPermission.text.toString().trim()
+        var tidakMasukTeks = ""
+        var sakitTeks = ""
+        var datangTerlambatTeks = ""
+        var pulangAwalTeks = ""
+        var dllTeks = ""
 
+
+        if (cekTidakMasuk.isChecked) {
+            tidakMasukTeks = "Tidak Masuk"
+        }
+        if (cekSakit.isChecked) {
+            sakitTeks = "Sakit"
+        }
+        if (cekDatangTerlambat.isChecked) {
+            datangTerlambatTeks = "Datang Terlambat"
+        }
+        if (cekPulangAwal.isChecked) {
+            pulangAwalTeks = "Pulang Awal"
+        }
+        if (cekDLL.isChecked) {
+            dllTeks = inputDLL.text.toString().trim()
+        }
+
+        val model = Permission()
+        model.nama_pegawai = namaTeks
+        model.devartement = divisiTeks
+        model.jabatan = jabatanTeks
+        model.tanggal_permission = tanggalTeks
+        model.jam_permission = pukulTeks
+        model.ket_tidak_masuk = tidakMasukTeks
+        model.ket_sakit = sakitTeks
+        model.ket_datang_terlambat = datangTerlambatTeks
+        model.ket_pulang_awal = pulangAwalTeks
+        model.ket_dll = dllTeks
+
+        if (databaseQueryHelper.tambahPermission(model) == -1L) {
+            Toast.makeText(context, SIMPAN_DATA_GAGAL, Toast.LENGTH_SHORT).show()
+        } else {
+            Toast.makeText(context, SIMPAN_DATA_BERHASIL, Toast.LENGTH_SHORT).show()
+        }
+        resetForm()
+    }
 }
 
 
