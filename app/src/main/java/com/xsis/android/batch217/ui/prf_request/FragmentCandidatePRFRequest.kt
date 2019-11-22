@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import androidx.appcompat.widget.SearchView
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -22,6 +23,7 @@ import com.xsis.android.batch217.models.PRFRequest
 import com.xsis.android.batch217.utils.ID_FROM_PRF
 import com.xsis.android.batch217.utils.ID_PRF_CANDIDATE
 import com.xsis.android.batch217.utils.ID_PRF_REQUEST
+import kotlinx.android.synthetic.main.fragment_candidates_request_history.*
 
 class FragmentCandidatePRFRequest(context: Context, val fm: FragmentManager) : Fragment() {
     var recyclerView: RecyclerView? = null
@@ -70,7 +72,15 @@ class FragmentCandidatePRFRequest(context: Context, val fm: FragmentManager) : F
         databaseQueryHelper: PRFCandidateQueryHelper
     ) {
         val listPRFCandidate = databaseQueryHelper.readSemuaPRFCandidateModels(ID)
-        tampilkanListPRFCandidate(listPRFCandidate, recyclerView)
+        if (listPRFCandidate.isEmpty()) {
+            dataNotFoundPRFCandidate.isVisible = true
+            listPRFCandidateRecycler.isVisible = false
+        }
+        else {
+            dataNotFoundPRFCandidate.isVisible = false
+            listPRFCandidateRecycler.isVisible = true
+            tampilkanListPRFCandidate(listPRFCandidate, recyclerView)
+        }
     }
 
     fun tampilkanListPRFCandidate(
