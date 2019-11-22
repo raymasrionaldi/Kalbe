@@ -22,6 +22,9 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.fragment.app.Fragment
+import com.google.android.material.textfield.TextInputLayout
+import com.xsis.android.batch217.utils.ubahEditTextColor
+import com.xsis.android.batch217.utils.ubahTextInputEditTextColor
 
 
 class KeluargaFormActivity : AppCompatActivity() {
@@ -31,6 +34,7 @@ class KeluargaFormActivity : AppCompatActivity() {
 
     var id = 0
     var judul:TextView? = null
+    var jenisKeluarga0:TextInputLayout? = null
     var jenisKeluarga: TextInputEditText? = null
     var errorJenis:TextView? = null
     var tambah:Button? = null
@@ -46,6 +50,7 @@ class KeluargaFormActivity : AppCompatActivity() {
         setContentView(R.layout.activity_keluarga_form)
 
         judul = findViewById(R.id.judulFormKeluarga)
+        jenisKeluarga0 = findViewById(R.id.jenisKeluarga0)
         jenisKeluarga = findViewById(R.id.jenisKeluarga)
         errorJenis = findViewById(R.id.errorJenisKeluarga)
         tambah = findViewById(R.id.tambahHubunganKeluarga)
@@ -146,6 +151,7 @@ class KeluargaFormActivity : AppCompatActivity() {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 val Jenis = jenisKeluarga!!.text.toString().trim()
+                ubahTextInputEditTextColor(context, jenisKeluarga!!, jenisKeluarga0!!, Jenis.isEmpty())
 
                 if (Jenis.isNotEmpty()){
                     errorJenis!!.visibility = View.INVISIBLE

@@ -92,11 +92,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:paddingTop="5dp">
-                <com.google.android.material.textfield.TextInputLayout
+                android:paddingTop="5dp"
+                android:layout_marginLeft="5dp">
+                <com.google.android.material.textfield.TextInputLayout android:id="@+id/jenisKeluarga0"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    app:hintTextAppearance="@style/TextAppearance.App.TextInputLayoutBlack">
+
                     <com.google.android.material.textfield.TextInputEditText android:id="@+id/jenisKeluarga"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -111,8 +114,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Error : Jenis keluarga tidak boleh kosong"
-                android:textColor="@android:color/holo_red_dark"
-                android:visibility="invisible"/>
+                android:textColor="@color/warnaMerah"
+                android:visibility="invisible"
+                android:textSize="13dp"
+                android:paddingLeft="5dp"/>
 
             <Button
                 android:id="@+id/tambahHubunganKeluarga"
@@ -133,7 +138,8 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/anggotaKeluarga"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"/>
 
         </LinearLayout>
     </ScrollView>
