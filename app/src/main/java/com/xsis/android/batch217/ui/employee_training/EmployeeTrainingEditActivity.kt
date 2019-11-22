@@ -431,26 +431,22 @@ class EmployeeTrainingEditActivity : AppCompatActivity() {
             editNamaTrainee.setText(data.namaTrainee)
 
             val dataNamaEmployeeTraining = cursor.getString(2)
-            val indexNamaEmployeeTraining =
-                isiSpinnerNamaTraining().indexOf(dataNamaEmployeeTraining)
+            val indexNamaEmployeeTraining = isiSpinnerNamaTraining().indexOf(dataNamaEmployeeTraining)
             spinnerEditNamaEmployeeTraining.setSelection(indexNamaEmployeeTraining)
 
             val dataNamaEmployeeTrainingOrganizer = cursor.getString(3)
-            val indexNamaEmployeeTrainingOrganizer =
-                isiSpinnerTrainingOrganizer().indexOf(dataNamaEmployeeTrainingOrganizer)
+            val indexNamaEmployeeTrainingOrganizer = isiSpinnerTrainingOrganizer().indexOf(dataNamaEmployeeTrainingOrganizer)
             spinnerEditNamaEmployeeTrainingOrganizer.setSelection(indexNamaEmployeeTrainingOrganizer)
 
             data.dateEmployeeTraining = cursor.getString(4)
             editTanggalEmployeeTraining.setText(data.dateEmployeeTraining)
 
             val dataTypeEmployeeTraining = cursor.getString(5)
-            val indexTypeEmployeeTraining =
-                isiSpinnerTrainingType().indexOf(dataTypeEmployeeTraining)
+            val indexTypeEmployeeTraining =  isiSpinnerTrainingType().indexOf(dataTypeEmployeeTraining)
             spinnerEditTypeEmployeeTraining.setSelection(indexTypeEmployeeTraining)
 
             val dataCertificationType = cursor.getString(6)
-            val indexCertificationType =
-                isiSpinnerCertificationType().indexOf(dataCertificationType)
+            val indexCertificationType = isiSpinnerCertificationType().indexOf(dataCertificationType)
             spinnerEditCertificationEmployeeTraining.setSelection(indexCertificationType)
 
             data.isDeleted = cursor.getString(7)

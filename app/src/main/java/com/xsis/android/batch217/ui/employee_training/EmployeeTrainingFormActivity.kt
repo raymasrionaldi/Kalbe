@@ -226,8 +226,7 @@ class EmployeeTrainingFormActivity : AppCompatActivity() {
                     model.typeEmployeeCertification = employeeCertificationTypeSpinner
                 }
 
-                val cekEmployeeTrainee =
-                    databaseQueryHelper!!.cekEmployeeTrainingSudahTraining(model.namaTrainee!!, model.dateEmployeeTraining!!)
+                val cekEmployeeTrainee = databaseQueryHelper!!.cekEmployeeTrainingSudahTraining(model.namaTrainee!!, model.dateEmployeeTraining!!)
 
                 if (cekEmployeeTrainee > 0) {
                     Toast.makeText(context, CEK_TRAINEE, Toast.LENGTH_SHORT).show()

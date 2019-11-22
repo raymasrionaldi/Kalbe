@@ -88,7 +88,7 @@ class EmployeeTrainingFragmentDetail(context: Context, val fm: FragmentManager) 
 
     fun showDeleteDialog() {
         AlertDialog.Builder(context!!, R.style.AlertDialogTheme)
-            .setMessage("Hapus ${data!!.namaTrainee} ?")
+            .setMessage("Hapus Data Training Pegawai ${data!!.namaTrainee} di Tanggal ${data!!.dateEmployeeTraining}  ?")
             .setCancelable(false)
             .setPositiveButton("DELETE") { dialog, which ->
                 if (databaseQueryHelper!!.hapusEmployeeTraining(data.idEmployeeTraining) != 0) {
