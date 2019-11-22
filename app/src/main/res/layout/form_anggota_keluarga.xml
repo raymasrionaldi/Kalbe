@@ -5,7 +5,6 @@
     android:orientation="vertical">
 
     <LinearLayout
-        android:id="@+id/kondisiTidakEditKeluarga"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -14,19 +13,24 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/hubunganKeluarga2"
+            <EditText
+                android:id="@+id/hubunganKeluarga"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Hubungan Keluarga"
                 android:text=""
-                android:textSize="15dp" />
+                android:textSize="15dp"
+                android:backgroundTint="@color/warnaDetailText"
+                android:longClickable="false"
+                android:clickable="false"/>
 
             <LinearLayout
+                android:id="@+id/kondisiTidakEditKeluarga"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end|center_vertical"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:layout_marginBottom="5dp">
 
                 <Button
                     android:id="@+id/edit"
@@ -43,42 +47,14 @@
                     android:background="@drawable/ic_delete_black" />
 
             </LinearLayout>
-        </FrameLayout>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text=""
-            android:textColor="@android:color/holo_red_dark"
-            android:visibility="invisible" />
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:id="@+id/kondisiEditKeluarga"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:visibility="gone">
-
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <EditText
-                android:id="@+id/hubunganKeluarga"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Hubungan Keluarga"
-                android:text=""
-                android:textSize="15dp"
-                android:singleLine="true"/>
-
             <LinearLayout
+                android:id="@+id/kondisiEditKeluarga"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end|center_vertical"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:layout_marginBottom="5dp"
+                android:visibility="gone">
 
                 <Button
                     android:id="@+id/clear"
@@ -101,12 +77,11 @@
             android:id="@+id/errorHubunganKeluarga"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Error : Hubungan keluarga tidak boleh kosong"
-            android:textColor="@android:color/holo_red_dark"
-            android:visibility="invisible" />
-
-
+            android:text="Error : Harus berisi minimal 1 hubungan keluarga"
+            android:textColor="@color/warnaMerah"
+            android:visibility="invisible"
+            android:textSize="13dp"
+            android:paddingLeft="5dp"/>
     </LinearLayout>
-
 
 </LinearLayout>
