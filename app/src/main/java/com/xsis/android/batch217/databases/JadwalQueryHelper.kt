@@ -47,7 +47,7 @@ class JadwalQueryHelper(val databaseHelper: DatabaseHelper) {
     fun cariJadwalModels(keyword:String): List<Jadwal>{
         var listJadwal = ArrayList<Jadwal>()
 
-        if (keyword.isNotBlank()) {
+        if (keyword.isNotEmpty()) {
             val db = databaseHelper.readableDatabase
             val queryCari = "SELECT * FROM $TABEL_JADWAL WHERE ($NAMA_JADWAL LIKE '%$keyword%' OR " +
                     "$DES_JADWAL LIKE '%$keyword%') AND $IS_DELETED='false'"

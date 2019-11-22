@@ -12,7 +12,7 @@ class PermissionQueryHelper(val databaseHelper: DatabaseHelper) {
     fun getSemuaPermission(): Cursor {
         val db = databaseHelper.readableDatabase
 
-        val queryRead = "SELECT * FROM $TABEL_PERMISSION WHERE $STATUS_PERMISSION = 'wait'"
+        val queryRead = "SELECT * FROM $TABEL_PERMISSION"
 
         return db.rawQuery(queryRead, null)
     }
@@ -59,8 +59,7 @@ class PermissionQueryHelper(val databaseHelper: DatabaseHelper) {
         if (keyword.isNotBlank()) {
             val db = databaseHelper.readableDatabase
             val queryCari =
-                "SELECT * FROM $TABEL_PERMISSION WHERE $TANGGAL_PERMISSION LIKE '%$keyword%' AND " +
-                        "$STATUS_PERMISSION = 'wait'"
+                "SELECT * FROM $TABEL_PERMISSION WHERE $TANGGAL_PERMISSION LIKE '%$keyword%' AND $STATUS_PERMISSION = 'Submit'"
 
             val cursor = db.rawQuery(queryCari, null)
             if (cursor.count > 0) {
@@ -75,8 +74,7 @@ class PermissionQueryHelper(val databaseHelper: DatabaseHelper) {
         if (keyword.isNotBlank()) {
             val db = databaseHelper.readableDatabase
             val queryCari =
-                "SELECT * FROM $TABEL_PERMISSION WHERE $TANGGAL_PERMISSION LIKE '%$keyword%' AND " +
-                        "$STATUS_PERMISSION = 'Approved' OR $STATUS_PERMISSION='Rejected'"
+                "SELECT * FROM $TABEL_PERMISSION WHERE $TANGGAL_PERMISSION LIKE '%$keyword%'"
 
             val cursor = db.rawQuery(queryCari, null)
             if (cursor.count > 0) {
@@ -84,6 +82,15 @@ class PermissionQueryHelper(val databaseHelper: DatabaseHelper) {
             }
         }
         return listPermission
+    }
+
+    fun cekTanggalAda(tanggal: String): Boolean{
+        val db = databaseHelper.readableDatabase
+        val queryCari =
+            "SELECT * FROM $TABEL_PERMISSION WHERE $TANGGAL_PERMISSION = '$tanggal'"
+
+        val cursor = db.rawQuery(queryCari, null)
+        return cursor.count > 0
     }
 
     fun loadPermission(id:Int): Permission {
@@ -115,7 +122,7 @@ class PermissionQueryHelper(val databaseHelper: DatabaseHelper) {
         values.put(KET_TIGA, model.ket_datang_terlambat)
         values.put(KET_EMPAT, model.ket_pulang_awal)
         values.put(KET_LIMA, model.ket_dll)
-        values.put(STATUS_PERMISSION, "wait")
+        values.put(STATUS_PERMISSION, "Submit")
 
         return db.insert(TABEL_PERMISSION, null, values)
     }

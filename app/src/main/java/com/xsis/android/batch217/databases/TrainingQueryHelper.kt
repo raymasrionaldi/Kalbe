@@ -46,7 +46,7 @@ class TrainingQueryHelper(val databaseHelper: DatabaseHelper) {
 
     fun cariTrainingModels(keyword: String): List<Training> {
         var listTraining = ArrayList<Training>()
-        if (keyword.isNotBlank()) {
+        if (keyword.isNotEmpty()) {
             val db = databaseHelper.readableDatabase
             val queryCari =
                 "SELECT * FROM $TABEL_TRAINING WHERE $NAMA_TRAINING LIKE '%$keyword%' AND " +

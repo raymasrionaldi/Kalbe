@@ -45,11 +45,11 @@ class PermissionCreateFormActivity : AppCompatActivity() {
         setTanggalPermissionForm()
         setJamPermissionForm()
 
-        buttonResetPermission.setOnClickListener(){
+        buttonResetPermission.setOnClickListener() {
             resetForm()
         }
 
-        buttonSubmitPermission.setOnClickListener{
+        buttonSubmitPermission.setOnClickListener {
             simpanData()
         }
 
@@ -74,6 +74,35 @@ class PermissionCreateFormActivity : AppCompatActivity() {
 
             val kondisiSubmit = kondisiButtonSubmit()
             val kondisiReset = kondisiButtonReset()
+            val namaTeks = inputNamaPegawai.text.toString().trim()
+            val divisiTeks = inputDevartement.text.toString().trim()
+            val jabatanTeks = inputJabatan.text.toString().trim()
+            val tanggalTeks = inputTanggalPermission.text.toString()
+            val jamTeks = inputJamPermission.text.toString()
+
+            val kondisiTanggal =
+                namaTeks.isNotEmpty() && divisiTeks.isNotEmpty() && jabatanTeks.isNotEmpty()
+            val kondisiJam =
+                namaTeks.isNotEmpty() && divisiTeks.isNotEmpty() && jabatanTeks.isNotEmpty() && tanggalTeks.isNotEmpty()
+
+            if (kondisiTanggal) {
+                inputTanggalPermission.isEnabled = true
+            } else {
+                inputTanggalPermission.isEnabled = false
+                if (tanggalTeks.isNotEmpty()) {
+                    inputTanggalPermission.setText("")
+                }
+            }
+
+            if (kondisiJam) {
+                inputJamPermission.isEnabled = true
+            } else {
+                inputJamPermission.isEnabled = false
+                if (jamTeks.isNotEmpty()) {
+                    inputJamPermission.setText("")
+                }
+            }
+
 
             ubahSimpanButton(context, kondisiSubmit, buttonSubmitPermission)
             ubahResetButton(context, kondisiReset, buttonResetPermission)
@@ -95,8 +124,7 @@ class PermissionCreateFormActivity : AppCompatActivity() {
             if (buttonView!!.id == R.id.cekDLL) {
                 if (isChecked) {
                     inputDLL.isEnabled = true
-                }
-                else {
+                } else {
                     inputDLL.isEnabled = false
                     inputDLL.text = null
                 }
@@ -135,7 +163,7 @@ class PermissionCreateFormActivity : AppCompatActivity() {
 
     }
 
-    fun resetForm(){
+    fun resetForm() {
         inputNamaPegawai.setText("")
         inputDevartement.setText("")
         inputJabatan.setText("")
@@ -196,13 +224,13 @@ class PermissionCreateFormActivity : AppCompatActivity() {
         inputJamPermission.setOnClickListener {
             val tpd = TimePickerDialog(this, TimePickerDialog.OnTimeSetListener { view, h, m ->
 
-               // Toast.makeText(this, "$h.$m", Toast.LENGTH_LONG).show()
+                // Toast.makeText(this, "$h.$m", Toast.LENGTH_LONG).show()
                 val selectedDate = Calendar.getInstance()
                 selectedDate.set(Calendar.HOUR_OF_DAY, h)
                 selectedDate.set(Calendar.MINUTE, m)
 
                 val jam = formatter.format(selectedDate.time)
-               // Toast.makeText(this, "$jam", Toast.LENGTH_SHORT).show()
+                // Toast.makeText(this, "$jam", Toast.LENGTH_SHORT).show()
                 //set tampilan
                 inputJamPermission.setText(jam)
 
@@ -253,12 +281,17 @@ class PermissionCreateFormActivity : AppCompatActivity() {
         model.ket_pulang_awal = pulangAwalTeks
         model.ket_dll = dllTeks
 
-        if (databaseQueryHelper.tambahPermission(model) == -1L) {
-            Toast.makeText(context, SIMPAN_DATA_GAGAL, Toast.LENGTH_SHORT).show()
+        if (databaseQueryHelper.cekTanggalAda(tanggalTeks)) {
+            Toast.makeText(context, "Data Sudah Ada", Toast.LENGTH_SHORT).show()
         } else {
-            Toast.makeText(context, SIMPAN_DATA_BERHASIL, Toast.LENGTH_SHORT).show()
+            if (databaseQueryHelper.tambahPermission(model) == -1L) {
+                Toast.makeText(context, SIMPAN_DATA_GAGAL, Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(context, SIMPAN_DATA_BERHASIL, Toast.LENGTH_SHORT).show()
+            }
+            resetForm()
         }
-        resetForm()
+
     }
 }
 
