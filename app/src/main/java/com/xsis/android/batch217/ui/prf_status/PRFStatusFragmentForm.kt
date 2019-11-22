@@ -93,13 +93,12 @@ class PRFStatusFragmentForm(context:Context, val fm:FragmentManager): Fragment()
     }
 
     fun save(){
-        val Nama = nama!!.text.toString().trim()
+        val Nama = databaseQueryHelper.capitalizeEachWord(nama!!.text.toString()).trim()
         val Notes = notes!!.text.toString().trim()
         val otherNames = databaseQueryHelper.readOtherIDPRFStatus(ID)
-        println(otherNames)
 
-        if (otherNames.contains(Nama.toUpperCase())){
-            Toast.makeText(context, DATA_SUDAH_ADA, Toast.LENGTH_SHORT).show()
+        if (otherNames.contains(Nama)){
+            Toast.makeText(context, "Data \"$Nama\" sudah ada !", Toast.LENGTH_SHORT).show()
         } else{
             if (ID == 0){
                 Toast.makeText(context, "Data berhasil ditambahkan.", Toast.LENGTH_SHORT).show()
@@ -119,9 +118,6 @@ class PRFStatusFragmentForm(context:Context, val fm:FragmentManager): Fragment()
     }
 
     fun delete(){
-        val Nama = nama!!.text.toString().trim()
-
-
         val confirmDelete = AlertDialog.Builder(context)
         confirmDelete.setMessage("Hapus ${data.namaPRFStatus} ?")
             .setPositiveButton("DELETE", {dialog, which ->

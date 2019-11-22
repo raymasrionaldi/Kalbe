@@ -30,7 +30,13 @@ class PRFStatusQueryHelper(val databaseHelper: DatabaseHelper) {
         var list = ArrayList<PRFStatus>()
 
         if (keyword.isNotEmpty()){
-            val querySearch = "SELECT * FROM $TABEL_PRF WHERE $NAMA_PRF LIKE '%$keyword%' AND $IS_DELETED='false'"
+            val keyword_lowercase = keyword.toLowerCase()
+            val keyword_CEW = capitalizeEachWord(keyword)
+            val querySearch = "SELECT * FROM $TABEL_PRF " +
+                    "WHERE ($NAMA_PRF LIKE '%$keyword%' " +
+                    "OR $NAMA_PRF LIKE '%$keyword_lowercase%' " +
+                    "OR $NAMA_PRF LIKE '%$keyword_CEW%') " +
+                    "AND $IS_DELETED='false'"
             val cursor = db_read.rawQuery(querySearch, null)
             list = konversiCursorKeList(cursor)
         }
@@ -53,18 +59,27 @@ class PRFStatusQueryHelper(val databaseHelper: DatabaseHelper) {
     }
 
     fun editDataPRFStatus(id:Int, Nama:String, Notes: String){
+        val Nama_edit = capitalizeEachWord(Nama).trim()
         val values = ContentValues()
-        values.put(NAMA_PRF, Nama)
+        values.put(NAMA_PRF, Nama_edit)
         values.put(DES_PRF, Notes)
         db_write.update(TABEL_PRF, values, "$ID_PRF = ?", arrayOf(id.toString()))
     }
 
     fun addDataPRFStatus(Nama:String, Notes:String){
+        val Nama_edit = capitalizeEachWord(Nama).trim()
         val values = ContentValues()
-        values.put(NAMA_PRF, Nama)
+        values.put(NAMA_PRF, Nama_edit)
         values.put(DES_PRF, Notes)
         values.put(IS_DELETED, "false")
         db_write.insert(TABEL_PRF, null, values)
+    }
+
+    fun capitalizeEachWord(Nama:String):String{
+        var Nama_edit = ""
+        val Nama_array = Nama.split(" ").toList()
+        Nama_array.forEach { Nama_edit += "${it.toLowerCase().capitalize()} " }
+        return Nama_edit
     }
 
     fun readOtherIDPRFStatus(id:Int):List<String>{
@@ -73,10 +88,9 @@ class PRFStatusQueryHelper(val databaseHelper: DatabaseHelper) {
                 "AND $IS_DELETED='false'"
         val cursor = db_read.rawQuery(queryReadNames, null)
         val list = konversiCursorKeList(cursor)
-        println(queryReadNames)
 
         val names = ArrayList<String>()
-        list.forEach { names.add(it.namaPRFStatus.toUpperCase()) }
+        list.forEach { names.add(capitalizeEachWord(it.namaPRFStatus).trim()) }
 
         return names
     }
