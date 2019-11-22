@@ -21,50 +21,37 @@ android:layout_height="match_parent">
             android:textSize="20sp"
             android:textStyle="bold"
             android:textColor="@android:color/black" />
-        <com.google.android.material.textfield.TextInputLayout
+
+        <EditText
+            android:id="@+id/teksPRFStatus"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingLeft="5dp"
-            android:paddingTop="7dp"
-            android:paddingRight="5dp"
-            app:hintTextAppearance="@style/TextAppearance.App.TextInputLayoutBlack">
+            android:hint="Name*"
+            android:singleLine="true"
+            android:layout_marginTop="5dp"
+            android:text=""
+            android:textColorHint="@color/warnaDetailText"
+            android:backgroundTint="@color/warnaDetailText"/>
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/teksPRFStatus"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Name*"
-                android:singleLine="true"
-                android:text="" />
-
-        </com.google.android.material.textfield.TextInputLayout>
         <TextView
             android:id="@+id/requiredPRFStatus"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Required"
-            android:textColor="@android:color/holo_red_dark"
+            android:textColor="@color/warnaMerah"
             android:visibility="invisible"
             android:paddingLeft="8dp"/>
 
-        <com.google.android.material.textfield.TextInputLayout
+        <EditText
+            android:id="@+id/teksNotesPRFStatus"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingLeft="5dp"
-            android:paddingTop="7dp"
-            android:paddingRight="5dp"
-            app:hintTextAppearance="@style/TextAppearance.App.TextInputLayoutBlack">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/teksNotesPRFStatus"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Notes"
-                android:singleLine="true"
-                android:text="" />
-
-        </com.google.android.material.textfield.TextInputLayout>
+            android:hint="Notes"
+            android:singleLine="true"
+            android:layout_marginTop="5dp"
+            android:text=""
+            android:textColorHint="@color/warnaDetailText"
+            android:backgroundTint="@color/warnaDetailText"/>
 
         <LinearLayout
             android:layout_width="match_parent"

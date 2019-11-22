@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.view.isVisible
@@ -23,6 +24,7 @@ import com.xsis.android.batch217.databases.DatabaseHelper
 import com.xsis.android.batch217.databases.PRFStatusQueryHelper
 import com.xsis.android.batch217.models.PRFStatus
 import com.xsis.android.batch217.utils.DATA_SUDAH_ADA
+import com.xsis.android.batch217.utils.ubahEditTextColor
 import com.xsis.android.batch217.utils.ubahResetButton
 import com.xsis.android.batch217.utils.ubahSimpanButton
 
@@ -33,8 +35,8 @@ class PRFStatusFragmentForm(context:Context, val fm:FragmentManager): Fragment()
     var ID = 0
     var CountError = 0
     var judulForm:TextView? = null
-    var nama:TextInputEditText? = null
-    var notes:TextInputEditText? = null
+    var nama:EditText? = null
+    var notes:EditText? = null
     var error:TextView? = null
     var reset:Button? = null
     var save:Button? = null
@@ -56,7 +58,6 @@ class PRFStatusFragmentForm(context:Context, val fm:FragmentManager): Fragment()
 
         nama!!.addTextChangedListener(textWatcher)
         notes!!.addTextChangedListener(textWatcher)
-
 
         reset!!.setOnClickListener { reset() }
         save!!.setOnClickListener { save() }
@@ -154,8 +155,14 @@ class PRFStatusFragmentForm(context:Context, val fm:FragmentManager): Fragment()
             val Nama = nama!!.text.toString()
             val Notes = notes!!.text.toString()
 
-            if (Nama.trim().isEmpty() && CountError > 0){ error!!.visibility = View.VISIBLE }
-            else{ error!!.visibility = View.INVISIBLE }
+            if (Nama.trim().isEmpty() && CountError > 0){
+                error!!.visibility = View.VISIBLE }
+            else{
+                error!!.visibility = View.INVISIBLE }
+
+            if (CountError > 0) {
+                ubahEditTextColor(context, nama!!, Nama.trim().isEmpty())
+            }
             CountError++
 
             val kondisi = Nama.isNotEmpty() || Notes.isNotEmpty()
