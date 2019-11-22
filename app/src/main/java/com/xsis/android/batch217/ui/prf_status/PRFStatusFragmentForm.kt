@@ -97,17 +97,21 @@ class PRFStatusFragmentForm(context:Context, val fm:FragmentManager): Fragment()
         val Notes = notes!!.text.toString().trim()
         val otherNames = databaseQueryHelper.readOtherIDPRFStatus(ID)
 
-        if (otherNames.contains(Nama)){
-            Toast.makeText(context, "Data \"$Nama\" sudah ada !", Toast.LENGTH_SHORT).show()
-        } else{
-            if (ID == 0){
-                Toast.makeText(context, "Data berhasil ditambahkan.", Toast.LENGTH_SHORT).show()
-                databaseQueryHelper.addDataPRFStatus(Nama, Notes)
+        if (Nama.isNotEmpty()){
+            if (otherNames.contains(Nama)){
+                Toast.makeText(context, "Data \"$Nama\" sudah ada !", Toast.LENGTH_SHORT).show()
             } else{
-                Toast.makeText(context, "Data berhasil diedit.", Toast.LENGTH_SHORT).show()
-                databaseQueryHelper.editDataPRFStatus(ID, Nama, Notes)
+                if (ID == 0){
+                    Toast.makeText(context, "Data berhasil ditambahkan.", Toast.LENGTH_SHORT).show()
+                    databaseQueryHelper.addDataPRFStatus(Nama, Notes)
+                } else{
+                    Toast.makeText(context, "Data berhasil diedit.", Toast.LENGTH_SHORT).show()
+                    databaseQueryHelper.editDataPRFStatus(ID, Nama, Notes)
+                }
+                moveToData()
             }
-            moveToData()
+        } else{
+            error!!.visibility = View.VISIBLE
         }
 
     }
@@ -147,10 +151,10 @@ class PRFStatusFragmentForm(context:Context, val fm:FragmentManager): Fragment()
         override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-            val Nama = nama!!.text.toString().trim()
-            val Notes = notes!!.text.toString().trim()
+            val Nama = nama!!.text.toString()
+            val Notes = notes!!.text.toString()
 
-            if (Nama.isEmpty() && CountError > 0){ error!!.visibility = View.VISIBLE }
+            if (Nama.trim().isEmpty() && CountError > 0){ error!!.visibility = View.VISIBLE }
             else{ error!!.visibility = View.INVISIBLE }
             CountError++
 
