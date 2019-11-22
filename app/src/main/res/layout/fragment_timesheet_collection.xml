@@ -5,144 +5,154 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="10dp"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:verticalScrollbarPosition="defaultPosition">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Collection"
-                android:textSize="@dimen/title_form_text_size"
-                android:textStyle="bold" />
+                android:orientation="vertical">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Year"
-                android:textColor="@android:color/darker_gray"
-                android:layout_marginTop="5dp"
-                android:layout_marginLeft="10dp"/>
-
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <EditText
-                    android:id="@+id/pilihTahunCollection"
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
+                    android:text="Collection"
+                    android:textSize="@dimen/title_form_text_size"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Year"
+                    android:textColor="@android:color/darker_gray"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="10dp"/>
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <EditText
+                        android:id="@+id/pilihTahunCollection"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:clickable="false"
+                        android:focusable="false"
+                        android:longClickable="false"/>
+
+                    <Spinner
+                        android:id="@+id/spinnerPilihTahunCollection"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_margin="5dp"/>
+                </FrameLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Month"
+                    android:textColor="@android:color/darker_gray"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="10dp"/>
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <EditText
+                        android:id="@+id/pilihBulanCollection"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:clickable="false"
+                        android:focusable="false"
+                        android:longClickable="false"/>
+
+                    <Spinner
+                        android:id="@+id/spinnerPilihBulanCollection"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_margin="5dp"/>
+                </FrameLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Client"
+                    android:textColor="@android:color/darker_gray"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="10dp"/>
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <EditText
+                        android:id="@+id/pilihClientCollection"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:clickable="false"
+                        android:focusable="false"
+                        android:longClickable="false"/>
+
+                    <Spinner
+                        android:id="@+id/spinnerPilihClientCollection"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_margin="5dp"/>
+                </FrameLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                android:padding="10dp"
+                android:layout_marginBottom="20dp">
+
+                <Button
+                    android:id="@+id/buttonResetCollection"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_reset_off"
                     android:clickable="false"
-                    android:focusable="false"
-                    android:longClickable="false"/>
+                    android:text="@string/reset"
+                    android:textColor="@color/warnaTeksSimpanOff" />
 
-                <Spinner
-                    android:id="@+id/spinnerPilihTahunCollection"
-                    android:layout_width="match_parent"
+                <Button
+                    android:id="@+id/buttonSearchCollection"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_margin="5dp"/>
-            </FrameLayout>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Month"
-                android:textColor="@android:color/darker_gray"
-                android:layout_marginTop="5dp"
-                android:layout_marginLeft="10dp"/>
-
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <EditText
-                    android:id="@+id/pilihBulanCollection"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
+                    android:layout_weight="1"
                     android:clickable="false"
-                    android:focusable="false"
-                    android:longClickable="false"/>
-
-                <Spinner
-                    android:id="@+id/spinnerPilihBulanCollection"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_margin="5dp"/>
-            </FrameLayout>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Client"
-                android:textColor="@android:color/darker_gray"
-                android:layout_marginTop="5dp"
-                android:layout_marginLeft="10dp"/>
-
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <EditText
-                    android:id="@+id/pilihClientCollection"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:clickable="false"
-                    android:focusable="false"
-                    android:longClickable="false"/>
-
-                <Spinner
-                    android:id="@+id/spinnerPilihClientCollection"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_margin="5dp"/>
-            </FrameLayout>
-
+                    android:background="@drawable/button_search_off"
+                    android:text="@string/search"
+                    android:textColor="@color/warnaTeksSimpanOff" />
+            </LinearLayout>
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:orientation="horizontal"
-            android:padding="10dp">
+    </ScrollView>
 
-            <Button
-                android:id="@+id/buttonResetCollection"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@drawable/button_reset_off"
-                android:clickable="false"
-                android:text="@string/reset"
-                android:textColor="@color/warnaTeksSimpanOff" />
 
-            <Button
-                android:id="@+id/buttonSearchCollection"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:clickable="false"
-                android:background="@drawable/button_search_off"
-                android:text="@string/search"
-                android:textColor="@color/warnaTeksSimpanOff" />
-        </LinearLayout>
-    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
