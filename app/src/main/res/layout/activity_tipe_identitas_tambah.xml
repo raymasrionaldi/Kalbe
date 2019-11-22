@@ -83,6 +83,7 @@
             android:layout_marginTop="10dp">
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/teksTipeIdentitas0"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -95,7 +96,8 @@
                     android:layout_margin="5dp"
                     android:hint="@string/nama_tipe_identitas"
                     android:text=""
-                    android:singleLine="true"/>
+                    android:singleLine="true"
+                    android:backgroundTint="@color/warnaDetailText"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -123,6 +125,7 @@
             android:layout_marginTop="10dp">
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/teksDesTipeIdentitas0"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:hintTextAppearance="@style/TextAppearance.App.TextInputLayoutBlack">
@@ -134,7 +137,8 @@
                     android:text=""
                     android:layout_margin="5dp"
                     android:hint="Deskripsi"
-                    android:singleLine="true"/>
+                    android:singleLine="true"
+                    android:backgroundTint="@color/warnaDetailText"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 

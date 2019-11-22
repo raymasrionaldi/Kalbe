@@ -17,6 +17,7 @@ import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 import com.xsis.android.batch217.R
 import com.xsis.android.batch217.databases.DatabaseHelper
 import com.xsis.android.batch217.databases.PendidikanQueryHelper
@@ -28,7 +29,10 @@ import kotlinx.android.synthetic.main.activity_keluarga_form.*
 import kotlinx.android.synthetic.main.activity_tipe_identitas_tambah.*
 import kotlinx.android.synthetic.main.fragment_tipe_identitas_tambah.*
 class TipeIdentitasTambahActivity : AppCompatActivity() {
+    val context = this
     var judul:TextView? = null
+    var nama0:TextInputLayout? = null
+    var des0:TextInputLayout? = null
     var nama:TextInputEditText? = null
     var des:TextInputEditText? = null
     var simpan:Button? = null
@@ -47,6 +51,8 @@ class TipeIdentitasTambahActivity : AppCompatActivity() {
         setContentView(R.layout.activity_tipe_identitas_tambah)
 
         judul = findViewById(R.id.judulFormTipeIdentitas)
+        nama0 = findViewById(R.id.teksTipeIdentitas0)
+        des0 = findViewById(R.id.teksDesTipeIdentitas0)
         nama = findViewById(R.id.teksTipeIdentitas)
         des = findViewById(R.id.teksDesTipeIdentitas)
         simpan = findViewById(R.id.btnSimpanTipeIdentitas)
@@ -76,10 +82,29 @@ class TipeIdentitasTambahActivity : AppCompatActivity() {
 
         backTipeIdentitasForm.setOnClickListener { finish() }
         linearLayout!!.setOnClickListener{ hideKeyboard()}
+
+        teksTipeIdentitas.addTextChangedListener(textWatcher)
+        teksDesTipeIdentitas.addTextChangedListener(textWatcher)
     }
 
     fun batal(){
         batal!!.setOnClickListener { finish() }
+    }
+    fun simpan(id:Int) {
+        simpan!!.setOnClickListener {
+            val Nama = nama!!.text.toString().trim().toUpperCase()
+            val Des = des!!.text.toString().trim().toUpperCase()
+
+            if (Nama.isEmpty()){
+                Toast.makeText(this, DATA_BELUM_LENGKAP, Toast.LENGTH_SHORT).show()
+            } else{
+                if (id == 0){
+                    insertKeDatabase(Nama, Des)
+                } else{
+                    update(id, Nama, Des)
+                }
+            }
+        }
     }
 
     fun enableUbah(){
@@ -98,17 +123,7 @@ class TipeIdentitasTambahActivity : AppCompatActivity() {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 //Enable tombol simpan ketika user sudah mulai mengisi form
-                simpan!!.setBackgroundResource(R.drawable.button_simpan_on)
-                simpan!!.setTextColor(Color.WHITE)
-                simpan!!.isEnabled = true
 
-                val Nama = nama!!.text.toString().trim()
-                clearNama!!.isVisible = !Nama.isEmpty()
-                if (Nama.isEmpty()){
-                    error!!.visibility = View.VISIBLE
-                } else{
-                    error!!.visibility = View.INVISIBLE
-                }
             }
         })
         teksDesTipeIdentitas.addTextChangedListener(object : TextWatcher {
@@ -126,22 +141,6 @@ class TipeIdentitasTambahActivity : AppCompatActivity() {
         })
     }
 
-    fun simpan(id:Int) {
-        simpan!!.setOnClickListener {
-            val Nama = nama!!.text.toString().trim().toUpperCase()
-            val Des = des!!.text.toString().trim().toUpperCase()
-
-            if (Nama.isEmpty()){
-                Toast.makeText(this, DATA_BELUM_LENGKAP, Toast.LENGTH_SHORT).show()
-            } else{
-                if (id == 0){
-                    insertKeDatabase(Nama, Des)
-                } else{
-                    update(id, Nama, Des)
-                }
-            }
-        }
-    }
 
     fun insertKeDatabase(Nama:String, Des:String){
         val sudahAda = databaseQueryHelper.readNamaTipeIdentitas(Nama)
@@ -172,6 +171,32 @@ class TipeIdentitasTambahActivity : AppCompatActivity() {
     fun hapus(){
         clearDes!!.setOnClickListener {des!!.setText("") }
         clearNama!!.setOnClickListener {nama!!.setText("") }
+    }
+
+    private val textWatcher = object : TextWatcher {
+        override fun afterTextChanged(s: Editable?) {}
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            simpan!!.setBackgroundResource(R.drawable.button_simpan_on)
+            simpan!!.setTextColor(Color.WHITE)
+            simpan!!.isEnabled = true
+
+            val Nama = nama!!.text.toString().trim()
+            val Des = des!!.text.toString().trim()
+
+            clearNama!!.isVisible = !Nama.isEmpty()
+            clearDes!!.isVisible = !Des.isEmpty()
+
+            ubahTextInputEditTextColor(context, nama!!, nama0!!, Nama.isEmpty())
+
+            if (Nama.isEmpty()){
+                error!!.visibility = View.VISIBLE
+            } else{
+                error!!.visibility = View.INVISIBLE
+            }
+
+        }
+
     }
 
     fun Activity.hideKeyboard() {
