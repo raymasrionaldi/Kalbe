@@ -12,12 +12,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.periode.UbahPeriodeActivity"
+        <activity android:name=".ui.permission.PermissionHistoryFormActivity"></activity>
+        <activity
+            android:name=".ui.periode.UbahPeriodeActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <activity android:name=".ui.periode.InputPeriodeActivity"
+        <activity
+            android:name=".ui.periode.InputPeriodeActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity android:name=".ui.permission.PermissionCreateFormActivity" />
-        <activity android:name=".ui.permission.permission_approval.PermissionApprovalFormActivity"/>
+        <activity android:name=".ui.permission.permission_approval.PermissionApprovalFormActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"/>
         <activity android:name=".ui.summary_prf.SummaryDetailActivity" />
         <activity
             android:name=".ui.timesheet.timesheet_send.SendDataActivity"
@@ -72,7 +76,6 @@
         <activity
             android:name=".ui.prf_request.CreateERFActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-
         <activity
             android:name=".HomeActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"

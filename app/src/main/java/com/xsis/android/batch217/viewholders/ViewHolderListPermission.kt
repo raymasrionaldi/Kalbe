@@ -29,4 +29,18 @@ class ViewHolderListPermission(itemView: View) : RecyclerView.ViewHolder(itemVie
             .build()
         inisial.setImageInfo(image)
     }
+
+    fun setModelPermissionHistory(model: Permission){
+        val date = model.tanggal_permission
+        val status = model.status_permission
+        teksUtama.text = date
+        teksTambahan.text = status
+
+        val image = NameInitialsCircleImageView.ImageInfo
+            .Builder(model.id_permission.toString())
+            .setTextColor(android.R.color.black)
+            .setCircleBackgroundColorRes(R.color.warnaAbu)
+            .build()
+        inisial.setImageInfo(image)
+    }
 }

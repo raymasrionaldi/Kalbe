@@ -70,6 +70,22 @@ class PermissionQueryHelper(val databaseHelper: DatabaseHelper) {
         return listPermission
     }
 
+    fun cariPermissionModelsBuatHistory(keyword:String): List<Permission>{
+        var listPermission = ArrayList<Permission>()
+        if (keyword.isNotBlank()) {
+            val db = databaseHelper.readableDatabase
+            val queryCari =
+                "SELECT * FROM $TABEL_PERMISSION WHERE $TANGGAL_PERMISSION LIKE '%$keyword%' AND " +
+                        "$STATUS_PERMISSION = 'Approved' OR $STATUS_PERMISSION='Rejected'"
+
+            val cursor = db.rawQuery(queryCari, null)
+            if (cursor.count > 0) {
+                listPermission = konversiCursorKeListPermissionModel(cursor)
+            }
+        }
+        return listPermission
+    }
+
     fun loadPermission(id:Int): Permission {
         var listPermission = ArrayList<Permission>()
 

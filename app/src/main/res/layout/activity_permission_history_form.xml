@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.permission.PermissionCreateFormActivity"
+    tools:context=".ui.permission.PermissionHistoryFormActivity"
     android:orientation="vertical">
 
 
@@ -24,7 +24,7 @@
             android:paddingTop="10dp">
 
             <EditText
-                android:id="@+id/displayNamaPegawaiApprove"
+                android:id="@+id/displayNamaPegawaiHistory"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Nama*"
@@ -32,7 +32,7 @@
                 android:textSize="15dp"
                 android:enabled="false"/>
             <EditText
-                android:id="@+id/displayDevartementApprove"
+                android:id="@+id/displayDevartementHistory"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Devartement / Divisi"
@@ -40,7 +40,7 @@
                 android:textSize="15dp"
                 android:enabled="false"/>
             <EditText
-                android:id="@+id/displayJabatanApprove"
+                android:id="@+id/displayJabatanHistory"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Jabatan"
@@ -53,7 +53,7 @@
                 android:layout_height="wrap_content">
 
                 <EditText
-                    android:id="@+id/displayTanggalApprove"
+                    android:id="@+id/displayTanggalHistory"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Tanggal *"
@@ -65,7 +65,7 @@
                     />
 
                 <ImageView
-                    android:id="@+id/iconInputTanggalPermissionApprove"
+                    android:id="@+id/iconInputTanggalPermissionHistory"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_gravity="right|center_vertical"
@@ -78,7 +78,7 @@
                 android:layout_height="wrap_content">
 
                 <EditText
-                    android:id="@+id/displayJamApprove"
+                    android:id="@+id/displayJamHistory"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Pukul *"
@@ -90,7 +90,7 @@
                     />
 
                 <ImageView
-                    android:id="@+id/iconInputJamPermissionApprove"
+                    android:id="@+id/iconInputJamPermissionHistory"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_gravity="right|center_vertical"
@@ -99,7 +99,7 @@
             </FrameLayout>
 
             <EditText
-                android:id="@+id/KeteranganApprove"
+                android:id="@+id/KeteranganHistory"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Keterangan *"
@@ -121,7 +121,7 @@
                     android:enabled="false"/>
 
                 <EditText
-                    android:id="@+id/hintTidakMasukApprove"
+                    android:id="@+id/hintTidakMasukHistory"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Tidak Masuk"
@@ -139,14 +139,14 @@
                 android:layout_marginTop="5dp">
 
                 <androidx.appcompat.widget.AppCompatCheckBox
-                    android:id="@+id/cekSakitApprove"
+                    android:id="@+id/cekSakitHistory"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:buttonTint="@color/warnaCheckBoxAbu"
                     android:enabled="false"/>
 
                 <EditText
-                    android:id="@+id/hintSakitApprove"
+                    android:id="@+id/hintSakitHistory"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Sakit"
@@ -165,14 +165,14 @@
                 android:layout_marginTop="5dp">
 
                 <androidx.appcompat.widget.AppCompatCheckBox
-                    android:id="@+id/cekDatangTerlambatApprove"
+                    android:id="@+id/cekDatangTerlambatHistory"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:buttonTint="@color/warnaCheckBoxAbu"
                     android:enabled="false"/>
 
                 <EditText
-                    android:id="@+id/hintDatangTerlambatApprove"
+                    android:id="@+id/hintDatangTerlambatHistory"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Datang Terlambat"
@@ -191,14 +191,14 @@
                 android:layout_marginTop="5dp">
 
                 <androidx.appcompat.widget.AppCompatCheckBox
-                    android:id="@+id/cekPulangAwalApprove"
+                    android:id="@+id/cekPulangAwalHistory"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:buttonTint="@color/warnaCheckBoxAbu"
                     android:enabled="false"/>
 
                 <EditText
-                    android:id="@+id/hintPulangAwalApprove"
+                    android:id="@+id/hintPulangAwalHistory"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Pulang Awal"
@@ -217,14 +217,14 @@
                 android:layout_marginTop="5dp">
 
                 <androidx.appcompat.widget.AppCompatCheckBox
-                    android:id="@+id/cekDLLApprove"
+                    android:id="@+id/cekDLLHistory"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:buttonTint="@color/warnaCheckBoxAbu"
                     android:enabled="false"/>
 
                 <EditText
-                    android:id="@+id/displayDLLApprove"
+                    android:id="@+id/displayDLLHistory"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="..."
@@ -233,32 +233,6 @@
                     android:textSize="15dp"
                     android:clickable="false"
                     android:longClickable="false"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="15dp">
-                <Button
-                    android:id="@+id/buttonRejectPermission"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="REJECT"
-                    android:background="@drawable/button_reject_on"
-                    android:textColor="#FFFFFF"
-                    android:layout_marginRight="1dp"/>
-                <Button
-                    android:id="@+id/buttonApprovalPermission"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="APPROVE"
-                    android:background="@drawable/button_approve_on"
-                    android:textColor="#FFFFFF"/>
 
             </LinearLayout>
         </LinearLayout>
