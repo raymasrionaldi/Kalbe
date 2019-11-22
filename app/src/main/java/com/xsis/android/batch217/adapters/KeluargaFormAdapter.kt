@@ -8,8 +8,6 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.xsis.android.batch217.R
-import com.xsis.android.batch217.databases.DatabaseHelper
-import com.xsis.android.batch217.databases.KeluargaQueryHelper
 import com.xsis.android.batch217.viewholders.ViewHolderAnggotaKeluargaForm
 
 class KeluargaFormAdapter(val id:Int,val context: Context, val listAnggota:ArrayList<String>):RecyclerView.Adapter<ViewHolderAnggotaKeluargaForm>() {
@@ -34,7 +32,13 @@ class KeluargaFormAdapter(val id:Int,val context: Context, val listAnggota:Array
             holder.setModelRead(model)
         }
 
-        holder.edit.setOnClickListener { holder.setModelEdit(model, listAnggota) }
+        holder.edit.setOnClickListener {
+            if (listAnggota.size != 1 && listAnggota[listAnggota.size-1].isEmpty()){
+                listAnggota.removeAt(listAnggota.size-1)
+            }
+            holder.setModelEdit(model, listAnggota)
+        }
+
         holder.clear.setOnClickListener { holder.hapus() }
 
 
@@ -45,6 +49,10 @@ class KeluargaFormAdapter(val id:Int,val context: Context, val listAnggota:Array
 
 
         holder.hapus.setOnClickListener {
+            if (listAnggota.size != 1 && listAnggota[listAnggota.size-1].isEmpty()){
+                listAnggota.removeAt(listAnggota.size-1)
+            }
+
             val konfirmasiDelete = AlertDialog.Builder(context)
             konfirmasiDelete.setMessage("Yakin mau hapus data ini ?")
                 .setPositiveButton("Ya", { dialog, which ->
