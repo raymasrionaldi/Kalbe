@@ -1,5 +1,6 @@
 package com.xsis.android.batch217.databases
 
+import android.content.ContentValues
 import android.database.Cursor
 import com.xsis.android.batch217.models.Periode
 import com.xsis.android.batch217.utils.*
@@ -92,5 +93,16 @@ class PeriodeQueryHelper(val databaseHelper:DatabaseHelper) {
             }
         }
         return listPeriode
+    }
+
+    fun tambahPeriode(model: Periode): Long {
+        val db = databaseHelper.writableDatabase
+
+        val values = ContentValues()
+        values.put(NAMA_PERIODE, model.nama_periode)
+        values.put(DES_PERIODE, model.des_periode)
+        values.put(IS_DELETED, "false")
+
+        return db.insert(TABEL_PERIODE, null, values)
     }
 }

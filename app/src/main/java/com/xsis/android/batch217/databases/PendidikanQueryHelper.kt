@@ -1,5 +1,6 @@
 package com.xsis.android.batch217.databases
 
+import android.content.ContentValues
 import android.database.Cursor
 import android.widget.Toast
 import com.xsis.android.batch217.models.Pendidikan
@@ -138,5 +139,15 @@ class PendidikanQueryHelper(val databaseHelper:DatabaseHelper) {
         return listPendidikan
     }
 
+    fun tambahPendidikan(model: Pendidikan): Long {
+        val db = databaseHelper.writableDatabase
+
+        val values = ContentValues()
+        values.put(NAMA_PENDIDIKAN, model.nama_pendidikan)
+        values.put(DES_PENDIDIKAN, model.des_pendidikan)
+        values.put(IS_DELETED, "false")
+
+        return db.insert(TABEL_PENDIDIKAN, null, values)
+    }
 
 }

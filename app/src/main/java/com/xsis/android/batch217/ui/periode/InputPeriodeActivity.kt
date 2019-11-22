@@ -12,6 +12,7 @@ import androidx.core.view.isVisible
 import com.xsis.android.batch217.R
 import com.xsis.android.batch217.databases.DatabaseHelper
 import com.xsis.android.batch217.databases.PeriodeQueryHelper
+import com.xsis.android.batch217.models.Periode
 import com.xsis.android.batch217.utils.*
 import kotlinx.android.synthetic.main.activity_input_periode.*
 
@@ -19,6 +20,7 @@ class InputPeriodeActivity : AppCompatActivity() {
     val context = this
     val databaseHelper = DatabaseHelper(context)
     val databaseQueryHelper = PeriodeQueryHelper(databaseHelper)
+    val data = Periode()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -93,13 +95,15 @@ class InputPeriodeActivity : AppCompatActivity() {
             if (!listPeriode.isEmpty()){
                 Toast.makeText(context, DATA_SUDAH_ADA, Toast.LENGTH_SHORT).show()
             } else {
-                val content = ContentValues()
-                content.put(NAMA_PERIODE, nama)
-                content.put(DES_PERIODE, des)
-                content.put(IS_DELETED, "false")
-                val db = DatabaseHelper(context!!).writableDatabase
-                db.insert(TABEL_PERIODE, null, content)
-                Toast.makeText(context, SIMPAN_DATA_BERHASIL, Toast.LENGTH_SHORT).show()
+                val model = Periode()
+                model.id_periode = data.id_periode
+                model.nama_periode = nama
+                model.des_periode = des
+                if (databaseQueryHelper!!.tambahPeriode(model) == -1L) {
+                    Toast.makeText(context, SIMPAN_DATA_GAGAL, Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(context, SIMPAN_DATA_BERHASIL, Toast.LENGTH_SHORT).show()
+                }
                 finish()
             }
         }

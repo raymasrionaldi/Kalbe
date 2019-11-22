@@ -18,6 +18,7 @@ import com.xsis.android.batch217.HomeActivity
 import com.xsis.android.batch217.R
 import com.xsis.android.batch217.databases.DatabaseHelper
 import com.xsis.android.batch217.databases.PendidikanQueryHelper
+import com.xsis.android.batch217.models.Pendidikan
 import com.xsis.android.batch217.utils.*
 import kotlinx.android.synthetic.main.activity_input_pendidikan.*
 import kotlinx.android.synthetic.main.activity_input_pendidikan.btnBatalPendidikan
@@ -32,6 +33,8 @@ import kotlinx.android.synthetic.main.fragment_jenjang_pendidikan_input.*
 class InputPendidikanActivity : AppCompatActivity() {
     val context = this
     val databaseHelper = DatabaseHelper(context)
+    val databaseQueryHelper = PendidikanQueryHelper(databaseHelper)
+    var data = Pendidikan()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -109,23 +112,22 @@ class InputPendidikanActivity : AppCompatActivity() {
         if(nama.isNullOrEmpty()){
             Toast.makeText(context, DATA_BELUM_LENGKAP, Toast.LENGTH_SHORT).show()
         } else {
-            val databaseHelper = DatabaseHelper(context!!)
-            val databaseQueryHelper = PendidikanQueryHelper(databaseHelper)
             val listPendidikan = databaseQueryHelper.readNamaPendidikan(nama)
             if (!listPendidikan.isEmpty()){
                 Toast.makeText(context, DATA_SUDAH_ADA, Toast.LENGTH_SHORT).show()
             } else {
-                val content = ContentValues()
-                content.put(NAMA_PENDIDIKAN, nama)
-                content.put(DES_PENDIDIKAN, des)
-                content.put(IS_DELETED, "false")
-                val db = DatabaseHelper(context!!).writableDatabase
-                db.insert(TABEL_PENDIDIKAN, null, content)
-                Toast.makeText(context, SIMPAN_DATA_BERHASIL, Toast.LENGTH_SHORT).show()
+                val model = Pendidikan()
+                model.id_pendidikan = data.id_pendidikan
+                model.nama_pendidikan = nama
+                model.des_pendidikan = des
+                if (databaseQueryHelper!!.tambahPendidikan(model) == -1L) {
+                    Toast.makeText(context, SIMPAN_DATA_GAGAL, Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(context, SIMPAN_DATA_BERHASIL, Toast.LENGTH_SHORT).show()
+                }
                 finish()
             }
         }
-
     }
 
     fun hapus(){
