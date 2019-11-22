@@ -38,6 +38,7 @@
                     android:id="@+id/inputCodeBackOffice"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textColorHint="@color/colorPrimaryDark"
                     android:hint="Code *"
                     android:inputType="text" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -54,6 +55,7 @@
                     android:id="@+id/inputNamaBackOffice"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textColorHint="@color/colorPrimaryDark"
                     android:hint="Name *"
                     android:inputType="text" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -74,6 +76,7 @@
                 android:id="@+id/inputNotesBackOffice"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textColorHint="@color/colorPrimaryDark"
                 android:hint="Notes"
                 android:inputType="text" />
 

@@ -35,6 +35,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/colorPrimaryDark"
+                android:textColorHint="@color/colorPrimaryDark"
                 android:hint="Name*"
                 android:inputType="text" />
 
@@ -50,6 +51,7 @@
                 android:id="@+id/inputNotesNewTrainingOrganizer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textColorHint="@color/colorPrimaryDark"
                 android:textColor="@color/colorPrimaryDark"
                 android:hint="Notes" />
 
