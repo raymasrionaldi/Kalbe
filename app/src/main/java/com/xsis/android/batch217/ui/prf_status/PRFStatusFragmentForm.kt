@@ -31,6 +31,7 @@ class PRFStatusFragmentForm(context:Context, val fm:FragmentManager): Fragment()
     val databaseQueryHelper = PRFStatusQueryHelper(databaseHelper)
     var data = PRFStatus()
     var ID = 0
+    var CountError = 0
     var judulForm:TextView? = null
     var nama:TextInputEditText? = null
     var notes:TextInputEditText? = null
@@ -70,6 +71,7 @@ class PRFStatusFragmentForm(context:Context, val fm:FragmentManager): Fragment()
     }
 
     fun setIsi(){
+        CountError = 0
         if (ID != 0){
             delete!!.isVisible = true
             judulForm!!.text = "Edit PRF Status"
@@ -152,15 +154,13 @@ class PRFStatusFragmentForm(context:Context, val fm:FragmentManager): Fragment()
             val Nama = nama!!.text.toString().trim()
             val Notes = notes!!.text.toString().trim()
 
-            if (Nama.isEmpty()){
-                error!!.visibility = View.VISIBLE
-            } else{
-                error!!.visibility = View.INVISIBLE
-            }
+            if (Nama.isEmpty() && CountError > 0){ error!!.visibility = View.VISIBLE }
+            else{ error!!.visibility = View.INVISIBLE }
+            CountError++
 
             val kondisi = Nama.isNotEmpty() || Notes.isNotEmpty()
-            ubahResetButton(context!!, kondisi, reset!!)
-            ubahSimpanButton(context!!, true, save!!)
+            ubahResetButton(context, kondisi, reset!!)
+            ubahSimpanButton(context, true, save!!)
 
         }
 
