@@ -240,4 +240,5 @@ class EmployeeStatusFragmentForm(context: Context, val fm: FragmentManager) : Fr
         inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
     }
 
+
 }
