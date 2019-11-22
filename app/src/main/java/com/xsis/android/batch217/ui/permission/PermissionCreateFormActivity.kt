@@ -4,11 +4,16 @@ import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.MenuItem
 import android.widget.Button
+import android.widget.CompoundButton
 import android.widget.Toast
 import com.xsis.android.batch217.R
 import com.xsis.android.batch217.utils.HOUR_PATTERN
+import com.xsis.android.batch217.utils.ubahResetButton
+import com.xsis.android.batch217.utils.ubahSimpanButton
 import kotlinx.android.synthetic.main.activity_entry_timesheet.*
 import kotlinx.android.synthetic.main.activity_permission_create_form.*
 import java.text.SimpleDateFormat
@@ -39,6 +44,87 @@ class PermissionCreateFormActivity : AppCompatActivity() {
         buttonResetPermission.setOnClickListener(){
             resetForm()
         }
+
+        inputNamaPegawai.addTextChangedListener(textWatcher)
+        inputDevartement.addTextChangedListener(textWatcher)
+        inputJabatan.addTextChangedListener(textWatcher)
+        inputTanggalPermission.addTextChangedListener(textWatcher)
+        inputJamPermission.addTextChangedListener(textWatcher)
+        cekTidakMasuk.setOnCheckedChangeListener(compoundButton)
+        cekSakit.setOnCheckedChangeListener(compoundButton)
+        cekDatangTerlambat.setOnCheckedChangeListener(compoundButton)
+        cekPulangAwal.setOnCheckedChangeListener(compoundButton)
+        cekDLL.setOnCheckedChangeListener(compoundButton)
+    }
+
+    private val textWatcher = object : TextWatcher {
+        override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
+
+        }
+
+        override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+
+            val kondisiSubmit = kondisiButtonSubmit()
+            val kondisiReset = kondisiButtonReset()
+
+            ubahSimpanButton(context, kondisiSubmit, buttonSubmitPermission)
+            ubahResetButton(context, kondisiReset, buttonResetPermission)
+        }
+
+        override fun afterTextChanged(s: Editable) {
+
+        }
+    }
+
+    private val compoundButton = object : CompoundButton.OnCheckedChangeListener {
+        override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
+
+            val kondisiSubmit = kondisiButtonSubmit()
+            val kondisiReset = kondisiButtonReset()
+
+            ubahSimpanButton(context, kondisiSubmit, buttonSubmitPermission)
+            ubahResetButton(context, kondisiReset, buttonResetPermission)
+            if (buttonView!!.id == R.id.cekDLL) {
+                if (isChecked) {
+                    inputDLL.isEnabled = true
+                }
+                else {
+                    inputDLL.isEnabled = false
+                    inputDLL.text = null
+                }
+            }
+        }
+
+    }
+
+    fun kondisiButtonSubmit(): Boolean {
+        val namaTeks = inputNamaPegawai.text.toString().trim()
+        val divisiTeks = inputDevartement.text.toString().trim()
+        val jabatanTeks = inputJabatan.text.toString().trim()
+        val tanggalTeks = inputTanggalPermission.text.toString().trim()
+        val pukulTeks = inputJamPermission.text.toString().trim()
+
+        return namaTeks.isNotEmpty() && divisiTeks.isNotEmpty()
+                && jabatanTeks.isNotEmpty() && tanggalTeks.isNotEmpty()
+                && pukulTeks.isNotEmpty() && (cekTidakMasuk.isChecked || cekSakit.isChecked
+                || cekDatangTerlambat.isChecked || cekPulangAwal.isChecked
+                || cekDLL.isChecked)
+
+    }
+
+    fun kondisiButtonReset(): Boolean {
+        val namaTeks = inputNamaPegawai.text.toString().trim()
+        val divisiTeks = inputDevartement.text.toString().trim()
+        val jabatanTeks = inputJabatan.text.toString().trim()
+        val tanggalTeks = inputTanggalPermission.text.toString().trim()
+        val pukulTeks = inputJamPermission.text.toString().trim()
+
+        return namaTeks.isNotEmpty() || divisiTeks.isNotEmpty()
+                || jabatanTeks.isNotEmpty() || tanggalTeks.isNotEmpty()
+                || pukulTeks.isNotEmpty() || cekTidakMasuk.isChecked || cekSakit.isChecked
+                || cekDatangTerlambat.isChecked || cekPulangAwal.isChecked
+                || cekDLL.isChecked
+
     }
 
     fun resetForm(){
@@ -52,7 +138,6 @@ class PermissionCreateFormActivity : AppCompatActivity() {
         cekDatangTerlambat.isChecked = false
         cekPulangAwal.isChecked = false
         cekDLL.isChecked = false
-        inputDLL.setText("...")
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -103,13 +188,13 @@ class PermissionCreateFormActivity : AppCompatActivity() {
         inputJamPermission.setOnClickListener {
             val tpd = TimePickerDialog(this, TimePickerDialog.OnTimeSetListener { view, h, m ->
 
-                Toast.makeText(this, "$h.$m", Toast.LENGTH_LONG).show()
+               // Toast.makeText(this, "$h.$m", Toast.LENGTH_LONG).show()
                 val selectedDate = Calendar.getInstance()
                 selectedDate.set(Calendar.HOUR_OF_DAY, h)
                 selectedDate.set(Calendar.MINUTE, m)
 
                 val jam = formatter.format(selectedDate.time)
-                Toast.makeText(this, "$jam", Toast.LENGTH_SHORT).show()
+               // Toast.makeText(this, "$jam", Toast.LENGTH_SHORT).show()
                 //set tampilan
                 inputJamPermission.setText(jam)
 

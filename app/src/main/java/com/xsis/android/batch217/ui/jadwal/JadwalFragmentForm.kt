@@ -208,8 +208,8 @@ class JadwalFragmentForm(context: Context, val fm: FragmentManager) : Fragment()
                         .show()
                 }
             } else if (modeForm == JadwalFragmentForm.MODE_EDIT) {
-                if ((cekJadwal != 1 && model.nama_jadwal == data.nama_jadwal) ||
-                    (cekJadwal != 0 && model.nama_jadwal != data.nama_jadwal)
+                if ((cekJadwal != 1 && model.nama_jadwal.equals(data.nama_jadwal, true) ) ||
+                    (cekJadwal != 0 && !model.nama_jadwal.equals(data.nama_jadwal, true) )
                 ) {
                     Toast.makeText(context, DATA_SUDAH_ADA, Toast.LENGTH_SHORT).show()
                     return

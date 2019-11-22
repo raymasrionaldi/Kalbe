@@ -208,8 +208,8 @@ class TipeTesFragmentForm(context: Context, val fm: FragmentManager) : Fragment(
                         .show()
                 }
             } else if (modeForm == TipeTesFragmentForm.MODE_EDIT) {
-                if ((cekTipeTes != 1 && model.nama_tipe_tes == data.nama_tipe_tes) ||
-                    (cekTipeTes != 0 && model.nama_tipe_tes != data.nama_tipe_tes)
+                if ((cekTipeTes != 1 && model.nama_tipe_tes.equals(data.nama_tipe_tes, true) ) ||
+                    (cekTipeTes != 0 && !model.nama_tipe_tes.equals(data.nama_tipe_tes, true) )
                 ) {
                     Toast.makeText(context, DATA_SUDAH_ADA, Toast.LENGTH_SHORT).show()
                     return

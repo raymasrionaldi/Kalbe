@@ -209,8 +209,8 @@ class TrainingFragmentForm(context: Context, val fm: FragmentManager) : Fragment
                         .show()
                 }
             } else if (modeForm == MODE_EDIT) {
-                if ((cekTrainingCode != 1 && model.codeTraining == data.codeTraining) ||
-                    (cekTrainingCode != 0 && model.codeTraining != data.codeTraining)
+                if ((cekTrainingCode != 1 && model.codeTraining.equals(data.codeTraining, true)) ||
+                    (cekTrainingCode != 0 && !model.codeTraining.equals(data.codeTraining, true))
                 /*||
                 (cekTrainingNama != 1 && model.namaTraining == data.namaTraining) ||
                 (cekTrainingNama != 0 && model.namaTraining != data.namaTraining)*/)
