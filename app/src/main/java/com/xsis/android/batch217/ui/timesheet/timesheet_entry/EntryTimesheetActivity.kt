@@ -360,7 +360,8 @@ class EntryTimesheetActivity : AppCompatActivity() {
         //cek dupilcate data
         val periksaTimesheet = databaseQueryHelper!!.cekTimesheet(reportDateTimesheet)
 
-        if(periksaTimesheet != 0){
+        if((periksaTimesheet != 0 && !data.reportDate_timesheet.equals(reportDateTimesheet)) ||
+            (periksaTimesheet != 1 && data.reportDate_timesheet.equals(reportDateTimesheet))){
             Toast.makeText(context, DATA_SUDAH_ADA, Toast.LENGTH_SHORT).show()
             isValid = false
         }
