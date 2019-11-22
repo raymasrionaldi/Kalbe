@@ -17,7 +17,7 @@ class ViewHolderListBackOffice(itemView: View) : RecyclerView.ViewHolder(itemVie
 
     fun setModel(model: BackOfficePosition) {
         val level = model.levelBackOffice
-        val company = model.companyBackOffice
+        val company = model.namaCompany
         teksUtama.text = level
         teksTambahan.text = company
 

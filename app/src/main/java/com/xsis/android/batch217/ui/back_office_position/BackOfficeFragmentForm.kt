@@ -16,6 +16,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.viewpager.widget.ViewPager
+import com.chivorn.smartmaterialspinner.SmartMaterialSpinner
 import com.xsis.android.batch217.R
 import com.xsis.android.batch217.adapters.fragments.BackOfficeFragmentAdapter
 import com.xsis.android.batch217.databases.BackOfficeQueryHelper
@@ -31,6 +32,7 @@ class BackOfficeFragmentForm(context: Context, val fm: FragmentManager) : Fragme
     var  listPositionLevel= ArrayList<String>()
     var listCompany = ArrayList<String>()
     var data = BackOfficePosition()
+    var spinnerCompany : SmartMaterialSpinner<String>? = null
 
     var databaseQueryHelper: BackOfficeQueryHelper? = null
 
@@ -50,6 +52,7 @@ class BackOfficeFragmentForm(context: Context, val fm: FragmentManager) : Fragme
 
         val databaseHelper = DatabaseHelper(context!!)
         databaseQueryHelper = BackOfficeQueryHelper(databaseHelper)
+        spinnerCompany = customView.findViewById(R.id.inputCompanyBackOffice)as SmartMaterialSpinner<String>
 
         return customView
     }
@@ -151,6 +154,7 @@ class BackOfficeFragmentForm(context: Context, val fm: FragmentManager) : Fragme
         idData = backOffice.idBackOffice
         inputCodeBackOffice.setText(backOffice.codeBackOffice)
         inputNamaBackOffice.setText(backOffice.namaBackOffice)
+
         inputNotesBackOffice.setText(backOffice.notesBackOffice)
         data = backOffice
     }
@@ -178,8 +182,10 @@ class BackOfficeFragmentForm(context: Context, val fm: FragmentManager) : Fragme
         val codeBackoffice = inputCodeBackOffice.text.toString().trim()
         val namaBackoffice = inputNamaBackOffice.text.toString().trim()
         val levelBackOffice = inputLevelBackOffice.selectedItem.toString()
-        val companyBackoofice = inputCompanyBackOffice.selectedItem.toString()
+        val companyBackoofice = spinnerCompany!!.selectedItemPosition
         val notesBackoofice = inputNotesBackOffice.text.toString().trim()
+
+        spinnerCompany!!.errorText = null
 
         var isValid = true
         if (codeBackoffice.isEmpty()) {
@@ -199,6 +205,9 @@ class BackOfficeFragmentForm(context: Context, val fm: FragmentManager) : Fragme
             inputNamaBackOffice.setHintTextColor(defaultColor)
             layoutNamaBackOffice.isErrorEnabled = false
         }
+        if(companyBackoofice == 0){
+            spinnerCompany!!.errorText = "Required"
+        }
 
         if (isValid) {
             val model = BackOfficePosition()
@@ -206,14 +215,14 @@ class BackOfficeFragmentForm(context: Context, val fm: FragmentManager) : Fragme
             model.codeBackOffice = codeBackoffice
             model.namaBackOffice = namaBackoffice
             model.levelBackOffice = levelBackOffice
-            model.companyBackOffice = companyBackoofice
+            model.companyBackOffice = companyBackoofice.toString()
             model.notesBackOffice = notesBackoofice
 
-
-            val cekBackOffice = databaseQueryHelper!!.cekBackOfficeSudahAda(model.codeBackOffice!!, model.namaBackOffice!!)
+            val cekBackOffice = databaseQueryHelper!!.cekBackOfficeSudahAda(model.namaBackOffice!!)
+            val cekBackOffice2 = databaseQueryHelper!!.cekBackOfficeSudahAda2(model.codeBackOffice!!)
 
             if (modeForm == MODE_ADD) {
-                if (cekBackOffice > 0) {
+                if (cekBackOffice>0 || cekBackOffice2>0){
                     Toast.makeText(context, DATA_SUDAH_ADA, Toast.LENGTH_SHORT).show()
                     return
                 }
@@ -224,8 +233,10 @@ class BackOfficeFragmentForm(context: Context, val fm: FragmentManager) : Fragme
                         .show()
                 }
             } else if (modeForm == MODE_EDIT) {
-                if ((cekBackOffice != 1 && model.namaBackOffice.equals(data.namaBackOffice, true)|| model.codeBackOffice.equals(data.codeBackOffice, true)) ||
-                    (cekBackOffice != 0 && !model.namaBackOffice.equals(data.namaBackOffice, true)|| model.codeBackOffice.equals(data.codeBackOffice, true))
+                if ((cekBackOffice != 1 && model.namaBackOffice.equals(data.namaBackOffice, true)) ||
+                    (cekBackOffice != 0 && !model.namaBackOffice.equals(data.namaBackOffice, true)) ||
+                    (cekBackOffice2 != 1 && model.codeBackOffice.equals(data.codeBackOffice, true)) ||
+                    (cekBackOffice != 0 && !model.codeBackOffice.equals(data.codeBackOffice, true))
                 ) {
                     Toast.makeText(context, DATA_SUDAH_ADA, Toast.LENGTH_SHORT).show()
                     return

@@ -64,7 +64,7 @@
                 android:layout_height="wrap_content"
                 style="@style/Base.Widget.AppCompat.Spinner.Underlined"/>
 
-            <Spinner
+            <com.chivorn.smartmaterialspinner.SmartMaterialSpinner
                 android:id="@+id/inputCompanyBackOffice"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

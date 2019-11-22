@@ -29,6 +29,7 @@ class BackOfficeQueryHelper(val databaseHelper: DatabaseHelper) {
             backOffice.companyBackOffice = cursor.getString(4)
             backOffice.notesBackOffice = cursor.getString(5)
             backOffice.isDeleted = cursor.getString(6)
+            backOffice.namaCompany = cursor.getString(7)
 
             listCompany.add(backOffice)
         }
@@ -53,7 +54,7 @@ class BackOfficeQueryHelper(val databaseHelper: DatabaseHelper) {
         values.put(NAMA_BACKOFFICE, model.namaBackOffice)
         values.put(LEVEL_BACKOFFICE, model.levelBackOffice)
         values.put(COMPANY_BACKOFFICE, model.companyBackOffice)
-        values.put(NOTES_TIMESHEET, model.notesBackOffice)
+        values.put(NOTE_BACKOFFICE, model.notesBackOffice)
         values.put(IS_DELETED, "false")
 
         return db.insert(TABEL_BACKOFFICE_POSITION, null, values)
@@ -66,7 +67,7 @@ class BackOfficeQueryHelper(val databaseHelper: DatabaseHelper) {
         values.put(NAMA_BACKOFFICE, model.namaBackOffice)
         values.put(LEVEL_BACKOFFICE, model.levelBackOffice)
         values.put(COMPANY_BACKOFFICE, model.companyBackOffice)
-        values.put(NOTES_TIMESHEET, model.notesBackOffice)
+        values.put(NOTE_BACKOFFICE, model.notesBackOffice)
 
         return db.update(
             TABEL_BACKOFFICE_POSITION,
@@ -84,16 +85,27 @@ class BackOfficeQueryHelper(val databaseHelper: DatabaseHelper) {
         return db.update(TABEL_BACKOFFICE_POSITION, values, "$ID_BACKOFFICE = ?", arrayOf(id.toString()))
     }
 
-    fun cekBackOfficeSudahAda(nama: String, code: String): Int {
+    fun cekBackOfficeSudahAda(nama: String): Int {
         val db = databaseHelper.readableDatabase
         val queryCari =
             "SELECT * FROM $TABEL_BACKOFFICE_POSITION WHERE $NAMA_BACKOFFICE LIKE '$nama' AND " +
-                    " $CODE_BACKOFFICE == '$code' AND $IS_DELETED = 'false'"
+                    " $IS_DELETED = 'false'"
 
         val cursor = db.rawQuery(queryCari, null)
 
         return cursor.count
     }
+    fun cekBackOfficeSudahAda2(code: String): Int {
+        val db = databaseHelper.readableDatabase
+        val queryCari =
+            "SELECT * FROM $TABEL_BACKOFFICE_POSITION WHERE $CODE_BACKOFFICE LIKE '$code' AND " +
+                    " $IS_DELETED = 'false'"
+
+        val cursor = db.rawQuery(queryCari, null)
+
+        return cursor.count
+    }
+
     fun tampilkanLevelBackOffice(): List<PositionLevel> {
         val db = databaseHelper.readableDatabase
 
@@ -152,8 +164,8 @@ class BackOfficeQueryHelper(val databaseHelper: DatabaseHelper) {
         if (keyword.isNotBlank()) {
             val db = databaseHelper.readableDatabase
             val queryCari =
-                "SELECT * FROM $TABEL_BACKOFFICE_POSITION WHERE $LEVEL_BACKOFFICE LIKE '%$keyword%' AND " +
-                        "$IS_DELETED = 'false'"
+                "SELECT a.*, b.$NAMA_COMPANY FROM $TABEL_BACKOFFICE_POSITION a,$TABEL_COMPANY b WHERE a.$LEVEL_BACKOFFICE LIKE '%$keyword%' AND " +
+                        "a.$COMPANY_BACKOFFICE = b.$ID_COMPANY AND a.$IS_DELETED = 'false'"
 
             val cursor = db.rawQuery(queryCari, null)
             if (cursor.count > 0) {

@@ -8,4 +8,5 @@ class BackOfficePosition {
     var companyBackOffice: String? = null
     var notesBackOffice: String? = null
     var isDeleted: String? = null
+    var namaCompany: String? = null
 }
