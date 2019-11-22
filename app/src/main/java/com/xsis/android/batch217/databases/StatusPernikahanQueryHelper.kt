@@ -2,7 +2,6 @@ package com.xsis.android.batch217.databases
 
 import android.content.ContentValues
 import android.database.Cursor
-import com.xsis.android.batch217.models.JenisCatatan
 import com.xsis.android.batch217.models.StatusPernikahan
 import com.xsis.android.batch217.utils.*
 
@@ -81,7 +80,7 @@ class StatusPernikahanQueryHelper(val databaseHelper: DatabaseHelper) {
         return db.update(
             TABEL_STATUS_NIKAH,
             values,
-            "$ID_CATATAN = ?",
+            "$ID_STATUS_NIKAH = ?",
             arrayOf(model.idStatusPernikahan.toString())
         )
     }
