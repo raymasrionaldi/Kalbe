@@ -106,7 +106,8 @@
                         android:text=""
                         android:textSize="15dp"
                         android:hint="Jenis Keluarga*"
-                        android:singleLine="true"/>
+                        android:singleLine="true"
+                        android:backgroundTint="@color/warnaDetailText"/>
 
                 </com.google.android.material.textfield.TextInputLayout>
             </FrameLayout>
