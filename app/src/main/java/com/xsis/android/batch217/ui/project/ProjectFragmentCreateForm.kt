@@ -312,8 +312,8 @@ class ProjectFragmentCreateForm(context: Context, val fm: FragmentManager):Fragm
                     val end_date = SimpleDateFormat(DATE_PATTERN).parse(endDate!!.text.toString()).time
                     val selisih = end_date - start_date
                     println("selisih hari = ${selisih/1000/60/60/24}")
-                    if (selisih < 1){
-                        Toast.makeText(context, "Start Date harus kurang dari End Date !", Toast.LENGTH_SHORT).show()
+                    if (selisih < 0){
+                        Toast.makeText(context, "Start Date harus kurang dari atau sama dengan End Date !", Toast.LENGTH_LONG).show()
                         startDate!!.setText("")
                     }
                 }
@@ -327,8 +327,8 @@ class ProjectFragmentCreateForm(context: Context, val fm: FragmentManager):Fragm
                     val end_date = SimpleDateFormat(DATE_PATTERN).parse(endDate!!.text.toString()).time
                     val selisih = end_date - start_date
                     println("selisih hari = ${selisih/1000/60/60/24}")
-                    if (selisih < 1){
-                        Toast.makeText(context, "End Date harus lebih dari Start Date !", Toast.LENGTH_SHORT).show()
+                    if (selisih < 0){
+                        Toast.makeText(context, "End Date harus lebih dari atau sama dengan Start Date !", Toast.LENGTH_LONG).show()
                         endDate!!.setText("")
                     }
                 }
