@@ -209,6 +209,10 @@ class EntryTimesheetActivity : AppCompatActivity() {
 //                        inputEndtOvertimeEntryTimesheet!!.visibility = View.VISIBLE
                         inputStartOvertimeEntryTimesheet.isClickable = false
                         inputEndtOvertimeEntryTimesheet.isClickable = false
+                        inputStartOvertimeEntryTimesheet.setHintTextColor(defaultColor)
+                        inputEndtOvertimeEntryTimesheet.setHintTextColor(defaultColor)
+                        inputStartOvertimeEntryTimesheet!!.setText("")
+                        inputEndtOvertimeEntryTimesheet!!.setText("")
                     }
 
                 }
@@ -242,6 +246,8 @@ class EntryTimesheetActivity : AppCompatActivity() {
         var startOvertimeTimesheet = inputStartOvertimeEntryTimesheet.text.toString().trim()
         var endOvertimeTimesheet = inputEndtOvertimeEntryTimesheet.text.toString().trim()
         val notesTimesheet = inputNotesEntryTimesheet.text.toString().trim()
+
+        println("jam = $startOvertimeTimesheet dan jam = $endOvertimeTimesheet")
 
         requiredStatusTimesheet.visibility = View.GONE
         requiredClientTimesheet.visibility = View.GONE
@@ -668,7 +674,7 @@ class EntryTimesheetActivity : AppCompatActivity() {
         val projection = arrayOf<String>(
             ID_TIMESHEET, STATUS_TIMESHEET, CLIENT_DATABASE, REPORT_DATE_TIMESHEET,
             START_REPORT_DATE_TIMESHEET, END_REPORT_DATE_TIMESHEET, OVERTIME_TIMESHEET,
-            START_REPORT_DATE_TIMESHEET, END_REPORT_DATE_TIMESHEET, NOTES_TIMESHEET,
+            START_REPORT_OVERTIME, END_REPORT_OVERTIME, NOTES_TIMESHEET,
             PROGRESS_TIMESHEET, IS_DELETED
         )
         val selection = ID_TIMESHEET + "=?"
@@ -706,6 +712,7 @@ class EntryTimesheetActivity : AppCompatActivity() {
 
             data.endOvertime_timesheet = cursor.getString(8)
             inputEndtOvertimeEntryTimesheet.setText(data.endOvertime_timesheet)
+            println("${overtimeTimesheet}, ${data.starOvertime_timesheet}, ${data.endOvertime_timesheet}")
 
             data.notes_timesheet = cursor.getString(9)
             inputNotesEntryTimesheet.setText(data.notes_timesheet)

@@ -254,7 +254,7 @@ class TimesheetQueryHelper(val databaseHelper: DatabaseHelper) {
         values.put(REPORT_DATE_TIMESHEET, model.reportDate_timesheet)
         values.put(START_REPORT_DATE_TIMESHEET, model.startReportDate_timesheet)
         values.put(END_REPORT_DATE_TIMESHEET, model.endReportDate_timesheet)
-        values.put(OVERTIME_TIMESHEET, model.endOvertime_timesheet)
+        values.put(OVERTIME_TIMESHEET, model.overtime_timesheet)
         values.put(START_REPORT_OVERTIME, model.starOvertime_timesheet)
         values.put(END_REPORT_OVERTIME, model.endOvertime_timesheet)
         values.put(NOTES_TIMESHEET, model.notes_timesheet)
